@@ -37,11 +37,27 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        float current_speed = Input.GetKey(KeyCode.LeftShift) ? 1.5f * movement_speed : movement_speed;
         //STATE ACTIONS & TRANSITIONS FOR THE ACTION STATE
         switch (action_state)
         {
             case PLAYER_ACTION_STATES.IDLE:
+
+                //This will be the area where the player is in between actions. Some examples are between bullet shots, Not interacting with anything, etc.
+
+
+
+                break;
+            case PLAYER_ACTION_STATES.SHOOT:
+
+                //This will be the state that actually creates the bullet, muzzle flash, recoil, etc.
+
+                //Any data specific to a weapon (fire rate, damage, etc) should likely be stored in a Scriptable Object (feel free to look it up). This will make our implementation easier.
+                //As well as more memory friendly.
+
+
+
+
                 break;
             default:
                 break;
@@ -100,7 +116,7 @@ public class Player : MonoBehaviour
         RotateEquipped();
 
         //Apply movement
-        _rb.linearVelocity = new Vector2(horizontal_multiplier,vertical_multiplier)*movement_speed;
+        _rb.linearVelocity = new Vector2(horizontal_multiplier,vertical_multiplier)*current_speed;
     }
 
     void RotateEquipped() {
