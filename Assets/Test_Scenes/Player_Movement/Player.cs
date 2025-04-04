@@ -2,13 +2,14 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    //States
     private enum PLAYER_MOVEMENT_STATES { IDLE, WALK };
     private enum PLAYER_ACTION_STATES { IDLE, SHOOT, INTERACT }
 
     private PLAYER_ACTION_STATES action_state = PLAYER_ACTION_STATES.IDLE;
     private PLAYER_MOVEMENT_STATES movement_state = PLAYER_MOVEMENT_STATES.IDLE;
 
-
+    //Movement Parameters
     [SerializeField] private float movement_speed = 1.0f;
     [SerializeField] private float horizontal_multiplier = 1.0f;
     [SerializeField] private float vertical_multiplier = 1.0f;
@@ -16,10 +17,20 @@ public class Player : MonoBehaviour
      
     private float eps = 1e-5f;
 
+    //Components
+    private Rigidbody2D _rb;
+    [SerializeField] private GameObject _equipped;
+    [SerializeField] private Camera _camera;
+
+
+    //Equipped Tool
+
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        _rb = GetComponent<Rigidbody2D>();
 
     }
 
@@ -52,39 +63,53 @@ public class Player : MonoBehaviour
 
             case PLAYER_MOVEMENT_STATES.WALK:
 
-                bool walk = false;
+                bool horizontal_walk = false;
+                bool vertical_walk = false;
                 if (Input.GetKey(KeyCode.W))
                 {
-                    vertical_multiplier = Mathf.Lerp(vertical_multiplier, 1.0f, Time.deltaTime);
-                    walk |= true;
+                    vertical_multiplier = Mathf.Lerp(vertical_multiplier, 1.0f, Time.deltaTime * dampening);
+                    vertical_walk |= true;
                 }
                 if (Input.GetKey(KeyCode.A))
                 {
-                    horizontal_multiplier = Mathf.Lerp(horizontal_multiplier, -1.0f, Time.deltaTime);
-                    walk |= true;
+                    horizontal_multiplier = Mathf.Lerp(horizontal_multiplier, -1.0f, Time.deltaTime * dampening);
+                    horizontal_walk |= true;
                 }
                 if (Input.GetKey(KeyCode.S))
                 {
-                    vertical_multiplier = Mathf.Lerp(vertical_multiplier, -1.0f, Time.deltaTime);
-                    walk |= true;
+                    vertical_multiplier = Mathf.Lerp(vertical_multiplier, -1.0f, Time.deltaTime * dampening);
+                    vertical_walk |= true;
                     
                 }
                 if (Input.GetKey(KeyCode.D))
                 {
-                    horizontal_multiplier = Mathf.Lerp(horizontal_multiplier, 1.0f, Time.deltaTime);
-                    walk |= true;
+                    horizontal_multiplier = Mathf.Lerp(horizontal_multiplier, 1.0f, Time.deltaTime * dampening);
+                    horizontal_walk |= true;
                 }
 
-                if (!walk) movement_state = PLAYER_MOVEMENT_STATES.IDLE;
+                if (!(horizontal_walk || vertical_walk)) movement_state = PLAYER_MOVEMENT_STATES.IDLE;
+                if(!vertical_walk)  vertical_multiplier = Mathf.Abs(vertical_multiplier) < eps ? 0 : Mathf.Lerp(vertical_multiplier, 0.0f, Time.deltaTime * dampening);
+                if(!horizontal_walk)horizontal_multiplier = Mathf.Abs(horizontal_multiplier) < eps ? 0 : Mathf.Lerp(horizontal_multiplier, 0.0f, Time.deltaTime * dampening);
                 break;
             default:
                 break;
 
         }
 
+        //Rotate Equipped tool
+        RotateEquipped();
+
         //Apply movement
-        transform.position += new Vector3(horizontal_multiplier,vertical_multiplier,0)*Time.deltaTime*movement_speed;
+        _rb.linearVelocity = new Vector2(horizontal_multiplier,vertical_multiplier)*movement_speed;
     }
 
-    
+    void RotateEquipped() {
+        Vector2 MousePos = Input.mousePosition;
+        Vector3 MouseWorldPos = _camera.ScreenToWorldPoint(MousePos);
+        Vector2 dir = ((Vector2)MouseWorldPos - (Vector2)transform.position).normalized;
+        MouseWorldPos.z = 0;
+
+        _equipped.transform.up = dir;
+        _equipped.transform.localPosition = (Vector3)dir;
+    }
 }
