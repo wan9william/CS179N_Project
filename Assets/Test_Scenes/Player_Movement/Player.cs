@@ -20,6 +20,7 @@ public class Player : MonoBehaviour
     //Components
     private Rigidbody2D _rb;
     [SerializeField] private GameObject _equipped;
+    [SerializeField] private GameObject _interactable;
     [SerializeField] private Camera _camera;
 
 
@@ -46,6 +47,19 @@ public class Player : MonoBehaviour
                 //This will be the area where the player is in between actions. Some examples are between bullet shots, Not interacting with anything, etc.
 
 
+                //This should be separated by state actions (what to do while in the state) and state transitions(which state to move to)
+
+
+
+                //START OF STATE TRANSITIONS
+
+                //If E is pressed, switch to interact state.
+                if (Input.GetKeyDown(KeyCode.E))
+                {
+                    action_state = PLAYER_ACTION_STATES.INTERACT;
+                    break;
+                }
+
 
                 break;
             case PLAYER_ACTION_STATES.SHOOT:
@@ -56,7 +70,17 @@ public class Player : MonoBehaviour
                 //As well as more memory friendly.
 
 
+            
 
+                break;
+            case PLAYER_ACTION_STATES.INTERACT:
+
+                //for now, simply make the object disappear. Will add resources in the future
+                _interactable.SetActive(false);
+                //_interactable = null;
+
+                //START OF STATE TRANSITIONS
+                action_state = PLAYER_ACTION_STATES.IDLE;
 
                 break;
             default:
@@ -117,6 +141,25 @@ public class Player : MonoBehaviour
 
         //Apply movement
         _rb.linearVelocity = new Vector2(horizontal_multiplier,vertical_multiplier)*current_speed;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        //If the player began touching a resource, make it glow
+        if (collision.gameObject.tag == "Resource")
+        {
+            _interactable = collision.gameObject;
+            collision.gameObject.GetComponent<Resource_Class>().Glow();
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        //If the player began touching a resource, make it glow
+        if (collision.gameObject.tag == "Resource")
+        {
+            collision.gameObject.GetComponent<Resource_Class>().NoGlow();
+        }
     }
 
     void RotateEquipped() {
