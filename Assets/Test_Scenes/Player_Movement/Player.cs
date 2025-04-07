@@ -76,7 +76,7 @@ public class Player : MonoBehaviour
             case PLAYER_ACTION_STATES.INTERACT:
 
                 //for now, simply make the object disappear. Will add resources in the future
-                if(_interactable) _interactable.GetComponent<Resource_Class>().Destroy();
+                if(_interactable) _interactable.GetComponent<Interactable>().Destroy();
                 //_interactable = null;
 
                 //START OF STATE TRANSITIONS
@@ -149,7 +149,7 @@ public class Player : MonoBehaviour
         if (collision.gameObject.tag == "Interactable")
         {
             _interactable = collision.gameObject;
-            collision.gameObject.GetComponent<Resource_Class>().Glow();
+            collision.gameObject.GetComponent<Interactable>().Glow();
         }
     }
 
@@ -158,7 +158,7 @@ public class Player : MonoBehaviour
         //If the player began touching a resource, make it glow
         if (collision.gameObject.tag == "Interactable")
         {
-            collision.gameObject.GetComponent<Resource_Class>().NoGlow();
+            collision.gameObject.GetComponent<Interactable>().NoGlow();
         }
     }
 

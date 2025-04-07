@@ -62,8 +62,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Test_Scenes\Player_Movement\Player.cs" />
+    <Compile Include="Assets\Scripts\Interactables\Interactable.cs" />
+    <Compile Include="Assets\Scripts\Interactables\Resource.cs" />
     <Compile Include="Assets\Test.cs" />
-    <Compile Include="Assets\Resource_Class.cs" />
+    <Compile Include="Assets\Scripts\Interactables\Door.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

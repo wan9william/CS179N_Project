@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7873636325706986470}
   - component: {fileID: 3797724039491705547}
   - component: {fileID: 4856804250992664946}
-  - component: {fileID: 5289504217919195371}
+  - component: {fileID: 3690592544759736511}
   m_Layer: 0
   m_Name: Door
   m_TagString: Interactable
@@ -135,7 +135,7 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &5289504217919195371
+--- !u!114 &3690592544759736511
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -144,8 +144,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 510592496906135705}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 187a2ebb290a8f442827ce8fd88141a6, type: 3}
+  m_Script: {fileID: 11500000, guid: 42d4e72c83f91e346b7a1449b299b13d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _mat: {fileID: 0}
   _glowMat: {fileID: 0}
+  building_top: {fileID: 0}

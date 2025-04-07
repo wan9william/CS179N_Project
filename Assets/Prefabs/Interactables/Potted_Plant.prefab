@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 7376938557676545772}
   - component: {fileID: 8777178996135216525}
-  - component: {fileID: 4979841229899623295}
   - component: {fileID: 6137778888413931236}
+  - component: {fileID: 253996147000718537}
   m_Layer: 0
   m_Name: Potted_Plant
   m_TagString: Interactable
@@ -89,20 +89,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &4979841229899623295
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2183818704165995221}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 187a2ebb290a8f442827ce8fd88141a6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _mat: {fileID: 2100000, guid: 62077a116aaf4b441bb9708ad338a2e4, type: 2}
-  _glowMat: {fileID: 2100000, guid: 5198636b6a46c7943b293f42b03aaa74, type: 2}
 --- !u!61 &6137778888413931236
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -149,3 +135,17 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.39, y: 0.46}
   m_EdgeRadius: 0
+--- !u!114 &253996147000718537
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2183818704165995221}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 931e2bb5da8364645ae7e09cacdd1044, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _mat: {fileID: 0}
+  _glowMat: {fileID: 0}
