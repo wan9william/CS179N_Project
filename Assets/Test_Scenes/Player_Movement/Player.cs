@@ -76,7 +76,7 @@ public class Player : MonoBehaviour
             case PLAYER_ACTION_STATES.INTERACT:
 
                 //for now, simply make the object disappear. Will add resources in the future
-                _interactable.SetActive(false);
+                if(_interactable) _interactable.GetComponent<Resource_Class>().Destroy();
                 //_interactable = null;
 
                 //START OF STATE TRANSITIONS
@@ -146,7 +146,7 @@ public class Player : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         //If the player began touching a resource, make it glow
-        if (collision.gameObject.tag == "Resource")
+        if (collision.gameObject.tag == "Interactable")
         {
             _interactable = collision.gameObject;
             collision.gameObject.GetComponent<Resource_Class>().Glow();
@@ -156,7 +156,7 @@ public class Player : MonoBehaviour
     private void OnTriggerExit2D(Collider2D collision)
     {
         //If the player began touching a resource, make it glow
-        if (collision.gameObject.tag == "Resource")
+        if (collision.gameObject.tag == "Interactable")
         {
             collision.gameObject.GetComponent<Resource_Class>().NoGlow();
         }
