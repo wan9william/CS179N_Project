@@ -70,6 +70,7 @@
     <Compile Include="Assets\Scripts\Interactables\Resource.cs" />
     <Compile Include="Assets\Test.cs" />
     <Compile Include="Assets\Scripts\Interactables\Door.cs" />
+    <Compile Include="Assets\Scripts\Interactables\Inventory.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
