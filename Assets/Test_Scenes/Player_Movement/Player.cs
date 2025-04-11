@@ -225,6 +225,13 @@ public class Player : MonoBehaviour
 
 
         _equipped.transform.up = dir;
+
+    SpriteRenderer sr = _equipped.GetComponentInChildren<SpriteRenderer>();
+    if (sr != null)
+    {
+        sr.flipY = (dir.x < 0);  // flip only when pointing left
+    }
+
         _equipped.transform.localPosition = (Vector3)dir;
     }
 }
