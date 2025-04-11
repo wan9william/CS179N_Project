@@ -76,7 +76,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 3
-  m_Sprite: {fileID: -4854829337826818713, guid: 2096a1cfc5463ac4dabbe379865c468d, type: 3}
+  m_Sprite: {fileID: 116400415285627404, guid: d88a684aeccb0bf46a0f63fd293a77e7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -98,7 +98,7 @@ GameObject:
   - component: {fileID: 8820982207661322334}
   - component: {fileID: 2500840451590345228}
   m_Layer: 0
-  m_Name: Pistol
+  m_Name: Rifle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -114,7 +114,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2.17, y: 1.86, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3884777477121756171}
@@ -136,8 +136,8 @@ MonoBehaviour:
   projectilePrefab: {fileID: 1873891436641685562, guid: 0eccac6df8f10434ca458c9770dbe1c7, type: 3}
   firePoint: {fileID: 8649754719203816196}
   fireForce: 10
-  fireCooldown: 0.3
-  fireMode: 0
+  fireCooldown: 0.1
+  fireMode: 1
 --- !u!1 &7903444706632405820
 GameObject:
   m_ObjectHideFlags: 0
@@ -163,7 +163,7 @@ Transform:
   m_GameObject: {fileID: 7903444706632405820}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.132, y: 0.494, z: 0.058391277}
+  m_LocalPosition: {x: 0.012, y: 0.496, z: 0.058391277}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

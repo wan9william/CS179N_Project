@@ -2,6 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum FireMode
+{
+    SemiAuto,
+    FullAuto
+}
 
 public class Weapon : MonoBehaviour
 {
@@ -9,10 +14,15 @@ public class Weapon : MonoBehaviour
     [SerializeField] private Transform firePoint;
     [SerializeField] private float fireForce = 10f;
     [SerializeField] private float fireCooldown = 0.3f;
+    [SerializeField] private FireMode fireMode = FireMode.SemiAuto;
 
 
     private float lastFireTime = 0f;
 
+    public FireMode GetFireMode()
+    {
+        return fireMode;
+    }
 
     public void Shoot()
     {

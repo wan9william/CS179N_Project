@@ -26,12 +26,13 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject _equipped;
     [SerializeField] private GameObject _interactable;
     [SerializeField] private Camera _camera;
+    
 
 
 
 
     //Equipped Tool
-
+    private Weapon _weaponScript;
 
 
 
@@ -41,6 +42,8 @@ public class Player : MonoBehaviour
     void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
+    if (_equipped != null)
+        _weaponScript = _equipped.GetComponent<Weapon>();
 
 
     }
@@ -78,10 +81,19 @@ public class Player : MonoBehaviour
                     break;
                 }
 
-                if (Input.GetMouseButton(0) && _equipped != null)
+            if (_weaponScript != null)
+            {
+                var fireMode = _weaponScript.GetFireMode();
+
+                if (fireMode == FireMode.FullAuto && Input.GetMouseButton(0))
                 {
                     action_state = PLAYER_ACTION_STATES.SHOOT;
                 }
+                else if (fireMode == FireMode.SemiAuto && Input.GetMouseButtonDown(0))
+                {
+                    action_state = PLAYER_ACTION_STATES.SHOOT;
+                }
+            }
 
                 break;
             case PLAYER_ACTION_STATES.SHOOT:
@@ -93,14 +105,12 @@ public class Player : MonoBehaviour
                 //Any data specific to a weapon (fire rate, damage, etc) should likely be stored in a Scriptable Object (feel free to look it up). This will make our implementation easier.
                 //As well as more memory friendly.
 
-            _equipped.GetComponent<Weapon>().Shoot();
-            action_state = PLAYER_ACTION_STATES.IDLE;
+    _equipped.GetComponent<Weapon>().Shoot();
+    action_state = PLAYER_ACTION_STATES.IDLE;
+    break;
 
 
            
-
-
-                break;
             case PLAYER_ACTION_STATES.INTERACT:
 
 
