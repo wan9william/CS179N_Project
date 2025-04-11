@@ -67,7 +67,6 @@
   <ItemGroup>
     <Compile Include="Assets\Test_Scenes\Player_Movement\Player.cs" />
     <Compile Include="Assets\Scripts\Interactables\Interactable.cs" />
-    <Compile Include="Assets\reticlescript.cs" />
     <Compile Include="Assets\Scripts\Weapons\Weapon.cs" />
     <Compile Include="Assets\Scripts\Weapons\Bullet.cs" />
     <Compile Include="Assets\Scripts\Interactables\Resource.cs" />
