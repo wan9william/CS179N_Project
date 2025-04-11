@@ -63,6 +63,7 @@
   <ItemGroup>
     <Compile Include="Assets\Test_Scenes\Player_Movement\Player.cs" />
     <Compile Include="Assets\Scripts\Interactables\Interactable.cs" />
+    <Compile Include="Assets\Prefabs\Particle_Systems\Explosion.cs" />
     <Compile Include="Assets\Scripts\Interactables\Resource.cs" />
     <Compile Include="Assets\Test.cs" />
     <Compile Include="Assets\Scripts\Interactables\Door.cs" />

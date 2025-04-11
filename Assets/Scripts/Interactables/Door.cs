@@ -8,4 +8,9 @@ public class Door : Interactable
     protected override void onInteract() {
         building_top.gameObject.SetActive(false);
     }
+
+    protected override void ExplosionVFX()
+    {
+        throw new System.NotImplementedException();
+    }
 }

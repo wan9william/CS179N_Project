@@ -22,7 +22,7 @@
 /Assets/Plugins/Editor/JetBrains*
 
 # Visual Studio cache directory
-vs/
+.vs/
 
 /.gradle/
 
@@ -47,6 +47,8 @@ vs/
 /*.pidb.meta
 /*.pdb.meta
 /*.mdb.meta
+
+UserSettings/*
 
 # Unity3D generated file on crash reports
 sysinfo.txt

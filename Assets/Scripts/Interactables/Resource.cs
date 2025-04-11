@@ -8,4 +8,10 @@ public class Resource : Interactable
     {
         
     }
+
+    protected override void ExplosionVFX()
+    {
+        //Inefficient, replace later
+        Instantiate(_explosion,transform.position,Quaternion.identity);
+    }
 }
