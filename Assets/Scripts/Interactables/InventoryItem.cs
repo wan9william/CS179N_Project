@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class Inventory : Interactable, IPointerClickHandler
+public class InventoryItem : Interactable, IPointerClickHandler
 {
     Image itemIcon;
     public Item userItem { get; set; }
