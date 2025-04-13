@@ -75,7 +75,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 3
+  m_SortingOrder: 5
   m_Sprite: {fileID: 116400415285627404, guid: d88a684aeccb0bf46a0f63fd293a77e7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -136,8 +136,15 @@ MonoBehaviour:
   projectilePrefab: {fileID: 1873891436641685562, guid: 0eccac6df8f10434ca458c9770dbe1c7, type: 3}
   firePoint: {fileID: 8649754719203816196}
   fireForce: 10
-  fireCooldown: 0.1
+  fireCooldown: 0.2
   fireMode: 1
+  recoilAmount: 0.2
+  recoilDuration: 0.01
+  recoilReturnSpeed: 15
+  baseSpreadAngle: 0
+  maxSpreadAngle: 10
+  bloomIncreasePerShot: 1
+  bloomDecaySpeed: 3
 --- !u!1 &7903444706632405820
 GameObject:
   m_ObjectHideFlags: 0

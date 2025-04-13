@@ -138,6 +138,10 @@ MonoBehaviour:
   fireForce: 10
   fireCooldown: 0.3
   fireMode: 0
+  baseSpreadAngle: 1
+  maxSpreadAngle: 10
+  bloomIncreasePerShot: 2
+  bloomDecaySpeed: 4
 --- !u!1 &7903444706632405820
 GameObject:
   m_ObjectHideFlags: 0
