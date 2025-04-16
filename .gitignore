@@ -23,6 +23,7 @@
 
 # Visual Studio cache directory
 vs/
+.vs/
 
 /.gradle/
 
@@ -69,6 +70,7 @@ crashlytics-build.properties
 
 # === Custom additions to ignore editor layout/search files ===
 UserSettings/
+*.suo
 *.vsidx
 *.dwlt        # Unity editor window layout files (like default-6000.dwlt)
 *.settings    # Unity search or editor settings (like Search.settings)

@@ -2,6 +2,10 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+
+    public Animator animator;
+    public SpriteRenderer spriteRenderer;
+
     //States
     private enum PLAYER_MOVEMENT_STATES { IDLE, WALK };
     private enum PLAYER_ACTION_STATES { IDLE, SHOOT, INTERACT }
@@ -99,7 +103,7 @@ public class Player : MonoBehaviour
         switch (movement_state)
         {
             case PLAYER_MOVEMENT_STATES.IDLE:
-
+                animator.SetBool("Walk", false);
                 bool moved = Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D);
                 if (moved) movement_state = PLAYER_MOVEMENT_STATES.WALK;
 
@@ -109,7 +113,7 @@ public class Player : MonoBehaviour
                 break;
 
             case PLAYER_MOVEMENT_STATES.WALK:
-
+                animator.SetBool("Walk", true); 
                 bool horizontal_walk = false;
                 bool vertical_walk = false;
                 if (Input.GetKey(KeyCode.W))
@@ -185,6 +189,8 @@ public class Player : MonoBehaviour
         Vector2 dir = ((Vector2)MouseWorldPos - (Vector2)transform.position).normalized;
         MouseWorldPos.z = 0;
 
+        animator.SetFloat("MouseX", dir.x);
+        animator.SetFloat("MouseY", dir.y);
         _equipped.transform.up = dir;
         _equipped.transform.localPosition = (Vector3)dir;
     }
