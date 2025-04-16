@@ -18,6 +18,7 @@ public class Weapon : MonoBehaviour
     [SerializeField] private float fireForce = 10f;
     [SerializeField] private float fireCooldown = 0.3f;
     [SerializeField] private FireMode fireMode = FireMode.SemiAuto;
+    [SerializeField] private float damage = 10f;
 
     [Header("Bloom Settings")]
     [SerializeField] private float baseSpreadAngle = 0f;
@@ -51,11 +52,11 @@ public class Weapon : MonoBehaviour
 
     public void Shoot()
     {
-        //Check if within firerate
-        if (Time.time < lastFireTime + fireCooldown)
-        {
+    // Check if within firerate
+    if (Time.time < lastFireTime + fireCooldown)
+    {
         return;
-        }
+    }
 
     Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
     Vector2 shootDirection = (mouseWorldPos - weaponOwner.position).normalized;
@@ -70,13 +71,21 @@ public class Weapon : MonoBehaviour
 
         Quaternion bulletRotation = Quaternion.Euler(0f, 0f, finalAngle);
         GameObject bullet = Instantiate(projectilePrefab, firePoint.position, bulletRotation);
+
+        // Assign velocity
         Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
         rb.linearVelocity = bullet.transform.right * fireForce;
+
+        // ✅ Assign damage
+        Bullet bulletScript = bullet.GetComponent<Bullet>();
+        if (bulletScript != null)
+        {
+            bulletScript.damage = damage;
+        }
     }
 
     // Bloom increases with each shot (not each pellet)
     currentSpread = Mathf.Min(currentSpread + bloomIncreasePerShot, maxSpreadAngle);
     lastFireTime = Time.time;
-
 }
 }

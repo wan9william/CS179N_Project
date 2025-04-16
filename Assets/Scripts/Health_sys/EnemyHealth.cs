@@ -78,17 +78,16 @@ public class EnemyHealth : MonoBehaviour
 
     public void TakeDamage(float amount)
     {
-        // Subtract damage amount and clamp health
         currentHealth -= amount;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
 
-        // Update the slider fill value
+        Debug.Log($"[Enemy] {gameObject.name} took {amount} damage — remaining HP: {currentHealth}");
+
         if (slider != null)
         {
             slider.value = currentHealth;
         }
 
-        // When health reaches 0, handle death
         if (currentHealth <= 0)
         {
             Die();
