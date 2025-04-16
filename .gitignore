@@ -7,7 +7,7 @@
 /[Bb]uild/
 /[Bb]uilds/
 /[Ll]ogs/
-/[Uu]ser[Ss]ettings/
+/[Uu]ser[Ss]ettings/  # Added: ignores all user settings including layouts and search
 
 # MemoryCaptures can get excessive in size
 # They also could contain extremely sensitive data
@@ -48,8 +48,6 @@ vs/
 /*.pdb.meta
 /*.mdb.meta
 
-UserSettings/*
-
 # Unity3D generated file on crash reports
 sysinfo.txt
 
@@ -69,6 +67,8 @@ crashlytics-build.properties
 /Assets/StreamingAssets/aa.meta
 /Assets/StreamingAssets/aa/*
 
-=== Custom additions to ignore editor layout/search files ===
+# === Custom additions to ignore editor layout/search files ===
+UserSettings/
+*.vsidx
 *.dwlt        # Unity editor window layout files (like default-6000.dwlt)
 *.settings    # Unity search or editor settings (like Search.settings)
