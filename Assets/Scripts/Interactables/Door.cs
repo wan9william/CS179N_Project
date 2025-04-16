@@ -5,7 +5,7 @@ public class Door : Interactable
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     [SerializeField] private Tilemap building_top;
-    protected override void onInteract() {
+    protected override void onInteract(ref Player player) {
         building_top.gameObject.SetActive(false);
     }
 

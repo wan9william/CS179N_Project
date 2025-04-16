@@ -28,12 +28,14 @@ public abstract class Interactable : MonoBehaviour
 
     public void Glow() { transform.GetComponent<Renderer>().material = _glowMat; }
 
-    public void Destroy() { 
+    public void Destroy(ref Player player) { 
         
 
         //call the interact function for a given object
-        onInteract();
+        onInteract(ref player);
         transform.gameObject.SetActive(false);
+
+        //If the object is exhaustable
 
         //Add FX for pickup. Perhaps a particle system variable
 
@@ -54,7 +56,7 @@ public abstract class Interactable : MonoBehaviour
 
     public void NoGlow() { transform.GetComponent<Renderer>().material = _mat; }
 
-    protected abstract void onInteract();
+    protected abstract void onInteract(ref Player player);
 
     protected abstract void ExplosionVFX();
 

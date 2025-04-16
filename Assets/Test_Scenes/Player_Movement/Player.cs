@@ -23,6 +23,9 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject _interactable;
     [SerializeField] private Camera _camera;
 
+    //FLAGS
+    [SerializeField] private bool find_interact = false;
+
 
     //Equipped Tool
 
@@ -76,7 +79,11 @@ public class Player : MonoBehaviour
             case PLAYER_ACTION_STATES.INTERACT:
 
                 //for now, simply make the object disappear. Will add resources in the future
-                if(_interactable) _interactable.GetComponent<Interactable>().Destroy();
+                var player = this;
+                if (_interactable)
+                {
+                    _interactable.GetComponent<Interactable>().Destroy(ref player);
+                }
                 //_interactable = null;
 
                 //START OF STATE TRANSITIONS
@@ -158,11 +165,21 @@ public class Player : MonoBehaviour
         //If the player began touching a resource, make it glow
         if (collision.gameObject.tag == "Interactable")
         {
+
             collision.gameObject.GetComponent<Interactable>().NoGlow();
+        }
+        if (collision.gameObject == _interactable) _interactable = null;
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Interactable" && find_interact)
+        {
+            _interactable = collision.gameObject;
         }
     }
 
-    void RotateEquipped() {
+    private void RotateEquipped() {
         Vector2 MousePos = Input.mousePosition;
         Vector3 MouseWorldPos = _camera.ScreenToWorldPoint(MousePos);
         Vector2 dir = ((Vector2)MouseWorldPos - (Vector2)transform.position).normalized;
@@ -171,4 +188,10 @@ public class Player : MonoBehaviour
         _equipped.transform.up = dir;
         _equipped.transform.localPosition = (Vector3)dir;
     }
+
+
+    public void SetFindInteract(bool _i) { find_interact = _i; }
+
+    public void SetInteract(GameObject _go) { _interactable = _go; }
+
 }
