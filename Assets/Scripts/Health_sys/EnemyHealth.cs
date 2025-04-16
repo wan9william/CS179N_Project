@@ -105,7 +105,7 @@ public class EnemyHealth : MonoBehaviour
         // Make the health bar follow the target (e.g., above the enemy's head)
         if (target != null)
         {
-            transform.position = target.position + Vector3.up * 0.5f;
+            //transform.position = target.position + Vector3.up * 0.5f;
         }
 
         // Ensure the health bar always faces the main camera
