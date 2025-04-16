@@ -31,7 +31,7 @@ vs/
 /*.csproj
 /*.unityproj
 /*.sln
-/*.suo
+*.suo
 /*.tmp
 /*.user
 /*.userprefs
@@ -67,5 +67,6 @@ crashlytics-build.properties
 /Assets/StreamingAssets/aa.meta
 /Assets/StreamingAssets/aa/*
 
-/*.dwlt        # Unity editor window layout files (like default-6000.dwlt)
-/*.settings    # Unity search or editor settings (like Search.settings)
+# === Custom additions to ignore editor layout/search files ===
+*.dwlt        # Unity editor window layout files (like default-6000.dwlt)
+*.settings    # Unity search or editor settings (like Search.settings)
