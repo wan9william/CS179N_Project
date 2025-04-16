@@ -13,6 +13,10 @@ public class Bullet : MonoBehaviour
         Destroy(gameObject, lifetime);
     }
 
+    void OnCollisionEnter2D(Collision2D collison)
+    {
+        Destroy(gameObject);
+    }
 
     void OnTriggerEnter2D(Collider2D other)
     {

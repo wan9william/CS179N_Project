@@ -10,6 +10,8 @@ public enum FireMode
 
 public class Weapon : MonoBehaviour
 {
+    [SerializeField] private Transform weaponOwner; // Reference to player or owner
+
     [Header("General Settings")]
     [SerializeField] private GameObject projectilePrefab;
     [SerializeField] private Transform firePoint;
@@ -23,8 +25,18 @@ public class Weapon : MonoBehaviour
     [SerializeField] private float bloomIncreasePerShot = 1f;
     [SerializeField] private float bloomDecaySpeed = 3f;
 
+    [Header("Multi-Bullet Settings")]
+    [SerializeField] private int bulletsPerShot = 1; // 1 = normal gun, 6 = shotgun
+    [SerializeField] private float perBulletSpread = 5f; // angle spread between bullets
+
     private float currentSpread = 0f;
     private float lastFireTime = 0f;
+
+    void Start()
+    {
+        if (weaponOwner == null)
+            weaponOwner = transform.root; // auto-assign the top-level parent if needed
+    }   
 
     void Update()
     {
@@ -39,22 +51,32 @@ public class Weapon : MonoBehaviour
 
     public void Shoot()
     {
+        //Check if within firerate
         if (Time.time < lastFireTime + fireCooldown)
-            return;
+        {
+        return;
+        }
 
-        // Angle with bloom
-        float spread = Random.Range(-currentSpread, currentSpread);
-        Quaternion spreadRotation = Quaternion.Euler(0, 0, firePoint.eulerAngles.z + spread);
+    Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+    Vector2 shootDirection = (mouseWorldPos - weaponOwner.position).normalized;
+    float baseAngle = Mathf.Atan2(shootDirection.y, shootDirection.x) * Mathf.Rad2Deg;
 
-        // Spawn bullet
-        GameObject bullet = Instantiate(projectilePrefab, firePoint.position, spreadRotation);
+    for (int i = 0; i < bulletsPerShot; i++)
+    {
+        // Spread = both random bloom and fixed pellet spread
+        float bloom = Random.Range(-currentSpread, currentSpread);
+        float spread = Random.Range(-perBulletSpread, perBulletSpread);
+        float finalAngle = baseAngle + bloom + spread;
+
+        Quaternion bulletRotation = Quaternion.Euler(0f, 0f, finalAngle);
+        GameObject bullet = Instantiate(projectilePrefab, firePoint.position, bulletRotation);
         Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
-        rb.linearVelocity = bullet.transform.up * fireForce;
-
-        // Increase bloom
-        currentSpread = Mathf.Min(currentSpread + bloomIncreasePerShot, maxSpreadAngle);
-
-        // Update fire time
-        lastFireTime = Time.time;
+        rb.linearVelocity = bullet.transform.right * fireForce;
     }
+
+    // Bloom increases with each shot (not each pellet)
+    currentSpread = Mathf.Min(currentSpread + bloomIncreasePerShot, maxSpreadAngle);
+    lastFireTime = Time.time;
+
+}
 }
