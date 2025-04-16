@@ -66,3 +66,6 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /Assets/StreamingAssets/aa.meta
 /Assets/StreamingAssets/aa/*
+
+*.dwlt        # Unity editor window layout files (like default-6000.dwlt)
+*.settings    # Unity search or editor settings (like Search.settings)
