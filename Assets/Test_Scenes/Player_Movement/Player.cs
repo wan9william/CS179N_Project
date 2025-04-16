@@ -36,6 +36,7 @@ public class Player : MonoBehaviour
 
     //Equipped Tool
     private Weapon _weaponScript;
+    private SpriteRenderer _weaponSR;
 
 
 
@@ -241,13 +242,14 @@ public class Player : MonoBehaviour
         animator.SetFloat("MouseY", dir.y);
         _equipped.transform.up = dir;
 
-    SpriteRenderer sr = _equipped.GetComponentInChildren<SpriteRenderer>();
-    if (sr != null)
-    {
-        sr.flipY = (dir.x < 0);  // flip only when pointing left
-    }
+        if(!_weaponSR) _weaponSR = _equipped.GetComponentInChildren<SpriteRenderer>();
 
-        _equipped.transform.localPosition = (Vector3)dir;
+        if (_weaponSR)
+        {
+            _weaponSR.flipY = (dir.x < 0);  // flip only when pointing left
+        }
+
+        _equipped.transform.localPosition = (Vector3)dir * 5f;
     }
 
 
