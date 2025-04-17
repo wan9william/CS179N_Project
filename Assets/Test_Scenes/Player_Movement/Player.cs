@@ -255,7 +255,7 @@ public class Player : MonoBehaviour
             _weaponSR.flipY = (dir.x < 0);  // flip only when pointing left
         }
 
-        _equipped.transform.localPosition = (Vector3)dir * 5f;
+        //_equipped.transform.localPosition = (Vector3)dir * 5f;
     }
 
 

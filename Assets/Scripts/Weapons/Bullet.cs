@@ -14,6 +14,12 @@ public class Bullet : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
+        if (collision.gameObject.GetComponent<Bullet>() != null)
+        {
+            Debug.Log("[Bullet] Ignored collision with another bullet");
+            return;
+        }
+
         Debug.Log($"[Collision] Hit {collision.collider.name}");
         EnemyHealth enemy = collision.collider.GetComponent<EnemyHealth>();
         if (enemy != null)
