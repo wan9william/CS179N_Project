@@ -10,10 +10,11 @@ public class Player : MonoBehaviour
     //Inventory
     [SerializeField] private Inventory inventory;
     [SerializeField] private GameObject canvas;
+    [SerializeField] private int selected_slot;
 
     //States
     private enum PLAYER_MOVEMENT_STATES { IDLE, WALK };
-    private enum PLAYER_ACTION_STATES { IDLE, SHOOT, INTERACT }
+    private enum PLAYER_ACTION_STATES { IDLE, SHOOT, INTERACT, SELECT }
 
 
     private PLAYER_ACTION_STATES action_state = PLAYER_ACTION_STATES.IDLE;
@@ -49,6 +50,7 @@ public class Player : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        selected_slot = 0;
         inventory = new Inventory(canvas.transform);
         
         _rb = GetComponent<Rigidbody2D>();
@@ -91,19 +93,39 @@ public class Player : MonoBehaviour
                     break;
                 }
 
-            if (_weaponScript != null)
-            {
-                var fireMode = _weaponScript.GetFireMode();
+                //If the scroll wheel is used, get current selected slot and add accordingly, then transition
+                if (Input.mouseScrollDelta.y != 0) {
+                    Debug.Log(Input.mouseScrollDelta.y);
+                    selected_slot += Input.mouseScrollDelta.y > 0 ? 1 : -1;
+                    selected_slot = Mathf.Clamp(selected_slot, 0, 7);
 
-                if (fireMode == FireMode.FullAuto && Input.GetMouseButton(0))
-                {
-                    action_state = PLAYER_ACTION_STATES.SHOOT;
+                    action_state = PLAYER_ACTION_STATES.SELECT;
+                    break;
                 }
-                else if (fireMode == FireMode.SemiAuto && Input.GetMouseButtonDown(0))
-                {
-                    action_state = PLAYER_ACTION_STATES.SHOOT;
+
+                //If a num is pressed, 
+                int selected_key = GetNumKey();
+                if (selected_key != -1) {
+                    selected_slot = selected_key;
+                    selected_slot = Mathf.Clamp(selected_slot, 0, 7);
+
+                    action_state = PLAYER_ACTION_STATES.SELECT;
+                    break;
                 }
-            }
+
+                if (_weaponScript != null)
+                {
+                    var fireMode = _weaponScript.GetFireMode();
+
+                    if (fireMode == FireMode.FullAuto && Input.GetMouseButton(0))
+                    {
+                        action_state = PLAYER_ACTION_STATES.SHOOT;
+                    }
+                    else if (fireMode == FireMode.SemiAuto && Input.GetMouseButtonDown(0))
+                    {
+                        action_state = PLAYER_ACTION_STATES.SHOOT;
+                    }
+                }
 
                 break;
             case PLAYER_ACTION_STATES.SHOOT:
@@ -115,9 +137,18 @@ public class Player : MonoBehaviour
                 //Any data specific to a weapon (fire rate, damage, etc) should likely be stored in a Scriptable Object (feel free to look it up). This will make our implementation easier.
                 //As well as more memory friendly.
 
-    _equipped.GetComponent<Weapon>().Shoot();
-    action_state = PLAYER_ACTION_STATES.IDLE;
-    break;
+                _equipped.GetComponent<Weapon>().Shoot();
+                action_state = PLAYER_ACTION_STATES.IDLE;
+                break;
+
+            case PLAYER_ACTION_STATES.SELECT:
+
+                //actions go here for selecting a slot
+
+                inventory.SelectSlot(selected_slot);
+
+                action_state = PLAYER_ACTION_STATES.IDLE;
+                break;
 
 
            
@@ -255,7 +286,7 @@ public class Player : MonoBehaviour
             _weaponSR.flipY = (dir.x < 0);  // flip only when pointing left
         }
 
-        //_equipped.transform.localPosition = (Vector3)dir * 5f;
+        _equipped.transform.localPosition = (Vector3)dir * 5f;
     }
 
 
@@ -264,6 +295,18 @@ public class Player : MonoBehaviour
     public void SetInteract(GameObject _go) { _interactable = _go; }
 
     public Inventory getInventory() { return inventory; }
+
+    int GetNumKey()
+    {
+        //Return the key that was pressed, 0 indexed
+        for (int i = 0; i < 8; i++)
+        {
+            if (Input.GetKeyDown(KeyCode.Alpha1 + i)) return i;
+        }
+
+        //-1 represents that nothing was pressed
+        return -1;
+    }
 
 }
 

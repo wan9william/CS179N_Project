@@ -9,6 +9,7 @@ public class Inventory
     public static Inventory Singleton;
     public static InventoryItem carriedItem;
     [SerializeField] InventorySlot[] inventorySlots;
+    [SerializeField] int selectedSlot;
 
 
     [SerializeField] Transform dragTransform;
@@ -44,6 +45,22 @@ public class Inventory
             }
         }
     }
+
+    public void SelectSlot(int index) {
+        if (selectedSlot == index) return;
+
+        //Unselect the previous slot
+        inventorySlots[selectedSlot].SetUnselect(true);
+
+        //Assign new slot
+        selectedSlot = index;
+
+        //Select the new slot
+        inventorySlots[selectedSlot].SetSelect(true);
+    }
+
+
+
 
     public void InitializeInventory(Transform _tf) {
         for (int i = 0; i < 8; ++i) {

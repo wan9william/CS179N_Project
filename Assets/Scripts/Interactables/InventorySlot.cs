@@ -13,7 +13,57 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
     public Item_ScriptableObj item;
     public int quantity;
 
+    //Slot state machine
+    private enum SLOT_ACTION_STATES { IDLE, SELECT, UNSELECT };
+    private SLOT_ACTION_STATES state;
+    private bool select;
+    private bool unselect;
+
     public slotTag myTag;
+
+
+    public void Update()
+    {
+        switch (state)
+        {
+            case SLOT_ACTION_STATES.IDLE:
+                if (select) {
+                    state = SLOT_ACTION_STATES.SELECT;
+                    select = false;
+                    break;
+                }
+
+                if (unselect)
+                {
+                    state = SLOT_ACTION_STATES.UNSELECT;
+                    unselect = false;
+                    break;
+                }
+                break;
+            case SLOT_ACTION_STATES.SELECT:
+
+                //grow the square
+                transform.localScale = Vector3.one * 1.2f;
+                state = SLOT_ACTION_STATES.IDLE;
+                break;
+            case SLOT_ACTION_STATES.UNSELECT:
+
+                state = SLOT_ACTION_STATES.IDLE;
+                transform.localScale = Vector3.one;
+                break;
+            default:
+                break;
+        }
+    }
+
+    public void SetSelect(bool _s) { select = _s; }
+
+    public void SetUnselect(bool _s) { unselect = _s; }
+
+
+
+
+
 
     public void OnPointerClick(PointerEventData eventData)
     {
