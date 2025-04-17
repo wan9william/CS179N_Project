@@ -7,6 +7,10 @@ public class Player : MonoBehaviour
     public Animator animator;
     public SpriteRenderer spriteRenderer;
 
+    //Inventory
+    [SerializeField] private Inventory inventory;
+    [SerializeField] private GameObject canvas;
+
     //States
     private enum PLAYER_MOVEMENT_STATES { IDLE, WALK };
     private enum PLAYER_ACTION_STATES { IDLE, SHOOT, INTERACT }
@@ -45,6 +49,8 @@ public class Player : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        inventory = new Inventory(canvas.transform);
+        
         _rb = GetComponent<Rigidbody2D>();
     if (_equipped != null)
         _weaponScript = _equipped.GetComponent<Weapon>();
@@ -256,6 +262,8 @@ public class Player : MonoBehaviour
     public void SetFindInteract(bool _i) { find_interact = _i; }
 
     public void SetInteract(GameObject _go) { _interactable = _go; }
+
+    public Inventory getInventory() { return inventory; }
 
 }
 
