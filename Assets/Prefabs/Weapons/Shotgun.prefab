@@ -53,6 +53,7 @@ MonoBehaviour:
   fireForce: 10
   fireCooldown: 0.3
   fireMode: 0
+  damage: 10
   baseSpreadAngle: 0
   maxSpreadAngle: 10
   bloomIncreasePerShot: 1

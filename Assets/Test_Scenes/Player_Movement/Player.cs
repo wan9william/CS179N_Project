@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-
+    //Player Animation
     public Animator animator;
     public SpriteRenderer spriteRenderer;
 
@@ -28,6 +28,7 @@ public class Player : MonoBehaviour
     //Components
     private Rigidbody2D _rb;
     [SerializeField] private GameObject _equipped;
+    [SerializeField] private GameObject _hand;
     [SerializeField] private GameObject _interactable;
     [SerializeField] private Camera _camera;
 
@@ -38,7 +39,8 @@ public class Player : MonoBehaviour
     private Weapon _weaponScript;
     private SpriteRenderer _weaponSR;
 
-
+    //Hand
+    private SpriteRenderer _handSR;
 
 
 
@@ -87,6 +89,7 @@ public class Player : MonoBehaviour
 
             if (_weaponScript != null)
             {
+                animator.SetBool("Equipped", true);
                 var fireMode = _weaponScript.GetFireMode();
 
                 if (fireMode == FireMode.FullAuto && Input.GetMouseButton(0))
@@ -98,6 +101,7 @@ public class Player : MonoBehaviour
                     action_state = PLAYER_ACTION_STATES.SHOOT;
                 }
             }
+            else animator.SetBool("Equipped", false);
 
                 break;
             case PLAYER_ACTION_STATES.SHOOT:
@@ -242,14 +246,36 @@ public class Player : MonoBehaviour
         animator.SetFloat("MouseY", dir.y);
         _equipped.transform.up = dir;
 
-        if(!_weaponSR) _weaponSR = _equipped.GetComponentInChildren<SpriteRenderer>();
+        Vector3 offset = _hand.transform.localPosition;
+        if (dir.x < 0) offset.y = 0.13f;
+        else offset.y = -0.13f;
+
+        if (!_weaponSR) _weaponSR = _equipped.GetComponentInChildren<SpriteRenderer>();
+        _handSR = _hand.GetComponent<SpriteRenderer>();
 
         if (_weaponSR)
         {
             _weaponSR.flipY = (dir.x < 0);  // flip only when pointing left
-        }
 
-        _equipped.transform.localPosition = (Vector3)dir * 5f;
+            if (dir.y > 0.38)
+            {
+                _weaponSR.sortingOrder = 1;
+                _handSR.sortingOrder = 2;
+
+            }
+            else
+            {
+                _weaponSR.sortingOrder = 4;
+                _handSR.sortingOrder = 5;
+            }
+        }
+        _hand.transform.localPosition = offset;
+
+        offset = Vector3.zero;
+        offset.y = -1f;
+        offset.x = -0.7f;
+
+        _equipped.transform.localPosition = (Vector3)dir * 3f + offset;
     }
 
 
