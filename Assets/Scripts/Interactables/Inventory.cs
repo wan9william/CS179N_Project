@@ -1,13 +1,17 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Inventory : MonoBehaviour
+public class Inventory
 {
     public static Inventory Singleton;
     public static InventoryItem carriedItem;
     [SerializeField] InventorySlot[] inventorySlots;
+    [SerializeField] int selectedSlot;
+
+
     [SerializeField] Transform dragTransform;
     [SerializeField] InventoryItem itemPrefab;
     [Header("Item List")]
@@ -19,14 +23,59 @@ public class Inventory : MonoBehaviour
     {
         Singleton = this;
         itemButton.onClick.AddListener( delegate { SpawnInventoryItem(); });
+
+        inventorySlots = new InventorySlot[8];
     }
+
+    public Inventory(Transform _tf) {
+        inventorySlots = new InventorySlot[8];
+        InitializeInventory(_tf); 
+    }
+
+    //When adding an item to the inventory
+    public void addItem(Tuple<Item_ScriptableObj,int> new_item) {
+        //search array. If an empty box is found, add to it. The sprite and quantity will be managed by individual boxes?
+        for (int i = 0; i < 8; i++)
+        {
+            if (!inventorySlots[i].item || inventorySlots[i].GetItem() == new_item.Item1)
+            {
+                //add item and its quantity through a slot's respective script
+                inventorySlots[i].SetItem_A(new_item);
+                break;
+            }
+        }
+    }
+
+    public void SelectSlot(int index) {
+        if (selectedSlot == index) return;
+
+        //Unselect the previous slot
+        inventorySlots[selectedSlot].SetUnselect(true);
+
+        //Assign new slot
+        selectedSlot = index;
+
+        //Select the new slot
+        inventorySlots[selectedSlot].SetSelect(true);
+    }
+
+
+
+
+    public void InitializeInventory(Transform _tf) {
+        for (int i = 0; i < 8; ++i) {
+            InventorySlot slot = _tf.gameObject.transform.GetChild(i).GetComponent<InventorySlot>();
+            inventorySlots[i] = slot;
+        }
+    }
+
 
     public void SpawnInventoryItem(Item currItem = null)
     {
         Item _currItem = currItem;
         if(_currItem == null)
         {
-            int rand = Random.Range(0, items.Length);
+            int rand = UnityEngine.Random.Range(0, items.Length);
             _currItem = items[rand];
         }
 
@@ -34,7 +83,7 @@ public class Inventory : MonoBehaviour
         {
             if(inventorySlots[i].myItem == null)
             {
-                Instantiate(itemPrefab, inventorySlots[i].transform).Initialize(_currItem, inventorySlots[i]);
+                //Instantiate(itemPrefab, inventorySlots[i].transform).Initialize(_currItem, inventorySlots[i]);
                 break;
             }
         }

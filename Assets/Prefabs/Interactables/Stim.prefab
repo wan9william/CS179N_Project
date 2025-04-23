@@ -103,6 +103,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _mat: {fileID: 0}
   _glowMat: {fileID: 0}
+  _explosion: {fileID: 0}
+  health: 10
+  damage: 0
+  _resource: {fileID: 11400000, guid: 6fef394b252f8e34698a83e6edc278eb, type: 2}
 --- !u!61 &7417185729872160839
 BoxCollider2D:
   m_ObjectHideFlags: 0

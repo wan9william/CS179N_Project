@@ -3,13 +3,18 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-
+    //Player Animation
     public Animator animator;
     public SpriteRenderer spriteRenderer;
 
+    //Inventory
+    [SerializeField] private Inventory inventory;
+    [SerializeField] private GameObject canvas;
+    [SerializeField] private int selected_slot;
+
     //States
     private enum PLAYER_MOVEMENT_STATES { IDLE, WALK };
-    private enum PLAYER_ACTION_STATES { IDLE, SHOOT, INTERACT }
+    private enum PLAYER_ACTION_STATES { IDLE, SHOOT, INTERACT, SELECT }
 
 
     private PLAYER_ACTION_STATES action_state = PLAYER_ACTION_STATES.IDLE;
@@ -17,6 +22,7 @@ public class Player : MonoBehaviour
 
 
     //Movement Parameters
+    [Header("Movement Parameters")]
     [SerializeField] private float movement_speed = 1.0f;
     [SerializeField] private float horizontal_multiplier = 1.0f;
     [SerializeField] private float vertical_multiplier = 1.0f;
@@ -26,25 +32,43 @@ public class Player : MonoBehaviour
 
 
     //Components
+    [Header("Components")]
     private Rigidbody2D _rb;
     [SerializeField] private GameObject _equipped;
+    [SerializeField] private GameObject _hand;
     [SerializeField] private GameObject _interactable;
     [SerializeField] private Camera _camera;
 
     //FLAGS
+    [Header("Flags")]
     [SerializeField] private bool find_interact = false;
+
+    [Header("Hand Settings")]
+    [SerializeField] private Vector3 handOffset = Vector3.zero;
+    [SerializeField] private float handRadius = 3.5f;
+    [SerializeField] private float handFlip = 0.13f;
+    [SerializeField] private int weaponLayerFront = 5;
+    [SerializeField] private int weaponLayerBack = 1;
+    [SerializeField] private float handLayerFront = 6;
+    [SerializeField] private float handLayerBack = 2;
+
+
 
     //Equipped Tool
     private Weapon _weaponScript;
     private SpriteRenderer _weaponSR;
 
-
+    //Hand
+    private SpriteRenderer _handSR;
 
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        selected_slot = 0;
+        inventory = new Inventory(canvas.transform);
+        
         _rb = GetComponent<Rigidbody2D>();
     if (_equipped != null)
         _weaponScript = _equipped.GetComponent<Weapon>();
@@ -85,19 +109,48 @@ public class Player : MonoBehaviour
                     break;
                 }
 
+
             if (_weaponScript != null)
             {
+                animator.SetBool("Equipped", true);
                 var fireMode = _weaponScript.GetFireMode();
+                //If the scroll wheel is used, get current selected slot and add accordingly, then transition
+                if (Input.mouseScrollDelta.y != 0) {
+                    Debug.Log(Input.mouseScrollDelta.y);
+                    selected_slot += Input.mouseScrollDelta.y > 0 ? 1 : -1;
+                    selected_slot = Mathf.Clamp(selected_slot, 0, 7);
 
-                if (fireMode == FireMode.FullAuto && Input.GetMouseButton(0))
-                {
-                    action_state = PLAYER_ACTION_STATES.SHOOT;
+
+                    action_state = PLAYER_ACTION_STATES.SELECT;
+                    break;
                 }
-                else if (fireMode == FireMode.SemiAuto && Input.GetMouseButtonDown(0))
+
+                //If a num is pressed, 
+                int selected_key = GetNumKey();
+                if (selected_key != -1) {
+                    selected_slot = selected_key;
+                    selected_slot = Mathf.Clamp(selected_slot, 0, 7);
+
+                    action_state = PLAYER_ACTION_STATES.SELECT;
+                    break;
+                }
+
+                if (_weaponScript != null)
                 {
-                    action_state = PLAYER_ACTION_STATES.SHOOT;
+                    var fireMode = _weaponScript.GetFireMode();
+
+                    if (fireMode == FireMode.FullAuto && Input.GetMouseButton(0))
+                    {
+                        action_state = PLAYER_ACTION_STATES.SHOOT;
+                    }
+                    else if (fireMode == FireMode.SemiAuto && Input.GetMouseButtonDown(0))
+                    {
+                        action_state = PLAYER_ACTION_STATES.SHOOT;
+                    }
                 }
             }
+            else animator.SetBool("Equipped", false);
+
 
                 break;
             case PLAYER_ACTION_STATES.SHOOT:
@@ -109,9 +162,18 @@ public class Player : MonoBehaviour
                 //Any data specific to a weapon (fire rate, damage, etc) should likely be stored in a Scriptable Object (feel free to look it up). This will make our implementation easier.
                 //As well as more memory friendly.
 
-    _equipped.GetComponent<Weapon>().Shoot();
-    action_state = PLAYER_ACTION_STATES.IDLE;
-    break;
+                _equipped.GetComponent<Weapon>().Shoot();
+                action_state = PLAYER_ACTION_STATES.IDLE;
+                break;
+
+            case PLAYER_ACTION_STATES.SELECT:
+
+                //actions go here for selecting a slot
+
+                inventory.SelectSlot(selected_slot);
+
+                action_state = PLAYER_ACTION_STATES.IDLE;
+                break;
 
 
            
@@ -242,20 +304,52 @@ public class Player : MonoBehaviour
         animator.SetFloat("MouseY", dir.y);
         _equipped.transform.up = dir;
 
-        if(!_weaponSR) _weaponSR = _equipped.GetComponentInChildren<SpriteRenderer>();
+        Vector3 offset = _hand.transform.localPosition;
+        if (dir.x < 0) offset.y = handFlip;
+        else offset.y = -handFlip;
+
+        if (!_weaponSR) _weaponSR = _equipped.GetComponentInChildren<SpriteRenderer>();
+        _handSR = _hand.GetComponent<SpriteRenderer>();
 
         if (_weaponSR)
         {
             _weaponSR.flipY = (dir.x < 0);  // flip only when pointing left
-        }
 
-        _equipped.transform.localPosition = (Vector3)dir * 5f;
+            if (dir.y > 0.38)
+            {
+                _weaponSR.sortingOrder = 1;
+                _handSR.sortingOrder = 2;
+
+            }
+            else
+            {
+                _weaponSR.sortingOrder = 4;
+                _handSR.sortingOrder = 5;
+            }
+        }
+        _hand.transform.localPosition = offset;
+
+        _equipped.transform.localPosition = (Vector3)dir * handRadius + handOffset;
     }
 
 
     public void SetFindInteract(bool _i) { find_interact = _i; }
 
     public void SetInteract(GameObject _go) { _interactable = _go; }
+
+    public Inventory getInventory() { return inventory; }
+
+    int GetNumKey()
+    {
+        //Return the key that was pressed, 0 indexed
+        for (int i = 0; i < 8; i++)
+        {
+            if (Input.GetKeyDown(KeyCode.Alpha1 + i)) return i;
+        }
+
+        //-1 represents that nothing was pressed
+        return -1;
+    }
 
 }
 
