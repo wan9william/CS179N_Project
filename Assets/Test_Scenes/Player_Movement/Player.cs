@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-
+    //Player Animation
     public Animator animator;
     public SpriteRenderer spriteRenderer;
 
@@ -22,6 +22,7 @@ public class Player : MonoBehaviour
 
 
     //Movement Parameters
+    [Header("Movement Parameters")]
     [SerializeField] private float movement_speed = 1.0f;
     [SerializeField] private float horizontal_multiplier = 1.0f;
     [SerializeField] private float vertical_multiplier = 1.0f;
@@ -31,19 +32,34 @@ public class Player : MonoBehaviour
 
 
     //Components
+    [Header("Components")]
     private Rigidbody2D _rb;
     [SerializeField] private GameObject _equipped;
+    [SerializeField] private GameObject _hand;
     [SerializeField] private GameObject _interactable;
     [SerializeField] private Camera _camera;
 
     //FLAGS
+    [Header("Flags")]
     [SerializeField] private bool find_interact = false;
+
+    [Header("Hand Settings")]
+    [SerializeField] private Vector3 handOffset = Vector3.zero;
+    [SerializeField] private float handRadius = 3.5f;
+    [SerializeField] private float handFlip = 0.13f;
+    [SerializeField] private int weaponLayerFront = 5;
+    [SerializeField] private int weaponLayerBack = 1;
+    [SerializeField] private float handLayerFront = 6;
+    [SerializeField] private float handLayerBack = 2;
+
+
 
     //Equipped Tool
     private Weapon _weaponScript;
     private SpriteRenderer _weaponSR;
 
-
+    //Hand
+    private SpriteRenderer _handSR;
 
 
 
@@ -93,11 +109,17 @@ public class Player : MonoBehaviour
                     break;
                 }
 
+
+            if (_weaponScript != null)
+            {
+                animator.SetBool("Equipped", true);
+                var fireMode = _weaponScript.GetFireMode();
                 //If the scroll wheel is used, get current selected slot and add accordingly, then transition
                 if (Input.mouseScrollDelta.y != 0) {
                     Debug.Log(Input.mouseScrollDelta.y);
                     selected_slot += Input.mouseScrollDelta.y > 0 ? 1 : -1;
                     selected_slot = Mathf.Clamp(selected_slot, 0, 7);
+
 
                     action_state = PLAYER_ACTION_STATES.SELECT;
                     break;
@@ -126,6 +148,9 @@ public class Player : MonoBehaviour
                         action_state = PLAYER_ACTION_STATES.SHOOT;
                     }
                 }
+            }
+            else animator.SetBool("Equipped", false);
+
 
                 break;
             case PLAYER_ACTION_STATES.SHOOT:
@@ -279,14 +304,32 @@ public class Player : MonoBehaviour
         animator.SetFloat("MouseY", dir.y);
         _equipped.transform.up = dir;
 
-        if(!_weaponSR) _weaponSR = _equipped.GetComponentInChildren<SpriteRenderer>();
+        Vector3 offset = _hand.transform.localPosition;
+        if (dir.x < 0) offset.y = handFlip;
+        else offset.y = -handFlip;
+
+        if (!_weaponSR) _weaponSR = _equipped.GetComponentInChildren<SpriteRenderer>();
+        _handSR = _hand.GetComponent<SpriteRenderer>();
 
         if (_weaponSR)
         {
             _weaponSR.flipY = (dir.x < 0);  // flip only when pointing left
-        }
 
-        _equipped.transform.localPosition = (Vector3)dir * 5f;
+            if (dir.y > 0.38)
+            {
+                _weaponSR.sortingOrder = 1;
+                _handSR.sortingOrder = 2;
+
+            }
+            else
+            {
+                _weaponSR.sortingOrder = 4;
+                _handSR.sortingOrder = 5;
+            }
+        }
+        _hand.transform.localPosition = offset;
+
+        _equipped.transform.localPosition = (Vector3)dir * handRadius + handOffset;
     }
 
 

@@ -30,6 +30,11 @@ public class Weapon : MonoBehaviour
     [SerializeField] private int bulletsPerShot = 1; // 1 = normal gun, 6 = shotgun
     [SerializeField] private float perBulletSpread = 5f; // angle spread between bullets
 
+    [Header("Animation Settings")]
+    public Animator animator;
+    public SpriteRenderer spriteRenderer;
+
+
     private float currentSpread = 0f;
     private float lastFireTime = 0f;
 
@@ -82,7 +87,9 @@ public class Weapon : MonoBehaviour
         {
             bulletScript.damage = damage;
         }
-    }
+        
+        animator.SetTrigger("Shoot");
+        }
 
     // Bloom increases with each shot (not each pellet)
     currentSpread = Mathf.Min(currentSpread + bloomIncreasePerShot, maxSpreadAngle);
