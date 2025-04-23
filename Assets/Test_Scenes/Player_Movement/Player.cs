@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 
 public class Player : MonoBehaviour
@@ -6,6 +7,10 @@ public class Player : MonoBehaviour
     //Player Animation
     public Animator animator;
     public SpriteRenderer spriteRenderer;
+
+    //Player Sprint Bar
+    [SerializeField] private Slider sprint_bar;
+
 
     //Inventory
     [SerializeField] private Inventory inventory;
@@ -27,6 +32,10 @@ public class Player : MonoBehaviour
     [SerializeField] private float horizontal_multiplier = 1.0f;
     [SerializeField] private float vertical_multiplier = 1.0f;
     [SerializeField] private float dampening;
+
+    //Sprinting Parameters
+    [SerializeField] private float sprint_amount = 100f;
+    [SerializeField] private float drain_amount = 25f;
      
     private float eps = 1e-5f;
 
@@ -72,7 +81,7 @@ public class Player : MonoBehaviour
         _rb = GetComponent<Rigidbody2D>();
     if (_equipped != null)
         _weaponScript = _equipped.GetComponent<Weapon>();
-
+        sprint_bar.maxValue = 100f;
 
     }
 
@@ -80,7 +89,16 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float current_speed = Input.GetKey(KeyCode.LeftShift) ? 1.5f * movement_speed : movement_speed;
+        float current_speed = movement_speed;
+
+        if (sprint_amount < 100)
+        {
+            sprint_bar.gameObject.SetActive(true);
+            sprint_bar.value = sprint_amount;
+        }
+        else {
+            sprint_bar.gameObject.SetActive(false);
+        }
         //STATE ACTIONS & TRANSITIONS FOR THE ACTION STATE
         switch (action_state)
         {
@@ -92,10 +110,13 @@ public class Player : MonoBehaviour
 
 
 
-                //This should be separated by state actions (what to do while in the state) and state transitions(which state to move to)
+                    //This should be separated by state actions (what to do while in the state) and state transitions(which state to move to)
 
 
-
+                 if (!Input.GetKey(KeyCode.LeftShift)) { 
+                    sprint_amount += drain_amount * Time.deltaTime;
+                    sprint_amount = Mathf.Clamp(sprint_amount, 0, 100);
+                 }
 
 
 
@@ -211,9 +232,29 @@ public class Player : MonoBehaviour
 
 
             case PLAYER_MOVEMENT_STATES.WALK:
-                animator.SetBool("Walk", true); 
+
+                //Start walking animation
+                animator.SetBool("Walk", true);
+
+
+                //Movement parameters
+                current_speed = movement_speed;
                 bool horizontal_walk = false;
                 bool vertical_walk = false;
+
+
+                //Sprinting
+                if (Input.GetKey(KeyCode.LeftShift) && sprint_amount > 0)
+                {
+                    current_speed = 1.5f * movement_speed;
+                    sprint_amount -= drain_amount * Time.deltaTime;
+                    sprint_amount = Mathf.Clamp(sprint_amount, 0, 100);
+                }
+                else if (!Input.GetKey(KeyCode.LeftShift)) {
+                    sprint_amount += drain_amount * Time.deltaTime;
+                    sprint_amount = Mathf.Clamp(sprint_amount, 0, 100);
+                }
+
                 if (Input.GetKey(KeyCode.W))
                 {
                     vertical_multiplier = Mathf.Lerp(vertical_multiplier, 1.0f, Time.deltaTime * dampening);

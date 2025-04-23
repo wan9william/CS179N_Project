@@ -104,6 +104,7 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
         //Reset visuals
         Image child_image = transform.GetChild(0).GetComponent<Image>();
         child_image.sprite = item.getSprite();
+        child_image.SetNativeSize();
         child_image.color = item.getSprite() ? new Color(1, 1, 1, 1) : new Color(1,1,1,0);
         //Get quantity as well
     }
