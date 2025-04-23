@@ -109,9 +109,9 @@ public class Player : MonoBehaviour
                     break;
                 }
 
+                //EVERYTHING BEYOND THIS STATEMENT ASSUMES THAT THERE IS AN ATTACHED WEAPONSCRIPT
+                if (!_weaponScript) { animator.SetBool("Equipped", false); break; }
 
-            if (_weaponScript != null)
-            {
                 animator.SetBool("Equipped", true);
                 var fireMode = _weaponScript.GetFireMode();
                 //If the scroll wheel is used, get current selected slot and add accordingly, then transition
@@ -135,21 +135,14 @@ public class Player : MonoBehaviour
                     break;
                 }
 
-                if (_weaponScript != null)
+                if (fireMode == FireMode.FullAuto && Input.GetMouseButton(0))
                 {
-                    var fireMode = _weaponScript.GetFireMode();
-
-                    if (fireMode == FireMode.FullAuto && Input.GetMouseButton(0))
-                    {
-                        action_state = PLAYER_ACTION_STATES.SHOOT;
-                    }
-                    else if (fireMode == FireMode.SemiAuto && Input.GetMouseButtonDown(0))
-                    {
-                        action_state = PLAYER_ACTION_STATES.SHOOT;
-                    }
+                    action_state = PLAYER_ACTION_STATES.SHOOT;
                 }
-            }
-            else animator.SetBool("Equipped", false);
+                else if (fireMode == FireMode.SemiAuto && Input.GetMouseButtonDown(0))
+                {
+                    action_state = PLAYER_ACTION_STATES.SHOOT;
+                }
 
 
                 break;

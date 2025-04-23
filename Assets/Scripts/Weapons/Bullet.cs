@@ -36,6 +36,13 @@ public class Bullet : MonoBehaviour
         Debug.Log($"[Bullet] Triggered with {other.name}");
 
         EnemyHealth enemy = other.GetComponent<EnemyHealth>();
+
+        //This checks if the hit item is of the interactable class. If it is, it means it has health and can be destroyed. Hit appropriately
+        Interactable _itemInteractable = other.GetComponent<Interactable>();
+        if (_itemInteractable) { _itemInteractable.Hit(damage); }
+        //////////////
+
+
         if (enemy != null)
         {
             Debug.Log($"[Bullet] Hit enemy with health: {enemy.name}");
