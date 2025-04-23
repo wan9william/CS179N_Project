@@ -6,7 +6,7 @@ using UnityEngine.Rendering.Universal; // For 2D lighting
 public class DayNightTimer : MonoBehaviour
 {
     // Total time for the full day cycle
-    public float totalDayTime = 780f;
+    private float totalDayTime = 780f;
     private float timePassed = 0f;
 
     // UI to show time left
