@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 
 public class Player : MonoBehaviour
@@ -6,6 +7,10 @@ public class Player : MonoBehaviour
 
     public Animator animator;
     public SpriteRenderer spriteRenderer;
+
+    //Player Sprint Bar
+    [SerializeField] private Slider sprint_bar;
+
 
     //Inventory
     [SerializeField] private Inventory inventory;
@@ -60,7 +65,7 @@ public class Player : MonoBehaviour
         _rb = GetComponent<Rigidbody2D>();
     if (_equipped != null)
         _weaponScript = _equipped.GetComponent<Weapon>();
-
+        sprint_bar.maxValue = 100f;
 
     }
 
@@ -69,6 +74,15 @@ public class Player : MonoBehaviour
     void Update()
     {
         float current_speed = movement_speed;
+
+        if (sprint_amount < 100)
+        {
+            sprint_bar.gameObject.SetActive(true);
+            sprint_bar.value = sprint_amount;
+        }
+        else {
+            sprint_bar.gameObject.SetActive(false);
+        }
         //STATE ACTIONS & TRANSITIONS FOR THE ACTION STATE
         switch (action_state)
         {
