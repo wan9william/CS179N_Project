@@ -17,6 +17,7 @@ public class Player : MonoBehaviour
 
 
     //Movement Parameters
+    [Header("Movement Parameters")]
     [SerializeField] private float movement_speed = 1.0f;
     [SerializeField] private float horizontal_multiplier = 1.0f;
     [SerializeField] private float vertical_multiplier = 1.0f;
@@ -26,6 +27,7 @@ public class Player : MonoBehaviour
 
 
     //Components
+    [Header("Components")]
     private Rigidbody2D _rb;
     [SerializeField] private GameObject _equipped;
     [SerializeField] private GameObject _hand;
@@ -33,7 +35,19 @@ public class Player : MonoBehaviour
     [SerializeField] private Camera _camera;
 
     //FLAGS
+    [Header("Flags")]
     [SerializeField] private bool find_interact = false;
+
+    [Header("Hand Settings")]
+    [SerializeField] private Vector3 handOffset = Vector3.zero;
+    [SerializeField] private float handRadius = 3.5f;
+    [SerializeField] private float handFlip = 0.13f;
+    [SerializeField] private int weaponLayerFront = 5;
+    [SerializeField] private int weaponLayerBack = 1;
+    [SerializeField] private float handLayerFront = 6;
+    [SerializeField] private float handLayerBack = 2;
+
+
 
     //Equipped Tool
     private Weapon _weaponScript;
@@ -247,8 +261,8 @@ public class Player : MonoBehaviour
         _equipped.transform.up = dir;
 
         Vector3 offset = _hand.transform.localPosition;
-        if (dir.x < 0) offset.y = 0.13f;
-        else offset.y = -0.13f;
+        if (dir.x < 0) offset.y = handFlip;
+        else offset.y = -handFlip;
 
         if (!_weaponSR) _weaponSR = _equipped.GetComponentInChildren<SpriteRenderer>();
         _handSR = _hand.GetComponent<SpriteRenderer>();
@@ -271,11 +285,7 @@ public class Player : MonoBehaviour
         }
         _hand.transform.localPosition = offset;
 
-        offset = Vector3.zero;
-        offset.y = -1f;
-        offset.x = -0.7f;
-
-        _equipped.transform.localPosition = (Vector3)dir * 3f + offset;
+        _equipped.transform.localPosition = (Vector3)dir * handRadius + handOffset;
     }
 
 
