@@ -111,4 +111,9 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
     public Item_ScriptableObj GetItem() {
         return item;
     }
+
+    public GameObject getFab()
+    {
+        return item.getPrefab();
+    }
 }

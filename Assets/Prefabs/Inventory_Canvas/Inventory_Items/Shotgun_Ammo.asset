@@ -16,3 +16,4 @@ MonoBehaviour:
   sprite: {fileID: 4581451250213666317, guid: 2a4861251bfa03d4fbfe9d08b7ce92e8, type: 3}
   _name: Shotgun Shell
   ID: 3
+  equipPrefab: {fileID: 2632405655439488564, guid: 14d56fd15dac18e4d8d7fec7629b6928, type: 3}

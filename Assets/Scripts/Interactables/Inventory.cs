@@ -195,4 +195,25 @@ public class Inventory
         }
 
     }
+
+    public GameObject selecteditem(int index)
+    {
+        Item_ScriptableObj item = inventorySlots[index].GetItem();
+
+        // If the slot has an item, return its prefab
+        if (item != null && item.getPrefab() != null)
+        {
+            return item.getPrefab();
+        }
+
+        // If the slot is empty, return currently equipped prefab
+        if (Player.Singleton != null && Player.Singleton.GetEquippedPrefab() != null)
+        {
+            return Player.Singleton.GetEquippedPrefab();
+        }
+
+        // Nothing to equip
+        return null;
+    }
+
 }

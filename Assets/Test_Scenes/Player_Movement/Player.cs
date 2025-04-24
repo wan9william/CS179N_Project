@@ -44,6 +44,12 @@ public class Player : MonoBehaviour
     private SpriteRenderer _weaponSR;
 
 
+public static Player Singleton;
+
+void Awake()
+{
+    Singleton = this;
+}
 
 
 
@@ -136,8 +142,23 @@ public class Player : MonoBehaviour
 
                 //Any data specific to a weapon (fire rate, damage, etc) should likely be stored in a Scriptable Object (feel free to look it up). This will make our implementation easier.
                 //As well as more memory friendly.
+            if (_equipped != null)
+                {
+                    Weapon weapon = _equipped.GetComponent<Weapon>();
+                    if (weapon != null)
+                    {
+                        weapon.Shoot();
+                    }
+                    else
+                    {
+                        Debug.LogWarning("[Player] Equipped item does not have a Weapon component.");
+                    }
+                }
+                else
+                {
+                    Debug.LogWarning("[Player] No weapon equipped.");
+                }
 
-                _equipped.GetComponent<Weapon>().Shoot();
                 action_state = PLAYER_ACTION_STATES.IDLE;
                 break;
 
@@ -145,7 +166,24 @@ public class Player : MonoBehaviour
 
                 //actions go here for selecting a slot
 
-                inventory.SelectSlot(selected_slot);
+            inventory.SelectSlot(selected_slot);
+
+                GameObject selectedPrefab = inventory.selecteditem(selected_slot);
+
+                // Only destroy if we're switching to a different prefab
+                if (_equipped != null && selectedPrefab != null && _equipped.name != selectedPrefab.name + "(Clone)")
+                {
+                    Destroy(_equipped);
+                    _equipped = null;
+                }
+
+                // Only instantiate if it's different or if nothing is equipped
+                if (_equipped == null && selectedPrefab != null)
+                {
+                    _equipped = Instantiate(selectedPrefab, transform);
+                    _equipped.transform.localPosition = Vector3.zero;
+                    _equipped.transform.localRotation = Quaternion.identity;
+                }
 
                 action_state = PLAYER_ACTION_STATES.IDLE;
                 break;
@@ -306,6 +344,11 @@ public class Player : MonoBehaviour
 
         //-1 represents that nothing was pressed
         return -1;
+    }
+
+    public GameObject GetEquippedPrefab()
+    {
+        return _equipped != null ? _equipped : null;
     }
 
 }
