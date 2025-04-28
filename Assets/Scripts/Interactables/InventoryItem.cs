@@ -37,10 +37,15 @@ public class InventoryItem : MonoBehaviour, IPointerClickHandler
     public void SetQuantity(int weight)
     {
         quantity = Mathf.Max(0,weight);
-        if (activeSlot != null)
+
+        if(quantity <= 0)
         {
-            // Update quantity display in the slot
-            activeSlot.SetItem_A(new System.Tuple<Item_ScriptableObj, int>(myItem, quantity));
+            if(activeSlot != null)
+            {
+                activeSlot.myItem = null;
+                activeSlot.item = null;
+                activeSlot.quantity = 0;
+            }
         }
     }
 
