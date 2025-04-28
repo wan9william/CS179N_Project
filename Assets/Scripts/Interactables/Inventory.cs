@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Inventory
+public class Inventory : MonoBehaviour
 {
     public static Inventory Singleton;
     public static InventoryItem carriedItem;
@@ -18,6 +18,10 @@ public class Inventory
     [SerializeField] Item[] items;
     [Header("Debug")]
     [SerializeField] Button itemButton;
+
+    [Header("Stack Settings")]
+    [SerializeField] private int maxStackSize = 99;
+    private bool isShiftPressed = false;
 
     void Awake()
     {
@@ -34,14 +38,38 @@ public class Inventory
 
     //When adding an item to the inventory
     public void addItem(Tuple<Item_ScriptableObj,int> new_item) {
-        //search array. If an empty box is found, add to it. The sprite and quantity will be managed by individual boxes?
+        Item_ScriptableObj item = new_item.Item1;
+        int quantity = new_item.Item2;
+
         for (int i = 0; i < 8; i++)
         {
-            if (!inventorySlots[i].item || inventorySlots[i].GetItem() == new_item.Item1)
+            // stacking existing items of same type in inventory
+            if (inventorySlots[i].item && inventorySlots[i].GetItem() == item)
             {
-                //add item and its quantity through a slot's respective script
-                inventorySlots[i].SetItem_A(new_item);
-                break;
+                int currentQuantity = inventorySlots[i].GetQuantity();
+                if (currentQuantity < maxStackSize)
+                {
+                    int spaceInStack = maxStackSize - currentQuantity;
+                    int amountToAdd = Mathf.Min(quantity, spaceInStack);
+                    
+                    inventorySlots[i].SetItem_A(new Tuple<Item_ScriptableObj, int>(item, currentQuantity + amountToAdd));
+                    quantity -= amountToAdd;
+
+                    if (quantity <= 0) return;
+                }
+            }
+        }
+
+        for (int i = 0; i < 8; i++)
+        {
+            // if items of a different type, then find new available inventory slots
+            if (!inventorySlots[i].item)
+            {
+                int amountToAdd = Mathf.Min(quantity, maxStackSize);
+                inventorySlots[i].SetItem_A(new Tuple<Item_ScriptableObj, int>(item, amountToAdd));
+                quantity -= amountToAdd;
+
+                if (quantity <= 0) return; // All items have been placed
             }
         }
     }
@@ -91,31 +119,62 @@ public class Inventory
 
     void Update()
     {
-        if(carriedItem == null)
+        isShiftPressed = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
+        
+        if(carriedItem != null)
         {
-            return;
+            carriedItem.transform.position = Input.mousePosition;
         }
-
-        carriedItem.transform.position = Input.mousePosition;
     }
 
     public void SetCarriedItem(InventoryItem item)
     {
-        if(carriedItem != null)
+        if (carriedItem != null)
         {
-            if(item.activeSlot.myTag != slotTag.None && item.activeSlot.myTag != carriedItem.myItem.itemTag)
+            if (item.activeSlot.myTag != slotTag.None && item.activeSlot.myTag != carriedItem.myItem.itemTag)
             {
                 return;
             }
+
+            // Stack items if same type
+            if (item.myItem == carriedItem.myItem)
+            {
+                int totalQuantity = item.GetQuantity() + carriedItem.GetQuantity();
+                if (totalQuantity <= maxStackSize)
+                {
+                    item.SetQuantity(totalQuantity);
+                    carriedItem = null;
+                    return;
+                }
+            }
+
             item.activeSlot.SetItem(carriedItem);
         }
-        if(item.activeSlot.myTag != slotTag.None)
-        {
-            Equip(item.activeSlot.myTag, null);
-        }
 
-        carriedItem = item;
-        item.transform.SetParent(dragTransform);
+        if (isShiftPressed && item.GetQuantity() > 1)
+        {
+            // Split stack in item quantity
+            int originalQuantity = item.GetQuantity();
+            int splitQuantity = originalQuantity / 2;
+            
+            item.SetQuantity(originalQuantity - splitQuantity);
+            
+            // Create new carried item with split quantity
+            InventoryItem splitItem = Instantiate(itemPrefab, dragTransform);
+            splitItem.Initialize(item.myItem, null);
+            splitItem.SetQuantity(splitQuantity);
+            carriedItem = splitItem;
+        }
+        else
+        {
+            if (item.activeSlot.myTag != slotTag.None)
+            {
+                Equip(item.activeSlot.myTag, null);
+            }
+
+            carriedItem = item;
+            item.transform.SetParent(dragTransform);
+        }
     }
 
     public void Equip(slotTag tag, InventoryItem item = null)

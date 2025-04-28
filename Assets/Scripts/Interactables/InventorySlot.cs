@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using TMPro;
 
 public class InventorySlot : MonoBehaviour, IPointerClickHandler
 {
@@ -13,6 +14,8 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
     public Item_ScriptableObj item;
     public int quantity;
 
+    [SerializeField] private TextMeshProUGUI quantityText;
+
     //Slot state machine
     private enum SLOT_ACTION_STATES { IDLE, SELECT, UNSELECT };
     private SLOT_ACTION_STATES state;
@@ -21,6 +24,24 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
 
     public slotTag myTag;
 
+    void Start()
+    {
+        // adds a text number of how many of that item there is to bottom right of inventory square
+        if (quantityText == null)
+        {
+            GameObject textObj = new GameObject("QuantityText");
+            textObj.transform.SetParent(transform);
+            quantityText = textObj.AddComponent<TextMeshProUGUI>();
+            quantityText.alignment = TextAlignmentOptions.BottomRight;
+            quantityText.fontSize = 12;
+            RectTransform rect = textObj.GetComponent<RectTransform>();
+            rect.anchorMin = new Vector2(0, 0);
+            rect.anchorMax = new Vector2(1, 1);
+            rect.offsetMin = new Vector2(2, 2);
+            rect.offsetMax = new Vector2(-2, -2);
+        }
+        UpdateQuantityDisplay();
+    }
 
     public void Update()
     {
@@ -60,17 +81,27 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
 
     public void SetUnselect(bool _s) { unselect = _s; }
 
-
-
-
-
-
     public void OnPointerClick(PointerEventData eventData)
     {
         if(eventData.button == PointerEventData.InputButton.Left)
         {
             if(Inventory.carriedItem == null)
             {
+                if(myItem != null)
+                {
+                    // if more than 1 item of that type exists in a slot and shift is pressed, split the stack of that item
+                    if((Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.LeftShift)) && quantity > 1)
+                    {
+                        int split = quantity / 2;
+                        quantity = quantity - split;
+                        UpdateQuantityDisplay();
+                        // creating a new carried item with the quantity of split result
+                        InventoryItem splitNewItem = Instantiate(myItem, Inventory.Singleton.transform);
+                        splitNewItem.Initialize(myItem.myItem, null);
+                        splitNewItem.SetQuantity(split);
+                        Inventory.carriedItem = splitNewItem;
+                    }
+                }
                 return;
             }
             if(myTag != slotTag.None && Inventory.carriedItem.myItem.itemTag != myTag)
@@ -83,6 +114,20 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
 
     public void SetItem(InventoryItem item)
     {
+        // If already have an item and it's the same type, add to the quantity of that existing item
+        if(myItem != null && myItem.myItem == item.myItem)
+        {
+            int totalQuantity = myItem.GetQuantity() + item.GetQuantity();
+            int maxStack = 99;
+            if(totalQuantity <= maxStack)
+            {
+                myItem.SetQuantity(totalQuantity);
+                Inventory.carriedItem = null;
+                return;
+            }
+        }
+
+        // Item Placement
         Inventory.carriedItem = null;
         item.activeSlot.myItem = null;
 
@@ -106,9 +151,24 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
         child_image.sprite = item.getSprite();
         child_image.color = item.getSprite() ? new Color(1, 1, 1, 1) : new Color(1,1,1,0);
         //Get quantity as well
+        UpdateQuantityDisplay();
     }
 
-    public Item_ScriptableObj GetItem() {
+    private void UpdateQuantityDisplay()
+    {
+        if(quantityText != null)
+        {
+            quantityText.text = quantity > 1 ? quantity.ToString() : "";
+        }
+    }
+
+    public Item_ScriptableObj GetItem()
+    {
         return item;
+    }
+
+    public int GetQuantity()
+    {
+        return quantity;
     }
 }

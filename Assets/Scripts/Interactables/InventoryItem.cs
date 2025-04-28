@@ -6,18 +6,22 @@ using UnityEngine.EventSystems;
 
 public class InventoryItem : MonoBehaviour, IPointerClickHandler
 {
-    Image itemIcon;
+    private Image itemIcon;
     public Item myItem { get; set; }
     public InventorySlot activeSlot { get; set; }
+    private int quantity = 1;
 
-    void Awake()
+    private void Awake()
     {
         itemIcon = GetComponent<Image>();
     }
     public void Initialize(Item item, InventorySlot invenSlot)
     {
         activeSlot = invenSlot;
-        activeSlot.myItem = this;
+        if(activeSlot != null)
+        {
+            activeSlot.myItem = this;
+        }
         myItem = item;
         itemIcon.sprite = item.sprite;
     }
@@ -28,6 +32,21 @@ public class InventoryItem : MonoBehaviour, IPointerClickHandler
         {
             Inventory.Singleton.SetCarriedItem(this);
         }
+    }
+
+    public void SetQuantity(int weight)
+    {
+        quantity = Mathf.Max(0,weight);
+        if (activeSlot != null)
+        {
+            // Update quantity display in the slot
+            activeSlot.SetItem_A(new System.Tuple<Item_ScriptableObj, int>(myItem, quantity));
+        }
+    }
+
+    public int GetQuantity()
+    {
+        return quantity;
     }
 
     void KeyboardControls()
