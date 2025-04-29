@@ -11,6 +11,7 @@ public class Player : MonoBehaviour
     [SerializeField] private Inventory inventory;
     [SerializeField] private GameObject canvas;
     [SerializeField] private int selected_slot;
+    [SerializeField] private GameObject flashlightPrefab;
 
     //States
     private enum PLAYER_MOVEMENT_STATES { IDLE, WALK };
@@ -166,27 +167,27 @@ void Awake()
 
                 //actions go here for selecting a slot
 
-            inventory.SelectSlot(selected_slot);
+                inventory.SelectSlot(selected_slot);
 
-                GameObject selectedPrefab = inventory.selecteditem(selected_slot);
+        GameObject selectedPrefab = inventory.selecteditem(selected_slot);
 
-                // Only destroy if we're switching to a different prefab
-                if (_equipped != null && selectedPrefab != null && _equipped.name != selectedPrefab.name + "(Clone)")
-                {
-                    Destroy(_equipped);
-                    _equipped = null;
-                }
+        // Remove currently equipped object if it's different
+        if (_equipped != null && selectedPrefab != null && _equipped.name != selectedPrefab.name + "(Clone)")
+        {
+            Destroy(_equipped);
+            _equipped = null;
+        }
 
-                // Only instantiate if it's different or if nothing is equipped
-                if (_equipped == null && selectedPrefab != null)
-                {
-                    _equipped = Instantiate(selectedPrefab, transform);
-                    _equipped.transform.localPosition = Vector3.zero;
-                    _equipped.transform.localRotation = Quaternion.identity;
-                }
+        // Equip if not already equipped
+        if (_equipped == null && selectedPrefab != null)
+        {
+            _equipped = Instantiate(selectedPrefab, transform);
+            _equipped.transform.localPosition = Vector3.zero;
+            _equipped.transform.localRotation = Quaternion.identity;
+        }
 
-                action_state = PLAYER_ACTION_STATES.IDLE;
-                break;
+        action_state = PLAYER_ACTION_STATES.IDLE;
+        break;
 
 
            
@@ -349,6 +350,11 @@ void Awake()
     public GameObject GetEquippedPrefab()
     {
         return _equipped != null ? _equipped : null;
+    }
+
+    public GameObject GetFlashlightPrefab()
+    {
+        return flashlightPrefab;
     }
 
 }
