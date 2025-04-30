@@ -34,6 +34,7 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IDropHandler
             quantityText = textObj.AddComponent<TextMeshProUGUI>();
             quantityText.alignment = TextAlignmentOptions.BottomRight;
             quantityText.fontSize = 12;
+            textObj.transform.localScale = Vector3.one;
             RectTransform rect = textObj.GetComponent<RectTransform>();
             rect.anchorMin = new Vector2(0, 0);
             rect.anchorMax = new Vector2(1, 1);
