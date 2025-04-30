@@ -56,7 +56,7 @@ public class Player : MonoBehaviour
     [Header("Hand Settings")]
     [SerializeField] private Vector3 handOffset = Vector3.zero;
     [SerializeField] private float handRadius = 3.5f;
-    [SerializeField] private float handFlip = 0.13f;
+    [SerializeField] private float handFlip = 0f;
     [SerializeField] private int weaponLayerFront = 5;
     [SerializeField] private int weaponLayerBack = 1;
     [SerializeField] private float handLayerFront = 6;
@@ -417,18 +417,6 @@ void Awake()
         if (_weaponSR)
         {
             _weaponSR.flipY = (dir.x < 0);  // flip only when pointing left
-
-            if (dir.y > 0.38)
-            {
-                _weaponSR.sortingOrder = 1;
-                _handSR.sortingOrder = 2;
-
-            }
-            else
-            {
-                _weaponSR.sortingOrder = 4;
-                _handSR.sortingOrder = 5;
-            }
         }
         _hand.transform.localPosition = offset;
 
