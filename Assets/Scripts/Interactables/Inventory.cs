@@ -114,7 +114,6 @@ public class Inventory : MonoBehaviour
                 newItem.Initialize(_currItem, inventorySlots[i]);
                 inventorySlots[i].myItem = newItem;
                 return; // Exit after spawning one item
-                break;
             }
         }
     }

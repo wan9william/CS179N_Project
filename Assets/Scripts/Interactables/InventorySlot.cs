@@ -165,7 +165,7 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IDropHandler
     {
         if(quantityText != null)
         {
-            quantityText.text = quantity > 1 ? quantity.ToString() : "";
+            quantityText.SetText(quantity > 1 ? quantity.ToString() : "");
         }
     }
 
