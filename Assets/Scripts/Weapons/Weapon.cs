@@ -94,5 +94,5 @@ public class Weapon : MonoBehaviour
     // Bloom increases with each shot (not each pellet)
     currentSpread = Mathf.Min(currentSpread + bloomIncreasePerShot, maxSpreadAngle);
     lastFireTime = Time.time;
-}
+    }
 }
