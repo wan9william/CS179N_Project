@@ -16,4 +16,4 @@ MonoBehaviour:
   sprite: {fileID: -5580227407950313359, guid: 2a4861251bfa03d4fbfe9d08b7ce92e8, type: 3}
   _name: Duck
   ID: 0
-  equipPrefab: {fileID: 6528111353357189117, guid: 6840901e9e628af489376d276839cc61, type: 3}
+  equipPrefab: {fileID: 6528111353357189117, guid: c432a18b5ff696c418e422724f9297f2, type: 3}

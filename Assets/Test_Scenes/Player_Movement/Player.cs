@@ -181,9 +181,24 @@ void Awake()
         // Equip if not already equipped
         if (_equipped == null && selectedPrefab != null)
         {
-            _equipped = Instantiate(selectedPrefab, transform);
-            _equipped.transform.localPosition = Vector3.zero;
-            _equipped.transform.localRotation = Quaternion.identity;
+        _equipped = Instantiate(selectedPrefab);
+        _equipped.transform.SetParent(transform, false);
+        _equipped.transform.localPosition = Vector3.zero;
+        _equipped.transform.localRotation = Quaternion.identity;
+
+        // Scale up to cancel out the player's scale (e.g., 0.2 becomes 5x)
+        Vector3 inverseScale = new Vector3(
+            1f / transform.localScale.x,
+            1f / transform.localScale.y,
+            1f / transform.localScale.z
+        );
+        _equipped.transform.localScale = inverseScale;
+
+        // Optional but helpful if the prefab has nested children with messed-up scales
+        NormalizeChildScale(_equipped.transform);
+
+        // Debug log
+        Debug.Log($"[EQUIP DEBUG] Final equipped scale: {_equipped.transform.lossyScale}");
         }
 
         action_state = PLAYER_ACTION_STATES.IDLE;
@@ -355,6 +370,15 @@ void Awake()
     public GameObject GetFlashlightPrefab()
     {
         return flashlightPrefab;
+    }
+
+    private void NormalizeChildScale(Transform root)
+    {
+        foreach (Transform child in root)
+        {
+            child.localScale = Vector3.one;
+            NormalizeChildScale(child); // Recursively reset nested children
+        }
     }
 
 }

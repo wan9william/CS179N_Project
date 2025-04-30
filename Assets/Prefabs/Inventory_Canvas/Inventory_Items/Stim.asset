@@ -16,4 +16,4 @@ MonoBehaviour:
   sprite: {fileID: 9010000181375383852, guid: 2a4861251bfa03d4fbfe9d08b7ce92e8, type: 3}
   _name: Stim
   ID: 1
-  equipPrefab: {fileID: 3957751190493910417, guid: ebb8b2ab44dfa474ca130cdff1d44e75, type: 3}
+  equipPrefab: {fileID: 3957751190493910417, guid: 38b3373e5b8caf940ac72cdf911a176e, type: 3}
