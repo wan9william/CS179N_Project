@@ -100,13 +100,11 @@ void Awake()
     // Update is called once per frame
     void Update()
     {
-        float current_speed = Input.GetKey(KeyCode.LeftShift) ? 1.5f * movement_speed : movement_speed;
+        float current_speed = movement_speed;
 
         //we could check if we have a weapon every frame
         //_weaponScript = _equipped != null ? _equipped.GetComponentInChildren<Weapon>() : null;
 
-
-        float current_speed = movement_speed;
 
         if (sprint_amount < 100)
         {
