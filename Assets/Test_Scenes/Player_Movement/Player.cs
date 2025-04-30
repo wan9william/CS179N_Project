@@ -72,6 +72,10 @@ void Awake()
     void Update()
     {
         float current_speed = Input.GetKey(KeyCode.LeftShift) ? 1.5f * movement_speed : movement_speed;
+
+        //we could check if we have a weapon every frame
+        //_weaponScript = _equipped != null ? _equipped.GetComponentInChildren<Weapon>() : null;
+
         //STATE ACTIONS & TRANSITIONS FOR THE ACTION STATE
         switch (action_state)
         {
@@ -143,16 +147,17 @@ void Awake()
 
                 //Any data specific to a weapon (fire rate, damage, etc) should likely be stored in a Scriptable Object (feel free to look it up). This will make our implementation easier.
                 //As well as more memory friendly.
-            if (_equipped != null)
+                if (_equipped != null)
                 {
-                    Weapon weapon = _equipped.GetComponent<Weapon>();
+                    Weapon weapon = _equipped.GetComponentInChildren<Weapon>();
                     if (weapon != null)
                     {
+                        Debug.Log("[Player] Firing weapon");
                         weapon.Shoot();
                     }
                     else
                     {
-                        Debug.LogWarning("[Player] Equipped item does not have a Weapon component.");
+                        Debug.LogWarning("[Player] Equipped item does not have a Weapon component (even in children).");
                     }
                 }
                 else
@@ -196,6 +201,9 @@ void Awake()
 
         // Optional but helpful if the prefab has nested children with messed-up scales
         NormalizeChildScale(_equipped.transform);
+
+        //properly update the weapon script to newly created weapon
+        _weaponScript = _equipped.GetComponentInChildren<Weapon>();
 
         // Debug log
         Debug.Log($"[EQUIP DEBUG] Final equipped scale: {_equipped.transform.lossyScale}");

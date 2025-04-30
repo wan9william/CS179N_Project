@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dc2918b2ec928214aa3865215bb75ed4, type: 3}
-  m_Name: Rifle
+  m_Name: Shotgun
   m_EditorClassIdentifier: 
   color: {r: 1, g: 0, b: 0, a: 1}
-  sprite: {fileID: 116400415285627404, guid: d88a684aeccb0bf46a0f63fd293a77e7, type: 3}
-  _name: Rifle
-  ID: 6
-  equipPrefab: {fileID: 7420429762061062423, guid: 2a4f2f48c42492f449f8484c430ffb3e, type: 3}
+  sprite: {fileID: -2408530018317867212, guid: 3325be58caa077145875edc55235db34, type: 3}
+  _name: Shotgun
+  ID: 8
+  equipPrefab: {fileID: 5034301034856951075, guid: 7b6838b3065137842a66e917e99171b2, type: 3}
