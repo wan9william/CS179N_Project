@@ -1,11 +1,16 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 
 public class Player : MonoBehaviour
 {
-
+    //Player Animation
     public Animator animator;
     public SpriteRenderer spriteRenderer;
+
+    //Player Sprint Bar
+    [SerializeField] private Slider sprint_bar;
+
 
     //Inventory
     [SerializeField] private Inventory inventory;
@@ -23,26 +28,46 @@ public class Player : MonoBehaviour
 
 
     //Movement Parameters
+    [Header("Movement Parameters")]
     [SerializeField] private float movement_speed = 1.0f;
     [SerializeField] private float horizontal_multiplier = 1.0f;
     [SerializeField] private float vertical_multiplier = 1.0f;
     [SerializeField] private float dampening;
+
+    //Sprinting Parameters
+    [SerializeField] private float sprint_amount = 100f;
+    [SerializeField] private float drain_amount = 25f;
      
     private float eps = 1e-5f;
 
 
     //Components
+    [Header("Components")]
     private Rigidbody2D _rb;
     [SerializeField] private GameObject _equipped;
+    [SerializeField] private GameObject _hand;
     [SerializeField] private GameObject _interactable;
     [SerializeField] private Camera _camera;
 
     //FLAGS
+    [Header("Flags")]
     [SerializeField] private bool find_interact = false;
+
+    [Header("Hand Settings")]
+    [SerializeField] private Vector3 handOffset = Vector3.zero;
+    [SerializeField] private float handRadius = 3.5f;
+    [SerializeField] private float handFlip = 0.13f;
+    [SerializeField] private int weaponLayerFront = 5;
+    [SerializeField] private int weaponLayerBack = 1;
+    [SerializeField] private float handLayerFront = 6;
+    [SerializeField] private float handLayerBack = 2;
+
+
 
     //Equipped Tool
     private Weapon _weaponScript;
     private SpriteRenderer _weaponSR;
+
 
 
 public static Player Singleton;
@@ -51,6 +76,10 @@ void Awake()
 {
     Singleton = this;
 }
+
+    //Hand
+    private SpriteRenderer _handSR;
+
 
 
 
@@ -63,7 +92,7 @@ void Awake()
         _rb = GetComponent<Rigidbody2D>();
     if (_equipped != null)
         _weaponScript = _equipped.GetComponent<Weapon>();
-
+        sprint_bar.maxValue = 100f;
 
     }
 
@@ -76,6 +105,18 @@ void Awake()
         //we could check if we have a weapon every frame
         //_weaponScript = _equipped != null ? _equipped.GetComponentInChildren<Weapon>() : null;
 
+
+        float current_speed = movement_speed;
+
+        if (sprint_amount < 100)
+        {
+            sprint_bar.gameObject.SetActive(true);
+            sprint_bar.value = sprint_amount;
+        }
+        else {
+            sprint_bar.gameObject.SetActive(false);
+        }
+
         //STATE ACTIONS & TRANSITIONS FOR THE ACTION STATE
         switch (action_state)
         {
@@ -87,10 +128,13 @@ void Awake()
 
 
 
-                //This should be separated by state actions (what to do while in the state) and state transitions(which state to move to)
+                    //This should be separated by state actions (what to do while in the state) and state transitions(which state to move to)
 
 
-
+                 if (!Input.GetKey(KeyCode.LeftShift)) { 
+                    sprint_amount += drain_amount * Time.deltaTime;
+                    sprint_amount = Mathf.Clamp(sprint_amount, 0, 100);
+                 }
 
 
 
@@ -104,11 +148,17 @@ void Awake()
                     break;
                 }
 
+                //EVERYTHING BEYOND THIS STATEMENT ASSUMES THAT THERE IS AN ATTACHED WEAPONSCRIPT
+                if (!_weaponScript) { animator.SetBool("Equipped", false); break; }
+
+                animator.SetBool("Equipped", true);
+                var fireMode = _weaponScript.GetFireMode();
                 //If the scroll wheel is used, get current selected slot and add accordingly, then transition
                 if (Input.mouseScrollDelta.y != 0) {
                     Debug.Log(Input.mouseScrollDelta.y);
                     selected_slot += Input.mouseScrollDelta.y > 0 ? 1 : -1;
                     selected_slot = Mathf.Clamp(selected_slot, 0, 7);
+
 
                     action_state = PLAYER_ACTION_STATES.SELECT;
                     break;
@@ -124,19 +174,15 @@ void Awake()
                     break;
                 }
 
-                if (_weaponScript != null)
+                if (fireMode == FireMode.FullAuto && Input.GetMouseButton(0))
                 {
-                    var fireMode = _weaponScript.GetFireMode();
-
-                    if (fireMode == FireMode.FullAuto && Input.GetMouseButton(0))
-                    {
-                        action_state = PLAYER_ACTION_STATES.SHOOT;
-                    }
-                    else if (fireMode == FireMode.SemiAuto && Input.GetMouseButtonDown(0))
-                    {
-                        action_state = PLAYER_ACTION_STATES.SHOOT;
-                    }
+                    action_state = PLAYER_ACTION_STATES.SHOOT;
                 }
+                else if (fireMode == FireMode.SemiAuto && Input.GetMouseButtonDown(0))
+                {
+                    action_state = PLAYER_ACTION_STATES.SHOOT;
+                }
+
 
                 break;
             case PLAYER_ACTION_STATES.SHOOT:
@@ -255,9 +301,29 @@ void Awake()
 
 
             case PLAYER_MOVEMENT_STATES.WALK:
-                animator.SetBool("Walk", true); 
+
+                //Start walking animation
+                animator.SetBool("Walk", true);
+
+
+                //Movement parameters
+                current_speed = movement_speed;
                 bool horizontal_walk = false;
                 bool vertical_walk = false;
+
+
+                //Sprinting
+                if (Input.GetKey(KeyCode.LeftShift) && sprint_amount > 0)
+                {
+                    current_speed = 1.5f * movement_speed;
+                    sprint_amount -= drain_amount * Time.deltaTime;
+                    sprint_amount = Mathf.Clamp(sprint_amount, 0, 100);
+                }
+                else if (!Input.GetKey(KeyCode.LeftShift)) {
+                    sprint_amount += drain_amount * Time.deltaTime;
+                    sprint_amount = Mathf.Clamp(sprint_amount, 0, 100);
+                }
+
                 if (Input.GetKey(KeyCode.W))
                 {
                     vertical_multiplier = Mathf.Lerp(vertical_multiplier, 1.0f, Time.deltaTime * dampening);
@@ -341,14 +407,32 @@ void Awake()
         animator.SetFloat("MouseY", dir.y);
         _equipped.transform.up = dir;
 
-        if(!_weaponSR) _weaponSR = _equipped.GetComponentInChildren<SpriteRenderer>();
+        Vector3 offset = _hand.transform.localPosition;
+        if (dir.x < 0) offset.y = handFlip;
+        else offset.y = -handFlip;
+
+        if (!_weaponSR) _weaponSR = _equipped.GetComponentInChildren<SpriteRenderer>();
+        _handSR = _hand.GetComponent<SpriteRenderer>();
 
         if (_weaponSR)
         {
             _weaponSR.flipY = (dir.x < 0);  // flip only when pointing left
-        }
 
-        _equipped.transform.localPosition = (Vector3)dir * 5f;
+            if (dir.y > 0.38)
+            {
+                _weaponSR.sortingOrder = 1;
+                _handSR.sortingOrder = 2;
+
+            }
+            else
+            {
+                _weaponSR.sortingOrder = 4;
+                _handSR.sortingOrder = 5;
+            }
+        }
+        _hand.transform.localPosition = offset;
+
+        _equipped.transform.localPosition = (Vector3)dir * handRadius + handOffset;
     }
 
 
