@@ -29,6 +29,7 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     // marks the item as carried
     public void OnBeginDrag(PointerEventData eventData)
     {
+        Debug.Log("OnBeginDrag called");
         if (eventData.button != PointerEventData.InputButton.Left)
         {
             return;
@@ -36,6 +37,7 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         
         if (activeSlot != null)
         {
+            Debug.Log("Setting carried item");
             Inventory.Singleton.SetCarriedItem(this);
         }
     }

@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using TMPro;
 
-public class InventorySlot : MonoBehaviour, IPointerClickHandler
+public class InventorySlot : MonoBehaviour, IPointerClickHandler, IDropHandler
 {
     public InventoryItem myItem { get; set;}
 
@@ -115,25 +115,31 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
     public void SetItem(InventoryItem item)
     {
         // If already have an item and it's the same type, add to the quantity of that existing item
-        if(myItem != null && myItem.myItem == item.myItem)
+        if (myItem != null && myItem.myItem == item.myItem)
         {
             int totalQuantity = myItem.GetQuantity() + item.GetQuantity();
-            int maxStack = 99;
-            if(totalQuantity <= maxStack)
+            int maxStack = Inventory.Singleton.GetMaxStackSize();
+            
+            if (totalQuantity <= maxStack)
             {
                 myItem.SetQuantity(totalQuantity);
+                Destroy(item.gameObject);
                 Inventory.carriedItem = null;
                 return;
             }
         }
 
-        // Item Placement
+        // Regular item placement
         Inventory.carriedItem = null;
-        item.activeSlot.myItem = null;
+        if (item.activeSlot != null)
+        {
+            item.activeSlot.myItem = null;
+        }
 
         myItem = item;
         myItem.activeSlot = this;
         myItem.transform.SetParent(transform);
+        myItem.transform.localPosition = Vector3.zero;
 
         if(myTag != slotTag.None)
         {
@@ -170,5 +176,36 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
     public int GetQuantity()
     {
         return quantity;
+    }
+
+    // Called when an item is dropped onto slot and handles stacking of same items and placement of new items
+    public void OnDrop(PointerEventData eventData)
+    {
+        if (Inventory.carriedItem != null)
+        {
+            // Check if the slot has a tag restriction
+            if (myTag != slotTag.None && myTag != Inventory.carriedItem.myItem.itemTag)
+            {
+                return;
+            }
+
+            // If we already have an item and it's the same type, try to stack
+            if (myItem != null && myItem.myItem == Inventory.carriedItem.myItem)
+            {
+                int totalQuantity = myItem.GetQuantity() + Inventory.carriedItem.GetQuantity();
+                int maxStack = Inventory.Singleton.GetMaxStackSize();
+                
+                if (totalQuantity <= maxStack)
+                {
+                    myItem.SetQuantity(totalQuantity);
+                    Destroy(Inventory.carriedItem.gameObject);
+                    Inventory.carriedItem = null;
+                    return;
+                }
+            }
+
+            // Regular item placement
+            SetItem(Inventory.carriedItem);
+        }
     }
 }

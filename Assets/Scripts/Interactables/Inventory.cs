@@ -27,7 +27,6 @@ public class Inventory : MonoBehaviour
     {
         Singleton = this;
         itemButton.onClick.AddListener( delegate { SpawnInventoryItem(); });
-
         inventorySlots = new InventorySlot[8];
     }
 
@@ -111,7 +110,10 @@ public class Inventory : MonoBehaviour
         {
             if(inventorySlots[i].myItem == null)
             {
-                //Instantiate(itemPrefab, inventorySlots[i].transform).Initialize(_currItem, inventorySlots[i]);
+                InventoryItem newItem = Instantiate(itemPrefab, inventorySlots[i].transform);
+                newItem.Initialize(_currItem, inventorySlots[i]);
+                inventorySlots[i].myItem = newItem;
+                return; // Exit after spawning one item
                 break;
             }
         }
@@ -179,79 +181,13 @@ public class Inventory : MonoBehaviour
 
     public void Equip(slotTag tag, InventoryItem item = null)
     {
-        switch(tag)
-        {
-            case slotTag.Bullet:
-                if(item == null)
-                {
-                    Debug.Log("Unequipped on " + tag);
-                }
-                else
-                {
-                    Debug.Log("Equipped " + item.myItem.name + " on " + tag);
-                }
-                break;
-            case slotTag.Health:
-                if(item == null)
-                {
-                    Debug.Log("Unequipped on " + tag);
-                }
-                else
-                {
-                    Debug.Log("Equipped " + item.myItem.name + " on " + tag);
-                }
-                break;
-            case slotTag.Duck:
-                if(item == null)
-                {
-                    Debug.Log("Unequipped on " + tag);
-                }
-                else
-                {
-                    Debug.Log("Equipped " + item.myItem.name + " on " + tag);
-                }
-                break;
-            case slotTag.Shotgun:
-                if(item == null)
-                {
-                    Debug.Log("Unequipped on " + tag);
-                }
-                else
-                {
-                    Debug.Log("Equipped " + item.myItem.name + " on " + tag);
-                }
-                break;
-            case slotTag.Pistol:
-                if(item == null)
-                {
-                    Debug.Log("Unequipped on " + tag);
-                }
-                else
-                {
-                    Debug.Log("Equipped " + item.myItem.name + " on " + tag);
-                }
-                break;
-            case slotTag.Knife:
-                if(item == null)
-                {
-                    Debug.Log("Unequipped on " + tag);
-                }
-                else
-                {
-                    Debug.Log("Equipped " + item.myItem.name + " on " + tag);
-                }
-                break;
-            case slotTag.MachineGun:
-                if(item == null)
-                {
-                    Debug.Log("Unequipped on " + tag);
-                }
-                else
-                {
-                    Debug.Log("Equipped " + item.myItem.name + " on " + tag);
-                }
-                break;
-        }
+        string action = (item == null) ? "Unequipped on " : "Equipped " + item.myItem.name + " on ";
+        Debug.Log(action + tag);
 
+    }
+
+    public int GetMaxStackSize()
+    {
+        return maxStackSize;
     }
 }
