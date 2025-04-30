@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class InventoryItem : MonoBehaviour, IPointerClickHandler
+public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     private Image itemIcon;
     public Item myItem { get; set; }
@@ -26,11 +26,47 @@ public class InventoryItem : MonoBehaviour, IPointerClickHandler
         itemIcon.sprite = item.sprite;
     }
 
-    public void OnPointerClick(PointerEventData eventData)
+    // marks the item as carried
+    public void OnBeginDrag(PointerEventData eventData)
     {
-        if(eventData.button == PointerEventData.InputButton.Left)
+        if (eventData.button != PointerEventData.InputButton.Left)
+        {
+            return;
+        }
+        
+        if (activeSlot != null)
         {
             Inventory.Singleton.SetCarriedItem(this);
+        }
+    }
+
+    // makes it carried item follow the cursor
+    public void OnDrag(PointerEventData eventData)
+    {
+        if (Inventory.carriedItem == this)
+        {
+            transform.position = Input.mousePosition;
+        }
+    }
+
+    // places it in a new slot or if no available slots, returns it to the original slot
+    public void OnEndDrag(PointerEventData eventData)
+    {
+        if (eventData.button != PointerEventData.InputButton.Left)
+        {
+            return;
+        }
+        
+        // If we're still being carried (wasn't placed in a slot)
+        if (Inventory.carriedItem == this)
+        {
+            // Return to original slot if there exists
+            if (activeSlot != null)
+            {
+                transform.SetParent(activeSlot.transform);
+                transform.localPosition = Vector3.zero;
+                Inventory.carriedItem = null;
+            }
         }
     }
 
