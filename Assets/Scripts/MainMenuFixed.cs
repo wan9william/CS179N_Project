@@ -5,7 +5,8 @@ public class MainMenuFixed : MonoBehaviour
 {
     public void StartGame()
     {
-        SceneManager.LoadScene("GameScene"); // change to actual scene name
+        Debug.Log("Starting...");
+        SceneManager.LoadScene(1); // change to actual scene name
     }
 
     public void QuitGame()
