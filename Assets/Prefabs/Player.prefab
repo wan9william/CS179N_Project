@@ -536,7 +536,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 1710947717994516418}
   spriteRenderer: {fileID: 4576711895773352515}
-  sprint_bar: {fileID: 0}
+  sprint_bar: {fileID: 4176203704576063588}
   canvas: {fileID: 0}
   selected_slot: 0
   flashlightPrefab: {fileID: 0}
@@ -912,7 +912,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 3
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 0
@@ -1015,7 +1015,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.061781306, g: 0.6509434, b: 0.061409745, a: 1}
+  m_Color: {r: 0.97735846, g: 0.69325215, b: 0.064542405, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
