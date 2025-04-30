@@ -195,4 +195,20 @@ public class Inventory
         }
 
     }
+
+    public GameObject selecteditem(int index)
+    {
+    Item_ScriptableObj item = inventorySlots[index].GetItem();
+
+    if (item != null && item.getPrefab() != null)
+    {
+        Debug.Log("[Inventory] Returning equipped prefab: " + item.getPrefab().name);
+        return item.getPrefab();
+    }
+
+    GameObject fallback = Player.Singleton?.GetFlashlightPrefab();
+    Debug.Log("[Inventory] Slot is empty. Returning flashlight: " + (fallback != null ? fallback.name : "null"));
+    return fallback;
+    }
+
 }

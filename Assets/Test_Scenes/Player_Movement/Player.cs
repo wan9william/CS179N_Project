@@ -16,6 +16,7 @@ public class Player : MonoBehaviour
     [SerializeField] private Inventory inventory;
     [SerializeField] private GameObject canvas;
     [SerializeField] private int selected_slot;
+    [SerializeField] private GameObject flashlightPrefab;
 
     //States
     private enum PLAYER_MOVEMENT_STATES { IDLE, WALK };
@@ -67,8 +68,18 @@ public class Player : MonoBehaviour
     private Weapon _weaponScript;
     private SpriteRenderer _weaponSR;
 
+
+
+public static Player Singleton;
+
+void Awake()
+{
+    Singleton = this;
+}
+
     //Hand
     private SpriteRenderer _handSR;
+
 
 
 
@@ -89,6 +100,12 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        float current_speed = Input.GetKey(KeyCode.LeftShift) ? 1.5f * movement_speed : movement_speed;
+
+        //we could check if we have a weapon every frame
+        //_weaponScript = _equipped != null ? _equipped.GetComponentInChildren<Weapon>() : null;
+
+
         float current_speed = movement_speed;
 
         if (sprint_amount < 100)
@@ -99,6 +116,7 @@ public class Player : MonoBehaviour
         else {
             sprint_bar.gameObject.SetActive(false);
         }
+
         //STATE ACTIONS & TRANSITIONS FOR THE ACTION STATE
         switch (action_state)
         {
@@ -175,8 +193,24 @@ public class Player : MonoBehaviour
 
                 //Any data specific to a weapon (fire rate, damage, etc) should likely be stored in a Scriptable Object (feel free to look it up). This will make our implementation easier.
                 //As well as more memory friendly.
+                if (_equipped != null)
+                {
+                    Weapon weapon = _equipped.GetComponentInChildren<Weapon>();
+                    if (weapon != null)
+                    {
+                        Debug.Log("[Player] Firing weapon");
+                        weapon.Shoot();
+                    }
+                    else
+                    {
+                        Debug.LogWarning("[Player] Equipped item does not have a Weapon component (even in children).");
+                    }
+                }
+                else
+                {
+                    Debug.LogWarning("[Player] No weapon equipped.");
+                }
 
-                _equipped.GetComponent<Weapon>().Shoot();
                 action_state = PLAYER_ACTION_STATES.IDLE;
                 break;
 
@@ -186,8 +220,43 @@ public class Player : MonoBehaviour
 
                 inventory.SelectSlot(selected_slot);
 
-                action_state = PLAYER_ACTION_STATES.IDLE;
-                break;
+        GameObject selectedPrefab = inventory.selecteditem(selected_slot);
+
+        // Remove currently equipped object if it's different
+        if (_equipped != null && selectedPrefab != null && _equipped.name != selectedPrefab.name + "(Clone)")
+        {
+            Destroy(_equipped);
+            _equipped = null;
+        }
+
+        // Equip if not already equipped
+        if (_equipped == null && selectedPrefab != null)
+        {
+        _equipped = Instantiate(selectedPrefab);
+        _equipped.transform.SetParent(transform, false);
+        _equipped.transform.localPosition = Vector3.zero;
+        _equipped.transform.localRotation = Quaternion.identity;
+
+        // Scale up to cancel out the player's scale (e.g., 0.2 becomes 5x)
+        Vector3 inverseScale = new Vector3(
+            1f / transform.localScale.x,
+            1f / transform.localScale.y,
+            1f / transform.localScale.z
+        );
+        _equipped.transform.localScale = inverseScale;
+
+        // Optional but helpful if the prefab has nested children with messed-up scales
+        NormalizeChildScale(_equipped.transform);
+
+        //properly update the weapon script to newly created weapon
+        _weaponScript = _equipped.GetComponentInChildren<Weapon>();
+
+        // Debug log
+        Debug.Log($"[EQUIP DEBUG] Final equipped scale: {_equipped.transform.lossyScale}");
+        }
+
+        action_state = PLAYER_ACTION_STATES.IDLE;
+        break;
 
 
            
@@ -371,6 +440,25 @@ public class Player : MonoBehaviour
 
         //-1 represents that nothing was pressed
         return -1;
+    }
+
+    public GameObject GetEquippedPrefab()
+    {
+        return _equipped != null ? _equipped : null;
+    }
+
+    public GameObject GetFlashlightPrefab()
+    {
+        return flashlightPrefab;
+    }
+
+    private void NormalizeChildScale(Transform root)
+    {
+        foreach (Transform child in root)
+        {
+            child.localScale = Vector3.one;
+            NormalizeChildScale(child); // Recursively reset nested children
+        }
     }
 
 }
