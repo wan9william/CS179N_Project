@@ -6,10 +6,19 @@ public class Bullet : MonoBehaviour
 {
     public float lifetime = 2f;
     public float damage = 10f;
+    private float elapsedTime = 0f;
 
     void Start()
     {
-        Destroy(gameObject, lifetime);
+    }
+
+    void Update() {
+        elapsedTime += Time.deltaTime;
+        if (elapsedTime > lifetime) gameObject.SetActive(false);
+    }
+
+    public void ResetTimer() {
+        elapsedTime = 0f;
     }
 
     void OnCollisionEnter2D(Collision2D collision)
@@ -28,7 +37,8 @@ public class Bullet : MonoBehaviour
             enemy.TakeDamage(damage);
         }
 
-        Destroy(gameObject);
+        
+        gameObject.SetActive(false);
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -49,6 +59,6 @@ public class Bullet : MonoBehaviour
             enemy.TakeDamage(damage);
         }
 
-        Destroy(gameObject);
+        gameObject.SetActive(false);
     }
 }
