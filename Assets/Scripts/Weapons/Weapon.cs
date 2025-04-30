@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using UnityEngine;
 
 public enum FireMode
@@ -34,12 +35,18 @@ public class Weapon : MonoBehaviour
     public Animator animator;
     public SpriteRenderer spriteRenderer;
 
+    [Header("Object Manager")]
+    [SerializeField] private ObjectManager objectManager;
+
 
     private float currentSpread = 0f;
     private float lastFireTime = 0f;
 
     void Start()
     {
+        if(objectManager == null) objectManager = GameObject.FindWithTag("Object_Manager").GetComponent<ObjectManager>();
+
+
         if (weaponOwner == null)
             weaponOwner = transform.root; // auto-assign the top-level parent if needed
     }   
@@ -75,7 +82,9 @@ public class Weapon : MonoBehaviour
         float finalAngle = baseAngle + bloom + spread;
 
         Quaternion bulletRotation = Quaternion.Euler(0f, 0f, finalAngle);
-        GameObject bullet = Instantiate(projectilePrefab, firePoint.position, bulletRotation);
+        GameObject bullet = objectManager.RequestBulletObj();//Instantiate(projectilePrefab, firePoint.position, bulletRotation);
+        bullet.transform.rotation = bulletRotation;
+        bullet.transform.position = firePoint.position;
 
         // Assign velocity
         Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();

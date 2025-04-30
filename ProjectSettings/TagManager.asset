@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Resource
   - Interactable
+  - Object_Manager
   layers:
   - Default
   - TransparentFX
