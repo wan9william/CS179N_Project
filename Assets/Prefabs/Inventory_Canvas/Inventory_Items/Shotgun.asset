@@ -16,4 +16,4 @@ MonoBehaviour:
   sprite: {fileID: -2408530018317867212, guid: 3325be58caa077145875edc55235db34, type: 3}
   _name: Shotgun
   ID: 8
-  equipPrefab: {fileID: 5034301034856951075, guid: 7b6838b3065137842a66e917e99171b2, type: 3}
+  equipPrefab: {fileID: 5972384561809364490, guid: f17b7b8ae91406943bd7feb56fa41f43, type: 3}
