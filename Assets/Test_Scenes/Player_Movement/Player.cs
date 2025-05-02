@@ -76,12 +76,8 @@ void Awake()
 {
     Singleton = this;
 }
-
     //Hand
     private SpriteRenderer _handSR;
-
-
-
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -405,20 +401,22 @@ void Awake()
         animator.SetFloat("MouseY", dir.y);
         _equipped.transform.up = dir;
 
-        Vector3 offset = _hand.transform.localPosition;
-        if (dir.x < 0) offset.y = handFlip;
-        else offset.y = -handFlip;
-
         if (!_weaponSR) _weaponSR = _equipped.GetComponentInChildren<SpriteRenderer>();
-        _handSR = _hand.GetComponent<SpriteRenderer>();
 
         if (_weaponSR)
         {
             _weaponSR.flipY = (dir.x < 0);  // flip only when pointing left
         }
-        _hand.transform.localPosition = offset;
+
+        _handSR = _hand.GetComponent<SpriteRenderer>();
+        if (dir.y > 0)
+        {
+            _handSR.sortingOrder = 3;
+        }
+        else _handSR.sortingOrder = 4;
 
         _equipped.transform.localPosition = (Vector3)dir * handRadius + handOffset;
+        _hand.transform.localPosition = (Vector3)dir * handRadius + handOffset;
     }
 
 
