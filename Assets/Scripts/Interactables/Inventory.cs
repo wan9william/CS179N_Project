@@ -110,11 +110,26 @@ public class Inventory : MonoBehaviour
         {
             if(inventorySlots[i].myItem == null)
             {
-                InventoryItem newItem = Instantiate(itemPrefab, inventorySlots[i].transform);
+                // Find or create the Image component under the slot
+                Transform imageTransform = inventorySlots[i].transform.Find("ItemImage");
+                if (imageTransform == null)
+                {
+                    // Create a new GameObject for the item image
+                    GameObject imageObj = new GameObject("ItemImage");
+                    imageObj.transform.SetParent(inventorySlots[i].transform);
+                    imageObj.transform.localPosition = Vector3.zero;
+                    imageTransform = imageObj.transform;
+                    
+                    // Add required components
+                    Image image = imageObj.AddComponent<Image>();
+                    image.raycastTarget = true;
+                }
+                
+                // Add InventoryItem component to the image object
+                InventoryItem newItem = imageTransform.gameObject.AddComponent<InventoryItem>();
                 newItem.Initialize(_currItem, inventorySlots[i]);
                 inventorySlots[i].myItem = newItem;
                 return; // Exit after spawning one item
-                break;
             }
         }
     }
@@ -190,4 +205,5 @@ public class Inventory : MonoBehaviour
     {
         return maxStackSize;
     }
+
 }
