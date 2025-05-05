@@ -4,19 +4,10 @@ using Pathfinding;
 [RequireComponent(typeof(Seeker), typeof(Rigidbody2D))]
 public class EnemyAI : MonoBehaviour
 {
-    [Header("Settings")]
-    public EnemySettings settings;
-    public Transform target;
-    public SpriteRenderer spriteRenderer;
-
-    /*
-    [Header("Patrol Settings")]
-    public Transform[] patrolPoints;
-    public float waitTimeAtPoint = 1f;
-
-    private int patrolIndex = 0;
-    private float waitTimer = 0f;
-    */
+    [Header("Enemy Stats")]
+    public EnemyStats stats;                // Holds all movement and attack values
+    public Transform target;                // Assign the player here
+    public SpriteRenderer spriteRenderer;   // Auto-assigned if not set
 
     private Seeker seeker;
     private Rigidbody2D rb;
@@ -25,7 +16,8 @@ public class EnemyAI : MonoBehaviour
     private int currentWaypoint = 0;
     private bool reachedEndOfPath = false;
 
-    private EnemyState currentState = EnemyState.Chase; // Start directly chasing
+    private EnemyAttack attackBehavior;     // Reference to Melee or Ranged attack script
+    private EnemyState currentState = EnemyState.Chase;
 
     void Start()
     {
@@ -34,7 +26,10 @@ public class EnemyAI : MonoBehaviour
         if (spriteRenderer == null)
             spriteRenderer = GetComponent<SpriteRenderer>();
 
+        attackBehavior = GetComponent<EnemyAttack>(); // Tries to find Melee or RangedAttack
         currentDirection = Vector2.zero;
+
+        // Recalculate path to target every 0.2 seconds
         InvokeRepeating(nameof(UpdatePath), 0f, 0.2f);
     }
 
@@ -63,51 +58,11 @@ public class EnemyAI : MonoBehaviour
                 rb.linearVelocity = Vector2.zero;
                 break;
 
-            /*
-            case EnemyState.Patrol:
-                HandlePatrol();
-                break;
-            */
-
             case EnemyState.Chase:
                 HandleChase();
                 break;
         }
     }
-
-    /*
-    void HandlePatrol()
-    {
-        if (patrolPoints.Length == 0)
-            return;
-
-        Transform point = patrolPoints[patrolIndex];
-        float distance = Vector2.Distance(rb.position, point.position);
-
-        if (distance <= 0.2f)
-        {
-            waitTimer += Time.deltaTime;
-            if (waitTimer >= waitTimeAtPoint)
-            {
-                patrolIndex = (patrolIndex + 1) % patrolPoints.Length;
-                waitTimer = 0f;
-            }
-
-            rb.velocity = Vector2.zero;
-            return;
-        }
-
-        Vector2 direction = ((Vector2)point.position - rb.position).normalized;
-        currentDirection = Vector2.Lerp(currentDirection, direction, 0.2f);
-        Vector2 nextPosition = rb.position + currentDirection * settings.speed * Time.fixedDeltaTime;
-        rb.MovePosition(nextPosition);
-
-        if (settings.flipSprite && spriteRenderer != null)
-        {
-            spriteRenderer.flipX = currentDirection.x < -0.05f;
-        }
-    }
-    */
 
     void HandleChase()
     {
@@ -117,24 +72,34 @@ public class EnemyAI : MonoBehaviour
             return;
         }
 
-        if (Vector2.Distance(rb.position, target.position) <= settings.stopDistance)
+        // Try to attack the player
+        if (attackBehavior != null)
+        {
+            attackBehavior.TryAttack(target, stats); 
+        }
+
+        // Stop movement if close enough to player
+        if (Vector2.Distance(rb.position, target.position) <= stats.stopDistance)
         {
             rb.linearVelocity = Vector2.zero;
             return;
         }
 
+        // Move toward next path point
         Vector2 targetDirection = ((Vector2)path.vectorPath[currentWaypoint] - rb.position).normalized;
         currentDirection = Vector2.Lerp(currentDirection, targetDirection, 0.2f);
-        Vector2 nextPosition = rb.position + currentDirection * settings.speed * Time.fixedDeltaTime;
+        Vector2 nextPosition = rb.position + currentDirection * stats.moveSpeed * Time.fixedDeltaTime;
         rb.MovePosition(nextPosition);
 
-        if (settings.flipSprite && spriteRenderer != null)
+        // Flip sprite left/right based on movement direction
+        if (stats.flipSprite && spriteRenderer != null)
         {
             spriteRenderer.flipX = currentDirection.x < -0.05f;
         }
 
+        // Check if we're close enough to next waypoint
         float distance = Vector2.Distance(rb.position, path.vectorPath[currentWaypoint]);
-        if (distance < settings.nextWaypointDistance)
+        if (distance < stats.nextWaypointDistance)
         {
             currentWaypoint++;
         }

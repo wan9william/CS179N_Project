@@ -10,9 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c9b2cec5e95900744a60338541320004, type: 3}
-  m_Name: BasicEnemy
+  m_Name: basicEnemy
   m_EditorClassIdentifier: 
-  speed: 5
-  stopDistance: 1.5
+  moveSpeed: 3
+  stopDistance: 1
   nextWaypointDistance: 0.3
   flipSprite: 1
+  attackRange: 1
+  attackCooldown: 1
+  attackDamage: 15
+  projectilePrefab: {fileID: 0}
+  projectileSpeed: 10
