@@ -183,12 +183,6 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IDropHandler
     // Called when an item is dropped onto slot and handles stacking of same items and placement of new items
     public void OnDrop(PointerEventData eventData)
     {
-        if (transform.childCount == 0)
-        {
-            GameObject dropped = eventData.pointerDrag;
-            InventoryItem dragItem = dropped.GetComponent<InventoryItem>();
-            dragItem.parentAfterDrag = transform;
-        }
         if (Inventory.carriedItem != null)
         {
             // Check if the slot has a tag restriction
