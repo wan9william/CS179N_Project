@@ -62,6 +62,11 @@ public class Player : MonoBehaviour
     [SerializeField] private float handLayerFront = 6;
     [SerializeField] private float handLayerBack = 2;
 
+    //Camera Parameters
+    [Header("Camera Settings")]
+    [SerializeField] private float trauma;
+    [SerializeField] private float translational_shake_max;
+    [SerializeField] private float rotational_shake_max;
 
 
     //Equipped Tool
@@ -104,6 +109,16 @@ void Awake()
 
         //we could check if we have a weapon every frame
         //_weaponScript = _equipped != null ? _equipped.GetComponentInChildren<Weapon>() : null;
+
+        //reduce trauma after each frame
+        trauma -= 1f * Time.deltaTime;
+        trauma = Mathf.Clamp(trauma, 0f, 1f);
+
+        if (_camera != null)
+        {
+            _camera.transform.localPosition = new Vector3(Random.Range(-translational_shake_max, translational_shake_max) * Mathf.Pow(trauma, 3), Random.Range(-translational_shake_max, translational_shake_max) * Mathf.Pow(trauma, 3), -10);
+            _camera.transform.localEulerAngles = new Vector3(0, 0, Random.Range(-rotational_shake_max, rotational_shake_max) * Mathf.Pow(trauma, 3));
+        }
 
 
         if (sprint_amount < 100)
@@ -188,6 +203,9 @@ void Awake()
 
                 //This will be the state that actually creates the bullet, muzzle flash, recoil, etc.
 
+
+                trauma += 0.5f;
+                trauma = Mathf.Clamp(trauma, 0f, 1f);
 
                 //Any data specific to a weapon (fire rate, damage, etc) should likely be stored in a Scriptable Object (feel free to look it up). This will make our implementation easier.
                 //As well as more memory friendly.

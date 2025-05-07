@@ -12,12 +12,20 @@ public class Resource : Interactable
         player.SetInteract(null);
 
         player.getInventory().addItem(new Tuple<Item_ScriptableObj,int>(_resource,1));
+
+        transform.gameObject.SetActive(false);
     }
 
     protected override void ExplosionVFX()
     {
         //Inefficient, replace later
         Instantiate(_explosion, transform.position, Quaternion.identity);
+    }
+
+    protected override void Tick()
+    {
+        //Not implemented
+        return;
     }
 
     public Item_ScriptableObj GetResource() { return _resource; }
