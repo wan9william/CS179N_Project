@@ -231,6 +231,8 @@ MonoBehaviour:
   bloomDecaySpeed: 3
   bulletsPerShot: 1
   perBulletSpread: 5
+  magazineSize: 30
+  reloadTime: 1.5
 --- !u!1 &7903444706632405820
 GameObject:
   m_ObjectHideFlags: 0
