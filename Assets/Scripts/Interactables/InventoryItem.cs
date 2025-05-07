@@ -30,6 +30,8 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     // marks the item as carried
     public void OnBeginDrag(PointerEventData eventData)
     {
+
+        Debug.Log("drag!");
         // Only allow right-click dragging
         if (eventData.button != PointerEventData.InputButton.Right)
             return;
