@@ -2,32 +2,33 @@ using UnityEngine;
 
 public class RangedAttack : MonoBehaviour, EnemyAttack
 {
-    public EnemyStats stats;
-    public Transform shootPoint;
-
     private float lastAttackTime = -Mathf.Infinity;
 
-    public void TryAttack(Transform target, EnemyStats _stats) // ✅ Match interface
+    public void TryAttack(Transform target, EnemyStats stats)
     {
-        if (target == null || stats.projectilePrefab == null || shootPoint == null)
+        if (target == null || stats == null || stats.projectilePrefab == null)
             return;
 
+        // Check attack cooldown
         if (Time.time - lastAttackTime < stats.attackCooldown)
             return;
 
+        // Only attack if within range
         float distance = Vector2.Distance(transform.position, target.position);
-        if (distance <= stats.attackRange)
+        if (distance > stats.attackRange)
+            return;
+
+        // Spawn projectile from enemy's position
+        Vector2 spawnPos = transform.position;
+        Vector2 direction = (target.position - transform.position).normalized;
+
+        GameObject proj = Instantiate(stats.projectilePrefab, spawnPos, Quaternion.identity);
+
+        if (proj.TryGetComponent<Rigidbody2D>(out var rb))
         {
-            Vector2 direction = (target.position - shootPoint.position).normalized;
-            GameObject proj = Instantiate(stats.projectilePrefab, shootPoint.position, Quaternion.identity);
-
-            Rigidbody2D rb = proj.GetComponent<Rigidbody2D>();
-            if (rb != null)
-                rb.linearVelocity = direction * stats.projectileSpeed;
-
-            Debug.Log("Ranged attack fired!");
-            lastAttackTime = Time.time;
+            rb.linearVelocity = direction * stats.projectileSpeed;
         }
+
+        lastAttackTime = Time.time;
     }
 }
-
