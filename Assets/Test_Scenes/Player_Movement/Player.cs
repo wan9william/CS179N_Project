@@ -14,7 +14,7 @@ public class Player : MonoBehaviour
 
     //States
     private enum PLAYER_MOVEMENT_STATES { IDLE, WALK };
-    private enum PLAYER_ACTION_STATES { IDLE, SHOOT, INTERACT, SELECT }
+    private enum PLAYER_ACTION_STATES { IDLE, SHOOT, INTERACT, SELECT, DROP }
 
 
     private PLAYER_ACTION_STATES action_state = PLAYER_ACTION_STATES.IDLE;
@@ -26,6 +26,9 @@ public class Player : MonoBehaviour
     [SerializeField] private float horizontal_multiplier = 1.0f;
     [SerializeField] private float vertical_multiplier = 1.0f;
     [SerializeField] private float dampening;
+
+    //Drop Parameters
+    [SerializeField] private float dropForce = 0.0f;
      
     private float eps = 1e-5f;
 
@@ -125,6 +128,37 @@ public class Player : MonoBehaviour
                     {
                         action_state = PLAYER_ACTION_STATES.SHOOT;
                     }
+                }
+
+                if (Input.GetKeyUp(KeyCode.Q) && dropForce > 0f)
+                {
+
+                    //Instantiate object
+                    GameObject droppedItem = Instantiate(_equipped, transform.position, Quaternion.identity);
+                    droppedItem.transform.localScale = Vector3.one;
+                    droppedItem.layer = 6; //Item_RB layer
+                    
+                    //Add rigidbody if necessary and calculate direction
+                    Rigidbody2D rb = !droppedItem.GetComponent<Rigidbody2D>() ? droppedItem.AddComponent<Rigidbody2D>() : droppedItem.GetComponent<Rigidbody2D>();
+                    BoxCollider2D bc = !droppedItem.GetComponent<BoxCollider2D>() ? droppedItem.AddComponent<BoxCollider2D>() : droppedItem.GetComponent<BoxCollider2D>();
+                    bc.isTrigger = true;
+                    Vector2 MousePos = Input.mousePosition;
+                    Vector3 MouseWorldPos = _camera.ScreenToWorldPoint(MousePos);
+                    Vector2 dir = ((Vector2)MouseWorldPos - (Vector2)transform.position).normalized;
+                    rb.linearVelocity = dir*3f;
+                    rb.gravityScale = 0;
+                    rb.linearDamping = 2f;
+
+                    //reset drop force
+                    dropForce = 0f;
+
+                    Destroy(_equipped);
+                    _equipped = null;
+                    break;
+                }
+                else if (Input.GetKey(KeyCode.Q)) {
+                    dropForce += 0.3f * Time.deltaTime;
+                    Mathf.Clamp(dropForce, 0, 1);
                 }
 
                 break;
@@ -270,6 +304,9 @@ public class Player : MonoBehaviour
     }
 
     private void RotateEquipped() {
+
+        
+
         Vector2 MousePos = Input.mousePosition;
         Vector3 MouseWorldPos = _camera.ScreenToWorldPoint(MousePos);
         Vector2 dir = ((Vector2)MouseWorldPos - (Vector2)transform.position).normalized;
@@ -277,6 +314,7 @@ public class Player : MonoBehaviour
 
         animator.SetFloat("MouseX", dir.x);
         animator.SetFloat("MouseY", dir.y);
+        if (!_equipped) return;
         _equipped.transform.up = dir;
 
         if(!_weaponSR) _weaponSR = _equipped.GetComponentInChildren<SpriteRenderer>();
