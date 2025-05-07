@@ -13,6 +13,7 @@ public abstract class Interactable : MonoBehaviour
     public void Update()
     {
         Tick();
+        CheckHealth();
     }
     /// ///////////////////////////
     public void Start()
@@ -43,8 +44,9 @@ public abstract class Interactable : MonoBehaviour
     }
     public void Hit(float damage) { 
         health -= damage;
-        if(health < 0) SelfDestruct();
     }
+
+    private void CheckHealth() { if (health < 0) SelfDestruct(); }
 
     public void SelfDestruct() {
         transform.gameObject.SetActive(false);

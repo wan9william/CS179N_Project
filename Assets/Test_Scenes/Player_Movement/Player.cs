@@ -73,6 +73,9 @@ public class Player : MonoBehaviour
     private Weapon _weaponScript;
     private SpriteRenderer _weaponSR;
 
+    //Currency
+    [SerializeField] private int money = 0;
+
 
 
 public static Player Singleton;
@@ -476,6 +479,10 @@ void Awake()
             NormalizeChildScale(child); // Recursively reset nested children
         }
     }
+
+    public ref int GetMoney() { return ref money; }
+
+    public void SetMoney(int val) { money = val; }
 
 }
 
