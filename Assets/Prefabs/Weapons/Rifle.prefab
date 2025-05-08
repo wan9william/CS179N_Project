@@ -345,6 +345,8 @@ MonoBehaviour:
   animator: {fileID: 12079794585811555}
   spriteRenderer: {fileID: 2490300557013193417}
   objectManager: {fileID: 0}
+  magazineSize: 30
+  reloadTime: 1.5
 --- !u!1 &7903444706632405820
 GameObject:
   m_ObjectHideFlags: 0

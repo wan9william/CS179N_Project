@@ -31,6 +31,10 @@ public class Weapon : MonoBehaviour
     [SerializeField] private int bulletsPerShot = 1; // 1 = normal gun, 6 = shotgun
     [SerializeField] private float perBulletSpread = 5f; // angle spread between bullets
 
+    [Header("Ammo Settings")]
+    [SerializeField] private int magazineSize = 10;
+    [SerializeField] private float reloadTime = 1.5f;
+
     [Header("Animation Settings")]
     public Animator animator;
     public SpriteRenderer spriteRenderer;
@@ -42,11 +46,15 @@ public class Weapon : MonoBehaviour
     private float currentSpread = 0f;
     private float lastFireTime = 0f;
 
+    private int currentAmmo;
+    private bool isReloading = false;
+
     void Start()
     {
         if(objectManager == null) objectManager = GameObject.FindWithTag("Object_Manager").GetComponent<ObjectManager>();
 
 
+        currentAmmo = magazineSize;
         if (weaponOwner == null)
             weaponOwner = transform.root; // auto-assign the top-level parent if needed
     }   
@@ -67,6 +75,12 @@ public class Weapon : MonoBehaviour
     // Check if within firerate
     if (Time.time < lastFireTime + fireCooldown)
     {
+        return;
+    }
+    if (currentAmmo <= 0)
+    {
+        Debug.Log("[Weapon] Out of ammo! Reload required.");
+        StartCoroutine(Reload());
         return;
     }
 
@@ -101,7 +115,20 @@ public class Weapon : MonoBehaviour
         }
 
     // Bloom increases with each shot (not each pellet)
+    currentAmmo--;
     currentSpread = Mathf.Min(currentSpread + bloomIncreasePerShot, maxSpreadAngle);
     lastFireTime = Time.time;
     }
+}
+
+private IEnumerator Reload()
+{
+    isReloading = true;
+    Debug.Log("[Weapon] Reloading...");
+
+    yield return new WaitForSeconds(reloadTime);
+
+    currentAmmo = magazineSize;
+    isReloading = false;
+    Debug.Log("[Weapon] Reloaded.");
 }
