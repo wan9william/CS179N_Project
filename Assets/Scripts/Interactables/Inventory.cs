@@ -4,10 +4,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Inventory : MonoBehaviour
+public class Inventory
 {
     public static Inventory Singleton;
-    public static InventoryItem carriedItem;
+    public InventoryItem carriedItem;
     [SerializeField] InventorySlot[] inventorySlots;
     [SerializeField] int selectedSlot;
 
@@ -32,8 +32,11 @@ public class Inventory : MonoBehaviour
 
     public Inventory(Transform _tf) {
         inventorySlots = new InventorySlot[8];
+
         InitializeInventory(_tf); 
     }
+
+    
 
     //When adding an item to the inventory
     public void addItem(Tuple<Item_ScriptableObj,int> new_item) {
@@ -62,7 +65,7 @@ public class Inventory : MonoBehaviour
         for (int i = 0; i < 8; i++)
         {
             // if items of a different type, then find new available inventory slots
-            if (!inventorySlots[i].item)
+            if (inventorySlots[i].item.getID() == 0)
             {
                 int amountToAdd = Mathf.Min(quantity, maxStackSize);
                 inventorySlots[i].SetItem_A(new Tuple<Item_ScriptableObj, int>(item, amountToAdd));
@@ -92,6 +95,8 @@ public class Inventory : MonoBehaviour
     public void InitializeInventory(Transform _tf) {
         for (int i = 0; i < 8; ++i) {
             InventorySlot slot = _tf.gameObject.transform.GetChild(i).GetComponent<InventorySlot>();
+            slot.SetInven(this);
+
             inventorySlots[i] = slot;
         }
     }
@@ -99,7 +104,7 @@ public class Inventory : MonoBehaviour
 
     public void SpawnInventoryItem(Item currItem = null)
     {
-        Item _currItem = currItem;
+        /*Item _currItem = currItem;
         if(_currItem == null)
         {
             int rand = UnityEngine.Random.Range(0, items.Length);
@@ -131,21 +136,27 @@ public class Inventory : MonoBehaviour
                 inventorySlots[i].myItem = newItem;
                 return; // Exit after spawning one item
             }
-        }
+        }*/
     }
 
     void Update()
     {
+        //Not even running?
+
         isShiftPressed = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
         
         if(carriedItem != null)
         {
             carriedItem.transform.position = Input.mousePosition;
         }
+
+        Debug.Log(carriedItem);
     }
 
     public void SetCarriedItem(InventoryItem item)
     {
+        carriedItem = item;
+        /*
         if (carriedItem != null)
         {
             if (item.activeSlot.myTag != slotTag.None && item.activeSlot.myTag != carriedItem.myItem.itemTag)
@@ -160,6 +171,7 @@ public class Inventory : MonoBehaviour
                 if (totalQuantity <= maxStackSize)
                 {
                     item.SetQuantity(totalQuantity);
+                    Debug.Log("Set to null here");
                     carriedItem = null;
                     return;
                 }
@@ -177,10 +189,13 @@ public class Inventory : MonoBehaviour
             item.SetQuantity(originalQuantity - splitQuantity);
             
             // Create new carried item with split quantity
+            
+            /*
             InventoryItem splitItem = Instantiate(itemPrefab, dragTransform);
             splitItem.Initialize(item.myItem, null);
             splitItem.SetQuantity(splitQuantity);
             carriedItem = splitItem;
+            
         }
         else
         {
@@ -191,7 +206,7 @@ public class Inventory : MonoBehaviour
 
             carriedItem = item;
             item.transform.SetParent(dragTransform);
-        }
+        }*/
     }
 
     public void Equip(slotTag tag, InventoryItem item = null)

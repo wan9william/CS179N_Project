@@ -3,28 +3,43 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using static UnityEditor.Progress;
 
 public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     [HideInInspector] public Transform parentAfterDrag;
     public Image itemIcon;
-    public Item myItem { get; set; }
+    //public Item myItem { get; set; }
+    [SerializeField] public Item_ScriptableObj myItem;
     public InventorySlot activeSlot { get; set; }
     private int quantity = 1;
+
+    [SerializeField] private Inventory inven;
 
     private void Awake()
     {
         itemIcon = GetComponent<Image>();
+        myItem = Resources.Load("Empty") as Item_ScriptableObj;
     }
-    public void Initialize(Item item, InventorySlot invenSlot)
+    public void Initialize(Item_ScriptableObj item, InventorySlot invenSlot)
     {
+
         activeSlot = invenSlot;
+        //inven = invenSlot.GetInven();
+        Debug.Log("Initialized");
+        Debug.Log($"inven is {inven}");
+
         if(activeSlot != null)
         {
             activeSlot.myItem = this;
         }
         myItem = item;
-        itemIcon.sprite = item.sprite;
+        itemIcon.sprite = item.getSprite();
+    }
+
+    public void SetInven(Inventory _inventory)
+    {
+        inven = _inventory;
     }
 
     // marks the item as carried
@@ -36,6 +51,13 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         if (eventData.button != PointerEventData.InputButton.Right)
             return;
 
+        //if (activeSlot == null) return;
+        Debug.Log(this);
+        if (inven != null)
+        {
+            inven.SetCarriedItem(this);
+            Debug.Log(inven.carriedItem.myItem);
+        }
         // Store original parent for returning if drag fails
         parentAfterDrag = transform.parent;
         
@@ -45,27 +67,30 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         
         // Disable raycast on item while dragging
         itemIcon.raycastTarget = false;
-        
+
+
+
+        return;
         // Set as carried item in inventory
-        if (activeSlot != null)
+
+        // If shift is held and we have more than 1 item, prepare for splitting
+        bool isShiftHeld = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
+        if (isShiftHeld && quantity > 1)
         {
-            // If shift is held and we have more than 1 item, prepare for splitting
-            bool isShiftHeld = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
-            if (isShiftHeld && quantity > 1)
-            {
-                int splitAmount = quantity / 2;
-                SetQuantity(quantity - splitAmount);
+            int splitAmount = quantity / 2;
+            SetQuantity(quantity - splitAmount);
                 
-                // Create new carried item with split quantity
-                InventoryItem splitItem = Instantiate(gameObject, transform.root).GetComponent<InventoryItem>();
-                splitItem.Initialize(myItem, null);
-                splitItem.SetQuantity(splitAmount);
-                Inventory.Singleton.SetCarriedItem(splitItem);
-            }
-            else
-            {
-                Inventory.Singleton.SetCarriedItem(this);
-            }
+            // Create new carried item with split quantity
+            /*
+            InventoryItem splitItem = Instantiate(gameObject, transform.root).GetComponent<InventoryItem>();
+            splitItem.Initialize(myItem, null);
+            splitItem.SetQuantity(splitAmount);
+            inven.SetCarriedItem(splitItem);
+            */
+        }
+        else
+        {
+            inven.SetCarriedItem(this);
         }
     }
 
@@ -75,7 +100,7 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         if (eventData.button != PointerEventData.InputButton.Right)
             return;
             
-        Debug.Log("Dragging at: " + Input.mousePosition);
+        //Debug.Log("Dragging at: " + Input.mousePosition);
         // Update position to follow cursor
         transform.position = Input.mousePosition;
     }
@@ -88,16 +113,21 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
         // Re-enable raycast
         itemIcon.raycastTarget = true;
-        
+
+
+        transform.parent = parentAfterDrag;
+        transform.localPosition = Vector3.zero;
+        transform.SetAsFirstSibling();
+
         // If we're still being carried (wasn't dropped on a valid slot)
-        if (Inventory.carriedItem == this)
+        /*if (inven.carriedItem == this)
         {
             // Return to original slot
             if (activeSlot != null)
             {
                 transform.SetParent(activeSlot.transform);
                 transform.localPosition = Vector3.zero;
-                Inventory.carriedItem = null;
+                inven.carriedItem = null;
             }
             else
             {
@@ -105,7 +135,7 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
                 transform.SetParent(parentAfterDrag);
                 transform.localPosition = Vector3.zero;
             }
-        }
+        }*/
     }
 
     public void SetQuantity(int weight)
@@ -128,13 +158,21 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         return quantity;
     }
 
+    public void SetItem(int quantity, Item_ScriptableObj item)
+    {
+        SetQuantity(quantity);
+        Debug.Log(item);
+        itemIcon.sprite = item.getSprite();
+
+    }
+
     void KeyboardControls()
     {
         for(int i = 0; i < 8; i++)
         {
             if(Input.GetKeyDown(KeyCode.Alpha1+i))
             {
-                Inventory.Singleton.SetCarriedItem(this);
+                inven.SetCarriedItem(this);
                 break;
             }
         }

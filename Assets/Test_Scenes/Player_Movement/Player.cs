@@ -67,6 +67,9 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+
+
         float current_speed = Input.GetKey(KeyCode.LeftShift) ? 1.5f * movement_speed : movement_speed;
         //STATE ACTIONS & TRANSITIONS FOR THE ACTION STATE
         switch (action_state)

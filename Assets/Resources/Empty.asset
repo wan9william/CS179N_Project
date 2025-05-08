@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dc2918b2ec928214aa3865215bb75ed4, type: 3}
-  m_Name: Duck
+  m_Name: Empty
   m_EditorClassIdentifier: 
   color: {r: 1, g: 0, b: 0, a: 1}
-  sprite: {fileID: -5580227407950313359, guid: 2a4861251bfa03d4fbfe9d08b7ce92e8, type: 3}
-  _name: Duck
-  ID: 1
+  sprite: {fileID: 0}
+  _name: Empty
+  ID: 0
