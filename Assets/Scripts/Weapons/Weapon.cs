@@ -9,6 +9,7 @@ public enum FireMode
     FullAuto
 }
 
+
 public class Weapon : MonoBehaviour
 {
     [SerializeField] private Transform weaponOwner; // Reference to player or owner
@@ -48,6 +49,18 @@ public class Weapon : MonoBehaviour
 
     private int currentAmmo;
     private bool isReloading = false;
+
+    private IEnumerator Reload()
+    {
+        isReloading = true;
+        Debug.Log("[Weapon] Reloading...");
+
+        yield return new WaitForSeconds(reloadTime);
+
+        currentAmmo = magazineSize;
+        isReloading = false;
+        Debug.Log("[Weapon] Reloaded.");
+    }
 
     void Start()
     {
@@ -119,16 +132,4 @@ public class Weapon : MonoBehaviour
     currentSpread = Mathf.Min(currentSpread + bloomIncreasePerShot, maxSpreadAngle);
     lastFireTime = Time.time;
     }
-}
-
-private IEnumerator Reload()
-{
-    isReloading = true;
-    Debug.Log("[Weapon] Reloading...");
-
-    yield return new WaitForSeconds(reloadTime);
-
-    currentAmmo = magazineSize;
-    isReloading = false;
-    Debug.Log("[Weapon] Reloaded.");
 }
