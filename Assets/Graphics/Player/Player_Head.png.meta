@@ -1,16 +1,25 @@
 fileFormatVersion: 2
-guid: 2da74cd066d694348801241e3ea43af0
+guid: b9c1c15c787a4624587299bd17aa57e4
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 1850993289195783787
-    second: Shadow and Hand(1)_0
+      213: 420805981189327916
+    second: Player_Head_0
   - first:
-      213: 4732263574786454528
-    second: Shadow and Hand(1)_1
+      213: -2988551339100031403
+    second: Player_Head_1
   - first:
-      213: -989480982941860982
-    second: Shadow and Hand(1)_2
+      213: -1566629025023913926
+    second: Player_Head_2
+  - first:
+      213: 3836644782481159340
+    second: Player_Head_3
+  - first:
+      213: 8311160518319346697
+    second: Player_Head_4
+  - first:
+      213: 4713104791976846116
+    second: Player_Head_5
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -46,9 +55,9 @@ TextureImporter:
     filterMode: 0
     aniso: 1
     mipBias: 0
-    wrapU: 1
-    wrapV: 1
-    wrapW: 1
+    wrapU: 0
+    wrapV: 0
+    wrapW: 0
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
@@ -57,7 +66,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 34
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -78,8 +87,8 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
+    maxTextureSize: 4096
+    resizeAlgorithm: 1
     textureFormat: -1
     textureCompression: 0
     compressionQuality: 50
@@ -106,67 +115,133 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Shadow and Hand(1)_0
+      name: Player_Head_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 25
-        width: 7
-        height: 7
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 1
+        y: 41
+        width: 18
+        height: 18
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: b66852ce69c00b910800000000000000
-      internalID: 1850993289195783787
+      spriteID: c2c46247fc007d500800000000000000
+      internalID: 420805981189327916
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Shadow and Hand(1)_1
+      name: Player_Head_1
       rect:
         serializedVersion: 2
-        x: 4
-        y: 16
-        width: 24
-        height: 7
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 21
+        y: 41
+        width: 18
+        height: 18
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 004baae06a06ca140800000000000000
-      internalID: 4732263574786454528
+      spriteID: 556bcef14688686d0800000000000000
+      internalID: -2988551339100031403
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Shadow and Hand(1)_2
+      name: Player_Head_2
       rect:
         serializedVersion: 2
-        x: 4
-        y: 9
-        width: 24
-        height: 7
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 1
+        y: 21
+        width: 18
+        height: 18
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: a8bfebbd948a442f0800000000000000
-      internalID: -989480982941860982
+      spriteID: a3012acb337324ae0800000000000000
+      internalID: -1566629025023913926
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_Head_3
+      rect:
+        serializedVersion: 2
+        x: 21
+        y: 21
+        width: 18
+        height: 18
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ca4352d2a108e3530800000000000000
+      internalID: 3836644782481159340
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_Head_4
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 1
+        width: 18
+        height: 18
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9041dadf47c275370800000000000000
+      internalID: 8311160518319346697
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_Head_5
+      rect:
+        serializedVersion: 2
+        x: 21
+        y: 1
+        width: 18
+        height: 18
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 423a8f256df486140800000000000000
+      internalID: 4713104791976846116
       vertices: []
       indices: 
       edges: []
@@ -175,7 +250,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: c108d880168766942b1b7f51e3cf5498
     internalID: 0
     vertices: []
     indices: 
@@ -185,9 +260,12 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Shadow and Hand(1)_0: 1850993289195783787
-      Shadow and Hand(1)_1: 4732263574786454528
-      Shadow and Hand(1)_2: -989480982941860982
+      Player_Head_0: 420805981189327916
+      Player_Head_1: -2988551339100031403
+      Player_Head_2: -1566629025023913926
+      Player_Head_3: 3836644782481159340
+      Player_Head_4: 8311160518319346697
+      Player_Head_5: 4713104791976846116
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -1,16 +1,16 @@
 fileFormatVersion: 2
-guid: 2da74cd066d694348801241e3ea43af0
+guid: 65026d78d60b823458c116fcfb72e758
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 1850993289195783787
-    second: Shadow and Hand(1)_0
+      213: 5465892869409603592
+    second: Player_Disembodied_0
   - first:
-      213: 4732263574786454528
-    second: Shadow and Hand(1)_1
+      213: -4997868668094409802
+    second: Player_Disembodied_1
   - first:
-      213: -989480982941860982
-    second: Shadow and Hand(1)_2
+      213: -5917396222487251761
+    second: Player_Disembodied_2
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -57,7 +57,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 34
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -78,8 +78,8 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
+    maxTextureSize: 4096
+    resizeAlgorithm: 1
     textureFormat: -1
     textureCompression: 0
     compressionQuality: 50
@@ -106,67 +106,155 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Shadow and Hand(1)_0
+      name: Player_Disembodied_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 25
+        x: 5
+        y: 10
+        width: 3
+        height: 3
+      alignment: 2
+      pivot: {x: 0.5, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 800008dea90cadb40800000000000000
+      internalID: 5465892869409603592
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_Disembodied_1
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 10
         width: 7
         height: 7
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 1
+      pivot: {x: 0, y: 1}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: b66852ce69c00b910800000000000000
-      internalID: 1850993289195783787
+      spriteID: 6b39d2c1de004aab0800000000000000
+      internalID: -4997868668094409802
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Shadow and Hand(1)_1
+      name: Player_Disembodied_2
       rect:
         serializedVersion: 2
-        x: 4
-        y: 16
-        width: 24
+        x: 28
+        y: 10
+        width: 11
         height: 7
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 004baae06a06ca140800000000000000
-      internalID: 4732263574786454528
+      spriteID: fc4b863cc7f21eda0800000000000000
+      internalID: -5917396222487251761
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Shadow and Hand(1)_2
+      name: Player_Disembodied_3
       rect:
         serializedVersion: 2
-        x: 4
-        y: 9
-        width: 24
-        height: 7
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 5
+        y: 1
+        width: 3
+        height: 3
+      alignment: 2
+      pivot: {x: 0.5, y: 1}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: a8bfebbd948a442f0800000000000000
-      internalID: -989480982941860982
+      spriteID: 9f2941863017f8a41958b5ea720017fa
+      internalID: -1186626860
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_Disembodied_4
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 1
+        width: 7
+        height: 7
+      alignment: 3
+      pivot: {x: 1, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a4687d89bae99a94f8fa66d382b97a11
+      internalID: 207961530
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_Disembodied_5
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 13
+        width: 2
+        height: 3
+      alignment: 2
+      pivot: {x: 0.5, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7881aaecfa8a4b14a9c054a4628d5cc6
+      internalID: 849076416
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_Disembodied_6
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 4
+        width: 2
+        height: 3
+      alignment: 2
+      pivot: {x: 0.5, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3aad54fa1a31ba146b090cdbd0b64cf6
+      internalID: -1892700747
       vertices: []
       indices: 
       edges: []
@@ -175,7 +263,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 17586743e9d8ae4499e847e97b39f718
     internalID: 0
     vertices: []
     indices: 
@@ -185,9 +273,13 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Shadow and Hand(1)_0: 1850993289195783787
-      Shadow and Hand(1)_1: 4732263574786454528
-      Shadow and Hand(1)_2: -989480982941860982
+      Player_Disembodied_0: 5465892869409603592
+      Player_Disembodied_1: -4997868668094409802
+      Player_Disembodied_2: -5917396222487251761
+      Player_Disembodied_3: -1186626860
+      Player_Disembodied_4: 207961530
+      Player_Disembodied_5: 849076416
+      Player_Disembodied_6: -1892700747
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

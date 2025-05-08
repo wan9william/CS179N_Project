@@ -1,16 +1,10 @@
 fileFormatVersion: 2
-guid: 2da74cd066d694348801241e3ea43af0
+guid: d95b1793e031a5242a44cf4b921d053b
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 1850993289195783787
-    second: Shadow and Hand(1)_0
-  - first:
-      213: 4732263574786454528
-    second: Shadow and Hand(1)_1
-  - first:
-      213: -989480982941860982
-    second: Shadow and Hand(1)_2
+      213: 7702769183129108996
+    second: Flashlight(1)_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -106,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Shadow and Hand(1)_0
+      name: Flashlight(1)_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 25
-        width: 7
-        height: 7
+        y: 7
+        width: 32
+        height: 18
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -121,52 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: b66852ce69c00b910800000000000000
-      internalID: 1850993289195783787
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Shadow and Hand(1)_1
-      rect:
-        serializedVersion: 2
-        x: 4
-        y: 16
-        width: 24
-        height: 7
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 004baae06a06ca140800000000000000
-      internalID: 4732263574786454528
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Shadow and Hand(1)_2
-      rect:
-        serializedVersion: 2
-        x: 4
-        y: 9
-        width: 24
-        height: 7
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: a8bfebbd948a442f0800000000000000
-      internalID: -989480982941860982
+      spriteID: 4028c33d2cbb5ea60800000000000000
+      internalID: 7702769183129108996
       vertices: []
       indices: 
       edges: []
@@ -185,9 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Shadow and Hand(1)_0: 1850993289195783787
-      Shadow and Hand(1)_1: 4732263574786454528
-      Shadow and Hand(1)_2: -989480982941860982
+      Flashlight(1)_0: 7702769183129108996
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -226,10 +226,10 @@ void Awake()
         // Equip if not already equipped
         if (_equipped == null && selectedPrefab != null)
         {
-        _equipped = Instantiate(selectedPrefab);
-        _equipped.transform.SetParent(transform, false);
-        _equipped.transform.localPosition = Vector3.zero;
-        _equipped.transform.localRotation = Quaternion.identity;
+            _equipped = Instantiate(selectedPrefab);
+            _equipped.transform.SetParent(transform, false);
+            _equipped.transform.localPosition = Vector3.zero;
+            _equipped.transform.localRotation = Quaternion.identity;
 
         // Scale up to cancel out the player's scale (e.g., 0.2 becomes 5x)
         Vector3 inverseScale = new Vector3(
@@ -399,9 +399,9 @@ void Awake()
 
         animator.SetFloat("MouseX", dir.x);
         animator.SetFloat("MouseY", dir.y);
-        _equipped.transform.up = dir;
+        if (_equipped) _equipped.transform.up = dir;
 
-        if (!_weaponSR) _weaponSR = _equipped.GetComponentInChildren<SpriteRenderer>();
+        if (!_weaponSR&&_equipped) _weaponSR = _equipped.GetComponentInChildren<SpriteRenderer>();
 
         if (_weaponSR)
         {
@@ -415,7 +415,7 @@ void Awake()
         }
         else _handSR.sortingOrder = 4;
 
-        _equipped.transform.localPosition = (Vector3)dir * handRadius + handOffset;
+        if(_equipped) _equipped.transform.localPosition = (Vector3)dir * handRadius + handOffset;
         _hand.transform.localPosition = (Vector3)dir * handRadius + handOffset;
     }
 
