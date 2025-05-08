@@ -58,6 +58,9 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
             inven.SetCarriedItem(this);
             Debug.Log(inven.carriedItem.myItem);
         }
+
+        quantity = transform.parent.GetComponent<InventorySlot>().GetQuantity();
+
         // Store original parent for returning if drag fails
         parentAfterDrag = transform.parent;
         
@@ -67,7 +70,7 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         
         // Disable raycast on item while dragging
         itemIcon.raycastTarget = false;
-
+        
 
 
         return;
@@ -160,7 +163,7 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     public void SetItem(int quantity, Item_ScriptableObj item)
     {
-        SetQuantity(quantity);
+        //SetQuantity(quantity);
         Debug.Log(item);
         itemIcon.sprite = item.getSprite();
 

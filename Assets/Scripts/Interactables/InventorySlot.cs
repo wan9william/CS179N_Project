@@ -145,8 +145,10 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IDropHandler
             if (totalQuantity <= maxStack)
             {
 
-                myItem.SetItem(totalQuantity,item.myItem);
-                //Destroy(item.gameObject);
+                //myItem.SetItem(totalQuantity,item.myItem);
+                SetItem_A(new Tuple<Item_ScriptableObj, int>(item.myItem, totalQuantity));
+
+
                 inven.carriedItem = null;
                 //send item back
                 item.transform.parent = item.parentAfterDrag;
@@ -160,13 +162,14 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IDropHandler
         if (myItem.myItem.getID() == 0)
         {
             int totalQuantity = item.GetQuantity();
+            Debug.Log("Total quantity " + totalQuantity);
             int maxStack = inven.GetMaxStackSize();
 
             if (totalQuantity <= maxStack)
             {
 
                 SetItem_A(new Tuple<Item_ScriptableObj,int>(item.myItem,totalQuantity));
-                //Destroy(item.gameObject);
+                
                 inven.carriedItem = null;
                 //send item back
                 item.transform.parent = item.parentAfterDrag;
