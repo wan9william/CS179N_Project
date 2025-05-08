@@ -141,7 +141,7 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IDropHandler
         {
             int totalQuantity = myItem.GetQuantity() + item.GetQuantity();
             int maxStack = inven.GetMaxStackSize();
-            
+
             if (totalQuantity <= maxStack)
             {
 
@@ -157,19 +157,16 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IDropHandler
                 return;
             }
         }
-
-        //If empty
-        if (myItem.myItem.getID() == 0)
+        else if (myItem.myItem.getID() == 0) //If empty
         {
             int totalQuantity = item.GetQuantity();
-            Debug.Log("Total quantity " + totalQuantity);
             int maxStack = inven.GetMaxStackSize();
 
             if (totalQuantity <= maxStack)
             {
 
-                SetItem_A(new Tuple<Item_ScriptableObj,int>(item.myItem,totalQuantity));
-                
+                SetItem_A(new Tuple<Item_ScriptableObj, int>(item.myItem, totalQuantity));
+
                 inven.carriedItem = null;
                 //send item back
                 item.transform.parent = item.parentAfterDrag;
@@ -178,7 +175,34 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IDropHandler
 
                 Item_ScriptableObj empty = Resources.Load("Empty") as Item_ScriptableObj;
 
-                item.transform.parent.GetComponent<InventorySlot>().SetItem_A(new Tuple<Item_ScriptableObj, int>(empty,0));
+                item.transform.parent.GetComponent<InventorySlot>().SetItem_A(new Tuple<Item_ScriptableObj, int>(empty, 0));
+                return;
+            }
+        }
+        else { //If another item exists in the box
+
+            int totalQuantity = item.GetQuantity();
+            int maxStack = inven.GetMaxStackSize();
+
+            if (totalQuantity <= maxStack)
+            {
+
+                
+
+                inven.carriedItem = null;
+                //send item back
+                item.transform.parent = item.parentAfterDrag;
+                item.transform.localPosition = Vector3.zero;
+                item.transform.SetAsFirstSibling();
+
+                Item_ScriptableObj replacement_resource = myItem.myItem;
+                Item_ScriptableObj current_resource = item.myItem; //copies item. There is a better way
+
+                //Set original slot with current item (first part of swap)
+                item.transform.parent.GetComponent<InventorySlot>().SetItem_A(new Tuple<Item_ScriptableObj, int>(replacement_resource, quantity));
+
+                //Set this slot to the original slot item (second part of swap)
+                SetItem_A(new Tuple<Item_ScriptableObj, int>(current_resource, totalQuantity));
                 return;
             }
         }
