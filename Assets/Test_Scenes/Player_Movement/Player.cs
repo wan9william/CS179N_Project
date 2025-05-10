@@ -1,3 +1,4 @@
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -86,12 +87,12 @@ void Awake()
         inventory = new Inventory(canvas.transform);
         
         _rb = GetComponent<Rigidbody2D>();
-    if (_equipped != null)
-        _weaponScript = _equipped.GetComponent<Weapon>();
+        if (_equipped != null)
+            _weaponScript = _equipped.GetComponent<Weapon>();
+
         sprint_bar.maxValue = 100f;
 
     }
-
 
     // Update is called once per frame
     void Update()
@@ -143,9 +144,10 @@ void Awake()
                 }
 
                 //EVERYTHING BEYOND THIS STATEMENT ASSUMES THAT THERE IS AN ATTACHED WEAPONSCRIPT
-                if (!_weaponScript) { animator.SetBool("Equipped", false); break; }
+                if (!_weaponScript) { animator.SetBool("Equipped", false); _hand.SetActive(false); break; }
 
                 animator.SetBool("Equipped", true);
+                _hand.SetActive(true);
                 var fireMode = _weaponScript.GetFireMode();
                 //If the scroll wheel is used, get current selected slot and add accordingly, then transition
                 if (Input.mouseScrollDelta.y != 0) {
@@ -168,11 +170,11 @@ void Awake()
                     break;
                 }
 
-                if (fireMode == FireMode.FullAuto && Input.GetMouseButton(0))
+                if (fireMode == FireMode.FullAuto && Input.GetMouseButton(0) && _equipped)
                 {
                     action_state = PLAYER_ACTION_STATES.SHOOT;
                 }
-                else if (fireMode == FireMode.SemiAuto && Input.GetMouseButtonDown(0))
+                else if (fireMode == FireMode.SemiAuto && Input.GetMouseButtonDown(0) && _equipped)
                 {
                     action_state = PLAYER_ACTION_STATES.SHOOT;
                 }
@@ -232,7 +234,7 @@ void Awake()
             _equipped.transform.localRotation = Quaternion.identity;
 
         // Scale up to cancel out the player's scale (e.g., 0.2 becomes 5x)
-        Vector3 inverseScale = new Vector3(
+            Vector3 inverseScale = new Vector3(
             1f / transform.localScale.x,
             1f / transform.localScale.y,
             1f / transform.localScale.z

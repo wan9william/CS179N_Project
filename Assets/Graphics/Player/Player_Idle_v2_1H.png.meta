@@ -1,115 +1,115 @@
 fileFormatVersion: 2
-guid: 7bd12ed2962c5e14fba2275db22b558a
+guid: 19394e7d09e79cf479893d92689c62ef
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -2206662250546813695
-    second: Player_Idle_1H_v2(4)_0
+      213: 6910747530443169367
+    second: Player_Idle_v2_1H_0
   - first:
-      213: 3471058393192623072
-    second: Player_Idle_1H_v2(4)_1
+      213: 4137864446743710007
+    second: Player_Idle_v2_1H_1
   - first:
-      213: 961331613081355804
-    second: Player_Idle_1H_v2(4)_2
+      213: -4221739898262962125
+    second: Player_Idle_v2_1H_2
   - first:
-      213: 8813860996388981358
-    second: Player_Idle_1H_v2(4)_3
+      213: 8193176426052461195
+    second: Player_Idle_v2_1H_3
   - first:
-      213: 6284154922309094251
-    second: Player_Idle_1H_v2(4)_4
+      213: -6780999897619394286
+    second: Player_Idle_v2_1H_4
   - first:
-      213: -8525522645946640496
-    second: Player_Idle_1H_v2(4)_5
+      213: -3503646026234220644
+    second: Player_Idle_v2_1H_5
   - first:
-      213: 971626514781756142
-    second: Player_Idle_1H_v2(4)_6
+      213: 3000620369026411135
+    second: Player_Idle_v2_1H_6
   - first:
-      213: 3540565039553161967
-    second: Player_Idle_1H_v2(4)_7
+      213: -4441855592505002696
+    second: Player_Idle_v2_1H_7
   - first:
-      213: 330996351294448730
-    second: Player_Idle_1H_v2(4)_8
+      213: -6333293493333663386
+    second: Player_Idle_v2_1H_8
   - first:
-      213: -8857184187187376985
-    second: Player_Idle_1H_v2(4)_9
+      213: 1579197516523801291
+    second: Player_Idle_v2_1H_9
   - first:
-      213: -7541033020599239115
-    second: Player_Idle_1H_v2(4)_10
+      213: 5016857255437331600
+    second: Player_Idle_v2_1H_10
   - first:
-      213: 8743619981177228922
-    second: Player_Idle_1H_v2(4)_11
+      213: 5054855941808744357
+    second: Player_Idle_v2_1H_11
   - first:
-      213: -1391804924244498978
-    second: Player_Idle_1H_v2(4)_12
+      213: 8979685108805363512
+    second: Player_Idle_v2_1H_12
   - first:
-      213: -2095526631072134523
-    second: Player_Idle_1H_v2(4)_13
+      213: 2776817544942062916
+    second: Player_Idle_v2_1H_13
   - first:
-      213: 6228821587681485632
-    second: Player_Idle_1H_v2(4)_14
+      213: 681461668066355841
+    second: Player_Idle_v2_1H_14
   - first:
-      213: -3501375624140017187
-    second: Player_Idle_1H_v2(4)_15
+      213: -6227486026722592713
+    second: Player_Idle_v2_1H_15
   - first:
-      213: 3992522812135346049
-    second: Player_Idle_1H_v2(4)_16
+      213: -1567456726229343942
+    second: Player_Idle_v2_1H_16
   - first:
-      213: -8172063025582231233
-    second: Player_Idle_1H_v2(4)_17
+      213: 5839071182378138170
+    second: Player_Idle_v2_1H_17
   - first:
-      213: 5241596941323117132
-    second: Player_Idle_1H_v2(4)_18
+      213: 1868074894891816418
+    second: Player_Idle_v2_1H_18
   - first:
-      213: 1221601635185749763
-    second: Player_Idle_1H_v2(4)_19
+      213: 8713193591111060894
+    second: Player_Idle_v2_1H_19
   - first:
-      213: -4508633732073992950
-    second: Player_Idle_1H_v2(4)_20
+      213: 1314940962564724260
+    second: Player_Idle_v2_1H_20
   - first:
-      213: -7890909304539347462
-    second: Player_Idle_1H_v2(4)_21
+      213: 9196894493554006515
+    second: Player_Idle_v2_1H_21
   - first:
-      213: 3968678855114834450
-    second: Player_Idle_1H_v2(4)_22
+      213: -1814736702615337311
+    second: Player_Idle_v2_1H_22
   - first:
-      213: 5802501030843487143
-    second: Player_Idle_1H_v2(4)_23
+      213: -5970158511236037408
+    second: Player_Idle_v2_1H_23
   - first:
-      213: 6814950421450673460
-    second: Player_Idle_1H_v2(4)_24
+      213: -4591210890237359865
+    second: Player_Idle_v2_1H_24
   - first:
-      213: 8845582975563375296
-    second: Player_Idle_1H_v2(4)_25
+      213: -1742252617210267595
+    second: Player_Idle_v2_1H_25
   - first:
-      213: -2629294805111959933
-    second: Player_Idle_1H_v2(4)_26
+      213: 2570943830976926623
+    second: Player_Idle_v2_1H_26
   - first:
-      213: -2566563504798310804
-    second: Player_Idle_1H_v2(4)_27
+      213: -8188849840719200324
+    second: Player_Idle_v2_1H_27
   - first:
-      213: -2073795109691451573
-    second: Player_Idle_1H_v2(4)_28
+      213: -8801064717669563738
+    second: Player_Idle_v2_1H_28
   - first:
-      213: 6426083583041489450
-    second: Player_Idle_1H_v2(4)_29
+      213: -4625115838451401377
+    second: Player_Idle_v2_1H_29
   - first:
-      213: 8923173201461134910
-    second: Player_Idle_1H_v2(4)_30
+      213: 2479839739816265456
+    second: Player_Idle_v2_1H_30
   - first:
-      213: -9043359442616484943
-    second: Player_Idle_1H_v2(4)_31
+      213: -4613429489864357884
+    second: Player_Idle_v2_1H_31
   - first:
-      213: -3366152958627376880
-    second: Player_Idle_1H_v2(4)_32
+      213: -4772437182291916650
+    second: Player_Idle_v2_1H_32
   - first:
-      213: -7830884269570262368
-    second: Player_Idle_1H_v2(4)_33
+      213: 8808992843335355848
+    second: Player_Idle_v2_1H_33
   - first:
-      213: 7684298389629172871
-    second: Player_Idle_1H_v2(4)_34
+      213: 1179789091597363620
+    second: Player_Idle_v2_1H_34
   - first:
-      213: -3382760220498668685
-    second: Player_Idle_1H_v2(4)_35
+      213: -7948446196604967865
+    second: Player_Idle_v2_1H_35
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -145,9 +145,9 @@ TextureImporter:
     filterMode: 0
     aniso: 1
     mipBias: 0
-    wrapU: 0
-    wrapV: 0
-    wrapW: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
@@ -181,7 +181,7 @@ TextureImporter:
     resizeAlgorithm: 1
     textureFormat: -1
     textureCompression: 0
-    compressionQuality: 100
+    compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
@@ -205,7 +205,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Player_Idle_1H_v2(4)_0
+      name: Player_Idle_v2_1H_0
       rect:
         serializedVersion: 2
         x: 0
@@ -218,16 +218,16 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: d71378e7760c2314b8b6092788fb5cb5
-      internalID: -861782207
+      spriteID: 75e1974a348e7ef50800000000000000
+      internalID: 6910747530443169367
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player_Idle_1H_v2(4)_1
+      name: Player_Idle_v2_1H_1
       rect:
         serializedVersion: 2
         x: 32
@@ -240,16 +240,16 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 5277088064be3344ea2579312f5e5fc6
-      internalID: -728869213
+      spriteID: 73980ec7ac5ac6930800000000000000
+      internalID: 4137864446743710007
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player_Idle_1H_v2(4)_2
+      name: Player_Idle_v2_1H_2
       rect:
         serializedVersion: 2
         x: 64
@@ -262,16 +262,16 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 5d24a33e40882ac4c8db03a452203f5e
-      internalID: -1402361828
+      spriteID: 33041f52eed5965c0800000000000000
+      internalID: -4221739898262962125
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player_Idle_1H_v2(4)_3
+      name: Player_Idle_v2_1H_3
       rect:
         serializedVersion: 2
         x: 96
@@ -284,16 +284,16 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: b554e1ab44428de4999d758c47388e3e
-      internalID: -1557606726
+      spriteID: b8226f8dc8204b170800000000000000
+      internalID: 8193176426052461195
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player_Idle_1H_v2(4)_4
+      name: Player_Idle_v2_1H_4
       rect:
         serializedVersion: 2
         x: 128
@@ -306,16 +306,16 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 5c9cdcec6122f04439b5bd531c96a651
-      internalID: 341981081
+      spriteID: 2119f68358c05e1a0800000000000000
+      internalID: -6780999897619394286
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player_Idle_1H_v2(4)_5
+      name: Player_Idle_v2_1H_5
       rect:
         serializedVersion: 2
         x: 160
@@ -328,16 +328,16 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 79e983bb96355c648b9f73ac36a9855f
-      internalID: -567494631
+      spriteID: c9fa993908c806fc0800000000000000
+      internalID: -3503646026234220644
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player_Idle_1H_v2(4)_6
+      name: Player_Idle_v2_1H_6
       rect:
         serializedVersion: 2
         x: 0
@@ -350,16 +350,16 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 0c0376c28f9cbed40a77174c14ba7633
-      internalID: 462994521
+      spriteID: f7aee91e35854a920800000000000000
+      internalID: 3000620369026411135
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player_Idle_1H_v2(4)_7
+      name: Player_Idle_v2_1H_7
       rect:
         serializedVersion: 2
         x: 32
@@ -372,16 +372,16 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 42dee0661e589dc4da7c8d573912cc04
-      internalID: 675632255
+      spriteID: 83538216fdb5b52c0800000000000000
+      internalID: -4441855592505002696
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player_Idle_1H_v2(4)_8
+      name: Player_Idle_v2_1H_8
       rect:
         serializedVersion: 2
         x: 64
@@ -394,16 +394,16 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 24fef6e94308f364ca20ca15c4acc75b
-      internalID: 1875351742
+      spriteID: 661ed8f7f1f9b18a0800000000000000
+      internalID: -6333293493333663386
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player_Idle_1H_v2(4)_9
+      name: Player_Idle_v2_1H_9
       rect:
         serializedVersion: 2
         x: 96
@@ -416,16 +416,16 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 58dd6d5a15677f7438dedc1ee78ed442
-      internalID: 1740419273
+      spriteID: bca849a36cf6ae510800000000000000
+      internalID: 1579197516523801291
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player_Idle_1H_v2(4)_10
+      name: Player_Idle_v2_1H_10
       rect:
         serializedVersion: 2
         x: 128
@@ -438,16 +438,16 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 6982396728d1fc947803f0af3afcd4db
-      internalID: -2090209332
+      spriteID: 09cee27e7157f9540800000000000000
+      internalID: 5016857255437331600
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player_Idle_1H_v2(4)_11
+      name: Player_Idle_v2_1H_11
       rect:
         serializedVersion: 2
         x: 160
@@ -460,16 +460,16 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 54a3e78c99eed8c418a71042d2a83146
-      internalID: -873104824
+      spriteID: 5a7684282b4762640800000000000000
+      internalID: 5054855941808744357
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player_Idle_1H_v2(4)_12
+      name: Player_Idle_v2_1H_12
       rect:
         serializedVersion: 2
         x: 0
@@ -482,16 +482,16 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 6dfdc3fc0fdb32649b2f311a3a7a54d7
-      internalID: 1892129024
+      spriteID: 8376531b7004e9c70800000000000000
+      internalID: 8979685108805363512
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player_Idle_1H_v2(4)_13
+      name: Player_Idle_v2_1H_13
       rect:
         serializedVersion: 2
         x: 32
@@ -504,16 +504,16 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 6377d8be788330d48ae551c0556e48a3
-      internalID: -1311812676
+      spriteID: 44d085c48dc398620800000000000000
+      internalID: 2776817544942062916
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player_Idle_1H_v2(4)_14
+      name: Player_Idle_v2_1H_14
       rect:
         serializedVersion: 2
         x: 64
@@ -526,16 +526,16 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 47e9109995c5ed946adad4f217ba6569
-      internalID: -252691390
+      spriteID: 18ae32dc6c9057900800000000000000
+      internalID: 681461668066355841
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player_Idle_1H_v2(4)_15
+      name: Player_Idle_v2_1H_15
       rect:
         serializedVersion: 2
         x: 96
@@ -548,16 +548,16 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: e2722dc85005f5e4293541772a0a581d
-      internalID: 1758707395
+      spriteID: 738bd7d04768399a0800000000000000
+      internalID: -6227486026722592713
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player_Idle_1H_v2(4)_16
+      name: Player_Idle_v2_1H_16
       rect:
         serializedVersion: 2
         x: 128
@@ -570,16 +570,16 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 2f70cd31dbc090444a596c18ef92adba
-      internalID: -1669613923
+      spriteID: a31ad4889664f3ae0800000000000000
+      internalID: -1567456726229343942
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player_Idle_1H_v2(4)_17
+      name: Player_Idle_v2_1H_17
       rect:
         serializedVersion: 2
         x: 160
@@ -592,16 +592,16 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 7d90558d9804d60439e6b0b5ee1bb0c8
-      internalID: -1751501125
+      spriteID: a3a7edbbd4c880150800000000000000
+      internalID: 5839071182378138170
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player_Idle_1H_v2(4)_18
+      name: Player_Idle_v2_1H_18
       rect:
         serializedVersion: 2
         x: 0
@@ -614,16 +614,16 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: a332ce6d7713518419a9cfc3a13fb11d
-      internalID: -1334391670
+      spriteID: 2e51adb283cbce910800000000000000
+      internalID: 1868074894891816418
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player_Idle_1H_v2(4)_19
+      name: Player_Idle_v2_1H_19
       rect:
         serializedVersion: 2
         x: 32
@@ -636,16 +636,16 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 9ca58f61cff2e104796316b0cd52668e
-      internalID: 1553511910
+      spriteID: e9d8269186b7be870800000000000000
+      internalID: 8713193591111060894
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player_Idle_1H_v2(4)_20
+      name: Player_Idle_v2_1H_20
       rect:
         serializedVersion: 2
         x: 64
@@ -658,16 +658,16 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: b62080f8fb2f5c8409669f19d7998d4a
-      internalID: 188183805
+      spriteID: 426d74ea6db9f3210800000000000000
+      internalID: 1314940962564724260
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player_Idle_1H_v2(4)_21
+      name: Player_Idle_v2_1H_21
       rect:
         serializedVersion: 2
         x: 96
@@ -680,16 +680,16 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 8955fc4cb6c6a67488b7910e4357be9e
-      internalID: -1263038201
+      spriteID: 3f9580d80dee1af70800000000000000
+      internalID: 9196894493554006515
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player_Idle_1H_v2(4)_22
+      name: Player_Idle_v2_1H_22
       rect:
         serializedVersion: 2
         x: 128
@@ -702,16 +702,16 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: b2023d58b516a4b46be7b78171716bc8
-      internalID: -1325264963
+      spriteID: 1a6cfb77592c0d6e0800000000000000
+      internalID: -1814736702615337311
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player_Idle_1H_v2(4)_23
+      name: Player_Idle_v2_1H_23
       rect:
         serializedVersion: 2
         x: 160
@@ -724,16 +724,16 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 2728cb777998a3a47b9fe462205f6d70
-      internalID: 58484532
+      spriteID: 0e4400d177cb52da0800000000000000
+      internalID: -5970158511236037408
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player_Idle_1H_v2(4)_24
+      name: Player_Idle_v2_1H_24
       rect:
         serializedVersion: 2
         x: 0
@@ -746,16 +746,16 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: b9482d1610fcc75428adcd08f4f1d10b
-      internalID: 1451091003
+      spriteID: 7094f76450eb840c0800000000000000
+      internalID: -4591210890237359865
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player_Idle_1H_v2(4)_25
+      name: Player_Idle_v2_1H_25
       rect:
         serializedVersion: 2
         x: 32
@@ -768,16 +768,16 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 87c9c3bec5cc55245a3b64fe07fa560b
-      internalID: -945163411
+      spriteID: 538ff2ab97642d7e0800000000000000
+      internalID: -1742252617210267595
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player_Idle_1H_v2(4)_26
+      name: Player_Idle_v2_1H_26
       rect:
         serializedVersion: 2
         x: 64
@@ -790,16 +790,16 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: c6b6bff6c23d490479b253698679daa4
-      internalID: -1437419469
+      spriteID: f939cd6fac3dda320800000000000000
+      internalID: 2570943830976926623
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player_Idle_1H_v2(4)_27
+      name: Player_Idle_v2_1H_27
       rect:
         serializedVersion: 2
         x: 96
@@ -812,16 +812,16 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: e1d0a6ab33e30cb4a9ac6b6168860933
-      internalID: -1145580247
+      spriteID: cbffaecc47c5b5e80800000000000000
+      internalID: -8188849840719200324
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player_Idle_1H_v2(4)_28
+      name: Player_Idle_v2_1H_28
       rect:
         serializedVersion: 2
         x: 128
@@ -834,16 +834,16 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 048eb4c06ce0c0b43891774ca986c658
-      internalID: -1403362061
+      spriteID: 6a20512f4465cd580800000000000000
+      internalID: -8801064717669563738
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player_Idle_1H_v2(4)_29
+      name: Player_Idle_v2_1H_29
       rect:
         serializedVersion: 2
         x: 160
@@ -856,16 +856,16 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 0824147f9f014b84291c977ebe822ce3
-      internalID: -2068373600
+      spriteID: f5d321c56a940dfb0800000000000000
+      internalID: -4625115838451401377
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player_Idle_1H_v2(4)_30
+      name: Player_Idle_v2_1H_30
       rect:
         serializedVersion: 2
         x: 0
@@ -878,16 +878,16 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 6bc28c6b5c4fb9d4c98dcb6361c8f27a
-      internalID: 595672017
+      spriteID: 0f645a7ca192a6220800000000000000
+      internalID: 2479839739816265456
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player_Idle_1H_v2(4)_31
+      name: Player_Idle_v2_1H_31
       rect:
         serializedVersion: 2
         x: 32
@@ -900,16 +900,16 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: cf4d9192300aee24ca8716c22667fce9
-      internalID: 782850049
+      spriteID: 408c25c625ec9ffb0800000000000000
+      internalID: -4613429489864357884
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player_Idle_1H_v2(4)_32
+      name: Player_Idle_v2_1H_32
       rect:
         serializedVersion: 2
         x: 64
@@ -922,16 +922,16 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: b0f8b10218c20df4f814c64ff83a1af6
-      internalID: -1248727958
+      spriteID: 698cf9c0ba5e4cdb0800000000000000
+      internalID: -4772437182291916650
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player_Idle_1H_v2(4)_33
+      name: Player_Idle_v2_1H_33
       rect:
         serializedVersion: 2
         x: 96
@@ -944,16 +944,16 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 1cb76671640c801438bb57ea88ef4f79
-      internalID: 1384791956
+      spriteID: 8cd46f7a154df3a70800000000000000
+      internalID: 8808992843335355848
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player_Idle_1H_v2(4)_34
+      name: Player_Idle_v2_1H_34
       rect:
         serializedVersion: 2
         x: 128
@@ -966,16 +966,16 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 10d9808cd4bd5fa4d9e8695a4401cd87
-      internalID: -1177872259
+      spriteID: 4a9aa829de37f5010800000000000000
+      internalID: 1179789091597363620
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player_Idle_1H_v2(4)_35
+      name: Player_Idle_v2_1H_35
       rect:
         serializedVersion: 2
         x: 160
@@ -988,10 +988,10 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: f8c2c2440548f8742b474392ae8585b9
-      internalID: -1910756373
+      spriteID: 7446e0ffb4271b190800000000000000
+      internalID: -7948446196604967865
       vertices: []
       indices: 
       edges: []
@@ -1000,7 +1000,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: f24bedccba785164280e13fb0c3d5896
+    spriteID: f4e67a3931c23a24ebd8a127c0691619
     internalID: 0
     vertices: []
     indices: 
@@ -1010,42 +1010,42 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Player_Idle_1H_v2(4)_0: -861782207
-      Player_Idle_1H_v2(4)_1: -728869213
-      Player_Idle_1H_v2(4)_10: -2090209332
-      Player_Idle_1H_v2(4)_11: -873104824
-      Player_Idle_1H_v2(4)_12: 1892129024
-      Player_Idle_1H_v2(4)_13: -1311812676
-      Player_Idle_1H_v2(4)_14: -252691390
-      Player_Idle_1H_v2(4)_15: 1758707395
-      Player_Idle_1H_v2(4)_16: -1669613923
-      Player_Idle_1H_v2(4)_17: -1751501125
-      Player_Idle_1H_v2(4)_18: -1334391670
-      Player_Idle_1H_v2(4)_19: 1553511910
-      Player_Idle_1H_v2(4)_2: -1402361828
-      Player_Idle_1H_v2(4)_20: 188183805
-      Player_Idle_1H_v2(4)_21: -1263038201
-      Player_Idle_1H_v2(4)_22: -1325264963
-      Player_Idle_1H_v2(4)_23: 58484532
-      Player_Idle_1H_v2(4)_24: 1451091003
-      Player_Idle_1H_v2(4)_25: -945163411
-      Player_Idle_1H_v2(4)_26: -1437419469
-      Player_Idle_1H_v2(4)_27: -1145580247
-      Player_Idle_1H_v2(4)_28: -1403362061
-      Player_Idle_1H_v2(4)_29: -2068373600
-      Player_Idle_1H_v2(4)_3: -1557606726
-      Player_Idle_1H_v2(4)_30: 595672017
-      Player_Idle_1H_v2(4)_31: 782850049
-      Player_Idle_1H_v2(4)_32: -1248727958
-      Player_Idle_1H_v2(4)_33: 1384791956
-      Player_Idle_1H_v2(4)_34: -1177872259
-      Player_Idle_1H_v2(4)_35: -1910756373
-      Player_Idle_1H_v2(4)_4: 341981081
-      Player_Idle_1H_v2(4)_5: -567494631
-      Player_Idle_1H_v2(4)_6: 462994521
-      Player_Idle_1H_v2(4)_7: 675632255
-      Player_Idle_1H_v2(4)_8: 1875351742
-      Player_Idle_1H_v2(4)_9: 1740419273
+      Player_Idle_v2_1H_0: 6910747530443169367
+      Player_Idle_v2_1H_1: 4137864446743710007
+      Player_Idle_v2_1H_10: 5016857255437331600
+      Player_Idle_v2_1H_11: 5054855941808744357
+      Player_Idle_v2_1H_12: 8979685108805363512
+      Player_Idle_v2_1H_13: 2776817544942062916
+      Player_Idle_v2_1H_14: 681461668066355841
+      Player_Idle_v2_1H_15: -6227486026722592713
+      Player_Idle_v2_1H_16: -1567456726229343942
+      Player_Idle_v2_1H_17: 5839071182378138170
+      Player_Idle_v2_1H_18: 1868074894891816418
+      Player_Idle_v2_1H_19: 8713193591111060894
+      Player_Idle_v2_1H_2: -4221739898262962125
+      Player_Idle_v2_1H_20: 1314940962564724260
+      Player_Idle_v2_1H_21: 9196894493554006515
+      Player_Idle_v2_1H_22: -1814736702615337311
+      Player_Idle_v2_1H_23: -5970158511236037408
+      Player_Idle_v2_1H_24: -4591210890237359865
+      Player_Idle_v2_1H_25: -1742252617210267595
+      Player_Idle_v2_1H_26: 2570943830976926623
+      Player_Idle_v2_1H_27: -8188849840719200324
+      Player_Idle_v2_1H_28: -8801064717669563738
+      Player_Idle_v2_1H_29: -4625115838451401377
+      Player_Idle_v2_1H_3: 8193176426052461195
+      Player_Idle_v2_1H_30: 2479839739816265456
+      Player_Idle_v2_1H_31: -4613429489864357884
+      Player_Idle_v2_1H_32: -4772437182291916650
+      Player_Idle_v2_1H_33: 8808992843335355848
+      Player_Idle_v2_1H_34: 1179789091597363620
+      Player_Idle_v2_1H_35: -7948446196604967865
+      Player_Idle_v2_1H_4: -6780999897619394286
+      Player_Idle_v2_1H_5: -3503646026234220644
+      Player_Idle_v2_1H_6: 3000620369026411135
+      Player_Idle_v2_1H_7: -4441855592505002696
+      Player_Idle_v2_1H_8: -6333293493333663386
+      Player_Idle_v2_1H_9: 1579197516523801291
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
