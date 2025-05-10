@@ -413,7 +413,7 @@ void Awake()
         _handSR = _hand.GetComponent<SpriteRenderer>();
         if (dir.y > 0)
         {
-            _handSR.sortingOrder = 3;
+            _handSR.sortingOrder = 2;
         }
         else _handSR.sortingOrder = 4;
 

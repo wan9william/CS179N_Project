@@ -161,7 +161,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -867108587
   m_SortingLayer: 2
-  m_SortingOrder: 5
+  m_SortingOrder: 3
   m_Sprite: {fileID: 116400415285627404, guid: d88a684aeccb0bf46a0f63fd293a77e7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -292,6 +292,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8820982207661322334}
   - component: {fileID: 2500840451590345228}
+  - component: {fileID: -2440677376335865836}
   m_Layer: 0
   m_Name: Rifle
   m_TagString: Untagged
@@ -342,11 +343,23 @@ MonoBehaviour:
   bloomDecaySpeed: 3
   bulletsPerShot: 1
   perBulletSpread: 5
+  magazineSize: 30
+  reloadTime: 1.5
   animator: {fileID: 12079794585811555}
   spriteRenderer: {fileID: 2490300557013193417}
   objectManager: {fileID: 0}
-  magazineSize: 30
-  reloadTime: 1.5
+--- !u!210 &-2440677376335865836
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7420429762061062423}
+  m_Enabled: 1
+  m_SortingLayerID: -867108587
+  m_SortingLayer: 2
+  m_SortingOrder: 0
+  m_SortAtRoot: 0
 --- !u!1 &7903444706632405820
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,37 +1,10 @@
 fileFormatVersion: 2
-guid: 7a98ee848900c04478d1a6127bcea401
+guid: 67616a8dc15972d46b5869317e3185b4
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -6560248693509957595
-    second: rifle (1)(1)_0
-  - first:
-      213: -4617593699531577692
-    second: rifle (1)(1)_1
-  - first:
-      213: -1062924594943430035
-    second: rifle (1)(1)_2
-  - first:
-      213: -1587446191742961469
-    second: rifle (1)(1)_3
-  - first:
-      213: -3181432592464358419
-    second: rifle (1)(1)_4
-  - first:
-      213: -6003593819083703784
-    second: rifle (1)(1)_5
-  - first:
-      213: 3041510721341924598
-    second: rifle (1)(1)_6
-  - first:
-      213: -9160767919867835491
-    second: rifle (1)(1)_7
-  - first:
-      213: 1618074948567631013
-    second: rifle (1)(1)_8
-  - first:
-      213: -1693904658707778106
-    second: rifle (1)(1)_9
+      213: -5632094745528637102
+    second: muzzle fire_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -64,7 +37,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -78,7 +51,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 34
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -99,10 +72,10 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
+    maxTextureSize: 4096
+    resizeAlgorithm: 1
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -127,45 +100,45 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: rifle (1)(1)_0
+      name: muzzle fire_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 640
-        width: 640
-        height: 640
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        y: 32
+        width: 32
+        height: 32
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 94d2170df2a0a70479d9793b5a03a13b
-      internalID: 1035649572
+      spriteID: 259eb674ba7c6d1b0800000000000000
+      internalID: -5632094745528637102
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: rifle (1)(1)_1
+      name: muzzle fire_1
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 640
-        height: 640
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 32
+        height: 32
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5bf7fa7f51e603b4fac65fa158efd0c4
-      internalID: -123166022
+      spriteID: 645f5c2dcd0dc4746bbe2c94bcb98bbf
+      internalID: -1799765209
       vertices: []
       indices: 
       edges: []
@@ -174,7 +147,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: c7673211177c3dd47807a5fe879388c5
+    spriteID: f4cf730acb21cbd47972b84d75780e11
     internalID: 0
     vertices: []
     indices: 
@@ -184,8 +157,8 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      rifle (1)(1)_0: 1035649572
-      rifle (1)(1)_1: -123166022
+      muzzle fire_0: -5632094745528637102
+      muzzle fire_1: -1799765209
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
