@@ -1,3 +1,4 @@
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -76,12 +77,8 @@ void Awake()
 {
     Singleton = this;
 }
-
     //Hand
     private SpriteRenderer _handSR;
-
-
-
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -90,12 +87,12 @@ void Awake()
         inventory = new Inventory(canvas.transform);
         
         _rb = GetComponent<Rigidbody2D>();
-    if (_equipped != null)
-        _weaponScript = _equipped.GetComponent<Weapon>();
+        if (_equipped != null)
+            _weaponScript = _equipped.GetComponent<Weapon>();
+
         sprint_bar.maxValue = 100f;
 
     }
-
 
     // Update is called once per frame
     void Update()
@@ -147,9 +144,10 @@ void Awake()
                 }
 
                 //EVERYTHING BEYOND THIS STATEMENT ASSUMES THAT THERE IS AN ATTACHED WEAPONSCRIPT
-                if (!_weaponScript) { animator.SetBool("Equipped", false); break; }
+                if (!_weaponScript) { animator.SetBool("Equipped", false); _hand.SetActive(false); break; }
 
                 animator.SetBool("Equipped", true);
+                _hand.SetActive(true);
                 var fireMode = _weaponScript.GetFireMode();
                 //If the scroll wheel is used, get current selected slot and add accordingly, then transition
                 if (Input.mouseScrollDelta.y != 0) {
@@ -172,11 +170,11 @@ void Awake()
                     break;
                 }
 
-                if (fireMode == FireMode.FullAuto && Input.GetMouseButton(0))
+                if (fireMode == FireMode.FullAuto && Input.GetMouseButton(0) && _equipped)
                 {
                     action_state = PLAYER_ACTION_STATES.SHOOT;
                 }
-                else if (fireMode == FireMode.SemiAuto && Input.GetMouseButtonDown(0))
+                else if (fireMode == FireMode.SemiAuto && Input.GetMouseButtonDown(0) && _equipped)
                 {
                     action_state = PLAYER_ACTION_STATES.SHOOT;
                 }
@@ -230,13 +228,13 @@ void Awake()
         // Equip if not already equipped
         if (_equipped == null && selectedPrefab != null)
         {
-        _equipped = Instantiate(selectedPrefab);
-        _equipped.transform.SetParent(transform, false);
-        _equipped.transform.localPosition = Vector3.zero;
-        _equipped.transform.localRotation = Quaternion.identity;
+            _equipped = Instantiate(selectedPrefab);
+            _equipped.transform.SetParent(transform, false);
+            _equipped.transform.localPosition = Vector3.zero;
+            _equipped.transform.localRotation = Quaternion.identity;
 
         // Scale up to cancel out the player's scale (e.g., 0.2 becomes 5x)
-        Vector3 inverseScale = new Vector3(
+            Vector3 inverseScale = new Vector3(
             1f / transform.localScale.x,
             1f / transform.localScale.y,
             1f / transform.localScale.z
@@ -403,22 +401,24 @@ void Awake()
 
         animator.SetFloat("MouseX", dir.x);
         animator.SetFloat("MouseY", dir.y);
-        _equipped.transform.up = dir;
+        if (_equipped) _equipped.transform.up = dir;
 
-        Vector3 offset = _hand.transform.localPosition;
-        if (dir.x < 0) offset.y = handFlip;
-        else offset.y = -handFlip;
-
-        if (!_weaponSR) _weaponSR = _equipped.GetComponentInChildren<SpriteRenderer>();
-        _handSR = _hand.GetComponent<SpriteRenderer>();
+        if (!_weaponSR&&_equipped) _weaponSR = _equipped.GetComponentInChildren<SpriteRenderer>();
 
         if (_weaponSR)
         {
             _weaponSR.flipY = (dir.x < 0);  // flip only when pointing left
         }
-        _hand.transform.localPosition = offset;
 
-        _equipped.transform.localPosition = (Vector3)dir * handRadius + handOffset;
+        _handSR = _hand.GetComponent<SpriteRenderer>();
+        if (dir.y > 0)
+        {
+            _handSR.sortingOrder = 3;
+        }
+        else _handSR.sortingOrder = 4;
+
+        if(_equipped) _equipped.transform.localPosition = (Vector3)dir * handRadius + handOffset;
+        _hand.transform.localPosition = (Vector3)dir * handRadius + handOffset;
     }
 
 
