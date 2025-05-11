@@ -233,7 +233,7 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 7064313321958363302, guid: 9063dc309286be84a80caeb93ddc6f64, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1368235455}
+      addedObject: {fileID: 1368235464}
   m_SourcePrefab: {fileID: 100100000, guid: 9063dc309286be84a80caeb93ddc6f64, type: 3}
 --- !u!1001 &265041681
 PrefabInstance:
@@ -788,7 +788,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 7064313321958363302, guid: 9063dc309286be84a80caeb93ddc6f64, type: 3}
   m_PrefabInstance: {fileID: 169644378}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1368235455
+--- !u!114 &1368235464
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -797,9 +797,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1368235446}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b34d8382588ed1e409f4e019ba842bde, type: 3}
+  m_Script: {fileID: 11500000, guid: 5dae2644e34b6b945b954c7e6980883a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stats: {fileID: 0}
+  shootPoint: {fileID: 0}
 --- !u!1001 &1766186756
 PrefabInstance:
   m_ObjectHideFlags: 0

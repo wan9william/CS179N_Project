@@ -13,6 +13,9 @@ public class EnemyStats : ScriptableObject
     public float attackRange = 1f;
     public float attackCooldown = 1f;
     public int attackDamage = 10;
+    public float initialAttackDelay = 1f;
+    public float attackDelay = 0.3f;      // wind-up delay
+  
 
     [Header("Ranged Only")]
     public GameObject projectilePrefab;

@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c9b2cec5e95900744a60338541320004, type: 3}
-  m_Name: basicEnemy
+  m_Name: BasicEnemy
   m_EditorClassIdentifier: 
   moveSpeed: 3
   stopDistance: 1
@@ -19,5 +19,7 @@ MonoBehaviour:
   attackRange: 1
   attackCooldown: 1
   attackDamage: 15
-  projectilePrefab: {fileID: 0}
+  initialAttackDelay: 1
+  attackDelay: 0.3
+  projectilePrefab: {fileID: 1873891436641685562, guid: 0eccac6df8f10434ca458c9770dbe1c7, type: 3}
   projectileSpeed: 10
