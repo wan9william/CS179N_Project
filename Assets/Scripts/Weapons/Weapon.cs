@@ -9,8 +9,7 @@ public enum FireMode
     FullAuto
 }
 
-
-public class Weapon : MonoBehaviour
+public class Weapon : Equippable
 {
     [SerializeField] private Transform weaponOwner; // Reference to player or owner
 
@@ -81,6 +80,10 @@ public class Weapon : MonoBehaviour
     public FireMode GetFireMode()
     {
         return fireMode;
+    }
+
+    public override void Use() {
+        Shoot();
     }
 
     public void Shoot()
