@@ -121,7 +121,7 @@ public class Weapon : MonoBehaviour
         Bullet bulletScript = bullet.GetComponent<Bullet>();
         if (bulletScript != null)
         {
-            bulletScript.damage = damage;
+            bulletScript.damage = (int)damage;
         }
         
         animator.SetTrigger("Shoot");
