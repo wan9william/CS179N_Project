@@ -216,43 +216,43 @@ void Awake()
 
                 inventory.SelectSlot(selected_slot);
 
-        GameObject selectedPrefab = inventory.selecteditem(selected_slot);
+                GameObject selectedPrefab = inventory.selecteditem(selected_slot);
 
-        // Remove currently equipped object if it's different
-        if (_equipped != null && selectedPrefab != null && _equipped.name != selectedPrefab.name + "(Clone)")
-        {
-            Destroy(_equipped);
-            _equipped = null;
-        }
+                // Remove currently equipped object if it's different
+                if (_equipped != null && selectedPrefab != null && _equipped.name != selectedPrefab.name + "(Clone)")
+                {
+                    Destroy(_equipped);
+                    _equipped = null;
+                }
 
-        // Equip if not already equipped
-        if (_equipped == null && selectedPrefab != null)
-        {
-            _equipped = Instantiate(selectedPrefab);
-            _equipped.transform.SetParent(transform, false);
-            _equipped.transform.localPosition = Vector3.zero;
-            _equipped.transform.localRotation = Quaternion.identity;
+                // Equip if not already equipped
+                if (_equipped == null && selectedPrefab != null)
+                {
+                    _equipped = Instantiate(selectedPrefab);
+                    _equipped.transform.SetParent(transform, false);
+                    _equipped.transform.localPosition = Vector3.zero;
+                    _equipped.transform.localRotation = Quaternion.identity;
 
-        // Scale up to cancel out the player's scale (e.g., 0.2 becomes 5x)
-            Vector3 inverseScale = new Vector3(
-            1f / transform.localScale.x,
-            1f / transform.localScale.y,
-            1f / transform.localScale.z
-        );
-        _equipped.transform.localScale = inverseScale;
+                // Scale up to cancel out the player's scale (e.g., 0.2 becomes 5x)
+                    Vector3 inverseScale = new Vector3(
+                    1f / transform.localScale.x,
+                    1f / transform.localScale.y,
+                    1f / transform.localScale.z
+                );
+                _equipped.transform.localScale = inverseScale;
 
-        // Optional but helpful if the prefab has nested children with messed-up scales
-        NormalizeChildScale(_equipped.transform);
+                // Optional but helpful if the prefab has nested children with messed-up scales
+                NormalizeChildScale(_equipped.transform);
 
-        //properly update the weapon script to newly created weapon
-        _weaponScript = _equipped.GetComponentInChildren<Weapon>();
+                //properly update the weapon script to newly created weapon
+                _weaponScript = _equipped.GetComponentInChildren<Weapon>();
 
-        // Debug log
-        Debug.Log($"[EQUIP DEBUG] Final equipped scale: {_equipped.transform.lossyScale}");
-        }
+                // Debug log
+                Debug.Log($"[EQUIP DEBUG] Final equipped scale: {_equipped.transform.lossyScale}");
+                }
 
-        action_state = PLAYER_ACTION_STATES.IDLE;
-        break;
+                action_state = PLAYER_ACTION_STATES.IDLE;
+                break;
 
 
            
