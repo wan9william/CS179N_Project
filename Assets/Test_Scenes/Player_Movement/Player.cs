@@ -145,14 +145,9 @@ void Awake()
                     break;
                 }
 
-                //EVERYTHING BEYOND THIS STATEMENT ASSUMES THAT THERE IS AN ATTACHED WEAPONSCRIPT
-                if (!_weaponScript) { animator.SetBool("Equipped", false); _hand.SetActive(false); break; }
-
-                animator.SetBool("Equipped", true);
-                _hand.SetActive(true);
-                var fireMode = _weaponScript.GetFireMode();
                 //If the scroll wheel is used, get current selected slot and add accordingly, then transition
-                if (Input.mouseScrollDelta.y != 0) {
+                if (Input.mouseScrollDelta.y != 0)
+                {
                     Debug.Log(Input.mouseScrollDelta.y);
                     selected_slot += Input.mouseScrollDelta.y > 0 ? 1 : -1;
                     selected_slot = Mathf.Clamp(selected_slot, 0, 7);
@@ -164,13 +159,72 @@ void Awake()
 
                 //If a num is pressed, 
                 int selected_key = GetNumKey();
-                if (selected_key != -1) {
+                if (selected_key != -1)
+                {
                     selected_slot = selected_key;
                     selected_slot = Mathf.Clamp(selected_slot, 0, 7);
 
                     action_state = PLAYER_ACTION_STATES.SELECT;
                     break;
                 }
+
+                //Dropping Items
+                if (Input.GetKeyUp(KeyCode.Q) && dropForce > 0f)
+                {
+
+                    //Instantiate object
+                    //GET THE RESOURCE VERSION OF THE OBJECT
+                    GameObject resourceItem = inventory.GetSelectedResource(selected_slot);
+
+                    //This may cause issues in the future
+                    if (resourceItem == null) break;
+
+                    GameObject droppedItem = Instantiate(resourceItem, transform.position, Quaternion.identity);//Instantiate(_equipped, transform.position, Quaternion.identity);
+
+
+                    droppedItem.transform.localScale = Vector3.one;
+                    droppedItem.layer = 6; //Item_RB layer
+
+                    //Add rigidbody if necessary and calculate direction
+                    Rigidbody2D rb = !droppedItem.GetComponent<Rigidbody2D>() ? droppedItem.AddComponent<Rigidbody2D>() : droppedItem.GetComponent<Rigidbody2D>();
+                    BoxCollider2D bc = !droppedItem.GetComponent<BoxCollider2D>() ? droppedItem.AddComponent<BoxCollider2D>() : droppedItem.GetComponent<BoxCollider2D>();
+                    bc.isTrigger = true;
+                    Vector2 MousePos = Input.mousePosition;
+                    Vector3 MouseWorldPos = _camera.ScreenToWorldPoint(MousePos);
+                    Vector2 dir = ((Vector2)MouseWorldPos - (Vector2)transform.position).normalized;
+                    rb.linearVelocity = dir * 3f;
+                    rb.gravityScale = 0;
+                    rb.linearDamping = 2f;
+
+                    //reset drop force
+                    dropForce = 0f;
+
+                    Destroy(_equipped);
+                    _equipped = null;
+
+                    //REMOVE 1 OF THE SELECTED SLOT'S RESOURCE. DELETION WILL BE HANDLED BY THE SLOT ITSELF
+                    inventory.DecrementItem(selected_slot);
+
+                    //Select same slot
+                    SelectEquipped();
+
+
+                    break;
+                }
+                else if (Input.GetKey(KeyCode.Q))
+                {
+                    dropForce += 0.3f * Time.deltaTime;
+                    Mathf.Clamp(dropForce, 0, 1);
+                }
+
+                //EVERYTHING BEYOND THIS STATEMENT ASSUMES THAT THERE IS AN ATTACHED WEAPONSCRIPT
+                if (!_weaponScript) { animator.SetBool("Equipped", false); _hand.SetActive(false); break; }
+
+                animator.SetBool("Equipped", true);
+                _hand.SetActive(true);
+                var fireMode = _weaponScript.GetFireMode();
+                
+                
 
                 if (fireMode == FireMode.FullAuto && Input.GetMouseButton(0) && _equipped)
                 {
@@ -182,36 +236,7 @@ void Awake()
                 }
 
 
-                if (Input.GetKeyUp(KeyCode.Q) && dropForce > 0f)
-                {
-
-                    //Instantiate object
-                    GameObject droppedItem = Instantiate(_equipped, transform.position, Quaternion.identity);
-                    droppedItem.transform.localScale = Vector3.one;
-                    droppedItem.layer = 6; //Item_RB layer
-                    
-                    //Add rigidbody if necessary and calculate direction
-                    Rigidbody2D rb = !droppedItem.GetComponent<Rigidbody2D>() ? droppedItem.AddComponent<Rigidbody2D>() : droppedItem.GetComponent<Rigidbody2D>();
-                    BoxCollider2D bc = !droppedItem.GetComponent<BoxCollider2D>() ? droppedItem.AddComponent<BoxCollider2D>() : droppedItem.GetComponent<BoxCollider2D>();
-                    bc.isTrigger = true;
-                    Vector2 MousePos = Input.mousePosition;
-                    Vector3 MouseWorldPos = _camera.ScreenToWorldPoint(MousePos);
-                    Vector2 dir = ((Vector2)MouseWorldPos - (Vector2)transform.position).normalized;
-                    rb.linearVelocity = dir*3f;
-                    rb.gravityScale = 0;
-                    rb.linearDamping = 2f;
-
-                    //reset drop force
-                    dropForce = 0f;
-
-                    Destroy(_equipped);
-                    _equipped = null;
-                    break;
-                }
-                else if (Input.GetKey(KeyCode.Q)) {
-                    dropForce += 0.3f * Time.deltaTime;
-                    Mathf.Clamp(dropForce, 0, 1);
-                }
+                
 
                 break;
             case PLAYER_ACTION_STATES.SHOOT:
@@ -249,41 +274,8 @@ void Awake()
                 //actions go here for selecting a slot
 
                 inventory.SelectSlot(selected_slot);
-
-                GameObject selectedPrefab = inventory.selecteditem(selected_slot);
-
-                // Remove currently equipped object if it's different
-                if (_equipped != null && selectedPrefab != null && _equipped.name != selectedPrefab.name + "(Clone)")
-                {
-                    Destroy(_equipped);
-                    _equipped = null;
-                }
-
-                // Equip if not already equipped
-                if (_equipped == null && selectedPrefab != null)
-                {
-                    _equipped = Instantiate(selectedPrefab);
-                    _equipped.transform.SetParent(transform, false);
-                    _equipped.transform.localPosition = Vector3.zero;
-                    _equipped.transform.localRotation = Quaternion.identity;
-
-                // Scale up to cancel out the player's scale (e.g., 0.2 becomes 5x)
-                    Vector3 inverseScale = new Vector3(
-                    1f / transform.localScale.x,
-                    1f / transform.localScale.y,
-                    1f / transform.localScale.z
-                );
-                _equipped.transform.localScale = inverseScale;
-
-                // Optional but helpful if the prefab has nested children with messed-up scales
-                NormalizeChildScale(_equipped.transform);
-
-                //properly update the weapon script to newly created weapon
-                _weaponScript = _equipped.GetComponentInChildren<Weapon>();
-
-                // Debug log
-                Debug.Log($"[EQUIP DEBUG] Final equipped scale: {_equipped.transform.lossyScale}");
-                }
+                SelectEquipped();
+                
 
                 action_state = PLAYER_ACTION_STATES.IDLE;
                 break;
@@ -394,6 +386,43 @@ void Awake()
 
         //Apply movement
         _rb.linearVelocity = new Vector2(horizontal_multiplier,vertical_multiplier)*current_speed;
+    }
+
+    private void SelectEquipped() {
+        GameObject selectedPrefab = inventory.selecteditem(selected_slot);
+
+        // Remove currently equipped object if it's different
+        if (_equipped != null && selectedPrefab != null && _equipped.name != selectedPrefab.name + "(Clone)")
+        {
+            Destroy(_equipped);
+            _equipped = null;
+        }
+
+        // Equip if not already equipped
+        if (_equipped == null && selectedPrefab != null)
+        {
+            _equipped = Instantiate(selectedPrefab);
+            _equipped.transform.SetParent(transform, false);
+            _equipped.transform.localPosition = Vector3.zero;
+            _equipped.transform.localRotation = Quaternion.identity;
+
+            // Scale up to cancel out the player's scale (e.g., 0.2 becomes 5x)
+            Vector3 inverseScale = new Vector3(
+            1f / transform.localScale.x,
+            1f / transform.localScale.y,
+            1f / transform.localScale.z
+        );
+            _equipped.transform.localScale = inverseScale;
+
+            // Optional but helpful if the prefab has nested children with messed-up scales
+            NormalizeChildScale(_equipped.transform);
+
+            //properly update the weapon script to newly created weapon
+            _weaponScript = _equipped.GetComponentInChildren<Weapon>();
+
+            // Debug log
+            Debug.Log($"[EQUIP DEBUG] Final equipped scale: {_equipped.transform.lossyScale}");
+        }
     }
 
 

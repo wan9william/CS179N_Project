@@ -216,6 +216,13 @@ public class Inventory
 
     }
 
+    public void DecrementItem(int index) {
+
+        int quantity = inventorySlots[index].GetQuantity() - 1;
+        inventorySlots[index].SetQuantity(quantity);
+        inventorySlots[index].UpdateItem();
+    }
+
     public GameObject selecteditem(int index)
     {
         Item_ScriptableObj item = inventorySlots[index].GetItem();
@@ -229,6 +236,11 @@ public class Inventory
         GameObject fallback = Player.Singleton?.GetFlashlightPrefab();
         Debug.Log("[Inventory] Slot is empty. Returning flashlight: " + (fallback != null ? fallback.name : "null"));
         return fallback;
+    }
+
+    public GameObject GetSelectedResource(int index) {
+        Item_ScriptableObj item = inventorySlots[index].GetItem();
+        return item.getResourcePrefab();
     }
     
     public int GetMaxStackSize()

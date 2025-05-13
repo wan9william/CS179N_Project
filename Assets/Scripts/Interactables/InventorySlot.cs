@@ -27,6 +27,8 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IDropHandler
 
     public slotTag myTag;
 
+    Item_ScriptableObj empty;
+
     void Start()
     {
         // adds a text number of how many of that item there is to bottom right of inventory square
@@ -46,7 +48,8 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IDropHandler
             rect.offsetMax = new Vector2(-2, -2);
         }
 
-        
+        empty = Resources.Load("Empty") as Item_ScriptableObj;
+
         myItem = transform.GetChild(0).GetComponent<InventoryItem>();
 
         UpdateQuantityDisplay();
@@ -80,13 +83,13 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IDropHandler
             case SLOT_ACTION_STATES.SELECT:
 
                 //grow the square
-                //transform.localScale = Vector3.one * 1.2f;
+                transform.localScale = Vector3.one * 1.2f;
                 state = SLOT_ACTION_STATES.IDLE;
                 break;
             case SLOT_ACTION_STATES.UNSELECT:
 
                 state = SLOT_ACTION_STATES.IDLE;
-                //transform.localScale = Vector3.one;
+                transform.localScale = Vector3.one;
                 break;
             default:
                 break;
@@ -238,6 +241,21 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IDropHandler
         UpdateQuantityDisplay();
     }
 
+    public void UpdateItem() {
+
+        UpdateQuantityDisplay();
+
+        if (quantity > 0) return; //if quantity is not less than 0, no need to update anything else
+
+        item = empty;
+        quantity = 0;
+
+        Image child_image = transform.GetChild(0).GetComponent<Image>();
+        child_image.sprite = item.getSprite();
+        child_image.color = item.getSprite() ? new Color(1, 1, 1, 1) : new Color(1, 1, 1, 0);
+        myItem.myItem = item;
+    }
+
     private void UpdateQuantityDisplay()
     {
         if(quantityText != null)
@@ -259,6 +277,8 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IDropHandler
     {
         return quantity;
     }
+
+    public void SetQuantity(int q) { quantity = q; }
 
     // Called when an item is dropped onto slot and handles stacking of same items and placement of new items
     public void OnDrop(PointerEventData eventData)
