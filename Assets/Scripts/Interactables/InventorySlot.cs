@@ -99,36 +99,31 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IDropHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if(eventData.button == PointerEventData.InputButton.Right)
+        if (eventData.button != PointerEventData.InputButton.Right || inven.carriedItem == null) return;
+
+        if(myItem != null)
         {
-            if(inven.carriedItem == null)
+            // if more than 1 item of that type exists in a slot and shift is pressed, split the stack of that item
+            if((Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.LeftShift)) && quantity > 1)
             {
-                if(myItem != null)
-                {
-                    // if more than 1 item of that type exists in a slot and shift is pressed, split the stack of that item
-                    if((Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.LeftShift)) && quantity > 1)
-                    {
-                        int split = quantity / 2;
-                        quantity = quantity - split;
-                        UpdateQuantityDisplay();
-                        // creating a new carried item with the quantity of split result
+                int split = quantity / 2;
+                quantity = quantity - split;
+                UpdateQuantityDisplay();
+                // creating a new carried item with the quantity of split result
                         
-                        /*InventoryItem splitNewItem = Instantiate(myItem, Inventory.Singleton.transform);
-                        splitNewItem.Initialize(myItem.myItem, null);
-                        splitNewItem.SetQuantity(split);
-                        inven.carriedItem = splitNewItem;
-                        */
-                    }
-                }
-                return;
+                /*InventoryItem splitNewItem = Instantiate(myItem, Inventory.Singleton.transform);
+                splitNewItem.Initialize(myItem.myItem, null);
+                splitNewItem.SetQuantity(split);
+                inven.carriedItem = splitNewItem;
+                */
             }
-            /*
-            if(myTag != slotTag.None && inven.carriedItem.myItem.itemTag != myTag)
-            {
-                return;
-            }*/
-            SetItem(inven.carriedItem);
         }
+        /*
+        if(myTag != slotTag.None && inven.carriedItem.myItem.itemTag != myTag)
+        {
+            return;
+        }*/
+        SetItem(inven.carriedItem);
     }
 
     public void SetItem(InventoryItem item)
