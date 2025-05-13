@@ -56,7 +56,7 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         if (inven != null)
         {
             inven.SetCarriedItem(this);
-            Debug.Log(inven.carriedItem.myItem);
+            //Debug.Log(inven.carriedItem.myItem);
         }
 
         quantity = transform.parent.GetComponent<InventorySlot>().GetQuantity();
@@ -118,7 +118,7 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         itemIcon.raycastTarget = true;
 
 
-        transform.parent = parentAfterDrag;
+        transform.SetParent(parentAfterDrag,false);
         transform.localPosition = Vector3.zero;
         transform.SetAsFirstSibling();
 

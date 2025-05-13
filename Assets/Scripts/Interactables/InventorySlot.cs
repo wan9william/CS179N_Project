@@ -80,13 +80,13 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IDropHandler
             case SLOT_ACTION_STATES.SELECT:
 
                 //grow the square
-                transform.localScale = Vector3.one * 1.2f;
+                //transform.localScale = Vector3.one * 1.2f;
                 state = SLOT_ACTION_STATES.IDLE;
                 break;
             case SLOT_ACTION_STATES.UNSELECT:
 
                 state = SLOT_ACTION_STATES.IDLE;
-                transform.localScale = Vector3.one;
+                //transform.localScale = Vector3.one;
                 break;
             default:
                 break;
