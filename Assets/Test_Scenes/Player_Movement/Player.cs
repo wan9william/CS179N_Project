@@ -174,7 +174,7 @@ public class Player : MonoBehaviour
                 //Any data specific to a weapon (fire rate, damage, etc) should likely be stored in a Scriptable Object (feel free to look it up). This will make our implementation easier.
                 //As well as more memory friendly.
 
-                _equipped.GetComponent<Weapon>().Shoot();
+                _equipped.GetComponent<Equippable>().Use();
                 action_state = PLAYER_ACTION_STATES.IDLE;
                 break;
 
