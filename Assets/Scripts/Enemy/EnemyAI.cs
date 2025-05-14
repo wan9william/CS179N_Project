@@ -50,6 +50,10 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
+    public void SetDeadState() {
+        currentState = EnemyState.Idle;
+    }
+
     void FixedUpdate()
     {
         switch (currentState)

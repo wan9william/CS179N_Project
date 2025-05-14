@@ -12,6 +12,8 @@ public class EnemyHealth : MonoBehaviour
     [SerializeField] private Camera mainCamera;
     [SerializeField] private Transform target;
 
+    private EnemyAI aiscript;
+
     [Header("Animation Settings")]
     public Animator animator;
     public SpriteRenderer spriteRenderer;
@@ -48,6 +50,9 @@ public class EnemyHealth : MonoBehaviour
         if (mainCamera == null) mainCamera = Camera.main;
         if (target == null) target = transform;
         if (slider == null) slider = GetComponentInChildren<Slider>();
+
+        if(!animator) animator = GetComponent<Animator>();
+        if (!aiscript) aiscript= GetComponent<EnemyAI>();
     }
 
     void Start()
@@ -76,6 +81,7 @@ public class EnemyHealth : MonoBehaviour
         if (currentHealth <= 0f)
         {
             animator.SetTrigger("Death");
+            aiscript.SetDeadState();
         }
     }
 

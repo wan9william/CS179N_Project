@@ -439,10 +439,10 @@ void Awake()
             1f / transform.localScale.y,
             1f / transform.localScale.z
         );
-            _equipped.transform.localScale = inverseScale;
+            //_equipped.transform.localScale = inverseScale;
 
             // Optional but helpful if the prefab has nested children with messed-up scales
-            NormalizeChildScale(_equipped.transform);
+            //NormalizeChildScale(_equipped.transform);
 
             //properly update the weapon script to newly created weapon
             _weaponScript = _equipped.GetComponentInChildren<Weapon>();
