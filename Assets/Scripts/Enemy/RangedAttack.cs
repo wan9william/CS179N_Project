@@ -48,7 +48,7 @@ public class RangedAttack : MonoBehaviour, EnemyAttack
 
         Debug.Log("[RangedAttack] Fired projectile at player.");
 
-        yield return new WaitForSeconds(stats.attackCooldown); // cooldown
+        yield return new WaitForSeconds(stats.attackCooldown);
         isAttacking = false;
     }
 }
