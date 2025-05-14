@@ -17,3 +17,4 @@ MonoBehaviour:
   _name: Shotgun Shell
   ID: 3
   equipPrefab: {fileID: 2632405655439488564, guid: 9c4aadef77f5e1d408a59e60f3fcc3b7, type: 3}
+  resourcePrefab: {fileID: 2632405655439488564, guid: 14d56fd15dac18e4d8d7fec7629b6928, type: 3}
