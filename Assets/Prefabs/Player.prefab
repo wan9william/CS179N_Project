@@ -1049,6 +1049,8 @@ MonoBehaviour:
   dampening: 15
   sprint_amount: 100
   drain_amount: 25
+  dropForce: 0
+  _rb: {fileID: 0}
   _equipped: {fileID: 0}
   _hand: {fileID: 1983484274515771791}
   _interactable: {fileID: 0}

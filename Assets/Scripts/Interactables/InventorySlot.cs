@@ -319,10 +319,11 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IDropHandler
 
     public void OnDrag(PointerEventData eventData)
     {
+        Debug.Log($"CarriedItem is {inven.carriedItem}");
         if (eventData.button != PointerEventData.InputButton.Right)
             return;
 
-        Debug.Log($"CarriedItem is {inven.carriedItem}");
+
         // Update position to follow cursor
         //transform.position = Input.mousePosition;
     }

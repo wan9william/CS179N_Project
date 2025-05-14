@@ -100,10 +100,12 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     // makes it carried item follow the cursor
     public void OnDrag(PointerEventData eventData)
     {
+        Debug.Log("Dragging at: " + Input.mousePosition);
+
         if (eventData.button != PointerEventData.InputButton.Right)
             return;
             
-        //Debug.Log("Dragging at: " + Input.mousePosition);
+        
         // Update position to follow cursor
         transform.position = Input.mousePosition;
     }
