@@ -16,6 +16,9 @@ public class Item_ScriptableObj : ScriptableObject
     [SerializeField] private string _name = string.Empty;
     [SerializeField] private UInt16 ID = 0; //0 signifies empty
 
+    public GameObject equipPrefab;
+    public GameObject resourcePrefab;
+
     public UInt16 getID()
     {
         return ID;
@@ -29,4 +32,7 @@ public class Item_ScriptableObj : ScriptableObject
     public Color getColor() { return color; }
 
     public string getName() { return _name; }
+    public GameObject getPrefab() { return equipPrefab;}
+
+    public GameObject getResourcePrefab() { return resourcePrefab; }
 }

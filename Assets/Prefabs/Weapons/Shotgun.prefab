@@ -60,6 +60,12 @@ MonoBehaviour:
   bloomDecaySpeed: 3
   bulletsPerShot: 6
   perBulletSpread: 15
+  ammoType: {fileID: 11400000, guid: f40b3b1526f2c3842ab693fea6e46211, type: 2}
+  magazineSize: 7
+  reloadTime: 1.5
+  animator: {fileID: 0}
+  spriteRenderer: {fileID: 0}
+  objectManager: {fileID: 0}
 --- !u!1 &5173227693625057319
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using UnityEngine;
 
 public enum FireMode
@@ -8,7 +9,7 @@ public enum FireMode
     FullAuto
 }
 
-public class Weapon : MonoBehaviour
+public class Weapon : Equippable
 {
     [SerializeField] private Transform weaponOwner; // Reference to player or owner
 
@@ -30,16 +31,59 @@ public class Weapon : MonoBehaviour
     [SerializeField] private int bulletsPerShot = 1; // 1 = normal gun, 6 = shotgun
     [SerializeField] private float perBulletSpread = 5f; // angle spread between bullets
 
+    [Header("Ammo Settings")]
+    [SerializeField] private Item_ScriptableObj ammoType;
+    [SerializeField] private int magazineSize = 10;
+    [SerializeField] private float reloadTime = 1.5f;
+
     [Header("Animation Settings")]
     public Animator animator;
     public SpriteRenderer spriteRenderer;
+
+    [Header("Object Manager")]
+    [SerializeField] private ObjectManager objectManager;
 
 
     private float currentSpread = 0f;
     private float lastFireTime = 0f;
 
+    private int currentAmmo;
+    private bool isReloading = false;
+
+    private IEnumerator Reload()
+    {
+        isReloading = true;
+        Debug.Log("[Weapon] Reloading...");
+
+        yield return new WaitForSeconds(reloadTime);
+
+        Inventory inv = Player.Singleton.getInventory();
+        int ammoNeeded = magazineSize - currentAmmo;
+        int availableAmmo = inv.GetTotalAmmo(ammoType);
+
+        // Only take what fits in the mag and what is available
+        int ammoToLoad = Mathf.Min(ammoNeeded, availableAmmo);
+
+        if (ammoToLoad > 0)
+        {
+            inv.ConsumeAmmo(ammoType, ammoToLoad);
+            currentAmmo += ammoToLoad;
+            Debug.Log($"[Weapon] Reloaded {ammoToLoad} bullet(s). Now: {currentAmmo}/{magazineSize}");
+        }
+        else
+        {
+            Debug.Log("[Weapon] No ammo available to reload.");
+        }
+
+        isReloading = false;
+    }
+
     void Start()
     {
+        if(objectManager == null) objectManager = GameObject.FindWithTag("Object_Manager").GetComponent<ObjectManager>();
+
+
+        currentAmmo = magazineSize;
         if (weaponOwner == null)
             weaponOwner = transform.root; // auto-assign the top-level parent if needed
     }   
@@ -55,11 +99,21 @@ public class Weapon : MonoBehaviour
         return fireMode;
     }
 
+    public override void Use() {
+        Shoot();
+    }
+
     public void Shoot()
     {
     // Check if within firerate
     if (Time.time < lastFireTime + fireCooldown)
     {
+        return;
+    }
+    if (currentAmmo <= 0)
+    {
+        Debug.Log("[Weapon] Out of ammo! Reload required.");
+        // StartCoroutine(Reload());
         return;
     }
 
@@ -75,7 +129,9 @@ public class Weapon : MonoBehaviour
         float finalAngle = baseAngle + bloom + spread;
 
         Quaternion bulletRotation = Quaternion.Euler(0f, 0f, finalAngle);
-        GameObject bullet = Instantiate(projectilePrefab, firePoint.position, bulletRotation);
+        GameObject bullet = objectManager.RequestBulletObj();//Instantiate(projectilePrefab, firePoint.position, bulletRotation);
+        bullet.transform.rotation = bulletRotation;
+        bullet.transform.position = firePoint.position;
 
         // Assign velocity
         Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
@@ -92,7 +148,30 @@ public class Weapon : MonoBehaviour
         }
 
     // Bloom increases with each shot (not each pellet)
+    currentAmmo--;
     currentSpread = Mathf.Min(currentSpread + bloomIncreasePerShot, maxSpreadAngle);
     lastFireTime = Time.time;
-}
+    }
+
+    public void StartReload()
+    {
+        if (isReloading || currentAmmo >= magazineSize)
+                return;
+
+            Inventory inv = Player.Singleton.getInventory();
+            if (inv.GetTotalAmmo(ammoType) > 0)
+            {
+                Player.Singleton.StartCoroutine(Reload());
+            }
+            else
+            {
+                Debug.Log("[Weapon] No ammo to reload.");
+            }
+    }
+
+    public bool IsReloading()
+    {
+        return isReloading;
+    }
+
 }

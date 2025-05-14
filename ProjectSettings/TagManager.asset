@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Resource
   - Interactable
+  - Object_Manager
   layers:
   - Default
   - TransparentFX
@@ -14,6 +15,7 @@ TagManager:
   - Water
   - UI
   - Obstacle
+  - Item_RB
   - 
   - 
   - 
@@ -48,6 +50,9 @@ TagManager:
     locked: 0
   - name: Foreground
     uniqueID: 3427858709
+    locked: 0
+  - name: UI
+    uniqueID: 3921425219
     locked: 0
   m_RenderingLayers:
   - Default

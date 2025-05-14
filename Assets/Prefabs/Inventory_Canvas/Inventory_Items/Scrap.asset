@@ -16,3 +16,5 @@ MonoBehaviour:
   sprite: {fileID: -5555290967203996117, guid: 2a4861251bfa03d4fbfe9d08b7ce92e8, type: 3}
   _name: Scrap
   ID: 5
+  equipPrefab: {fileID: 2483345626859940841, guid: 370e9023216a812468baad7ab7a34c84, type: 3}
+  resourcePrefab: {fileID: 2483345626859940841, guid: c29f7f79f74c73344a714f79ac885dfd, type: 3}

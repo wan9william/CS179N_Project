@@ -1,3 +1,4 @@
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,10 +17,11 @@ public class Player : MonoBehaviour
     [SerializeField] private Inventory inventory;
     [SerializeField] private GameObject canvas;
     [SerializeField] private int selected_slot;
+    [SerializeField] private GameObject flashlightPrefab;
 
     //States
     private enum PLAYER_MOVEMENT_STATES { IDLE, WALK };
-    private enum PLAYER_ACTION_STATES { IDLE, SHOOT, INTERACT, SELECT }
+    private enum PLAYER_ACTION_STATES { IDLE, SHOOT, INTERACT, SELECT, DROP, RELOAD }
 
 
     private PLAYER_ACTION_STATES action_state = PLAYER_ACTION_STATES.IDLE;
@@ -36,13 +38,15 @@ public class Player : MonoBehaviour
     //Sprinting Parameters
     [SerializeField] private float sprint_amount = 100f;
     [SerializeField] private float drain_amount = 25f;
+    //Drop Parameters
+    [SerializeField] private float dropForce = 0.0f;
      
     private float eps = 1e-5f;
 
 
     //Components
     [Header("Components")]
-    private Rigidbody2D _rb;
+    [SerializeField] private Rigidbody2D _rb;
     [SerializeField] private GameObject _equipped;
     [SerializeField] private GameObject _hand;
     [SerializeField] private GameObject _interactable;
@@ -55,7 +59,7 @@ public class Player : MonoBehaviour
     [Header("Hand Settings")]
     [SerializeField] private Vector3 handOffset = Vector3.zero;
     [SerializeField] private float handRadius = 3.5f;
-    [SerializeField] private float handFlip = 0.13f;
+    [SerializeField] private float handFlip = 0f;
     [SerializeField] private int weaponLayerFront = 5;
     [SerializeField] private int weaponLayerBack = 1;
     [SerializeField] private float handLayerFront = 6;
@@ -67,10 +71,16 @@ public class Player : MonoBehaviour
     private Weapon _weaponScript;
     private SpriteRenderer _weaponSR;
 
+
+
+public static Player Singleton;
+
+void Awake()
+{
+    Singleton = this;
+}
     //Hand
     private SpriteRenderer _handSR;
-
-
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -79,17 +89,21 @@ public class Player : MonoBehaviour
         inventory = new Inventory(canvas.transform);
         
         _rb = GetComponent<Rigidbody2D>();
-    if (_equipped != null)
-        _weaponScript = _equipped.GetComponent<Weapon>();
+        if (_equipped != null)
+            _weaponScript = _equipped.GetComponent<Weapon>();
+
         sprint_bar.maxValue = 100f;
 
     }
-
 
     // Update is called once per frame
     void Update()
     {
         float current_speed = movement_speed;
+
+        //we could check if we have a weapon every frame
+        //_weaponScript = _equipped != null ? _equipped.GetComponentInChildren<Weapon>() : null;
+
 
         if (sprint_amount < 100)
         {
@@ -99,6 +113,7 @@ public class Player : MonoBehaviour
         else {
             sprint_bar.gameObject.SetActive(false);
         }
+
         //STATE ACTIONS & TRANSITIONS FOR THE ACTION STATE
         switch (action_state)
         {
@@ -130,13 +145,9 @@ public class Player : MonoBehaviour
                     break;
                 }
 
-                //EVERYTHING BEYOND THIS STATEMENT ASSUMES THAT THERE IS AN ATTACHED WEAPONSCRIPT
-                if (!_weaponScript) { animator.SetBool("Equipped", false); break; }
-
-                animator.SetBool("Equipped", true);
-                var fireMode = _weaponScript.GetFireMode();
                 //If the scroll wheel is used, get current selected slot and add accordingly, then transition
-                if (Input.mouseScrollDelta.y != 0) {
+                if (Input.mouseScrollDelta.y != 0)
+                {
                     Debug.Log(Input.mouseScrollDelta.y);
                     selected_slot += Input.mouseScrollDelta.y > 0 ? 1 : -1;
                     selected_slot = Mathf.Clamp(selected_slot, 0, 7);
@@ -148,7 +159,8 @@ public class Player : MonoBehaviour
 
                 //If a num is pressed, 
                 int selected_key = GetNumKey();
-                if (selected_key != -1) {
+                if (selected_key != -1)
+                {
                     selected_slot = selected_key;
                     selected_slot = Mathf.Clamp(selected_slot, 0, 7);
 
@@ -156,15 +168,80 @@ public class Player : MonoBehaviour
                     break;
                 }
 
-                if (fireMode == FireMode.FullAuto && Input.GetMouseButton(0))
+                //Dropping Items
+                if (Input.GetKeyUp(KeyCode.Q) && dropForce > 0f)
+                {
+
+                    //Instantiate object
+                    //GET THE RESOURCE VERSION OF THE OBJECT
+                    GameObject resourceItem = inventory.GetSelectedResource(selected_slot);
+
+                    //This may cause issues in the future
+                    if (resourceItem == null) break;
+
+                    GameObject droppedItem = Instantiate(resourceItem, transform.position, Quaternion.identity);//Instantiate(_equipped, transform.position, Quaternion.identity);
+
+
+                    droppedItem.transform.localScale = Vector3.one;
+                    droppedItem.layer = 6; //Item_RB layer
+
+                    //Add rigidbody if necessary and calculate direction
+                    Rigidbody2D rb = !droppedItem.GetComponent<Rigidbody2D>() ? droppedItem.AddComponent<Rigidbody2D>() : droppedItem.GetComponent<Rigidbody2D>();
+                    BoxCollider2D bc = !droppedItem.GetComponent<BoxCollider2D>() ? droppedItem.AddComponent<BoxCollider2D>() : droppedItem.GetComponent<BoxCollider2D>();
+                    bc.isTrigger = true;
+                    Vector2 MousePos = Input.mousePosition;
+                    Vector3 MouseWorldPos = _camera.ScreenToWorldPoint(MousePos);
+                    Vector2 dir = ((Vector2)MouseWorldPos - (Vector2)transform.position).normalized;
+                    rb.linearVelocity = dir * 3f;
+                    rb.gravityScale = 0;
+                    rb.linearDamping = 2f;
+
+                    //reset drop force
+                    dropForce = 0f;
+
+                    Destroy(_equipped);
+                    _equipped = null;
+
+                    //REMOVE 1 OF THE SELECTED SLOT'S RESOURCE. DELETION WILL BE HANDLED BY THE SLOT ITSELF
+                    inventory.DecrementItem(selected_slot);
+
+                    //Select same slot
+                    SelectEquipped();
+
+
+                    break;
+                }
+                else if (Input.GetKey(KeyCode.Q))
+                {
+                    dropForce += 0.3f * Time.deltaTime;
+                    Mathf.Clamp(dropForce, 0, 1);
+                }
+
+                //EVERYTHING BEYOND THIS STATEMENT ASSUMES THAT THERE IS AN ATTACHED WEAPONSCRIPT
+                if (!_weaponScript) { animator.SetBool("Equipped", false); _hand.SetActive(false); break; }
+
+                animator.SetBool("Equipped", true);
+                _hand.SetActive(true);
+                var fireMode = _weaponScript.GetFireMode();
+                
+                
+
+                if (fireMode == FireMode.FullAuto && Input.GetMouseButton(0) && _equipped)
                 {
                     action_state = PLAYER_ACTION_STATES.SHOOT;
                 }
-                else if (fireMode == FireMode.SemiAuto && Input.GetMouseButtonDown(0))
+                else if (fireMode == FireMode.SemiAuto && Input.GetMouseButtonDown(0) && _equipped)
                 {
                     action_state = PLAYER_ACTION_STATES.SHOOT;
                 }
 
+            if (_weaponScript && Input.GetKeyDown(KeyCode.R))//reloading
+            {
+                action_state = PLAYER_ACTION_STATES.RELOAD;
+                break;
+            }
+
+                
 
                 break;
             case PLAYER_ACTION_STATES.SHOOT:
@@ -175,8 +252,25 @@ public class Player : MonoBehaviour
 
                 //Any data specific to a weapon (fire rate, damage, etc) should likely be stored in a Scriptable Object (feel free to look it up). This will make our implementation easier.
                 //As well as more memory friendly.
+                if (_equipped != null)
+                {
+                    Weapon weapon = _equipped.GetComponentInChildren<Weapon>();
+                    if (weapon != null)
+                    {
+                        Debug.Log("[Player] Firing weapon");
+                        weapon.Shoot();
+                    }
+                    else
+                    {
+                        Debug.LogWarning("[Player] Equipped item does not have a Weapon component (even in children).");
+                    }
+                }
+                else
+                {
+                    Debug.LogWarning("[Player] No weapon equipped.");
+                }
 
-                _equipped.GetComponent<Weapon>().Shoot();
+                _equipped.GetComponent<Equippable>().Use();
                 action_state = PLAYER_ACTION_STATES.IDLE;
                 break;
 
@@ -185,6 +279,8 @@ public class Player : MonoBehaviour
                 //actions go here for selecting a slot
 
                 inventory.SelectSlot(selected_slot);
+                SelectEquipped();
+                
 
                 action_state = PLAYER_ACTION_STATES.IDLE;
                 break;
@@ -212,6 +308,28 @@ public class Player : MonoBehaviour
                 break;
 
 
+            case PLAYER_ACTION_STATES.RELOAD:
+                if (_weaponScript != null)
+                {
+                    if (!_weaponScript.IsReloading())
+                    {
+                        _weaponScript.StartReload();
+                    }
+
+                    if (_weaponScript.IsReloading())
+                    {
+                        // Still reloading — stay in RELOAD state
+                        break;
+                    }
+
+                    // Done reloading — go back to idle
+                    action_state = PLAYER_ACTION_STATES.IDLE;
+                }
+                else
+                {
+                    action_state = PLAYER_ACTION_STATES.IDLE;
+                }
+                break;
         }
 
 
@@ -297,6 +415,43 @@ public class Player : MonoBehaviour
         _rb.linearVelocity = new Vector2(horizontal_multiplier,vertical_multiplier)*current_speed;
     }
 
+    private void SelectEquipped() {
+        GameObject selectedPrefab = inventory.selecteditem(selected_slot);
+
+        // Remove currently equipped object if it's different
+        if (_equipped != null && selectedPrefab != null && _equipped.name != selectedPrefab.name + "(Clone)")
+        {
+            Destroy(_equipped);
+            _equipped = null;
+        }
+
+        // Equip if not already equipped
+        if (_equipped == null && selectedPrefab != null)
+        {
+            _equipped = Instantiate(selectedPrefab);
+            _equipped.transform.SetParent(transform, false);
+            _equipped.transform.localPosition = Vector3.zero;
+            _equipped.transform.localRotation = Quaternion.identity;
+
+            // Scale up to cancel out the player's scale (e.g., 0.2 becomes 5x)
+            Vector3 inverseScale = new Vector3(
+            1f / transform.localScale.x,
+            1f / transform.localScale.y,
+            1f / transform.localScale.z
+        );
+            _equipped.transform.localScale = inverseScale;
+
+            // Optional but helpful if the prefab has nested children with messed-up scales
+            NormalizeChildScale(_equipped.transform);
+
+            //properly update the weapon script to newly created weapon
+            _weaponScript = _equipped.GetComponentInChildren<Weapon>();
+
+            // Debug log
+            Debug.Log($"[EQUIP DEBUG] Final equipped scale: {_equipped.transform.lossyScale}");
+        }
+    }
+
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -329,6 +484,9 @@ public class Player : MonoBehaviour
     }
 
     private void RotateEquipped() {
+
+        
+
         Vector2 MousePos = Input.mousePosition;
         Vector3 MouseWorldPos = _camera.ScreenToWorldPoint(MousePos);
         Vector2 dir = ((Vector2)MouseWorldPos - (Vector2)transform.position).normalized;
@@ -336,34 +494,26 @@ public class Player : MonoBehaviour
 
         animator.SetFloat("MouseX", dir.x);
         animator.SetFloat("MouseY", dir.y);
+        
+        if (!_equipped) return;
         _equipped.transform.up = dir;
 
-        Vector3 offset = _hand.transform.localPosition;
-        if (dir.x < 0) offset.y = handFlip;
-        else offset.y = -handFlip;
-
-        if (!_weaponSR) _weaponSR = _equipped.GetComponentInChildren<SpriteRenderer>();
-        _handSR = _hand.GetComponent<SpriteRenderer>();
+        if (!_weaponSR&&_equipped) _weaponSR = _equipped.GetComponentInChildren<SpriteRenderer>();
 
         if (_weaponSR)
         {
             _weaponSR.flipY = (dir.x < 0);  // flip only when pointing left
-
-            if (dir.y > 0.38)
-            {
-                _weaponSR.sortingOrder = 1;
-                _handSR.sortingOrder = 2;
-
-            }
-            else
-            {
-                _weaponSR.sortingOrder = 4;
-                _handSR.sortingOrder = 5;
-            }
         }
-        _hand.transform.localPosition = offset;
 
-        _equipped.transform.localPosition = (Vector3)dir * handRadius + handOffset;
+        _handSR = _hand.GetComponent<SpriteRenderer>();
+        if (dir.y > 0)
+        {
+            _handSR.sortingOrder = 2;
+        }
+        else _handSR.sortingOrder = 4;
+
+        if(_equipped) _equipped.transform.localPosition = (Vector3)dir * handRadius + handOffset;
+        _hand.transform.localPosition = (Vector3)dir * handRadius + handOffset;
     }
 
 
@@ -385,7 +535,25 @@ public class Player : MonoBehaviour
         return -1;
     }
 
-}
+    public GameObject GetEquippedPrefab()
+    {
+        return _equipped != null ? _equipped : null;
+    }
 
+    public GameObject GetFlashlightPrefab()
+    {
+        return flashlightPrefab;
+    }
+
+    private void NormalizeChildScale(Transform root)
+    {
+        foreach (Transform child in root)
+        {
+            child.localScale = Vector3.one;
+            NormalizeChildScale(child); // Recursively reset nested children
+        }
+    }
+
+}
 
 

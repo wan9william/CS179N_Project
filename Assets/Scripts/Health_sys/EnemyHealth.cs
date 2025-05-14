@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.UI;
-
 [RequireComponent(typeof(Canvas))]
 public class EnemyHealth : MonoBehaviour
 {
@@ -12,6 +11,10 @@ public class EnemyHealth : MonoBehaviour
     [SerializeField] private Slider slider;
     [SerializeField] private Camera mainCamera;
     [SerializeField] private Transform target;
+
+    [Header("Animation Settings")]
+    public Animator animator;
+    public SpriteRenderer spriteRenderer;
 
     private Canvas canvas;
 
@@ -60,6 +63,8 @@ public class EnemyHealth : MonoBehaviour
 
     public void TakeDamage(float amount)
     {
+
+        animator.SetTrigger("Damaged");
         currentHealth -= amount;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
 
@@ -70,7 +75,7 @@ public class EnemyHealth : MonoBehaviour
 
         if (currentHealth <= 0f)
         {
-            Die();
+            animator.SetTrigger("Death");
         }
     }
 

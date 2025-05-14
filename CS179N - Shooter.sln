@@ -1,7 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AstarPathfindingProject", "AstarPathfindingProject.csproj", "{647397D7-4DA6-F130-A1AB-AD186C70B738}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp", "Assembly-CSharp.csproj", "{E22C83DF-6DF0-D33B-3E1A-23B6CCE4C67B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PackageToolsEditor", "PackageToolsEditor.csproj", "{1251A0DD-E0FE-2E87-BA55-3735A11792AB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AstarPathfindingProjectEditor", "AstarPathfindingProjectEditor.csproj", "{3A506BFF-67C5-E31D-539B-51579BA032BD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp-Editor", "Assembly-CSharp-Editor.csproj", "{983BC034-D92C-DC59-BA76-B9C4C4DEA211}"
 EndProject
@@ -11,10 +17,22 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{647397D7-4DA6-F130-A1AB-AD186C70B738}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{647397D7-4DA6-F130-A1AB-AD186C70B738}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{647397D7-4DA6-F130-A1AB-AD186C70B738}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{647397D7-4DA6-F130-A1AB-AD186C70B738}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E22C83DF-6DF0-D33B-3E1A-23B6CCE4C67B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E22C83DF-6DF0-D33B-3E1A-23B6CCE4C67B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E22C83DF-6DF0-D33B-3E1A-23B6CCE4C67B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E22C83DF-6DF0-D33B-3E1A-23B6CCE4C67B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1251A0DD-E0FE-2E87-BA55-3735A11792AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1251A0DD-E0FE-2E87-BA55-3735A11792AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1251A0DD-E0FE-2E87-BA55-3735A11792AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1251A0DD-E0FE-2E87-BA55-3735A11792AB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3A506BFF-67C5-E31D-539B-51579BA032BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A506BFF-67C5-E31D-539B-51579BA032BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3A506BFF-67C5-E31D-539B-51579BA032BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3A506BFF-67C5-E31D-539B-51579BA032BD}.Release|Any CPU.Build.0 = Release|Any CPU
 		{983BC034-D92C-DC59-BA76-B9C4C4DEA211}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{983BC034-D92C-DC59-BA76-B9C4C4DEA211}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{983BC034-D92C-DC59-BA76-B9C4C4DEA211}.Release|Any CPU.ActiveCfg = Release|Any CPU

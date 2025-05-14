@@ -16,3 +16,5 @@ MonoBehaviour:
   sprite: {fileID: -5059684048452499088, guid: 2a4861251bfa03d4fbfe9d08b7ce92e8, type: 3}
   _name: Rifle Ammo
   ID: 4
+  equipPrefab: {fileID: 3656777680845249198, guid: eda8e2264c004d74e9b2a059d6184286, type: 3}
+  resourcePrefab: {fileID: 3656777680845249198, guid: 33d97410bb4dca84791728767925f4f1, type: 3}
