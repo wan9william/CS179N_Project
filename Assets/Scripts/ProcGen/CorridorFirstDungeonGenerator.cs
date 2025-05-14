@@ -2,12 +2,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class CorridorFirstDungeonGenerator : DungeonGenerator
 {
     [SerializeField] private int corridorLength = 14, corridorCount = 5;
     [SerializeField] [Range(0.1f,1f)] public float roomPercent = 0.8f;
     [SerializeField] private GameObject roomPrefab;
+    [SerializeField] private int minimumRoomLength = 6;
+    [SerializeField] private int maximumRoomLength = 17;
+    [SerializeField] private bool randomWalk = false;
     protected override void RunProceduralGeneration()
     {
         CorridorFirstGeneration();
@@ -58,14 +62,9 @@ public class CorridorFirstDungeonGenerator : DungeonGenerator
     {
         foreach (var position in deadEnds)
         {
-            //if (roomFloors.Contains(position) == false)
-            //{
-            //    var room = RunRandomWalk(randomWalkParameters, position);
-            //    roomFloors.UnionWith(room);
-            //}
             if (roomFloors.Contains(position) == false)
             {
-                var room = RunRectangleWalk(position, (int)UnityEngine.Random.Range(6.0f, 17.0f), (int)UnityEngine.Random.Range(6.0f, 17.0f));
+                var room = randomWalk ? RunRandomWalk(randomWalkParameters, position) : RunRectangleWalk(position, (int)UnityEngine.Random.Range(minimumRoomLength, maximumRoomLength), (int)UnityEngine.Random.Range(minimumRoomLength, maximumRoomLength));
                 roomFloors.UnionWith(room);
             }
             //Quaternion roomRotation = Quaternion.Euler(0f, 0f, 0f);
@@ -101,13 +100,11 @@ public class CorridorFirstDungeonGenerator : DungeonGenerator
 
         List<Vector2Int> roomsToCreate = potentialRoomPositions.OrderBy(x => Guid.NewGuid()).Take(roomToCreateCount).ToList();
 
-        foreach (var roomPosition in roomsToCreate) 
+        foreach (var roomPosition in roomsToCreate)
         {
-            //var roomFloor = RunRandomWalk(randomWalkParameters, roomPosition);
-            var roomFloor = RunRectangleWalk(roomPosition, (int)UnityEngine.Random.Range(6.0f, 17.0f), (int)UnityEngine.Random.Range(6.0f, 17.0f));
+            var roomFloor = randomWalk ? RunRandomWalk(randomWalkParameters, roomPosition) : RunRectangleWalk(roomPosition, (int)UnityEngine.Random.Range(minimumRoomLength, maximumRoomLength), (int)UnityEngine.Random.Range(minimumRoomLength, maximumRoomLength));
             roomPositions.UnionWith(roomFloor);
         }
-
         return roomPositions;
     }
 
