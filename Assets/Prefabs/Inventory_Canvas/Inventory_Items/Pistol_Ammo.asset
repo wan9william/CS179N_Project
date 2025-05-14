@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Pistol_Ammo
   m_EditorClassIdentifier: 
   color: {r: 1, g: 0, b: 0, a: 1}
-  sprite: {fileID: 9010000181375383852, guid: 2a4861251bfa03d4fbfe9d08b7ce92e8, type: 3}
+  sprite: {fileID: -7689852844686393343, guid: 2a4861251bfa03d4fbfe9d08b7ce92e8, type: 3}
   _name: Stim
   ID: 1
-  equipPrefab: {fileID: 3957751190493910417, guid: 38b3373e5b8caf940ac72cdf911a176e, type: 3}
+  equipPrefab: {fileID: 3443330127039651185, guid: f30307d7a6db98f499b3ffbe312c4aa3, type: 3}
+  resourcePrefab: {fileID: 3443330127039651185, guid: 0a1787d52f2a68240880d8399036f573, type: 3}

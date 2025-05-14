@@ -46,7 +46,7 @@ public class Player : MonoBehaviour
 
     //Components
     [Header("Components")]
-    private Rigidbody2D _rb;
+    [SerializeField] private Rigidbody2D _rb;
     [SerializeField] private GameObject _equipped;
     [SerializeField] private GameObject _hand;
     [SerializeField] private GameObject _interactable;
