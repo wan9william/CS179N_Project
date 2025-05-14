@@ -44,7 +44,6 @@ public class RangedAttack : MonoBehaviour, EnemyAttack
         if (proj.TryGetComponent<Bullet>(out var bullet))
         {
             bullet.damage = stats.attackDamage;
-            bullet.targetType = TargetType.Player;
         }
 
         Debug.Log("[RangedAttack] Fired projectile at player.");
