@@ -13,4 +13,9 @@ public class Door : Interactable
     {
         throw new System.NotImplementedException();
     }
+
+    protected override void Tick()
+    {
+        return;
+    }
 }

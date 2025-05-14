@@ -12,10 +12,8 @@ public abstract class Interactable : MonoBehaviour
     public bool damage;
     public void Update()
     {
-        if (damage) {
-            damage = false;
-            Hit(5);
-        }
+        Tick();
+        CheckHealth();
     }
     /// ///////////////////////////
     public void Start()
@@ -33,7 +31,7 @@ public abstract class Interactable : MonoBehaviour
 
         //call the interact function for a given object
         onInteract(ref player);
-        transform.gameObject.SetActive(false);
+        
 
         //If the object is exhaustable
 
@@ -46,8 +44,9 @@ public abstract class Interactable : MonoBehaviour
     }
     public void Hit(float damage) { 
         health -= damage;
-        if(health < 0) SelfDestruct();
     }
+
+    private void CheckHealth() { if (health < 0) SelfDestruct(); }
 
     public void SelfDestruct() {
         transform.gameObject.SetActive(false);
@@ -59,5 +58,7 @@ public abstract class Interactable : MonoBehaviour
     protected abstract void onInteract(ref Player player);
 
     protected abstract void ExplosionVFX();
+
+    protected abstract void Tick();
 
 }
