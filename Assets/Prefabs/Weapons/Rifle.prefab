@@ -279,7 +279,7 @@ SpriteRenderer:
   m_Size: {x: 6.4, y: 6.4}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &7420429762061062423
@@ -343,6 +343,7 @@ MonoBehaviour:
   bloomDecaySpeed: 3
   bulletsPerShot: 1
   perBulletSpread: 5
+  ammoType: {fileID: 11400000, guid: 6d9fc24e61bab234aa2000cddb14dab9, type: 2}
   magazineSize: 30
   reloadTime: 1.5
   animator: {fileID: 12079794585811555}

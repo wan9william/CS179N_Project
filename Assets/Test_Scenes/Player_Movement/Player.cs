@@ -21,7 +21,7 @@ public class Player : MonoBehaviour
 
     //States
     private enum PLAYER_MOVEMENT_STATES { IDLE, WALK };
-    private enum PLAYER_ACTION_STATES { IDLE, SHOOT, INTERACT, SELECT, DROP }
+    private enum PLAYER_ACTION_STATES { IDLE, SHOOT, INTERACT, SELECT, DROP, RELOAD }
 
 
     private PLAYER_ACTION_STATES action_state = PLAYER_ACTION_STATES.IDLE;
@@ -235,6 +235,11 @@ void Awake()
                     action_state = PLAYER_ACTION_STATES.SHOOT;
                 }
 
+            if (_weaponScript && Input.GetKeyDown(KeyCode.R))//reloading
+            {
+                action_state = PLAYER_ACTION_STATES.RELOAD;
+                break;
+            }
 
                 
 
@@ -303,6 +308,28 @@ void Awake()
                 break;
 
 
+            case PLAYER_ACTION_STATES.RELOAD:
+                if (_weaponScript != null)
+                {
+                    if (!_weaponScript.IsReloading())
+                    {
+                        _weaponScript.StartReload();
+                    }
+
+                    if (_weaponScript.IsReloading())
+                    {
+                        // Still reloading — stay in RELOAD state
+                        break;
+                    }
+
+                    // Done reloading — go back to idle
+                    action_state = PLAYER_ACTION_STATES.IDLE;
+                }
+                else
+                {
+                    action_state = PLAYER_ACTION_STATES.IDLE;
+                }
+                break;
         }
 
 
@@ -528,6 +555,5 @@ void Awake()
     }
 
 }
-
 
 

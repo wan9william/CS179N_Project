@@ -32,6 +32,7 @@ public class Weapon : Equippable
     [SerializeField] private float perBulletSpread = 5f; // angle spread between bullets
 
     [Header("Ammo Settings")]
+    [SerializeField] private Item_ScriptableObj ammoType;
     [SerializeField] private int magazineSize = 10;
     [SerializeField] private float reloadTime = 1.5f;
 
@@ -56,9 +57,25 @@ public class Weapon : Equippable
 
         yield return new WaitForSeconds(reloadTime);
 
-        currentAmmo = magazineSize;
+        Inventory inv = Player.Singleton.getInventory();
+        int ammoNeeded = magazineSize - currentAmmo;
+        int availableAmmo = inv.GetTotalAmmo(ammoType);
+
+        // Only take what fits in the mag and what is available
+        int ammoToLoad = Mathf.Min(ammoNeeded, availableAmmo);
+
+        if (ammoToLoad > 0)
+        {
+            inv.ConsumeAmmo(ammoType, ammoToLoad);
+            currentAmmo += ammoToLoad;
+            Debug.Log($"[Weapon] Reloaded {ammoToLoad} bullet(s). Now: {currentAmmo}/{magazineSize}");
+        }
+        else
+        {
+            Debug.Log("[Weapon] No ammo available to reload.");
+        }
+
         isReloading = false;
-        Debug.Log("[Weapon] Reloaded.");
     }
 
     void Start()
@@ -96,7 +113,7 @@ public class Weapon : Equippable
     if (currentAmmo <= 0)
     {
         Debug.Log("[Weapon] Out of ammo! Reload required.");
-        StartCoroutine(Reload());
+        // StartCoroutine(Reload());
         return;
     }
 
@@ -135,4 +152,26 @@ public class Weapon : Equippable
     currentSpread = Mathf.Min(currentSpread + bloomIncreasePerShot, maxSpreadAngle);
     lastFireTime = Time.time;
     }
+
+    public void StartReload()
+    {
+        if (isReloading || currentAmmo >= magazineSize)
+                return;
+
+            Inventory inv = Player.Singleton.getInventory();
+            if (inv.GetTotalAmmo(ammoType) > 0)
+            {
+                Player.Singleton.StartCoroutine(Reload());
+            }
+            else
+            {
+                Debug.Log("[Weapon] No ammo to reload.");
+            }
+    }
+
+    public bool IsReloading()
+    {
+        return isReloading;
+    }
+
 }

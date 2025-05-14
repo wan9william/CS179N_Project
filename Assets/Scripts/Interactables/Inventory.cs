@@ -248,4 +248,39 @@ public class Inventory
         return maxStackSize;
     }
 
+
+    public int GetTotalAmmo(Item_ScriptableObj ammoType)
+    {
+        int total = 0;
+        for (int i = 0; i < inventorySlots.Length; i++)
+        {
+            if (inventorySlots[i].GetItem() == ammoType)
+            {
+                total += inventorySlots[i].GetQuantity();
+            }
+        }
+        return total;
+    }
+
+    public void ConsumeAmmo(Item_ScriptableObj ammoType, int amount)
+    {
+        for (int i = 0; i < inventorySlots.Length && amount > 0; i++)
+        {
+            if (inventorySlots[i].GetItem() == ammoType)
+            {
+                int available = inventorySlots[i].GetQuantity();
+                int subtract = Mathf.Min(available, amount);
+
+                inventorySlots[i].SetQuantity(available - subtract);
+                inventorySlots[i].UpdateItem();
+
+                amount -= subtract;
+            }
+        }
+    }
+
+    public InventorySlot[] getInventorySlots()
+    {
+        return inventorySlots;
+    }
 }
