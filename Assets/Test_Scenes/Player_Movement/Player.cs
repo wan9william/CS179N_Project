@@ -57,11 +57,8 @@ public class Player : MonoBehaviour
     [Header("Hand Settings")]
     [SerializeField] private Vector3 handOffset = Vector3.zero;
     [SerializeField] private float handRadius = 3.5f;
-    [SerializeField] private float handFlip = 0f;
-    [SerializeField] private int weaponLayerFront = 5;
-    [SerializeField] private int weaponLayerBack = 1;
-    [SerializeField] private float handLayerFront = 6;
-    [SerializeField] private float handLayerBack = 2;
+    [SerializeField] private int handLayerFront = 4;
+    [SerializeField] private int handLayerBack = 2;
 
 
 
@@ -413,9 +410,9 @@ void Awake()
         _handSR = _hand.GetComponent<SpriteRenderer>();
         if (dir.y > 0)
         {
-            _handSR.sortingOrder = 2;
+            _handSR.sortingOrder = handLayerBack;
         }
-        else _handSR.sortingOrder = 4;
+        else _handSR.sortingOrder = handLayerFront;
 
         if(_equipped) _equipped.transform.localPosition = (Vector3)dir * handRadius + handOffset;
         _hand.transform.localPosition = (Vector3)dir * handRadius + handOffset;

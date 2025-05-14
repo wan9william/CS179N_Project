@@ -1,16 +1,9 @@
 using UnityEngine;
 
-public class SimpleRandomWalkData : MonoBehaviour
+[CreateAssetMenu(fileName= "SimpleRandomWalkParameters_", menuName = "PCG/SimpleRandomWalkData")]
+public class SimpleRandomWalkData : ScriptableObject
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    public int iterations = 10, walkLength = 10;
+    public bool startRandomlyEachIteration = true;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

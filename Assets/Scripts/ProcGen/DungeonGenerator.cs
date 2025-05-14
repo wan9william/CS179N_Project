@@ -1,34 +1,32 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class DungeonGenerator : AbstractDungeonGenerator
 {
 
-    [SerializeField] private int iterations = 10;
-    [SerializeField] public int walkLength = 10;
-    [SerializeField] public bool startRandomlyEachIteration = true;
-
-
+    [SerializeField] protected SimpleRandomWalkData randomWalkParameters;
 
     protected override void RunProceduralGeneration()
     {
-        HashSet<Vector2Int> floorPositions = RunRandomWalk();
+        HashSet<Vector2Int> floorPositions = RunRandomWalk(randomWalkParameters, startPosition);
         tileMapVisualizer.Clear();
         tileMapVisualizer.PaintFloorTiles(floorPositions);
+        WallGenerator.CreateWalls(floorPositions, tileMapVisualizer);
     }
 
-    protected HashSet<Vector2Int> RunRandomWalk()
+    protected HashSet<Vector2Int> RunRandomWalk(SimpleRandomWalkData parameters, Vector2Int position)
     {
-        var currentPositon = startPosition;
+        var currentPositon = position;
         HashSet<Vector2Int> floorPositions = new HashSet<Vector2Int>();
-        for (int i = 0; i < iterations; i++)
+        for (int i = 0; i < parameters.iterations; i++)
         {
-            var path = ProceduralGeneration.SimpleRandomWalk(currentPositon, walkLength);
+            var path = ProceduralGeneration.SimpleRandomWalk(currentPositon, parameters.walkLength);
             floorPositions.UnionWith(path);
-            if (startRandomlyEachIteration) 
+            if (parameters.startRandomlyEachIteration) 
             {
                 currentPositon = floorPositions.ElementAt(Random.Range(0,floorPositions.Count));
 
@@ -36,4 +34,14 @@ public class DungeonGenerator : AbstractDungeonGenerator
         }
         return floorPositions;
     }
+
+    protected HashSet<Vector2Int> RunRectangleWalk(Vector2Int position, int width, int length)
+    {
+        var currentPositon = position;
+        HashSet<Vector2Int> floorPositions = new HashSet<Vector2Int>();
+        var path = ProceduralGeneration.SimpleRectangle(currentPositon, width, length);
+        floorPositions.UnionWith(path);
+        return floorPositions;
+    }
+
 }
