@@ -87,7 +87,7 @@ void Awake()
         if (_equipped != null)
             _weaponScript = _equipped.GetComponent<Weapon>();
 
-        sprint_bar.maxValue = 100f;
+        if(sprint_bar != null) sprint_bar.maxValue = 100f;
 
     }
 
@@ -99,15 +99,19 @@ void Awake()
         //we could check if we have a weapon every frame
         //_weaponScript = _equipped != null ? _equipped.GetComponentInChildren<Weapon>() : null;
 
-
-        if (sprint_amount < 100)
+        if (sprint_bar != null)
         {
-            sprint_bar.gameObject.SetActive(true);
-            sprint_bar.value = sprint_amount;
+            if (sprint_amount < 100)
+            {
+                sprint_bar.gameObject.SetActive(true);
+                sprint_bar.value = sprint_amount;
+            }
+            else
+            {
+                sprint_bar.gameObject.SetActive(false);
+            }
         }
-        else {
-            sprint_bar.gameObject.SetActive(false);
-        }
+
 
         //STATE ACTIONS & TRANSITIONS FOR THE ACTION STATE
         switch (action_state)
@@ -356,7 +360,7 @@ void Awake()
 
 
         //Apply movement
-        _rb.linearVelocity = new Vector2(horizontal_multiplier,vertical_multiplier)*current_speed;
+        if(_rb != null) _rb.linearVelocity = new Vector2(horizontal_multiplier,vertical_multiplier)*current_speed;
     }
 
 
