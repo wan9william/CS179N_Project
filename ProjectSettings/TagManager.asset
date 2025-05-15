@@ -16,6 +16,7 @@ TagManager:
   - UI
   - Obstacle
   - Item_RB
+  - Item
   - 
   - 
   - 
@@ -50,6 +51,9 @@ TagManager:
     locked: 0
   - name: Foreground
     uniqueID: 3427858709
+    locked: 0
+  - name: Highest
+    uniqueID: 3496975553
     locked: 0
   - name: UI
     uniqueID: 3921425219
