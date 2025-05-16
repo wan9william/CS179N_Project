@@ -106,7 +106,7 @@ MonoBehaviour:
   _explosion: {fileID: 0}
   health: 10
   damage: 0
-  _resource: {fileID: 0}
+  _resource: {fileID: 11400000, guid: 4105950071925c645be4344b3634a4f2, type: 2}
 --- !u!61 &7931689870728226104
 BoxCollider2D:
   m_ObjectHideFlags: 0

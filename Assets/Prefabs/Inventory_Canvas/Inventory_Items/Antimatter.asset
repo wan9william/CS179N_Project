@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc2918b2ec928214aa3865215bb75ed4, type: 3}
+  m_Name: Antimatter
+  m_EditorClassIdentifier: 
+  color: {r: 1, g: 0, b: 0, a: 1}
+  sprite: {fileID: 4089025788520073079, guid: 2a4861251bfa03d4fbfe9d08b7ce92e8, type: 3}
+  value: 35
+  _name: Antimatter
+  ID: 0
+  equipPrefab: {fileID: 210607244735680991, guid: e6995617274fe65478d952d2af392dd5, type: 3}
+  resourcePrefab: {fileID: 9129115006391499319, guid: 8f2a8bf263e1c254d8bf8ff97078caeb, type: 3}

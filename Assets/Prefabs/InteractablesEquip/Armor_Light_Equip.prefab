@@ -10,10 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 2239928559271647241}
   - component: {fileID: 5722526450429949129}
-  - component: {fileID: 8546270263792422540}
   - component: {fileID: 5141363743823035915}
   m_Layer: 0
-  m_Name: Armor_Light
+  m_Name: Armor_Light_Equip
   m_TagString: Interactable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -89,20 +88,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &8546270263792422540
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4740018917089328927}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 931e2bb5da8364645ae7e09cacdd1044, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _mat: {fileID: 0}
-  _glowMat: {fileID: 0}
 --- !u!61 &5141363743823035915
 BoxCollider2D:
   m_ObjectHideFlags: 0

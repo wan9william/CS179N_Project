@@ -10,10 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 7861688526595523529}
   - component: {fileID: 5211981759836925942}
-  - component: {fileID: 7341046103312500279}
   - component: {fileID: 4531399128764891594}
   m_Layer: 0
-  m_Name: Book
+  m_Name: Book_Equip
   m_TagString: Interactable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -89,20 +88,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &7341046103312500279
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6523770012386410511}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 931e2bb5da8364645ae7e09cacdd1044, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _mat: {fileID: 0}
-  _glowMat: {fileID: 0}
 --- !u!61 &4531399128764891594
 BoxCollider2D:
   m_ObjectHideFlags: 0
