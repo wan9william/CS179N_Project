@@ -1,6 +1,7 @@
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.XR;
 
 
 public class Player : MonoBehaviour
@@ -77,6 +78,9 @@ void Awake()
     //Hand
     private SpriteRenderer _handSR;
 
+    //Muzzle Flash
+    private SpriteRenderer _muzzleFlashSR;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -112,6 +116,8 @@ void Awake()
             }
         }
 
+        if (_equipped == null) _hand.gameObject.SetActive(false);
+        else _hand.gameObject.SetActive(true);
 
         //STATE ACTIONS & TRANSITIONS FOR THE ACTION STATE
         switch (action_state)

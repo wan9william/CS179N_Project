@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using static ProceduralGeneration;
 
@@ -6,11 +7,15 @@ public static class WallGenerator
 {
     public static void CreateWalls(HashSet<Vector2Int> floorPositions, TileMapVisualizer tilemapVisualizer)
     {
-        var basicWallPositions = FindWallsInDirections(floorPositions, Direction2D.cardinalDirectionsList);
+        List< Vector2Int> directionList = new List<Vector2Int>();
+        directionList = Direction2D.cardinalDirectionsList.Union(Direction2D.diagonalDirectionsList).ToList<Vector2Int>();
+        var basicWallPositions = FindWallsInDirections(floorPositions, directionList);
         foreach (var position in basicWallPositions) 
         {
+            var front = position + ProceduralGeneration.Direction2D.cardinalDirectionsList[2];
             tilemapVisualizer.PaintSingleBasicWall(position);
-        
+            if (!basicWallPositions.Contains(front))
+                tilemapVisualizer.PaintSingleBasicWallFront(front);
         }
     }
 
