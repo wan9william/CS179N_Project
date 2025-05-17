@@ -21,7 +21,7 @@ public class Player : MonoBehaviour
 
     //States
     private enum PLAYER_MOVEMENT_STATES { IDLE, WALK };
-    private enum PLAYER_ACTION_STATES { IDLE, SHOOT, INTERACT, SELECT }
+    private enum PLAYER_ACTION_STATES { IDLE, SHOOT, INTERACT, SELECT, DROP, RELOAD }
 
 
     private PLAYER_ACTION_STATES action_state = PLAYER_ACTION_STATES.IDLE;
@@ -38,13 +38,15 @@ public class Player : MonoBehaviour
     //Sprinting Parameters
     [SerializeField] private float sprint_amount = 100f;
     [SerializeField] private float drain_amount = 25f;
+    //Drop Parameters
+    [SerializeField] private float dropForce = 0.0f;
      
     private float eps = 1e-5f;
 
 
     //Components
     [Header("Components")]
-    private Rigidbody2D _rb;
+    [SerializeField] private Rigidbody2D _rb;
     [SerializeField] private GameObject _equipped;
     [SerializeField] private GameObject _hand;
     [SerializeField] private GameObject _interactable;
@@ -60,11 +62,19 @@ public class Player : MonoBehaviour
     [SerializeField] private int handLayerFront = 4;
     [SerializeField] private int handLayerBack = 2;
 
+    //Camera Parameters
+    [Header("Camera Settings")]
+    [SerializeField] private float trauma;
+    [SerializeField] private float translational_shake_max;
+    [SerializeField] private float rotational_shake_max;
 
 
     //Equipped Tool
     private Weapon _weaponScript;
     private SpriteRenderer _weaponSR;
+
+    //Currency
+    [SerializeField] private int money = 0;
 
 
 
@@ -99,7 +109,18 @@ void Awake()
         //we could check if we have a weapon every frame
         //_weaponScript = _equipped != null ? _equipped.GetComponentInChildren<Weapon>() : null;
 
-        if (sprint_bar != null)
+        //reduce trauma after each frame
+        trauma -= 1f * Time.deltaTime;
+        trauma = Mathf.Clamp(trauma, 0f, 1f);
+
+        if (_camera != null)
+        {
+            _camera.transform.localPosition = new Vector3(Random.Range(-translational_shake_max, translational_shake_max) * Mathf.Pow(trauma, 3), Random.Range(-translational_shake_max, translational_shake_max) * Mathf.Pow(trauma, 3), -10);
+            _camera.transform.localEulerAngles = new Vector3(0, 0, Random.Range(-rotational_shake_max, rotational_shake_max) * Mathf.Pow(trauma, 3));
+        }
+
+
+        if (sprint_amount < 100)
         {
             if (sprint_amount < 100)
             {
@@ -144,14 +165,9 @@ void Awake()
                     break;
                 }
 
-                //EVERYTHING BEYOND THIS STATEMENT ASSUMES THAT THERE IS AN ATTACHED WEAPONSCRIPT
-                if (!_weaponScript) { animator.SetBool("Equipped", false); _hand.SetActive(false); break; }
-
-                animator.SetBool("Equipped", true);
-                _hand.SetActive(true);
-                var fireMode = _weaponScript.GetFireMode();
                 //If the scroll wheel is used, get current selected slot and add accordingly, then transition
-                if (Input.mouseScrollDelta.y != 0) {
+                if (Input.mouseScrollDelta.y != 0)
+                {
                     Debug.Log(Input.mouseScrollDelta.y);
                     selected_slot += Input.mouseScrollDelta.y > 0 ? 1 : -1;
                     selected_slot = Mathf.Clamp(selected_slot, 0, 7);
@@ -163,13 +179,72 @@ void Awake()
 
                 //If a num is pressed, 
                 int selected_key = GetNumKey();
-                if (selected_key != -1) {
+                if (selected_key != -1)
+                {
                     selected_slot = selected_key;
                     selected_slot = Mathf.Clamp(selected_slot, 0, 7);
 
                     action_state = PLAYER_ACTION_STATES.SELECT;
                     break;
                 }
+
+                //Dropping Items
+                if (Input.GetKeyUp(KeyCode.Q) && dropForce > 0f)
+                {
+
+                    //Instantiate object
+                    //GET THE RESOURCE VERSION OF THE OBJECT
+                    GameObject resourceItem = inventory.GetSelectedResource(selected_slot);
+
+                    //This may cause issues in the future
+                    if (resourceItem == null) break;
+
+                    GameObject droppedItem = Instantiate(resourceItem, transform.position, Quaternion.identity);//Instantiate(_equipped, transform.position, Quaternion.identity);
+
+
+                    droppedItem.transform.localScale = Vector3.one;
+                    droppedItem.layer = 6; //Item_RB layer
+
+                    //Add rigidbody if necessary and calculate direction
+                    Rigidbody2D rb = !droppedItem.GetComponent<Rigidbody2D>() ? droppedItem.AddComponent<Rigidbody2D>() : droppedItem.GetComponent<Rigidbody2D>();
+                    BoxCollider2D bc = !droppedItem.GetComponent<BoxCollider2D>() ? droppedItem.AddComponent<BoxCollider2D>() : droppedItem.GetComponent<BoxCollider2D>();
+                    bc.isTrigger = true;
+                    Vector2 MousePos = Input.mousePosition;
+                    Vector3 MouseWorldPos = _camera.ScreenToWorldPoint(MousePos);
+                    Vector2 dir = ((Vector2)MouseWorldPos - (Vector2)transform.position).normalized;
+                    rb.linearVelocity = dir * 3f;
+                    rb.gravityScale = 0;
+                    rb.linearDamping = 2f;
+
+                    //reset drop force
+                    dropForce = 0f;
+
+                    Destroy(_equipped);
+                    _equipped = null;
+
+                    //REMOVE 1 OF THE SELECTED SLOT'S RESOURCE. DELETION WILL BE HANDLED BY THE SLOT ITSELF
+                    inventory.DecrementItem(selected_slot);
+
+                    //Select same slot
+                    SelectEquipped();
+
+
+                    break;
+                }
+                else if (Input.GetKey(KeyCode.Q))
+                {
+                    dropForce += 0.3f * Time.deltaTime;
+                    Mathf.Clamp(dropForce, 0, 1);
+                }
+
+                //EVERYTHING BEYOND THIS STATEMENT ASSUMES THAT THERE IS AN ATTACHED WEAPONSCRIPT
+                if (!_weaponScript) { animator.SetBool("Equipped", false); _hand.SetActive(false); break; }
+
+                animator.SetBool("Equipped", true);
+                _hand.SetActive(true);
+                var fireMode = _weaponScript.GetFireMode();
+                
+                
 
                 if (fireMode == FireMode.FullAuto && Input.GetMouseButton(0) && _equipped)
                 {
@@ -180,6 +255,13 @@ void Awake()
                     action_state = PLAYER_ACTION_STATES.SHOOT;
                 }
 
+            if (_weaponScript && Input.GetKeyDown(KeyCode.R))//reloading
+            {
+                action_state = PLAYER_ACTION_STATES.RELOAD;
+                break;
+            }
+
+                
 
                 break;
             case PLAYER_ACTION_STATES.SHOOT:
@@ -187,6 +269,9 @@ void Awake()
 
                 //This will be the state that actually creates the bullet, muzzle flash, recoil, etc.
 
+
+                trauma += 0.5f;
+                trauma = Mathf.Clamp(trauma, 0f, 1f);
 
                 //Any data specific to a weapon (fire rate, damage, etc) should likely be stored in a Scriptable Object (feel free to look it up). This will make our implementation easier.
                 //As well as more memory friendly.
@@ -208,6 +293,7 @@ void Awake()
                     Debug.LogWarning("[Player] No weapon equipped.");
                 }
 
+                _equipped.GetComponent<Equippable>().Use();
                 action_state = PLAYER_ACTION_STATES.IDLE;
                 break;
 
@@ -216,44 +302,11 @@ void Awake()
                 //actions go here for selecting a slot
 
                 inventory.SelectSlot(selected_slot);
+                SelectEquipped();
+                
 
-        GameObject selectedPrefab = inventory.selecteditem(selected_slot);
-
-        // Remove currently equipped object if it's different
-        if (_equipped != null && selectedPrefab != null && _equipped.name != selectedPrefab.name + "(Clone)")
-        {
-            Destroy(_equipped);
-            _equipped = null;
-        }
-
-        // Equip if not already equipped
-        if (_equipped == null && selectedPrefab != null)
-        {
-            _equipped = Instantiate(selectedPrefab);
-            _equipped.transform.SetParent(transform, false);
-            _equipped.transform.localPosition = Vector3.zero;
-            _equipped.transform.localRotation = Quaternion.identity;
-
-        // Scale up to cancel out the player's scale (e.g., 0.2 becomes 5x)
-            Vector3 inverseScale = new Vector3(
-            1f / transform.localScale.x,
-            1f / transform.localScale.y,
-            1f / transform.localScale.z
-        );
-        _equipped.transform.localScale = inverseScale;
-
-        // Optional but helpful if the prefab has nested children with messed-up scales
-        NormalizeChildScale(_equipped.transform);
-
-        //properly update the weapon script to newly created weapon
-        _weaponScript = _equipped.GetComponentInChildren<Weapon>();
-
-        // Debug log
-        Debug.Log($"[EQUIP DEBUG] Final equipped scale: {_equipped.transform.lossyScale}");
-        }
-
-        action_state = PLAYER_ACTION_STATES.IDLE;
-        break;
+                action_state = PLAYER_ACTION_STATES.IDLE;
+                break;
 
 
            
@@ -278,6 +331,28 @@ void Awake()
                 break;
 
 
+            case PLAYER_ACTION_STATES.RELOAD:
+                if (_weaponScript != null)
+                {
+                    if (!_weaponScript.IsReloading())
+                    {
+                        _weaponScript.StartReload();
+                    }
+
+                    if (_weaponScript.IsReloading())
+                    {
+                        // Still reloading — stay in RELOAD state
+                        break;
+                    }
+
+                    // Done reloading — go back to idle
+                    action_state = PLAYER_ACTION_STATES.IDLE;
+                }
+                else
+                {
+                    action_state = PLAYER_ACTION_STATES.IDLE;
+                }
+                break;
         }
 
 
@@ -363,6 +438,43 @@ void Awake()
         if(_rb != null) _rb.linearVelocity = new Vector2(horizontal_multiplier,vertical_multiplier)*current_speed;
     }
 
+    private void SelectEquipped() {
+        GameObject selectedPrefab = inventory.selecteditem(selected_slot);
+
+        // Remove currently equipped object if it's different
+        if (_equipped != null && selectedPrefab != null && _equipped.name != selectedPrefab.name + "(Clone)")
+        {
+            Destroy(_equipped);
+            _equipped = null;
+        }
+
+        // Equip if not already equipped
+        if (_equipped == null && selectedPrefab != null)
+        {
+            _equipped = Instantiate(selectedPrefab);
+`            _equipped.transform.SetParent(transform, false);
+            _equipped.transform.localPosition = Vector3.zero;
+            _equipped.transform.localRotation = Quaternion.identity;
+
+            // Scale up to cancel out the player's scale (e.g., 0.2 becomes 5x)
+            Vector3 inverseScale = new Vector3(
+            1f / transform.localScale.x,
+            1f / transform.localScale.y,
+            1f / transform.localScale.z
+        );
+            _equipped.transform.localScale = inverseScale;
+
+            // Optional but helpful if the prefab has nested children with messed-up scales
+            NormalizeChildScale(_equipped.transform);
+
+            //properly update the weapon script to newly created weapon
+            _weaponScript = _equipped.GetComponentInChildren<Weapon>();
+
+            // Debug log
+            Debug.Log($"[EQUIP DEBUG] Final equipped scale: {_equipped.transform.lossyScale}");
+        }
+    }
+
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -395,6 +507,9 @@ void Awake()
     }
 
     private void RotateEquipped() {
+
+        
+
         Vector2 MousePos = Input.mousePosition;
         Vector3 MouseWorldPos = _camera.ScreenToWorldPoint(MousePos);
         Vector2 dir = ((Vector2)MouseWorldPos - (Vector2)transform.position).normalized;
@@ -402,7 +517,9 @@ void Awake()
 
         animator.SetFloat("MouseX", dir.x);
         animator.SetFloat("MouseY", dir.y);
-        if (_equipped) _equipped.transform.up = dir;
+        
+        if (!_equipped) return;
+        _equipped.transform.up = dir;
 
         if (!_weaponSR&&_equipped) _weaponSR = _equipped.GetComponentInChildren<SpriteRenderer>();
 
@@ -460,7 +577,10 @@ void Awake()
         }
     }
 
-}
+    public ref int GetMoney() { return ref money; }
 
+    public void SetMoney(int val) { money = val; }
+
+}
 
 

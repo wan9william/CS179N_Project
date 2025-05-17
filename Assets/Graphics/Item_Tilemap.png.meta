@@ -381,7 +381,7 @@ TextureImporter:
         serializedVersion: 2
         x: 63
         y: 192
-        width: 37
+        width: 32
         height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -393,6 +393,50 @@ TextureImporter:
       bones: []
       spriteID: 443ccef0433d6b0d0800000000000000
       internalID: -3407303847500266684
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Item_Tilemap_11
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 192
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3f35d67bd94a4834a8e29dc67f7d342c
+      internalID: -1302297249
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Item_Tilemap_12
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 192
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dd52c12ef32ab534abde36ad0036b5af
+      internalID: -637845532
       vertices: []
       indices: 
       edges: []
@@ -414,6 +458,8 @@ TextureImporter:
       Item_Tilemap_0: -7689852844686393343
       Item_Tilemap_1: 4581451250213666317
       Item_Tilemap_10: -3407303847500266684
+      Item_Tilemap_11: -1302297249
+      Item_Tilemap_12: -637845532
       Item_Tilemap_2: -5059684048452499088
       Item_Tilemap_3: -5285769047921839499
       Item_Tilemap_4: 9010000181375383852
