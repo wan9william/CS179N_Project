@@ -61,14 +61,5 @@ public static class ProceduralGeneration
         {
             return cardinalDirectionsList[Random.Range(0,cardinalDirectionsList.Count)];
         }
-
-        public static List<Vector2Int> diagonalDirectionsList = new List<Vector2Int>()
-        {
-            new Vector2Int(-1,1),    //UP-LEFT 
-            new Vector2Int(1,1),    //UP-RIGHT 
-            new Vector2Int(-1,-1),   //DOWN-LEFT
-            new Vector2Int(1,-1)    //DOWN-RIGHT
-        };
-
     }
 }
