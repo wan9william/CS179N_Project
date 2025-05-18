@@ -28,6 +28,9 @@ public class Player : MonoBehaviour
     private PLAYER_MOVEMENT_STATES movement_state = PLAYER_MOVEMENT_STATES.IDLE;
 
 
+    //Health Parameters
+    [SerializeField] private float health;
+
     //Movement Parameters
     [Header("Movement Parameters")]
     [SerializeField] private float movement_speed = 1.0f;
@@ -50,6 +53,7 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject _equipped;
     [SerializeField] private GameObject _hand;
     [SerializeField] private GameObject _interactable;
+    [SerializeField] private GameObject _healthbar;
     [SerializeField] private Camera _camera;
 
     //FLAGS
@@ -92,6 +96,7 @@ void Awake()
     {
         selected_slot = 0;
         inventory = new Inventory(canvas.transform);
+        health = 100;
         
         _rb = GetComponent<Rigidbody2D>();
         if (_equipped != null)
@@ -268,10 +273,6 @@ void Awake()
 
                 //This will be the state that actually creates the bullet, muzzle flash, recoil, etc.
 
-
-                trauma += 0.5f;
-                trauma = Mathf.Clamp(trauma, 0f, 1f);
-
                 //Any data specific to a weapon (fire rate, damage, etc) should likely be stored in a Scriptable Object (feel free to look it up). This will make our implementation easier.
                 //As well as more memory friendly.
                 if (_equipped != null)
@@ -280,7 +281,11 @@ void Awake()
                     if (weapon != null)
                     {
                         Debug.Log("[Player] Firing weapon");
-                        weapon.Shoot();
+                        bool canShoot = weapon.Shoot();
+                        if (canShoot) {
+                            trauma += 0.5f;
+                            trauma = Mathf.Clamp(trauma, 0f, 1f);
+                        }
                     }
                     else
                     {

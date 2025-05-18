@@ -103,54 +103,55 @@ public class Weapon : Equippable
         Shoot();
     }
 
-    public void Shoot()
+    public bool Shoot()
     {
-    // Check if within firerate
-    if (Time.time < lastFireTime + fireCooldown)
-    {
-        return;
-    }
-    if (currentAmmo <= 0)
-    {
-        Debug.Log("[Weapon] Out of ammo! Reload required.");
-        // StartCoroutine(Reload());
-        return;
-    }
-
-    Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-    Vector2 shootDirection = (mouseWorldPos - weaponOwner.position).normalized;
-    float baseAngle = Mathf.Atan2(shootDirection.y, shootDirection.x) * Mathf.Rad2Deg;
-
-    for (int i = 0; i < bulletsPerShot; i++)
-    {
-        // Spread = both random bloom and fixed pellet spread
-        float bloom = Random.Range(-currentSpread, currentSpread);
-        float spread = Random.Range(-perBulletSpread, perBulletSpread);
-        float finalAngle = baseAngle + bloom + spread;
-
-        Quaternion bulletRotation = Quaternion.Euler(0f, 0f, finalAngle);
-        GameObject bullet = objectManager.RequestBulletObj();//Instantiate(projectilePrefab, firePoint.position, bulletRotation);
-        bullet.transform.rotation = bulletRotation;
-        bullet.transform.position = firePoint.position;
-
-        // Assign velocity
-        Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
-        rb.linearVelocity = bullet.transform.right * fireForce;
-
-        // ✅ Assign damage
-        Bullet bulletScript = bullet.GetComponent<Bullet>();
-        if (bulletScript != null)
+        // Check if within firerate
+        if (Time.time < lastFireTime + fireCooldown)
         {
-            bulletScript.damage = (int)damage;
+            return false;
         }
-        
-        animator.SetTrigger("Shoot");
+        if (currentAmmo <= 0)
+        {
+            Debug.Log("[Weapon] Out of ammo! Reload required.");
+            // StartCoroutine(Reload());
+            return false;
         }
 
-    // Bloom increases with each shot (not each pellet)
-    currentAmmo--;
-    currentSpread = Mathf.Min(currentSpread + bloomIncreasePerShot, maxSpreadAngle);
-    lastFireTime = Time.time;
+        Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector2 shootDirection = (mouseWorldPos - weaponOwner.position).normalized;
+        float baseAngle = Mathf.Atan2(shootDirection.y, shootDirection.x) * Mathf.Rad2Deg;
+
+        for (int i = 0; i < bulletsPerShot; i++)
+        {
+            // Spread = both random bloom and fixed pellet spread
+            float bloom = Random.Range(-currentSpread, currentSpread);
+            float spread = Random.Range(-perBulletSpread, perBulletSpread);
+            float finalAngle = baseAngle + bloom + spread;
+
+            Quaternion bulletRotation = Quaternion.Euler(0f, 0f, finalAngle);
+            GameObject bullet = objectManager.RequestBulletObj();//Instantiate(projectilePrefab, firePoint.position, bulletRotation);
+            bullet.transform.rotation = bulletRotation;
+            bullet.transform.position = firePoint.position;
+
+            // Assign velocity
+            Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
+            rb.linearVelocity = bullet.transform.right * fireForce;
+
+            // ✅ Assign damage
+            Bullet bulletScript = bullet.GetComponent<Bullet>();
+            if (bulletScript != null)
+            {
+                bulletScript.damage = (int)damage;
+            }
+        
+            animator.SetTrigger("Shoot");
+            }
+
+        // Bloom increases with each shot (not each pellet)
+        currentAmmo--;
+        currentSpread = Mathf.Min(currentSpread + bloomIncreasePerShot, maxSpreadAngle);
+        lastFireTime = Time.time;
+        return true;
     }
 
     public void StartReload()

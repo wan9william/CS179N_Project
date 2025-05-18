@@ -90,6 +90,8 @@ public class Shop : MonoBehaviour
         objects.ForEach(obj => { 
             Resource resource = obj.GetComponent<Resource>();
 
+            if (!resource) return;
+
             //Add the value to the player's wallet
             recipient.GetMoney() += resource.GetResource().getValue();
 
