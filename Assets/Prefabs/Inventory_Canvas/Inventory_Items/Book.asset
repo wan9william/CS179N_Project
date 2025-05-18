@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Book
   m_EditorClassIdentifier: 
   color: {r: 1, g: 0, b: 0, a: 1}
-  sprite: {fileID: 0}
-  value: 0
-  _name: 
-  ID: 0
-  equipPrefab: {fileID: 0}
-  resourcePrefab: {fileID: 0}
+  sprite: {fileID: 5861741702991487382, guid: 2a4861251bfa03d4fbfe9d08b7ce92e8, type: 3}
+  value: 14
+  _name: Book
+  ID: 1
+  equipPrefab: {fileID: 6523770012386410511, guid: 9046da770a60df146b456cd1dc79fc5a, type: 3}
+  resourcePrefab: {fileID: 6523770012386410511, guid: 0ee0a05a88292f847b798b2e8a022974, type: 3}

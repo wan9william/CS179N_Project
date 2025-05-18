@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Grenade
   m_EditorClassIdentifier: 
   color: {r: 1, g: 0, b: 0, a: 1}
-  sprite: {fileID: 0}
-  value: 0
-  _name: 
-  ID: 0
-  equipPrefab: {fileID: 0}
-  resourcePrefab: {fileID: 0}
+  sprite: {fileID: -5285769047921839499, guid: 2a4861251bfa03d4fbfe9d08b7ce92e8, type: 3}
+  value: 10
+  _name: Grenade
+  ID: 1
+  equipPrefab: {fileID: 9183792719404996813, guid: 72dcd7a771930e34cac1888345416e5b, type: 3}
+  resourcePrefab: {fileID: 9183792719404996813, guid: a408b0b62e778424893e0a7aab3904da, type: 3}
