@@ -19,6 +19,7 @@ public class Weapon : Equippable
     [SerializeField] private float fireForce = 10f;
     [SerializeField] private float fireCooldown = 0.3f;
     [SerializeField] private FireMode fireMode = FireMode.SemiAuto;
+    [SerializeField] private bool chamberReset = false;
     [SerializeField] private float damage = 10f;
 
     [Header("Bloom Settings")]
@@ -99,7 +100,7 @@ public class Weapon : Equippable
         return fireMode;
     }
 
-    public override void Use() {
+    public override void Use(ref Player player) {
         Shoot();
     }
 

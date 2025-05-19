@@ -89,7 +89,9 @@ public class Inventory
         inventorySlots[selectedSlot].SetSelect(true);
     }
 
+    public int GetSelectedSlot() { return selectedSlot; }
 
+    public bool SelectedSlotIsEmpty() { return inventorySlots[selectedSlot].GetQuantity() <= 0; }
 
 
     public void InitializeInventory(Transform _tf) {
