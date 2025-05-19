@@ -47,7 +47,7 @@ public class Weapon : Equippable
     private float currentSpread = 0f;
     private float lastFireTime = 0f;
 
-    private int currentAmmo;
+    private int currentAmmo = -1;
     private bool isReloading = false;
 
     private IEnumerator Reload()
@@ -61,7 +61,6 @@ public class Weapon : Equippable
         int ammoNeeded = magazineSize - currentAmmo;
         int availableAmmo = inv.GetTotalAmmo(ammoType);
 
-        // Only take what fits in the mag and what is available
         int ammoToLoad = Mathf.Min(ammoNeeded, availableAmmo);
 
         if (ammoToLoad > 0)
@@ -75,17 +74,31 @@ public class Weapon : Equippable
             Debug.Log("[Weapon] No ammo available to reload.");
         }
 
+        InventorySlot[] slots = inv.getInventorySlots();
+        for (int i = 0; i < slots.Length; i++)
+        {
+            if (slots[i].getFab()?.name == gameObject.name.Replace("(Clone)", "").Trim())
+            {
+                slots[i].storedAmmo = currentAmmo;
+                slots[i].UpdateQuantityDisplay();
+                break;
+            }
+        }
+
         isReloading = false;
     }
 
     void Start()
     {
-        if(objectManager == null) objectManager = GameObject.FindWithTag("Object_Manager").GetComponent<ObjectManager>();
+        if(objectManager == null)
+            objectManager = GameObject.FindWithTag("Object_Manager").GetComponent<ObjectManager>();
 
+        // ✅ Only assign full ammo if not restored yet
+        if (currentAmmo < 0)
+            currentAmmo = magazineSize;
 
-        currentAmmo = magazineSize;
         if (weaponOwner == null)
-            weaponOwner = transform.root; // auto-assign the top-level parent if needed
+            weaponOwner = transform.root;
     }   
 
     void Update()
@@ -149,8 +162,19 @@ public class Weapon : Equippable
 
         // Bloom increases with each shot (not each pellet)
         currentAmmo--;
+        InventorySlot[] slots = Player.Singleton.getInventory().getInventorySlots();
+        for (int i = 0; i < slots.Length; i++)
+        {
+            if (slots[i].getFab().name == gameObject.name.Replace("(Clone)", "").Trim())
+            {
+                slots[i].UpdateAmmoDisplay(currentAmmo, magazineSize);
+                break;
+            }
+        }
+
         currentSpread = Mathf.Min(currentSpread + bloomIncreasePerShot, maxSpreadAngle);
         lastFireTime = Time.time;
+        
         return true;
     }
 
@@ -175,4 +199,18 @@ public class Weapon : Equippable
         return isReloading;
     }
 
+    public int GetCurrentAmmo()
+    {
+        return currentAmmo;
+    }
+
+    public void SetCurrentAmmo(int value)
+    {
+        currentAmmo = Mathf.Clamp(value, 0, magazineSize);
+    }
+
+    public int GetMagazineSize()
+    {
+        return magazineSize;
+    }
 }
