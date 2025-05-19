@@ -53,7 +53,7 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject _equipped;
     [SerializeField] private GameObject _hand;
     [SerializeField] private GameObject _interactable;
-    [SerializeField] private GameObject _healthbar;
+    [SerializeField] private PlayerHealth _healthbar;
     [SerializeField] private Camera _camera;
 
     //FLAGS
@@ -113,6 +113,12 @@ void Awake()
 
         //we could check if we have a weapon every frame
         //_weaponScript = _equipped != null ? _equipped.GetComponentInChildren<Weapon>() : null;
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            TakeDamage(10);
+
+        }
 
         //reduce trauma after each frame
         trauma -= 1f * Time.deltaTime;
@@ -440,6 +446,15 @@ void Awake()
 
         //Apply movement
         if(_rb != null) _rb.linearVelocity = new Vector2(horizontal_multiplier,vertical_multiplier)*current_speed;
+    }
+
+    public void TakeDamage(int damage) {
+        health -= damage;
+
+        //need a death check here as well
+        if (health <= 0) animator.SetBool("Dead", true);
+
+        _healthbar.TakeDamage(damage);
     }
 
     private void SelectEquipped() {
