@@ -137,6 +137,11 @@ void Awake()
             }
         }
 
+        if (_equipped != null)
+        {
+            _hand.gameObject.SetActive(true);
+        }
+        else { _hand.gameObject.SetActive(false); }
 
         //STATE ACTIONS & TRANSITIONS FOR THE ACTION STATE
         switch (action_state)
@@ -242,10 +247,10 @@ void Awake()
                 }
 
                 //EVERYTHING BEYOND THIS STATEMENT ASSUMES THAT THERE IS AN ATTACHED WEAPONSCRIPT
-                if (!_weaponScript) { animator.SetBool("Equipped", false); _hand.SetActive(false); break; }
+                if (!_weaponScript) { animator.SetBool("Equipped", false); _hand.gameObject.SetActive(false); break; }
 
                 animator.SetBool("Equipped", true);
-                _hand.SetActive(true);
+                _hand.gameObject.SetActive(true);
                 var fireMode = _weaponScript.GetFireMode();
                 
                 

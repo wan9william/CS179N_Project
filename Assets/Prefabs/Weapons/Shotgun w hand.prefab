@@ -227,7 +227,7 @@ SpriteRenderer:
   m_Size: {x: 6.4, y: 6.4}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!114 &634803176931404447
@@ -308,7 +308,7 @@ Transform:
   m_GameObject: {fileID: 5799481334654353510}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.02, y: -1.013, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.47289, y: 2.0743299, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -334,7 +334,7 @@ MonoBehaviour:
   m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeEnabled: 0
-  m_ApplyToSortingLayers: 0000000015f950ccffdde16d
+  m_ApplyToSortingLayers: 00000000
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
@@ -376,6 +376,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5984737206847484276}
   - component: {fileID: 4320193028135363865}
+  - component: {fileID: -3216991352784533302}
   m_Layer: 0
   m_Name: Shotgun w hand
   m_TagString: Untagged
@@ -393,8 +394,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 3.41, y: -2, z: 0}
-  m_LocalScale: {x: 5, y: 5, z: 5}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1818682183708256156}
   - {fileID: 9008746323010819863}
@@ -426,6 +427,21 @@ MonoBehaviour:
   bloomDecaySpeed: 3
   bulletsPerShot: 6
   perBulletSpread: 15
+  ammoType: {fileID: 0}
+  magazineSize: 10
+  reloadTime: 1.5
   animator: {fileID: 848104311465782816}
   spriteRenderer: {fileID: 1019702892802534350}
   objectManager: {fileID: 0}
+--- !u!210 &-3216991352784533302
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5972384561809364490}
+  m_Enabled: 1
+  m_SortingLayerID: -867108587
+  m_SortingLayer: 2
+  m_SortingOrder: 1
+  m_SortAtRoot: 0

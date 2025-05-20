@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 816691753443826528}
   - component: {fileID: 3567337991877260966}
+  - component: {fileID: 2989587707242784433}
   m_Layer: 0
   m_Name: Shotgun
   m_TagString: Untagged
@@ -66,6 +67,18 @@ MonoBehaviour:
   animator: {fileID: 0}
   spriteRenderer: {fileID: 0}
   objectManager: {fileID: 0}
+--- !u!210 &2989587707242784433
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5034301034856951075}
+  m_Enabled: 1
+  m_SortingLayerID: -867108587
+  m_SortingLayer: 2
+  m_SortingOrder: 1
+  m_SortAtRoot: 0
 --- !u!1 &5173227693625057319
 GameObject:
   m_ObjectHideFlags: 0

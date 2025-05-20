@@ -6,13 +6,21 @@ using UnityEngine.Tilemaps;
 
 public class TileMapVisualizer : MonoBehaviour
 {
-    [SerializeField] private Tilemap floorTilemap, wallTilemap;
+    [SerializeField] private Tilemap floorTilemap, wallTilemap, itemFloorTilemap;
 
-    [SerializeField] private TileBase floorTile, wallTop;
+    [SerializeField] private TileBase floorTile, wallTop, wallFront;
+
+    [SerializeField] public List<Item_ScriptableObj> items = new List<Item_ScriptableObj>();    
     public void PaintFloorTiles(IEnumerable<Vector2Int> floorPositions)
     {
-        PaintTiles(floorPositions,floorTilemap,floorTile);
-
+        if (UnityEngine.Random.value < 0.5f)
+        {
+            
+        }
+        else
+        {
+            PaintTiles(floorPositions, floorTilemap, floorTile);
+        }
     }
 
     private void PaintTiles(IEnumerable<Vector2Int> positions, Tilemap tilemap, TileBase tile)
@@ -33,10 +41,15 @@ public class TileMapVisualizer : MonoBehaviour
     {
         floorTilemap.ClearAllTiles();
         wallTilemap.ClearAllTiles();
+        itemFloorTilemap.ClearAllTiles();
     }
 
-    internal void PaintSingleBasicWall(Vector2Int position)
+    internal void PaintSingleBasicWallTop(Vector2Int position)
     {
         PaintSingleTile(wallTilemap, wallTop, position);
+    }
+    internal void PaintSingleBasicWallFront(Vector2Int position)
+    {
+        PaintSingleTile(wallTilemap, wallFront, position);
     }
 }

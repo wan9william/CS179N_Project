@@ -11,12 +11,14 @@ public class CorridorFirstDungeonGenerator : DungeonGenerator
     [SerializeField] private GameObject roomPrefab;
     [SerializeField] private int minimumRoomLength = 6;
     [SerializeField] private int maximumRoomLength = 17;
+    [SerializeField] private int corridorSize = 3;
     [SerializeField] private bool randomWalk = false;
     protected override void RunProceduralGeneration()
     {
         CorridorFirstGeneration();
     }
 
+    //Creates Corridors, then Rooms on the Corridors, then Walls.
     private void CorridorFirstGeneration()
     {
         HashSet<Vector2Int> floorPositions = new HashSet<Vector2Int>();
@@ -34,7 +36,7 @@ public class CorridorFirstDungeonGenerator : DungeonGenerator
 
         for (int i = 0; i < corridors.Count; i++)
         {
-            corridors[i] = IncreaseCorridorBrush(corridors[i]);
+            corridors[i] = IncreaseCorridorBrush(corridors[i],corridorSize);
             floorPositions.UnionWith(corridors[i]);
         }
 
@@ -42,14 +44,14 @@ public class CorridorFirstDungeonGenerator : DungeonGenerator
         WallGenerator.CreateWalls(floorPositions,tileMapVisualizer); 
     }
 
-    private List<Vector2Int> IncreaseCorridorBrush(List<Vector2Int> corridor)
+    private List<Vector2Int> IncreaseCorridorBrush(List<Vector2Int> corridor, int size)
     {
         List<Vector2Int> newCorridor = new List<Vector2Int>();
         for (int i = 0; i < corridor.Count; i++)
         {
-            for(int x = -1; x < 2;  x++)
+            for(int x = -size/2; x < size/2;  x++)
             {
-                for(int y = -1; y < 2; y++)
+                for(int y = -size/2; y < size/2; y++)
                 {
                     newCorridor.Add(corridor[i] + new Vector2Int(x,y));
                 }
@@ -62,16 +64,12 @@ public class CorridorFirstDungeonGenerator : DungeonGenerator
     {
         foreach (var position in deadEnds)
         {
+            if (position == new Vector2Int(0, 0)) continue; //remove 
             if (roomFloors.Contains(position) == false)
             {
                 var room = randomWalk ? RunRandomWalk(randomWalkParameters, position) : RunRectangleWalk(position, (int)UnityEngine.Random.Range(minimumRoomLength, maximumRoomLength), (int)UnityEngine.Random.Range(minimumRoomLength, maximumRoomLength));
                 roomFloors.UnionWith(room);
             }
-            //Quaternion roomRotation = Quaternion.Euler(0f, 0f, 0f);
-            //Vector3 roomPosition = Vector3.zero;
-            //roomPosition.x = position.x;
-            //roomPosition.y = position.y;
-            //Instantiate(roomPrefab, roomPosition, Quaternion.identity);
         }
     }
 
@@ -81,7 +79,7 @@ public class CorridorFirstDungeonGenerator : DungeonGenerator
         foreach (var position in floorPositions)
         {
             int neighborsCount = 0;
-            foreach (var direction in ProceduralGeneration.Direction2D.cardinalDirectionsList)
+            foreach (var direction in Direction2D.cardinalDirectionsList)
             {
                 if(floorPositions.Contains(position + direction))
                     neighborsCount++;
@@ -102,6 +100,7 @@ public class CorridorFirstDungeonGenerator : DungeonGenerator
 
         foreach (var roomPosition in roomsToCreate)
         {
+            if (roomPosition == new Vector2Int(0, 0)) continue;
             var roomFloor = randomWalk ? RunRandomWalk(randomWalkParameters, roomPosition) : RunRectangleWalk(roomPosition, (int)UnityEngine.Random.Range(minimumRoomLength, maximumRoomLength), (int)UnityEngine.Random.Range(minimumRoomLength, maximumRoomLength));
             roomPositions.UnionWith(roomFloor);
         }
