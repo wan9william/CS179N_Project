@@ -18,4 +18,10 @@ public class Door : Interactable
     {
         return;
     }
+
+    protected override void Initialize()
+    {
+        return;
+    }
+
 }

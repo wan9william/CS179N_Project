@@ -20,7 +20,7 @@ public class Inventory
     [SerializeField] Button itemButton;
 
     [Header("Stack Settings")]
-    [SerializeField] private int maxStackSize = 99;
+    [SerializeField] private int maxStackSize = 64;
     private bool isShiftPressed = false;
 
     void Awake()
@@ -39,7 +39,7 @@ public class Inventory
     
 
     //When adding an item to the inventory
-    public void addItem(Tuple<Item_ScriptableObj,int> new_item) {
+    public int addItem(Tuple<Item_ScriptableObj,int> new_item) {
         Item_ScriptableObj item = new_item.Item1;
         int quantity = new_item.Item2;
 
@@ -57,7 +57,7 @@ public class Inventory
                     inventorySlots[i].SetItem_A(new Tuple<Item_ScriptableObj, int>(item, currentQuantity + amountToAdd));
                     quantity -= amountToAdd;
 
-                    if (quantity <= 0) return;
+                    if (quantity <= 0) return 0;
                 }
             }
         }
@@ -71,9 +71,11 @@ public class Inventory
                 inventorySlots[i].SetItem_A(new Tuple<Item_ScriptableObj, int>(item, amountToAdd));
                 quantity -= amountToAdd;
 
-                if (quantity <= 0) return; // All items have been placed
+                if (quantity <= 0) return 0; // All items have been placed
             }
         }
+
+        return quantity;
     }
 
     public void SelectSlot(int index) {

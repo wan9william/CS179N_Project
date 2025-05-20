@@ -217,6 +217,7 @@ void Awake()
 
                     droppedItem.transform.localScale = Vector3.one;
                     droppedItem.layer = 6; //Item_RB layer
+                    droppedItem.GetComponent<Resource>().SetNatural(false);
 
                     //Add rigidbody if necessary and calculate direction
                     Rigidbody2D rb = !droppedItem.GetComponent<Rigidbody2D>() ? droppedItem.AddComponent<Rigidbody2D>() : droppedItem.GetComponent<Rigidbody2D>();
