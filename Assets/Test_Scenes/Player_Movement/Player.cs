@@ -105,7 +105,8 @@ void Awake()
             _weaponScript = _equipped.GetComponent<Weapon>();
 
         if(sprint_bar != null) sprint_bar.maxValue = 100f;
-
+        inventory.SelectSlot(selected_slot);
+        SelectEquipped();
     }
 
     // Update is called once per frame
@@ -471,47 +472,74 @@ void Awake()
         _healthbar.TakeDamage(damage);
     }
 
-    public void SelectEquipped() {
-        GameObject selectedPrefab = inventory.selecteditem(selected_slot);
+    private void SelectEquipped() {
+    GameObject selectedPrefab = inventory.selecteditem(selected_slot);
+    InventorySlot[] slots = inventory.getInventorySlots();
 
-        if (_equipped && inventory.SelectedSlotIsEmpty()) {
-            Destroy(_equipped);
-            _equipped = null;
-            return;
+    //  Store ammo from the currently equipped weapon into its corresponding slot
+    if (_equipped != null)
+    {
+        string equippedName = _equipped.name.Replace("(Clone)", "").Trim();
+
+        for (int i = 0; i < slots.Length; i++)
+
+        {
+            GameObject slotFab = slots[i].getFab();
+            if (slotFab != null && slotFab.name == equippedName)
+            {
+                Weapon oldWeapon = _equipped.GetComponentInChildren<Weapon>();
+                if (oldWeapon != null)
+                {
+                    slots[i].storedAmmo = oldWeapon.GetCurrentAmmo();
+                    slots[i].UpdateQuantityDisplay();  //  Update UI
+                    Debug.Log($"[SelectEquipped] Stored ammo {oldWeapon.GetCurrentAmmo()} into slot {i}");
+                }
+                break;
+            }
         }
 
-        // Remove currently equipped object if it's different
-        if (_equipped != null && selectedPrefab != null && _equipped.name != selectedPrefab.name + "(Clone)")
-        {
-            Destroy(_equipped);
-            _equipped = null;
-        }
+        Destroy(_equipped);
+        _equipped = null;
+    }
 
-        // Equip if not already equipped
-        if (_equipped == null && selectedPrefab != null)
-        {
-            _equipped = Instantiate(selectedPrefab);
-            _equipped.transform.SetParent(transform, false);
-            _equipped.transform.localPosition = Vector3.zero;
-            _equipped.transform.localRotation = Quaternion.identity;
+    //  Equip if not already equipped
+    if (_equipped == null && selectedPrefab != null)
+    {
+        _equipped = Instantiate(selectedPrefab);
+        _equipped.transform.SetParent(transform, false);
+        _equipped.transform.localPosition = Vector3.zero;
+        _equipped.transform.localRotation = Quaternion.identity;
 
-            // Scale up to cancel out the player's scale (e.g., 0.2 becomes 5x)
-            Vector3 inverseScale = new Vector3(
+        Vector3 inverseScale = new Vector3(
             1f / transform.localScale.x,
             1f / transform.localScale.y,
             1f / transform.localScale.z
         );
-            _equipped.transform.localScale = inverseScale;
+        _equipped.transform.localScale = inverseScale;
+        NormalizeChildScale(_equipped.transform);
 
-            // Optional but helpful if the prefab has nested children with messed-up scales
-            NormalizeChildScale(_equipped.transform);
+        _weaponScript = _equipped.GetComponentInChildren<Weapon>();
 
-            //properly update the weapon script to newly created weapon
-            _weaponScript = _equipped.GetComponentInChildren<Weapon>();
+        if (_weaponScript != null)
+        {
+            GameObject prefabFromSlot = slots[selected_slot].getFab();
+            if (prefabFromSlot != null && prefabFromSlot.name == selectedPrefab.name && slots[selected_slot].storedAmmo >= 0)
+            {
+                _weaponScript.SetCurrentAmmo(slots[selected_slot].storedAmmo);
+                Debug.Log($"[SelectEquipped] Restored ammo {slots[selected_slot].storedAmmo} from slot {selected_slot}");
+            }
+            else
+            {
+                // Fresh weapon (new pickup or different weapon type), fill magazine
+                _weaponScript.SetCurrentAmmo(_weaponScript.GetMagazineSize());
+                Debug.Log("[SelectEquipped] New weapon equipped. Full magazine applied.");
+            }
 
-            // Debug log
-            Debug.Log($"[EQUIP DEBUG] Final equipped scale: {_equipped.transform.lossyScale}");
+            slots[selected_slot].UpdateQuantityDisplay(); //  Always update display
         }
+
+        Debug.Log($"[EQUIP DEBUG] Final equipped scale: {_equipped.transform.lossyScale}");
+    }
     }
 
 

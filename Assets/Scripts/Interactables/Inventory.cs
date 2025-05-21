@@ -57,7 +57,21 @@ public class Inventory
                     inventorySlots[i].SetItem_A(new Tuple<Item_ScriptableObj, int>(item, currentQuantity + amountToAdd));
                     quantity -= amountToAdd;
 
-                    if (quantity <= 0) return 0;
+
+                // Handle weapon UI update
+                Weapon weapon = item.getPrefab()?.GetComponentInChildren<Weapon>();
+                if (weapon != null)
+                {
+                    inventorySlots[i].storedAmmo = weapon.GetMagazineSize(); // full mag by default
+                }
+                else
+                {
+                    inventorySlots[i].storedAmmo = -1;
+                }
+                inventorySlots[i].UpdateQuantityDisplay();
+
+                    if (quantity <= 0) return;
+
                 }
             }
         }
