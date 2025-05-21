@@ -21,6 +21,11 @@ public class Button_Interact : Interactable
         pressed = true;
     }
 
+    protected override void Initialize()
+    {
+        return;
+    }
+
     protected override void ExplosionVFX()
     {
         //Inefficient, replace later

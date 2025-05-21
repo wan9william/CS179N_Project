@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UI;
@@ -76,6 +77,7 @@ public class Player : MonoBehaviour
     //Equipped Tool
     private Weapon _weaponScript;
     private SpriteRenderer _weaponSR;
+    [SerializeField] private bool releaseMouse = false;
 
     //Currency
     [SerializeField] private int money = 0;
@@ -111,6 +113,7 @@ void Awake()
     void Update()
     {
         float current_speed = movement_speed;
+        var player = this;
 
         //we could check if we have a weapon every frame
         //_weaponScript = _equipped != null ? _equipped.GetComponentInChildren<Weapon>() : null;
@@ -215,6 +218,7 @@ void Awake()
 
                     droppedItem.transform.localScale = Vector3.one;
                     droppedItem.layer = 6; //Item_RB layer
+                    droppedItem.GetComponent<Resource>().SetNatural(false);
 
                     //Add rigidbody if necessary and calculate direction
                     Rigidbody2D rb = !droppedItem.GetComponent<Rigidbody2D>() ? droppedItem.AddComponent<Rigidbody2D>() : droppedItem.GetComponent<Rigidbody2D>();
@@ -248,7 +252,16 @@ void Awake()
                     Mathf.Clamp(dropForce, 0, 1);
                 }
 
+                releaseMouse = !Input.GetMouseButton(0) ? true : releaseMouse;
+
+                //EVERYTHING BEYOND THIS ASSUMES THERE IS AN ATTACHED EQUIPPABLE SCRIPT
+                Equippable _equipScript = (_equipped) ? _equipped.GetComponent<Equippable>() : null;
+                if (Input.GetMouseButton(0) && _equipScript) {
+                    action_state = PLAYER_ACTION_STATES.SHOOT;
+                }
+
                 //EVERYTHING BEYOND THIS STATEMENT ASSUMES THAT THERE IS AN ATTACHED WEAPONSCRIPT
+
                 if (!_weaponScript) { animator.SetBool("Equipped", false); _hand.SetActive(false); break; }
 
                 animator.SetBool("Equipped", true);
@@ -257,20 +270,16 @@ void Awake()
                 
                 
 
-                if (fireMode == FireMode.FullAuto && Input.GetMouseButton(0) && _equipped)
+                if ((fireMode == FireMode.FullAuto || fireMode == FireMode.SemiAuto) && Input.GetMouseButton(0) && _equipped) action_state = PLAYER_ACTION_STATES.SHOOT;
+
+
+                if (_weaponScript && Input.GetKeyDown(KeyCode.R))//reloading
                 {
-                    action_state = PLAYER_ACTION_STATES.SHOOT;
-                }
-                else if (fireMode == FireMode.SemiAuto && Input.GetMouseButtonDown(0) && _equipped)
-                {
-                    action_state = PLAYER_ACTION_STATES.SHOOT;
+                    action_state = PLAYER_ACTION_STATES.RELOAD;
+                    break;
                 }
 
-            if (_weaponScript && Input.GetKeyDown(KeyCode.R))//reloading
-            {
-                action_state = PLAYER_ACTION_STATES.RELOAD;
-                break;
-            }
+
 
                 
 
@@ -304,7 +313,12 @@ void Awake()
                     Debug.LogWarning("[Player] No weapon equipped.");
                 }
 
-                _equipped.GetComponent<Equippable>().Use();
+                if (releaseMouse)
+                {
+                    _equipped.GetComponent<Equippable>().Use(ref player);
+                    releaseMouse = false;
+                }
+
                 action_state = PLAYER_ACTION_STATES.IDLE;
                 break;
 
@@ -325,7 +339,7 @@ void Awake()
 
 
                 //for now, simply make the object disappear. Will add resources in the future
-                var player = this;
+                
                 if (_interactable)
                 {
                     _interactable.GetComponent<Interactable>().Destroy(ref player);
@@ -373,7 +387,7 @@ void Awake()
             case PLAYER_MOVEMENT_STATES.IDLE:
                 animator.SetBool("Walk", false);
                 bool moved = Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D);
-                if (moved) movement_state = PLAYER_MOVEMENT_STATES.WALK;
+                if (moved && health > 0) movement_state = PLAYER_MOVEMENT_STATES.WALK;
 
 
                 vertical_multiplier = Mathf.Abs( vertical_multiplier ) < eps ? 0 : Mathf.Lerp(vertical_multiplier, 0.0f, Time.deltaTime*dampening);
@@ -468,6 +482,7 @@ void Awake()
         string equippedName = _equipped.name.Replace("(Clone)", "").Trim();
 
         for (int i = 0; i < slots.Length; i++)
+
         {
             GameObject slotFab = slots[i].getFab();
             if (slotFab != null && slotFab.name == equippedName)
