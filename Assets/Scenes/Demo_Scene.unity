@@ -131,6 +131,10 @@ PrefabInstance:
       propertyPath: canvas
       value: 
       objectReference: {fileID: 880797586}
+    - target: {fileID: 2065361587193314629, guid: 4c18fb5dec947874ca31c66ba2f5fe97, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4690868738214975529, guid: 4c18fb5dec947874ca31c66ba2f5fe97, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -4600,7 +4604,7 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b3ba6a77dc1f3eb46ac88b56a41318d6, type: 3}
---- !u!43 &1976713617
+--- !u!43 &1955002771
 Mesh:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

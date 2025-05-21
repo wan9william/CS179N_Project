@@ -105,6 +105,7 @@ public class Weapon : Equippable
         if (audioSource)
         {
             audioSource.Play();
+            Debug.Log("PLAY");
         }
     }
 
