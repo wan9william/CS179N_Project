@@ -1,0 +1,64 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1192920668356715472
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1233199445400571765}
+  - component: {fileID: 4645795447025144996}
+  m_Layer: 0
+  m_Name: ItemManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1233199445400571765
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1192920668356715472}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4645795447025144996
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1192920668356715472}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a15e09f7b82e42149b3cab528c4caa6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  allItemsList:
+  - {fileID: 11400000, guid: 0a722d4c590203340958d8cc6861a204, type: 2}
+  - {fileID: 11400000, guid: 4105950071925c645be4344b3634a4f2, type: 2}
+  - {fileID: 11400000, guid: d4a0370db8c2e5d4d968dc9807caf1bf, type: 2}
+  - {fileID: 11400000, guid: c6deb789e1abc5046a412729fa5c1313, type: 2}
+  - {fileID: 11400000, guid: 9afcbb464af0828479103f33ff12383f, type: 2}
+  - {fileID: 11400000, guid: 7cc6a1b5dd311a64c89b1248e635477f, type: 2}
+  - {fileID: 11400000, guid: adbdfa091b2c0464f87b357a61162d04, type: 2}
+  - {fileID: 11400000, guid: 2c1cf173236ea994283f61b94a00e423, type: 2}
+  - {fileID: 11400000, guid: 06f4142cda1824d43a996b097fb1c297, type: 2}
+  - {fileID: 11400000, guid: d2d17d6f41eaee345ab5570f2fbfaf9a, type: 2}
+  - {fileID: 11400000, guid: 6d9fc24e61bab234aa2000cddb14dab9, type: 2}
+  - {fileID: 11400000, guid: ebfabfcab44f3404d8a80e7c19b4c227, type: 2}
+  - {fileID: 11400000, guid: fff1ab4c48bde8d4cbfc8a0219f8ada1, type: 2}
+  - {fileID: 11400000, guid: f40b3b1526f2c3842ab693fea6e46211, type: 2}
+  - {fileID: 11400000, guid: 6fef394b252f8e34698a83e6edc278eb, type: 2}
+  itemChancePerTile: 0.1
+  offset: {x: 0.33, y: 0.4}

@@ -15,6 +15,7 @@ MonoBehaviour:
   color: {r: 1, g: 0, b: 0, a: 1}
   sprite: {fileID: -7689852844686393343, guid: 2a4861251bfa03d4fbfe9d08b7ce92e8, type: 3}
   value: 0
+  dropChance: 20
   _name: Stim
   ID: 1
   equipPrefab: {fileID: 3443330127039651185, guid: f30307d7a6db98f499b3ffbe312c4aa3, type: 3}

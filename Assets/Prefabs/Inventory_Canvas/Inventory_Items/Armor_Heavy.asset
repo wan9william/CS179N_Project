@@ -15,6 +15,7 @@ MonoBehaviour:
   color: {r: 1, g: 0, b: 0, a: 1}
   sprite: {fileID: -7540204563991458530, guid: 2a4861251bfa03d4fbfe9d08b7ce92e8, type: 3}
   value: 0
+  dropChance: 5
   _name: Armor Heavy
   ID: 1
   equipPrefab: {fileID: 7697460204704243890, guid: b0ca87fd5f9f71441b78937c90896967, type: 3}

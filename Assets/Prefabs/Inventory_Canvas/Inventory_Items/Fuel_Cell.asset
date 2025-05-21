@@ -15,6 +15,7 @@ MonoBehaviour:
   color: {r: 1, g: 0, b: 0, a: 1}
   sprite: {fileID: -3407303847500266684, guid: 2a4861251bfa03d4fbfe9d08b7ce92e8, type: 3}
   value: 22
+  dropChance: 5
   _name: Fuel Cell
   ID: 1
   equipPrefab: {fileID: 2194635865067834649, guid: 1b83d2d101d48b84e80388a9ff53f834, type: 3}

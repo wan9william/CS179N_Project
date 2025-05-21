@@ -10,9 +10,11 @@ public class Item_ScriptableObj : ScriptableObject
     // Start is called before the first frame update
     [SerializeField] private Color color = Color.red;
 
-    [SerializeField] private Sprite sprite;
+    [SerializeField] public Sprite sprite;
 
     [SerializeField] private int value;
+
+    [SerializeField] public int dropChance;
 
     [Header("Object Name")]
     [SerializeField] private string _name = string.Empty;
