@@ -472,7 +472,7 @@ void Awake()
         _healthbar.TakeDamage(damage);
     }
 
-    private void SelectEquipped() {
+    public void SelectEquipped() {
     GameObject selectedPrefab = inventory.selecteditem(selected_slot);
     InventorySlot[] slots = inventory.getInventorySlots();
 
