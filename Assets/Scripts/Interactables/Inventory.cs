@@ -70,7 +70,7 @@ public class Inventory
                 }
                 inventorySlots[i].UpdateQuantityDisplay();
 
-                    if (quantity <= 0) return;
+                    if (quantity <= 0) return 0;
 
                 }
             }

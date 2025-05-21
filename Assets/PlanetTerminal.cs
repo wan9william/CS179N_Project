@@ -7,10 +7,16 @@ public class PlanetTerminal : Interactable
     [SerializeField] private GameObject planetSelectionUI;
     private string selectedScene;
 
+    /*
     void Start()
     {
         if (planetSelectionUI != null)
             planetSelectionUI.SetActive(false);
+    }*/
+
+    protected override void Initialize()
+    {
+        return;
     }
 
     protected override void onInteract(ref Player player)
