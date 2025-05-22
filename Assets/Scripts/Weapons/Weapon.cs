@@ -91,8 +91,7 @@ public class Weapon : Equippable
 
     void Start()
     {
-        if(objectManager == null)
-            objectManager = GameObject.FindWithTag("Object_Manager").GetComponent<ObjectManager>();
+        if (objectManager == null) objectManager = GameObject.FindWithTag("Object_Manager").GetComponent<ObjectManager>();
 
         // ✅ Only assign full ammo if not restored yet
         if (currentAmmo < 0)
@@ -115,6 +114,11 @@ public class Weapon : Equippable
 
     public override void Use(ref Player player) {
         Shoot();
+        if (audioSource)
+        {
+            audioSource.Play();
+            Debug.Log("PLAY");
+        }
     }
 
     public bool Shoot()
