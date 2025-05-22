@@ -23,5 +23,12 @@ public class Stim : Equippable
         player.getInventory().DecrementItem(index);
         //Destroy(this.gameObject);
         player.SelectEquipped();
+
+        if (audioSource)
+        {
+            audioSource.Stop();
+            audioSource.Play();
+            Debug.Log("PLAY");
+        }
     }
 }

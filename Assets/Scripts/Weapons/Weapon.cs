@@ -114,11 +114,7 @@ public class Weapon : Equippable
 
     public override void Use(ref Player player) {
         Shoot();
-        if (audioSource)
-        {
-            audioSource.Play();
-            Debug.Log("PLAY");
-        }
+        
     }
 
     public bool Shoot()
@@ -133,6 +129,13 @@ public class Weapon : Equippable
             Debug.Log("[Weapon] Out of ammo! Reload required.");
             // StartCoroutine(Reload());
             return false;
+        }
+
+        if (audioSource)
+        {
+            audioSource.Stop();
+            audioSource.Play();
+            Debug.Log("PLAY");
         }
 
         Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
