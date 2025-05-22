@@ -43,11 +43,6 @@ public class PlanetTerminal : Interactable
         SceneManager.LoadScene(selectedScene);
     }
 
-    protected override void Initialize()
-    {
-        return;
-    }
-
 
     protected override void ExplosionVFX() { } // not needed
     protected override void Tick() { } // not needed
