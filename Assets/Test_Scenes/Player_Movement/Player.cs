@@ -147,6 +147,11 @@ void Awake()
             }
         }
 
+        if (_equipped != null)
+        {
+            _hand.gameObject.SetActive(true);
+        }
+        else { _hand.gameObject.SetActive(false); }
 
         //STATE ACTIONS & TRANSITIONS FOR THE ACTION STATE
         switch (action_state)
@@ -261,11 +266,18 @@ void Awake()
                 }
 
                 //EVERYTHING BEYOND THIS STATEMENT ASSUMES THAT THERE IS AN ATTACHED WEAPONSCRIPT
+                if (!_equipped) 
+                {
+                    animator.SetBool("Equipped", false); 
+                    _hand.gameObject.SetActive(false); 
+                }
+                else
+                {
+                    animator.SetBool("Equipped", true);
+                    _hand.gameObject.SetActive(true);
+                }
+                if (!_weaponScript) { break; }
 
-                if (!_weaponScript) { animator.SetBool("Equipped", false); _hand.SetActive(false); break; }
-
-                animator.SetBool("Equipped", true);
-                _hand.SetActive(true);
                 var fireMode = _weaponScript.GetFireMode();
                 
                 
@@ -590,7 +602,7 @@ void Awake()
 
         if (!_weaponSR&&_equipped) _weaponSR = _equipped.GetComponentInChildren<SpriteRenderer>();
 
-        if (_weaponSR)
+        if (_weaponSR&&_weaponScript)
         {
             _weaponSR.flipY = (dir.x < 0);  // flip only when pointing left
         }

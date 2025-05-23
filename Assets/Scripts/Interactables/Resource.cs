@@ -41,4 +41,6 @@ public class Resource : Interactable
     }
 
     public Item_ScriptableObj GetResource() { return _resource; }
+
+    public void SetResource(Item_ScriptableObj resource) { _resource = resource; }
 }

@@ -15,6 +15,7 @@ MonoBehaviour:
   color: {r: 1, g: 0, b: 0, a: 1}
   sprite: {fileID: -2408530018317867212, guid: 3325be58caa077145875edc55235db34, type: 3}
   value: 0
+  dropChance: 5
   _name: Shotgun
   ID: 1
   equipPrefab: {fileID: 5972384561809364490, guid: f17b7b8ae91406943bd7feb56fa41f43, type: 3}

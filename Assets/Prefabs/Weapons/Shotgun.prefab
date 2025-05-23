@@ -68,8 +68,8 @@ MonoBehaviour:
   animator: {fileID: 0}
   spriteRenderer: {fileID: 0}
   objectManager: {fileID: 0}
---- !u!82 &4551867575039175382
-AudioSource:
+--- !u!210 &2989587707242784433
+  AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
