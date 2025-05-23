@@ -25,12 +25,14 @@ public class PlayerHealth : MonoBehaviour
     void Update()
     {
         // If the player presses the space key, take 10 damage
+        /*
         if (Input.GetKeyDown(KeyCode.Space))
         {
             TakeDamage(10);
             flashEffect.Flash();
             
         }
+        */
 
         // Optional: heal by pressing H
         if (Input.GetKeyDown(KeyCode.H))

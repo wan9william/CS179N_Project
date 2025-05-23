@@ -24,9 +24,13 @@ public abstract class Interactable : MonoBehaviour
         _glowMat = Resources.Load("Materials/Sprite_Outline") as Material;
 
         _explosion = Resources.Load("Explosion_0") as GameObject;
+
+        Initialize();
     }
 
     public void Glow() { transform.GetComponent<Renderer>().material = _glowMat; }
+
+    protected abstract void Initialize();
 
     public void Destroy(ref Player player) { 
         

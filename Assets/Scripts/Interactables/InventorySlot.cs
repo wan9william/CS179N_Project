@@ -28,6 +28,7 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IDropHandler
     public slotTag myTag;
 
     Item_ScriptableObj empty;
+    public int storedAmmo = -1;
 
     void Start()
     {
@@ -230,7 +231,7 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IDropHandler
     {
         item = new_item.Item1;
         quantity = new_item.Item2;
-
+        
         //Reset visuals
         Image child_image = transform.GetChild(0).GetComponent<Image>();
         child_image.sprite = item.getSprite();
@@ -238,8 +239,20 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IDropHandler
         child_image.color = item.getSprite() ? new Color(1, 1, 1, 1) : new Color(1,1,1,0);
         myItem.myItem= item;
         //Get quantity as well
-        UpdateQuantityDisplay();
-    }
+        
+        // Check if this is a weapon prefab
+        Weapon weapon = item.getPrefab()?.GetComponentInChildren<Weapon>();
+        if (weapon != null)
+        {
+            if (storedAmmo < 0)  // Only initialize if not set already
+                storedAmmo = weapon.GetMagazineSize();  // full mag by default
+        }
+        else
+        {
+            storedAmmo = -1;  // Reset if non-weapon
+        }
+            UpdateQuantityDisplay();
+        }
 
     public void UpdateItem() {
 
@@ -254,13 +267,34 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IDropHandler
         child_image.sprite = item.getSprite();
         child_image.color = item.getSprite() ? new Color(1, 1, 1, 1) : new Color(1, 1, 1, 0);
         myItem.myItem = item;
+
+        UpdateQuantityDisplay(); // 💡 Ensure display updates after resetting
     }
 
-    private void UpdateQuantityDisplay()
+    public void UpdateQuantityDisplay()
     {
-        if(quantityText != null)
+    if (quantityText == null) return;
+
+    // If this slot holds a weapon with stored ammo
+    if (storedAmmo >= 0 && item != null && item.getPrefab() != null)
+    {
+        Weapon weapon = item.getPrefab().GetComponentInChildren<Weapon>();
+        if (weapon != null)
         {
-            quantityText.SetText(quantity > 1 ? quantity.ToString() : "");
+            quantityText.SetText($"{storedAmmo} / {weapon.GetMagazineSize()}");
+            return;
+        }
+    }
+
+    // Default behavior for stackable items
+    quantityText.SetText(quantity > 1 ? quantity.ToString() : "");
+    }
+
+    public void UpdateAmmoDisplay(int current, int max)
+    {
+        if (quantityText != null)
+        {
+            quantityText.SetText($"{current} / {max}");
         }
     }
 
