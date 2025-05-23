@@ -43,6 +43,7 @@ public class RoomFirstDungeonGenerator : DungeonGenerator
 
         tileMapVisualizer.PaintFloorTiles(floor);
         WallGenerator.CreateWalls(floor, tileMapVisualizer);
+        SpawnItems(floor);
     }
 
     private HashSet<Vector2Int> CreateRoomsRandomly(List<BoundsInt> roomsList)

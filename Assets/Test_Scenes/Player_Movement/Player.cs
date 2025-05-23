@@ -246,11 +246,20 @@ void Awake()
                     Mathf.Clamp(dropForce, 0, 1);
                 }
 
+                if (!_equipped) 
+                {
+                    animator.SetBool("Equipped", false); 
+                    _hand.gameObject.SetActive(false); 
+                }
+                else
+                {
+                    animator.SetBool("Equipped", true);
+                    _hand.gameObject.SetActive(true);
+                }
+                    
                 //EVERYTHING BEYOND THIS STATEMENT ASSUMES THAT THERE IS AN ATTACHED WEAPONSCRIPT
-                if (!_weaponScript) { animator.SetBool("Equipped", false); _hand.gameObject.SetActive(false); break; }
+                if (!_weaponScript) { break; }
 
-                animator.SetBool("Equipped", true);
-                _hand.gameObject.SetActive(true);
                 var fireMode = _weaponScript.GetFireMode();
                 
                 
@@ -532,7 +541,7 @@ void Awake()
 
         if (!_weaponSR&&_equipped) _weaponSR = _equipped.GetComponentInChildren<SpriteRenderer>();
 
-        if (_weaponSR)
+        if (_weaponSR&&_weaponScript)
         {
             _weaponSR.flipY = (dir.x < 0);  // flip only when pointing left
         }

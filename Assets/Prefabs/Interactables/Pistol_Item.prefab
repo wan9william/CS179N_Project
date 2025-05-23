@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6483712278813850252}
   - component: {fileID: 6294304488256117073}
   - component: {fileID: 6160284989667227510}
+  - component: {fileID: 4136325710952160691}
   m_Layer: 0
   m_Name: Pistol_Item
   m_TagString: Interactable
@@ -105,6 +106,7 @@ MonoBehaviour:
   _glowMat: {fileID: 0}
   _explosion: {fileID: 0}
   health: 10
+  itemAnimator: {fileID: 0}
   damage: 0
   _resource: {fileID: 11400000, guid: 2c1cf173236ea994283f61b94a00e423, type: 2}
 --- !u!61 &6160284989667227510
@@ -145,7 +147,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.15925924, y: 0.3222222}
-    oldSize: {x: 1, y: 0.5833333}
+    oldSize: {x: 0.46153846, y: 0.26923078}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -153,3 +155,25 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.96875, y: 0.84375}
   m_EdgeRadius: 0
+--- !u!95 &4136325710952160691
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3656777680845249198}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 4f20794701fc14144919a47f4c932b19, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

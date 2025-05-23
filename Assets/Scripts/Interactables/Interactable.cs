@@ -6,6 +6,7 @@ public abstract class Interactable : MonoBehaviour
     [SerializeField] private Material _glowMat;
     [SerializeField] protected GameObject _explosion;
     [SerializeField] private float health = 10;
+    [SerializeField] private Animator itemAnimator;
 
 
     //FOR TESTING PURPOSES
@@ -18,6 +19,7 @@ public abstract class Interactable : MonoBehaviour
     /// ///////////////////////////
     public void Start()
     {
+        itemAnimator = this.transform.GetComponent<Animator>();
         _mat = Resources.Load("Materials/Sprite-Lit") as Material;
         _glowMat = Resources.Load("Materials/Sprite_Outline") as Material;
 
@@ -42,7 +44,8 @@ public abstract class Interactable : MonoBehaviour
 
         //This could be done through a child class of an abstract resource class
     }
-    public void Hit(float damage) { 
+    public void Hit(float damage) {
+        itemAnimator.SetTrigger("Hit");
         health -= damage;
     }
 

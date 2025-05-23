@@ -45,11 +45,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tileMapVisualizer: {fileID: 0}
-  startPosition: {x: 0, y: 0}
-  randomWalkParameters: {fileID: 11400000, guid: 9c8d3c4f53d983842967d9ad767d54a6, type: 2}
-  minRoomWidth: 7
-  minRoomHeight: 7
-  dungeonWidth: 32
-  dungeonHeight: 32
+  startPosition: {x: -20, y: -20}
+  itemManager: {fileID: 0}
+  spawnItems: 1
+  randomWalkParameters: {fileID: 11400000, guid: 33b79cd1d5ed3044894572969df92bb6, type: 2}
+  minRoomWidth: 10
+  minRoomHeight: 10
+  dungeonWidth: 70
+  dungeonHeight: 70
   offset: 2
   randomWalkRooms: 0

@@ -145,7 +145,7 @@ public class Weapon : Equippable
             }
         
             animator.SetTrigger("Shoot");
-            }
+        }
 
         // Bloom increases with each shot (not each pellet)
         currentAmmo--;

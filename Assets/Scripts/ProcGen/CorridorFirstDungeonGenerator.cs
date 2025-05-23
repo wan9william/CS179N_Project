@@ -6,6 +6,7 @@ using UnityEngine.UIElements;
 
 public class CorridorFirstDungeonGenerator : DungeonGenerator
 {
+    //PCG Parameters
     [SerializeField] private int corridorLength = 14, corridorCount = 5;
     [SerializeField] [Range(0.1f,1f)] public float roomPercent = 0.8f;
     [SerializeField] private GameObject roomPrefab;
@@ -13,6 +14,16 @@ public class CorridorFirstDungeonGenerator : DungeonGenerator
     [SerializeField] private int maximumRoomLength = 17;
     [SerializeField] private int corridorSize = 3;
     [SerializeField] private bool randomWalk = false;
+
+    //PCG Data
+    private Dictionary<Vector2Int, HashSet<Vector2Int>> roomsDictionary = new Dictionary<Vector2Int, HashSet<Vector2Int>>();
+
+    private HashSet<Vector2Int> floorPositions, corridorPositions;
+
+    //Color
+    private List<Color> roomColors = new List<Color>();
+
+    
     protected override void RunProceduralGeneration()
     {
         CorridorFirstGeneration();
@@ -41,7 +52,8 @@ public class CorridorFirstDungeonGenerator : DungeonGenerator
         }
 
         tileMapVisualizer.PaintFloorTiles(floorPositions);
-        WallGenerator.CreateWalls(floorPositions,tileMapVisualizer); 
+        WallGenerator.CreateWalls(floorPositions,tileMapVisualizer);
+        SpawnItems(floorPositions);
     }
 
     private List<Vector2Int> IncreaseCorridorBrush(List<Vector2Int> corridor, int size)
@@ -90,22 +102,40 @@ public class CorridorFirstDungeonGenerator : DungeonGenerator
         }
         return deadEnds;
     }
+    
+    private void ClearRoomData()
+    {
+        roomsDictionary.Clear();
+        roomColors.Clear();
+    }
 
+    private void SaveRoomData(Vector2Int roomPosition, HashSet<Vector2Int> roomFloor)
+    {
+        roomsDictionary[roomPosition] = roomFloor;
+        roomColors.Add(UnityEngine.Random.ColorHSV());
+    }
     private HashSet<Vector2Int> CreateRooms(HashSet<Vector2Int> potentialRoomPositions)
     {
         HashSet<Vector2Int> roomPositions = new HashSet<Vector2Int>();
         int roomToCreateCount = Mathf.RoundToInt(potentialRoomPositions.Count*roomPercent);
 
+
+
         List<Vector2Int> roomsToCreate = potentialRoomPositions.OrderBy(x => Guid.NewGuid()).Take(roomToCreateCount).ToList();
+        var roomFloor = new HashSet<Vector2Int>();
+        roomFloor = RunRectangleWalk(new Vector2Int(0, 0), 10, 10);
+        roomPositions.UnionWith(roomFloor);
 
         foreach (var roomPosition in roomsToCreate)
         {
             if (roomPosition == new Vector2Int(0, 0)) continue;
-            var roomFloor = randomWalk ? RunRandomWalk(randomWalkParameters, roomPosition) : RunRectangleWalk(roomPosition, (int)UnityEngine.Random.Range(minimumRoomLength, maximumRoomLength), (int)UnityEngine.Random.Range(minimumRoomLength, maximumRoomLength));
+            roomFloor = randomWalk ? RunRandomWalk(randomWalkParameters, roomPosition) : RunRectangleWalk(roomPosition, (int)UnityEngine.Random.Range(minimumRoomLength, maximumRoomLength), (int)UnityEngine.Random.Range(minimumRoomLength, maximumRoomLength));
+            SaveRoomData(roomPosition, roomFloor);
             roomPositions.UnionWith(roomFloor);
         }
         return roomPositions;
     }
+
 
     private List<List<Vector2Int>> CreateCorridors(HashSet<Vector2Int> floorPositions, HashSet<Vector2Int> potentialRoomPositions)
     {

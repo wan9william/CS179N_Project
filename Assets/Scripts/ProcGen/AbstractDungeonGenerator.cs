@@ -5,13 +5,17 @@ public abstract class AbstractDungeonGenerator : MonoBehaviour
 {
     [SerializeField] protected TileMapVisualizer tileMapVisualizer = null;
     [SerializeField] protected Vector2Int startPosition = Vector2Int.zero;
+    [SerializeField] protected ItemManager itemManager = null;
+    [SerializeField] protected bool spawnItems = true;
 
     public void generateDungeon()
     {
+        itemManager.Clear();
         tileMapVisualizer.Clear();
         RunProceduralGeneration();
     }
 
     protected abstract void RunProceduralGeneration();
+
 }
 

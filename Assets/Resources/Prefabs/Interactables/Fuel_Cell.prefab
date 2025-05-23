@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 893376077185962237}
   - component: {fileID: 3966199978848574863}
   - component: {fileID: 6004362872444846854}
+  - component: {fileID: 5967608734377967622}
   m_Layer: 0
   m_Name: Fuel_Cell
   m_TagString: Interactable
@@ -76,9 +77,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingLayerID: -867108587
+  m_SortingLayer: 2
+  m_SortingOrder: 3
   m_Sprite: {fileID: -3407303847500266684, guid: 2a4861251bfa03d4fbfe9d08b7ce92e8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -106,6 +107,7 @@ MonoBehaviour:
   _glowMat: {fileID: 0}
   _explosion: {fileID: 0}
   health: 10
+  itemAnimator: {fileID: 5967608734377967622}
   damage: 0
   _resource: {fileID: 11400000, guid: 7cc6a1b5dd311a64c89b1248e635477f, type: 2}
 --- !u!61 &3966199978848574863
@@ -167,7 +169,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ShadowGroup: 0
-  m_Priority: 1
+  m_Priority: 3
   m_ComponentVersion: 5
   m_HasRenderer: 1
   m_UseRendererSilhouette: 1
@@ -207,3 +209,25 @@ MonoBehaviour:
     - rid: 4259633773400555529
       type: {class: ShadowShape2DProvider_SpriteRenderer, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.2D.Runtime}
       data: 
+--- !u!95 &5967608734377967622
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2194635865067834649}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 4f20794701fc14144919a47f4c932b19, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

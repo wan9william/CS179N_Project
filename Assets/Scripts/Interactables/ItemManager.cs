@@ -15,11 +15,10 @@ public class ItemManager : MonoBehaviour
             if (droppedItem != null)
             {
                 GameObject itemGameObject = Instantiate(droppedItem.getResourcePrefab(), parent);
-                itemGameObject.transform.localPosition = spawnPosition + new Vector3(offset.x,offset.y);
+                itemGameObject.transform.localPosition = spawnPosition + new Vector3(offset.x + Random.Range(-0.5f, 0.5f), offset.y + Random.Range(-0.5f, 0.5f));
                 items.Add(itemGameObject);
             }
         }
-
     }
 
     //Loot Table for Dropped Item
@@ -48,7 +47,7 @@ public class ItemManager : MonoBehaviour
         {
             foreach (GameObject item in items)
             {
-                Destroy(item);
+                DestroyImmediate(item);
             }
         }
     }
