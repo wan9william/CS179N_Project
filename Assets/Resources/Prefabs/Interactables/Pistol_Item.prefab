@@ -109,6 +109,8 @@ MonoBehaviour:
   itemAnimator: {fileID: 2710183851387927202}
   damage: 0
   _resource: {fileID: 11400000, guid: 2c1cf173236ea994283f61b94a00e423, type: 2}
+  quantity: 0
+  natural: 1
 --- !u!61 &6160284989667227510
 BoxCollider2D:
   m_ObjectHideFlags: 0

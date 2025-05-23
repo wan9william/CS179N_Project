@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UI;
@@ -53,7 +54,7 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject _equipped;
     [SerializeField] private GameObject _hand;
     [SerializeField] private GameObject _interactable;
-    [SerializeField] private GameObject _healthbar;
+    [SerializeField] private PlayerHealth _healthbar;
     [SerializeField] private Camera _camera;
 
     //FLAGS
@@ -76,6 +77,7 @@ public class Player : MonoBehaviour
     //Equipped Tool
     private Weapon _weaponScript;
     private SpriteRenderer _weaponSR;
+    [SerializeField] private bool releaseMouse = false;
 
     //Currency
     [SerializeField] private int money = 0;
@@ -103,16 +105,24 @@ void Awake()
             _weaponScript = _equipped.GetComponent<Weapon>();
 
         if(sprint_bar != null) sprint_bar.maxValue = 100f;
-
+        inventory.SelectSlot(selected_slot);
+        SelectEquipped();
     }
 
     // Update is called once per frame
     void Update()
     {
         float current_speed = movement_speed;
+        var player = this;
 
         //we could check if we have a weapon every frame
         //_weaponScript = _equipped != null ? _equipped.GetComponentInChildren<Weapon>() : null;
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            TakeDamage(10);
+
+        }
 
         //reduce trauma after each frame
         trauma -= 1f * Time.deltaTime;
@@ -213,6 +223,7 @@ void Awake()
 
                     droppedItem.transform.localScale = Vector3.one;
                     droppedItem.layer = 6; //Item_RB layer
+                    droppedItem.GetComponent<Resource>().SetNatural(false);
 
                     //Add rigidbody if necessary and calculate direction
                     Rigidbody2D rb = !droppedItem.GetComponent<Rigidbody2D>() ? droppedItem.AddComponent<Rigidbody2D>() : droppedItem.GetComponent<Rigidbody2D>();
@@ -246,6 +257,15 @@ void Awake()
                     Mathf.Clamp(dropForce, 0, 1);
                 }
 
+                releaseMouse = !Input.GetMouseButton(0) ? true : releaseMouse;
+
+                //EVERYTHING BEYOND THIS ASSUMES THERE IS AN ATTACHED EQUIPPABLE SCRIPT
+                Equippable _equipScript = (_equipped) ? _equipped.GetComponent<Equippable>() : null;
+                if (Input.GetMouseButton(0) && _equipScript) {
+                    action_state = PLAYER_ACTION_STATES.SHOOT;
+                }
+
+                //EVERYTHING BEYOND THIS STATEMENT ASSUMES THAT THERE IS AN ATTACHED WEAPONSCRIPT
                 if (!_equipped) 
                 {
                     animator.SetBool("Equipped", false); 
@@ -256,28 +276,22 @@ void Awake()
                     animator.SetBool("Equipped", true);
                     _hand.gameObject.SetActive(true);
                 }
-                    
-                //EVERYTHING BEYOND THIS STATEMENT ASSUMES THAT THERE IS AN ATTACHED WEAPONSCRIPT
                 if (!_weaponScript) { break; }
 
                 var fireMode = _weaponScript.GetFireMode();
                 
                 
 
-                if (fireMode == FireMode.FullAuto && Input.GetMouseButton(0) && _equipped)
+                if ((fireMode == FireMode.FullAuto || fireMode == FireMode.SemiAuto) && Input.GetMouseButton(0) && _equipped) action_state = PLAYER_ACTION_STATES.SHOOT;
+
+
+                if (_weaponScript && Input.GetKeyDown(KeyCode.R))//reloading
                 {
-                    action_state = PLAYER_ACTION_STATES.SHOOT;
-                }
-                else if (fireMode == FireMode.SemiAuto && Input.GetMouseButtonDown(0) && _equipped)
-                {
-                    action_state = PLAYER_ACTION_STATES.SHOOT;
+                    action_state = PLAYER_ACTION_STATES.RELOAD;
+                    break;
                 }
 
-            if (_weaponScript && Input.GetKeyDown(KeyCode.R))//reloading
-            {
-                action_state = PLAYER_ACTION_STATES.RELOAD;
-                break;
-            }
+
 
                 
 
@@ -311,7 +325,12 @@ void Awake()
                     Debug.LogWarning("[Player] No weapon equipped.");
                 }
 
-                _equipped.GetComponent<Equippable>().Use();
+                if (releaseMouse)
+                {
+                    _equipped.GetComponent<Equippable>().Use(ref player);
+                    releaseMouse = false;
+                }
+
                 action_state = PLAYER_ACTION_STATES.IDLE;
                 break;
 
@@ -332,7 +351,7 @@ void Awake()
 
 
                 //for now, simply make the object disappear. Will add resources in the future
-                var player = this;
+                
                 if (_interactable)
                 {
                     _interactable.GetComponent<Interactable>().Destroy(ref player);
@@ -380,7 +399,7 @@ void Awake()
             case PLAYER_MOVEMENT_STATES.IDLE:
                 animator.SetBool("Walk", false);
                 bool moved = Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D);
-                if (moved) movement_state = PLAYER_MOVEMENT_STATES.WALK;
+                if (moved && health > 0) movement_state = PLAYER_MOVEMENT_STATES.WALK;
 
 
                 vertical_multiplier = Mathf.Abs( vertical_multiplier ) < eps ? 0 : Mathf.Lerp(vertical_multiplier, 0.0f, Time.deltaTime*dampening);
@@ -456,41 +475,83 @@ void Awake()
         if(_rb != null) _rb.linearVelocity = new Vector2(horizontal_multiplier,vertical_multiplier)*current_speed;
     }
 
-    private void SelectEquipped() {
-        GameObject selectedPrefab = inventory.selecteditem(selected_slot);
+    public void TakeDamage(int damage) {
+        health -= damage;
 
-        // Remove currently equipped object if it's different
-        if (_equipped != null && selectedPrefab != null && _equipped.name != selectedPrefab.name + "(Clone)")
+        //need a death check here as well
+        if (health <= 0) animator.SetBool("Dead", true);
+
+        _healthbar.TakeDamage(damage);
+    }
+
+    public void SelectEquipped() {
+    GameObject selectedPrefab = inventory.selecteditem(selected_slot);
+    InventorySlot[] slots = inventory.getInventorySlots();
+
+    //  Store ammo from the currently equipped weapon into its corresponding slot
+    if (_equipped != null)
+    {
+        string equippedName = _equipped.name.Replace("(Clone)", "").Trim();
+
+        for (int i = 0; i < slots.Length; i++)
+
         {
-            Destroy(_equipped);
-            _equipped = null;
+            GameObject slotFab = slots[i].getFab();
+            if (slotFab != null && slotFab.name == equippedName)
+            {
+                Weapon oldWeapon = _equipped.GetComponentInChildren<Weapon>();
+                if (oldWeapon != null)
+                {
+                    slots[i].storedAmmo = oldWeapon.GetCurrentAmmo();
+                    slots[i].UpdateQuantityDisplay();  //  Update UI
+                    Debug.Log($"[SelectEquipped] Stored ammo {oldWeapon.GetCurrentAmmo()} into slot {i}");
+                }
+                break;
+            }
         }
 
-        // Equip if not already equipped
-        if (_equipped == null && selectedPrefab != null)
-        {
-            _equipped = Instantiate(selectedPrefab);
-            _equipped.transform.SetParent(transform, false);
-            _equipped.transform.localPosition = Vector3.zero;
-            _equipped.transform.localRotation = Quaternion.identity;
+        Destroy(_equipped);
+        _equipped = null;
+    }
 
-            // Scale up to cancel out the player's scale (e.g., 0.2 becomes 5x)
-            Vector3 inverseScale = new Vector3(
+    //  Equip if not already equipped
+    if (_equipped == null && selectedPrefab != null)
+    {
+        _equipped = Instantiate(selectedPrefab);
+        _equipped.transform.SetParent(transform, false);
+        _equipped.transform.localPosition = Vector3.zero;
+        _equipped.transform.localRotation = Quaternion.identity;
+
+        Vector3 inverseScale = new Vector3(
             1f / transform.localScale.x,
             1f / transform.localScale.y,
             1f / transform.localScale.z
         );
-            _equipped.transform.localScale = inverseScale;
+        _equipped.transform.localScale = inverseScale;
+        NormalizeChildScale(_equipped.transform);
 
-            // Optional but helpful if the prefab has nested children with messed-up scales
-            NormalizeChildScale(_equipped.transform);
+        _weaponScript = _equipped.GetComponentInChildren<Weapon>();
 
-            //properly update the weapon script to newly created weapon
-            _weaponScript = _equipped.GetComponentInChildren<Weapon>();
+        if (_weaponScript != null)
+        {
+            GameObject prefabFromSlot = slots[selected_slot].getFab();
+            if (prefabFromSlot != null && prefabFromSlot.name == selectedPrefab.name && slots[selected_slot].storedAmmo >= 0)
+            {
+                _weaponScript.SetCurrentAmmo(slots[selected_slot].storedAmmo);
+                Debug.Log($"[SelectEquipped] Restored ammo {slots[selected_slot].storedAmmo} from slot {selected_slot}");
+            }
+            else
+            {
+                // Fresh weapon (new pickup or different weapon type), fill magazine
+                _weaponScript.SetCurrentAmmo(_weaponScript.GetMagazineSize());
+                Debug.Log("[SelectEquipped] New weapon equipped. Full magazine applied.");
+            }
 
-            // Debug log
-            Debug.Log($"[EQUIP DEBUG] Final equipped scale: {_equipped.transform.lossyScale}");
+            slots[selected_slot].UpdateQuantityDisplay(); //  Always update display
         }
+
+        Debug.Log($"[EQUIP DEBUG] Final equipped scale: {_equipped.transform.lossyScale}");
+    }
     }
 
 
