@@ -44,8 +44,9 @@ public class PlayerHealth : MonoBehaviour
     // This method reduces the player's health
     public void TakeDamage(int amount)
     {
-        unitHealth.Dmgunit(amount);
-        UpdateHealthBar();
+        Debug.Log($"[PlayerHealth] Took {amount} damage.");
+        unitHealth.Dmgunit(amount); // or: health -= amount;
+        UpdateHealthBar();  
 
     if (flashEffect != null)
     {

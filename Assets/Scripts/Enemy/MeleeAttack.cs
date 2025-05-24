@@ -24,22 +24,33 @@ public class MeleeAttack : MonoBehaviour, EnemyAttack
         float distance = Vector2.Distance(transform.position, target.position);
         if (distance <= stats.attackRange)
         {
-            StartCoroutine(PerformAttack(target, stats));
+            Debug.Log("[MeleeAttack] Within range, starting attack...");
+            StartCoroutine(PerformAttack(stats));
         }
     }
 
-    IEnumerator PerformAttack(Transform target, EnemyStats stats)
+    IEnumerator PerformAttack(EnemyStats stats)
     {
         isAttacking = true;
-        yield return new WaitForSeconds(stats.attackDelay); // wind-up
 
-        if (target.TryGetComponent<PlayerHealth>(out var playerHealth))
+        // Optional wind-up delay
+        yield return new WaitForSeconds(stats.attackDelay);
+
+        // Use modern replacement for finding the PlayerHealth script
+        PlayerHealth playerHealth = Object.FindFirstObjectByType<PlayerHealth>();
+        if (playerHealth != null)
         {
             playerHealth.TakeDamage(stats.attackDamage);
             Debug.Log("[MeleeAttack] Player hit!");
         }
+        else
+        {
+            Debug.LogWarning("[MeleeAttack] Could not find PlayerHealth.");
+        }
 
-        yield return new WaitForSeconds(stats.attackCooldown); // cooldown
+        // Cooldown before next possible attack
+        yield return new WaitForSeconds(stats.attackCooldown);
         isAttacking = false;
     }
+
 }
