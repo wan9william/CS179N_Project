@@ -8,7 +8,8 @@ public class Menu : Interactable
     [SerializeField] private Canvas menu;
     protected override void onInteract(ref Player player)
     {
-        menu.gameObject.SetActive(false);
+        menu.gameObject.SetActive(true);
+        player.setPaused(true);
     }
 
     protected override void ExplosionVFX()
