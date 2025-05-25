@@ -1,5 +1,7 @@
 using UnityEngine;
+using UnityEngine.Tilemaps;
 using System.Collections;
+using System.Collections.Generic;
 
 [System.Serializable]
 public class SpawnEntry
@@ -11,67 +13,71 @@ public class SpawnEntry
 public class EnemySpawner : MonoBehaviour
 {
     public SpawnEntry[] enemyTypes;
-    public Transform[] spawnPoints;
-    public float spawnInterval = 5f;
-    public int enemiesPerWave = 1;
-    public float triggerDistance = 5f; // Distance from player to trigger spawn
-    public bool spawnOnce = true;
+    public TileMapVisualizer tileMapVisualizer;
+    public int enemiesToSpawn = 10;
+    public float spawnInterval = 0.3f;
+    public float spawnOffset = 0.5f;
 
-    private bool hasSpawned = false;
-    private bool isSpawning = false;
-    private Transform player;
+    private BoundsInt mapBounds;
+    private List<Vector3> floorWorldPositions = new List<Vector3>();
 
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player")?.transform;
+        ExtractFloorPositions();
+        StartCoroutine(SpawnEnemiesOnFloor());
     }
 
-    void Update()
+    void ExtractFloorPositions()
     {
-        if (player == null || (hasSpawned && spawnOnce)) return;
+        Tilemap floorTilemap = tileMapVisualizer.GetComponent<TileMapVisualizer>().GetComponentInChildren<Tilemap>();
+        mapBounds = floorTilemap.cellBounds;
 
-        foreach (var point in spawnPoints)
+        foreach (var pos in mapBounds.allPositionsWithin)
         {
-            float distance = Vector2.Distance(player.position, point.position);
-            if (distance <= triggerDistance && !isSpawning)
+            if (floorTilemap.HasTile(pos))
             {
-                StartCoroutine(SpawnWaveRepeatedly());
-                if (spawnOnce) hasSpawned = true;
-                break;
+                Vector3 worldPos = floorTilemap.CellToWorld(pos) + new Vector3(spawnOffset, spawnOffset, 0);
+                floorWorldPositions.Add(worldPos);
             }
         }
+
+        Debug.Log($"[EnemySpawner] Found {floorWorldPositions.Count} floor tiles.");
     }
 
-    IEnumerator SpawnWaveRepeatedly()
+    IEnumerator SpawnEnemiesOnFloor()
     {
-        isSpawning = true;
+        HashSet<Vector3> used = new HashSet<Vector3>();
 
-        do
+        for (int i = 0; i < enemiesToSpawn; i++)
         {
-            for (int i = 0; i < enemiesPerWave; i++)
+            if (floorWorldPositions.Count == 0)
             {
-                var entry = enemyTypes[Random.Range(0, enemyTypes.Length)];
-                var point = spawnPoints[Random.Range(0, spawnPoints.Length)];
+                Debug.LogWarning("[EnemySpawner] No valid floor tiles found.");
+                yield break;
+            }
 
-                GameObject enemy = Instantiate(entry.prefab, point.position, Quaternion.identity);
+            Vector3 spawnPos;
+            do
+            {
+                spawnPos = floorWorldPositions[Random.Range(0, floorWorldPositions.Count)];
+            } while (used.Contains(spawnPos));
+            used.Add(spawnPos);
 
-                var ai = enemy.GetComponent<EnemyAI>();
-                if (ai != null)
+            var entry = enemyTypes[Random.Range(0, enemyTypes.Length)];
+            GameObject enemy = Instantiate(entry.prefab, spawnPos, Quaternion.identity);
+
+            var ai = enemy.GetComponent<EnemyAI>();
+            if (ai != null)
+            {
+                switch (entry.type)
                 {
-                    switch (entry.type)
-                    {
-                        case EnemyType.Idle: ai.currentState = EnemyState.Idle; break;
-                        case EnemyType.Patrol: ai.currentState = EnemyState.Patrol; break;
-                        case EnemyType.Chase: ai.currentState = EnemyState.Chase; break;
-                        default: ai.currentState = EnemyState.Idle; break;
-                    }
+                    case EnemyType.Idle: ai.currentState = EnemyState.Idle; break;
+                    case EnemyType.Patrol: ai.currentState = EnemyState.Patrol; break;
+                    case EnemyType.Chase: ai.currentState = EnemyState.Chase; break;
                 }
             }
 
             yield return new WaitForSeconds(spawnInterval);
-
-        } while (!spawnOnce);
-
-        isSpawning = false;
+        }
     }
 }
