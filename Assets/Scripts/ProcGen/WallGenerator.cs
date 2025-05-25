@@ -9,6 +9,7 @@ public static class WallGenerator
     {
         var basicWallPositions = FindWallsInDirections(floorPositions, Direction2D.cardinalDirectionsList);
         var cornerWallPositions = FindWallsInDirections(floorPositions, Direction2D.diagonalDirectionsList);
+        //var emptyWallPositions = FindEmptyWalls(floorPositions, basicWallPositions, cornerWallPositions)
 
         CreateCornerWalls(tilemapVisualizer, basicWallPositions, cornerWallPositions, floorPositions);
         CreateBasicWalls(tilemapVisualizer, basicWallPositions, cornerWallPositions, floorPositions);
@@ -60,7 +61,6 @@ public static class WallGenerator
                     binaryWallType += "1";
                 else binaryWallType += "0";
             }
-            Debug.Log(position+" BasicWallType: "+binaryType);
             tilemapVisualizer.PaintSingleBasicWall(position, binaryType, binaryWallType);
         }
     }

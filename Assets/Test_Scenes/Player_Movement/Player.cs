@@ -479,8 +479,11 @@ void Awake()
         health -= damage;
 
         //need a death check here as well
-        if (health <= 0) animator.SetBool("Dead", true);
-
+        if (health <= 0)
+        {
+            animator.SetBool("Dead", true);
+            animator.SetFloat("RandomNum", Random.value);
+        }
         _healthbar.TakeDamage(damage);
     }
 

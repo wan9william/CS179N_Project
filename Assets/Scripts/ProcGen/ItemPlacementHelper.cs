@@ -9,16 +9,17 @@ public class ItemPlacementHelper
     //    tileByType = new Dictionary<PlacementType, HashSet<Vector2Int>>();
 
     HashSet<Vector2Int> roomFloorNoCorridor;
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    
+    public ItemPlacementHelper(HashSet<Vector2Int> roomFloor,
+        HashSet<Vector2Int> roomFloorNoCorridor)
     {
-        
-    }
+        Graph graph = new Graph(roomFloor);
+        this.roomFloorNoCorridor = roomFloorNoCorridor;
+        foreach (var position in roomFloorNoCorridor)
+        {
+            int neighborsCount8Dir = graph.GetNeighbors8Directions(position).Count;
+            //PlacementType type = neighborsCount8Dir < 8 ? PlacementType.NearWall : PlacementType.Open;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        }
     }
 }
