@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Tilemaps;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -12,72 +11,97 @@ public class SpawnEntry
 
 public class EnemySpawner : MonoBehaviour
 {
-    public SpawnEntry[] enemyTypes;
     public TileMapVisualizer tileMapVisualizer;
-    public int enemiesToSpawn = 10;
-    public float spawnInterval = 0.3f;
+    public SpawnEntry[] enemyTypes;
+    public int enemiesPerSpawn = 2;
     public float spawnOffset = 0.5f;
+    public float triggerRadius = 7f;
+    public float spawnInterval = 3f;
 
-    private BoundsInt mapBounds;
-    private List<Vector3> floorWorldPositions = new List<Vector3>();
+    private Transform player;
+    private List<Vector3> spawnPositions = new List<Vector3>();
+    private Dictionary<Vector3, Coroutine> activeSpawns = new Dictionary<Vector3, Coroutine>();
 
     void Start()
     {
-        ExtractFloorPositions();
-        StartCoroutine(SpawnEnemiesOnFloor());
-    }
+        player = GameObject.FindGameObjectWithTag("Player")?.transform;
 
-    void ExtractFloorPositions()
-    {
-        Tilemap floorTilemap = tileMapVisualizer.GetComponent<TileMapVisualizer>().GetComponentInChildren<Tilemap>();
-        mapBounds = floorTilemap.cellBounds;
-
-        foreach (var pos in mapBounds.allPositionsWithin)
+        if (player == null || tileMapVisualizer == null || enemyTypes.Length == 0)
         {
-            if (floorTilemap.HasTile(pos))
-            {
-                Vector3 worldPos = floorTilemap.CellToWorld(pos) + new Vector3(spawnOffset, spawnOffset, 0);
-                floorWorldPositions.Add(worldPos);
-            }
+            Debug.LogError("[EnemySpawner] Missing required references.");
+            return;
         }
 
-        Debug.Log($"[EnemySpawner] Found {floorWorldPositions.Count} floor tiles.");
+        List<Vector2Int> floorPositions = tileMapVisualizer.GetFloorWorldPositions();
+        if (floorPositions.Count == 0)
+        {
+            Debug.LogWarning("[EnemySpawner] No floor tiles found. Spawning aborted.");
+            return;
+        }
+
+        for (int i = 0; i < 10; i++) // Set number of spawn points
+        {
+            Vector2Int tile = floorPositions[Random.Range(0, floorPositions.Count)];
+            Vector3 spawnPos = new Vector3(tile.x + spawnOffset, tile.y + spawnOffset, 0);
+            spawnPositions.Add(spawnPos);
+        }
+
+        Debug.Log($"[EnemySpawner] Prepared {spawnPositions.Count} spawn positions.");
     }
 
-    IEnumerator SpawnEnemiesOnFloor()
+    void Update()
     {
-        HashSet<Vector3> used = new HashSet<Vector3>();
-
-        for (int i = 0; i < enemiesToSpawn; i++)
+        foreach (Vector3 point in spawnPositions)
         {
-            if (floorWorldPositions.Count == 0)
-            {
-                Debug.LogWarning("[EnemySpawner] No valid floor tiles found.");
-                yield break;
-            }
+            float distance = Vector3.Distance(player.position, point);
 
-            Vector3 spawnPos;
-            do
+            if (distance <= triggerRadius)
             {
-                spawnPos = floorWorldPositions[Random.Range(0, floorWorldPositions.Count)];
-            } while (used.Contains(spawnPos));
-            used.Add(spawnPos);
-
-            var entry = enemyTypes[Random.Range(0, enemyTypes.Length)];
-            GameObject enemy = Instantiate(entry.prefab, spawnPos, Quaternion.identity);
-
-            var ai = enemy.GetComponent<EnemyAI>();
-            if (ai != null)
-            {
-                switch (entry.type)
+                if (!activeSpawns.ContainsKey(point))
                 {
-                    case EnemyType.Idle: ai.currentState = EnemyState.Idle; break;
-                    case EnemyType.Patrol: ai.currentState = EnemyState.Patrol; break;
-                    case EnemyType.Chase: ai.currentState = EnemyState.Chase; break;
+                    Coroutine routine = StartCoroutine(SpawnEnemiesAtPoint(point));
+                    activeSpawns[point] = routine;
+                }
+            }
+            else
+            {
+                if (activeSpawns.ContainsKey(point))
+                {
+                    StopCoroutine(activeSpawns[point]);
+                    activeSpawns.Remove(point);
+                }
+            }
+        }
+    }
+
+    IEnumerator SpawnEnemiesAtPoint(Vector3 spawnPoint)
+    {
+        while (true)
+        {
+            for (int i = 0; i < enemiesPerSpawn; i++)
+            {
+                var entry = enemyTypes[Random.Range(0, enemyTypes.Length)];
+                if (entry.prefab != null)
+                {
+                    Instantiate(entry.prefab, spawnPoint, Quaternion.identity);
                 }
             }
 
             yield return new WaitForSeconds(spawnInterval);
+        }
+    }
+
+    public List<Vector3> GetEnemySpawnPositions()
+    {
+        return spawnPositions;
+    }
+
+    void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        foreach (var pos in spawnPositions)
+        {
+            Gizmos.DrawSphere(pos, 0.2f);
         }
     }
 }

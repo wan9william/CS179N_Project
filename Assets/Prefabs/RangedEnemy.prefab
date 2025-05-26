@@ -164,7 +164,7 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0.5, y: 0.3}
     oldSize: {x: 1, y: 1}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
@@ -212,6 +212,8 @@ MonoBehaviour:
   slider: {fileID: 5207522037836462302}
   mainCamera: {fileID: 0}
   target: {fileID: 3208393823185724856}
+  animator: {fileID: 0}
+  spriteRenderer: {fileID: 0}
 --- !u!114 &8665906965145548110
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -253,7 +255,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stats: {fileID: 11400000, guid: 08ee9b323e775f344b2c5ceaa41b8675, type: 2}
-  target: {fileID: 0}
+  target: {fileID: 4690868738214975529, guid: 4c18fb5dec947874ca31c66ba2f5fe97, type: 3}
   spriteRenderer: {fileID: 0}
   currentState: 0
 --- !u!114 &2188227948664884281
