@@ -123,7 +123,7 @@ public class CorridorFirstDungeonGenerator : DungeonGenerator
 
         List<Vector2Int> roomsToCreate = potentialRoomPositions.OrderBy(x => Guid.NewGuid()).Take(roomToCreateCount).ToList();
         var roomFloor = new HashSet<Vector2Int>();
-        roomFloor = RunRectangleWalk(new Vector2Int(0, 0), 10, 10);
+        roomFloor = RunRectangleWalk(new Vector2Int(0, 0), 20, 20);
         roomPositions.UnionWith(roomFloor);
 
         foreach (var roomPosition in roomsToCreate)

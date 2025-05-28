@@ -49,7 +49,7 @@ public abstract class Interactable : MonoBehaviour
         //This could be done through a child class of an abstract resource class
     }
     public void Hit(float damage) {
-        itemAnimator.SetTrigger("Hit");
+        if(itemAnimator) itemAnimator.SetTrigger("Hit");
         health -= damage;
     }
 
