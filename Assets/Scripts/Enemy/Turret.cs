@@ -9,7 +9,7 @@ public class TurretBehavior : MonoBehaviour
     public LayerMask obstructionMask;
 
     [Header("Turret Rotation")]
-    public float rotationSpeed = 30f; // degrees per second
+    public float rotationSpeed = 180f; // Degrees per second
 
     [Header("Shooting")]
     public GameObject bulletPrefab;
@@ -28,29 +28,38 @@ public class TurretBehavior : MonoBehaviour
 
         if (playerVisible)
         {
-            // Rotate toward player
-            Vector2 direction = (player.position - transform.position).normalized;
-            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0, 0, angle), rotationSpeed * Time.deltaTime);
+            RotateTowardPlayer();
 
             if (Time.time >= nextFireTime)
             {
-                Shoot(direction);
+                Shoot();
                 nextFireTime = Time.time + fireRate;
             }
         }
         else
         {
-            // Idle scanning (rotate slowly when no player in sight)
+            // Optional: scanning idle rotation
             transform.Rotate(Vector3.forward * rotationSpeed * Time.deltaTime);
         }
     }
 
-    void Shoot(Vector2 direction)
+    void RotateTowardPlayer()
     {
-        GameObject bullet = Instantiate(bulletPrefab, firePoint.position, Quaternion.identity);
+        Vector2 direction = (player.position - transform.position).normalized;
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+
+        // Use Quaternion to rotate smoothly
+        Quaternion targetRotation = Quaternion.Euler(0f, 0f, angle - 90f); // Adjust -90 if your turret points up
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+    }
+
+    void Shoot()
+    {
+        GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
         if (bullet.TryGetComponent<Rigidbody2D>(out var rb))
-            rb.linearVelocity = direction * bulletSpeed;
+        {
+            rb.linearVelocity = firePoint.up * bulletSpeed;
+        }
     }
 
     bool IsPlayerVisible()
@@ -60,11 +69,10 @@ public class TurretBehavior : MonoBehaviour
         if (toPlayer.magnitude > detectionRange)
             return false;
 
-        float angleToPlayer = Vector2.Angle(transform.right, toPlayer.normalized);
+        float angleToPlayer = Vector2.Angle(transform.up, toPlayer.normalized); // Assumes turret faces up
         if (angleToPlayer > fieldOfViewAngle / 2f)
             return false;
 
-        // Check if player is behind wall or obstacle
         RaycastHit2D hit = Physics2D.Raycast(transform.position, toPlayer.normalized, detectionRange, obstructionMask);
         if (hit.collider != null && hit.collider.transform != player)
             return false;
