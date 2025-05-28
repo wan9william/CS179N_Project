@@ -16,6 +16,9 @@ public class Game_Event_Manager : MonoBehaviour
     //Dead Text
     [SerializeField] private GameObject Dead_Text;
     [SerializeField] private GameObject Success_Text;
+    [SerializeField] private GameObject Object_Manager;
+    [SerializeField] private Player player;
+    [SerializeField] private GameObject UI;
 
     public enum GM_STATES { 
         IDLE,
@@ -30,6 +33,13 @@ public class Game_Event_Manager : MonoBehaviour
     {
         state = GM_STATES.IDLE;
         if(!initialize) initialize = true;
+
+
+        //Prevents the following objects from being destroyed across scenes.
+        DontDestroyOnLoad(gameObject);
+        DontDestroyOnLoad(player.gameObject);
+        DontDestroyOnLoad(Object_Manager);
+        DontDestroyOnLoad(UI);
     }
 
     // Update is called once per frame
@@ -59,6 +69,8 @@ public class Game_Event_Manager : MonoBehaviour
                 if (ScreenFadeT >= 1f) {
                     //Scene transition
                     SceneManager.LoadScene("ItemSpawnerTestScene");
+                    state = GM_STATES.IDLE;
+                    initialize = true;
                 }
                 break;
             case GM_STATES.END_MISSION:
@@ -77,6 +89,8 @@ public class Game_Event_Manager : MonoBehaviour
                 {
                     //Scene transition
                     SceneManager.LoadScene("HubWorld");
+                    state = GM_STATES.IDLE;
+                    initialize = true;
                 }
                 break;
             default:
