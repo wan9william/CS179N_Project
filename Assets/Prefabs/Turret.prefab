@@ -139,7 +139,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   rotationSpeed: 50
-  bulletPrefab: {fileID: 1873891436641685562, guid: 0eccac6df8f10434ca458c9770dbe1c7, type: 3}
+  bulletPrefab: {fileID: 1873891436641685562, guid: 683c6bcdbe44c3e46ab2a6cecbeaa3fa, type: 3}
   firePoint: {fileID: 5454321251119079527}
   fireRate: 1
   bulletSpeed: 10

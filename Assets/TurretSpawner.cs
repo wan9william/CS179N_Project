@@ -5,7 +5,7 @@ public class TurretSpawner : MonoBehaviour
 {
     [Header("Dependencies")]
     public TileMapVisualizer tileMapVisualizer;
-    public EnemySpawner enemySpawner;           // Reference to get enemy spawn positions
+    public EnemySpawner enemySpawner;
     public GameObject turretPrefab;
     public Transform playerTransform;
 
@@ -14,12 +14,12 @@ public class TurretSpawner : MonoBehaviour
     public float spawnOffset = 0.5f;
     public float minDistanceFromEnemies = 5f;
     public float minDistanceFromPlayer = 6f;
+    public float minDistanceBetweenTurrets = 6f;
 
     private List<Vector3> turretSpawnPositions = new List<Vector3>();
 
     void Start()
     {
-        // Null checks
         if (turretPrefab == null || tileMapVisualizer == null || enemySpawner == null || playerTransform == null)
         {
             Debug.LogError("[TurretSpawner] Missing required references!");
@@ -36,7 +36,8 @@ public class TurretSpawner : MonoBehaviour
         }
 
         int attempts = 0;
-        while (turretSpawnPositions.Count < turretsToSpawn && attempts < 500)
+
+        while (turretSpawnPositions.Count < turretsToSpawn && attempts < 1000)
         {
             attempts++;
 
@@ -61,10 +62,29 @@ public class TurretSpawner : MonoBehaviour
                 tooClose = true;
             }
 
-            // Place turret
+            // Check distance from other turrets
             if (!tooClose)
             {
-                Instantiate(turretPrefab, spawnPos, Quaternion.identity);
+                foreach (var turretPos in turretSpawnPositions)
+                {
+                    if (Vector3.Distance(spawnPos, turretPos) < minDistanceBetweenTurrets)
+                    {
+                        tooClose = true;
+                        break;
+                    }
+                }
+            }
+
+            if (!tooClose)
+            {
+                GameObject turret = Instantiate(turretPrefab, spawnPos, Quaternion.identity);
+
+                TurretBehavior turretBehavior = turret.GetComponent<TurretBehavior>();
+                if (turretBehavior != null)
+                {
+                    turretBehavior.player = playerTransform;
+                }
+
                 turretSpawnPositions.Add(spawnPos);
             }
         }

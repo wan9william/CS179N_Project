@@ -11,42 +11,68 @@ public class SpawnEntry
 
 public class EnemySpawner : MonoBehaviour
 {
+    [Header("References")]
     public TileMapVisualizer tileMapVisualizer;
+    public Transform player;
+
+    [Header("Spawn Settings")]
     public SpawnEntry[] enemyTypes;
+    public int spawnPointCount = 10;
     public int enemiesPerSpawn = 2;
     public float spawnOffset = 0.5f;
     public float triggerRadius = 7f;
     public float spawnInterval = 3f;
+    public float minDistanceFromPlayer = 6f;
+    public float minDistanceBetweenSpawners = 5f;
 
-    private Transform player;
     private List<Vector3> spawnPositions = new List<Vector3>();
     private Dictionary<Vector3, Coroutine> activeSpawns = new Dictionary<Vector3, Coroutine>();
 
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player")?.transform;
-
-        if (player == null || tileMapVisualizer == null || enemyTypes.Length == 0)
+        if (tileMapVisualizer == null || player == null || enemyTypes.Length == 0)
         {
-            Debug.LogError("[EnemySpawner] Missing required references.");
+            Debug.LogError("[EnemySpawner] Missing references.");
             return;
         }
 
-        List<Vector2Int> floorPositions = tileMapVisualizer.GetFloorWorldPositions();
-        if (floorPositions.Count == 0)
+        List<Vector2Int> floorTiles = tileMapVisualizer.GetFloorWorldPositions();
+
+        int attempts = 0;
+        while (spawnPositions.Count < spawnPointCount && attempts < 1000)
         {
-            Debug.LogWarning("[EnemySpawner] No floor tiles found. Spawning aborted.");
-            return;
+            attempts++;
+            Vector2Int tile = floorTiles[Random.Range(0, floorTiles.Count)];
+            Vector3 spawnPos = new Vector3(tile.x + spawnOffset, tile.y + spawnOffset, 0f);
+
+            bool tooClose = false;
+
+            // Don't place near player
+            if (Vector3.Distance(spawnPos, player.position) < minDistanceFromPlayer)
+            {
+                tooClose = true;
+            }
+
+            // Don't place near other spawn points
+            if (!tooClose)
+            {
+                foreach (var existing in spawnPositions)
+                {
+                    if (Vector3.Distance(spawnPos, existing) < minDistanceBetweenSpawners)
+                    {
+                        tooClose = true;
+                        break;
+                    }
+                }
+            }
+
+            if (!tooClose)
+            {
+                spawnPositions.Add(spawnPos);
+            }
         }
 
-        for (int i = 0; i < 10; i++) // Set number of spawn points
-        {
-            Vector2Int tile = floorPositions[Random.Range(0, floorPositions.Count)];
-            Vector3 spawnPos = new Vector3(tile.x + spawnOffset, tile.y + spawnOffset, 0);
-            spawnPositions.Add(spawnPos);
-        }
-
-        Debug.Log($"[EnemySpawner] Prepared {spawnPositions.Count} spawn positions.");
+        Debug.Log($"[EnemySpawner] Placed {spawnPositions.Count} spawn points after {attempts} attempts.");
     }
 
     void Update()
@@ -74,7 +100,7 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 
-    IEnumerator SpawnEnemiesAtPoint(Vector3 spawnPoint)
+    IEnumerator SpawnEnemiesAtPoint(Vector3 point)
     {
         while (true)
         {
@@ -83,7 +109,12 @@ public class EnemySpawner : MonoBehaviour
                 var entry = enemyTypes[Random.Range(0, enemyTypes.Length)];
                 if (entry.prefab != null)
                 {
-                    Instantiate(entry.prefab, spawnPoint, Quaternion.identity);
+                    GameObject enemy = Instantiate(entry.prefab, point, Quaternion.identity);
+
+                    // Assign player to AI if needed
+                    EnemyAI ai = enemy.GetComponent<EnemyAI>();
+                    if (ai != null && ai.target == null)
+                        ai.target = player;
                 }
             }
 
