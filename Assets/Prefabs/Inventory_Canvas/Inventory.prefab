@@ -121,7 +121,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6800318670308444437}
+      - m_Target: {fileID: 760980912590106007}
         m_TargetAssemblyTypeName: Terminal, Assembly-CSharp
         m_MethodName: ClickX
         m_Mode: 1
@@ -254,7 +254,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8279540536474665399}
+      - m_Target: {fileID: 760980912590106007}
         m_TargetAssemblyTypeName: Terminal, Assembly-CSharp
         m_MethodName: ClickStart
         m_Mode: 1
@@ -414,10 +414,9 @@ GameObject:
   - component: {fileID: 5279983069294897669}
   - component: {fileID: 8862695997972690087}
   - component: {fileID: 5541685586301958199}
-  - component: {fileID: 8279540536474665399}
   - component: {fileID: 5245745751529523033}
   m_Layer: 5
-  m_Name: Mission_UI
+  m_Name: Start_Mission_UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -430,14 +429,14 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 178916100855336850}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4644472486402062342}
   - {fileID: 4080229086032390978}
-  m_Father: {fileID: 8742075211461726368}
+  m_Father: {fileID: 9119088472425693024}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -505,20 +504,6 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
---- !u!114 &8279540536474665399
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 178916100855336850}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3a372d7e2d0a7cc478c4d101e8d4a408, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  game_event_manager: {fileID: 0}
 --- !u!114 &5245745751529523033
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -748,7 +733,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8279540536474665399}
+      - m_Target: {fileID: 760980912590106007}
         m_TargetAssemblyTypeName: Terminal, Assembly-CSharp
         m_MethodName: ClickX
         m_Mode: 1
@@ -773,7 +758,7 @@ GameObject:
   - component: {fileID: 3122037007308870827}
   - component: {fileID: 316025319934078309}
   m_Layer: 5
-  m_Name: Start_Button
+  m_Name: Extract_Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -881,7 +866,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6800318670308444437}
+      - m_Target: {fileID: 760980912590106007}
         m_TargetAssemblyTypeName: Terminal, Assembly-CSharp
         m_MethodName: ClickExtract
         m_Mode: 1
@@ -1231,10 +1216,9 @@ GameObject:
   - component: {fileID: 438598671935861197}
   - component: {fileID: 6107138088960417835}
   - component: {fileID: 1560114881573753048}
-  - component: {fileID: 6800318670308444437}
   - component: {fileID: 3393158508983920965}
   m_Layer: 5
-  m_Name: Mission_UI
+  m_Name: Extract_Mission_UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1254,7 +1238,7 @@ RectTransform:
   m_Children:
   - {fileID: 1723366073287048553}
   - {fileID: 9037639468944689340}
-  m_Father: {fileID: 8742075211461726368}
+  m_Father: {fileID: 9119088472425693024}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1322,20 +1306,6 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
---- !u!114 &6800318670308444437
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1278056805778640980}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3a372d7e2d0a7cc478c4d101e8d4a408, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  game_event_manager: {fileID: 0}
 --- !u!114 &3393158508983920965
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1840,6 +1810,60 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1 &2047801923615306332
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9119088472425693024}
+  - component: {fileID: 760980912590106007}
+  m_Layer: 5
+  m_Name: UI_Parent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &9119088472425693024
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2047801923615306332}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 6715940371556252436}
+  - {fileID: 6761265207126488850}
+  m_Father: {fileID: 8742075211461726368}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &760980912590106007
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2047801923615306332}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a372d7e2d0a7cc478c4d101e8d4a408, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  game_event_manager: {fileID: 0}
+  Start_Button: {fileID: 0}
+  Extract_Button: {fileID: 0}
 --- !u!1 &2696241453474636972
 GameObject:
   m_ObjectHideFlags: 0
@@ -2252,10 +2276,9 @@ RectTransform:
   - {fileID: 1468045199771560273}
   - {fileID: 854436854294287910}
   - {fileID: 6503757364777134228}
-  - {fileID: 6715940371556252436}
   - {fileID: 5921568241720278498}
-  - {fileID: 6761265207126488850}
   - {fileID: 3067282071939050548}
+  - {fileID: 9119088472425693024}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}

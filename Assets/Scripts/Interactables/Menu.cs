@@ -5,10 +5,12 @@ public class Menu : Interactable
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    [SerializeField] private Canvas menu;
+    [SerializeField] private Terminal terminal;
+    [SerializeField] Terminal.UI_Elements ui_element;
     protected override void onInteract(ref Player player)
     {
-        menu.gameObject.SetActive(true);
+        if(!terminal) terminal = GameObject.FindWithTag("UI_Manager").GetComponent<Terminal>();
+        terminal.ActivateUI(ui_element);
         player.setPaused(true);
     }
 

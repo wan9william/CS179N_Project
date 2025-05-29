@@ -36,10 +36,16 @@ public class Game_Event_Manager : MonoBehaviour
 
 
         //Prevents the following objects from being destroyed across scenes.
+        if (GameObject.FindGameObjectsWithTag("Player").Length > 1) Destroy(player.gameObject);
+        if (GameObject.FindGameObjectsWithTag("UI_Manager").Length > 1) Destroy(UI.gameObject);
+        if (GameObject.FindGameObjectsWithTag("Object_Manager").Length > 1) Destroy(Object_Manager.gameObject);
+        if (GameObject.FindGameObjectsWithTag("Game_Manager").Length > 1) Destroy(gameObject);
+
+        //Absolutely terrible code devised by yours truly. There are million ways to optimize this or even make this more readable.
         DontDestroyOnLoad(gameObject);
-        DontDestroyOnLoad(player.gameObject);
-        DontDestroyOnLoad(Object_Manager);
-        DontDestroyOnLoad(UI);
+        if(player) DontDestroyOnLoad(player.gameObject);
+        if(Object_Manager) DontDestroyOnLoad(Object_Manager);
+        if(UI) DontDestroyOnLoad(UI);
     }
 
     // Update is called once per frame
@@ -56,6 +62,9 @@ public class Game_Event_Manager : MonoBehaviour
                 {
                     ScreenFadeT = 1f;
                     state = GM_STATES.INITIALIZE;
+
+                    //Temporary
+                    player.gameObject.transform.position = GameObject.FindWithTag("Ship").transform.position;
                 }
                 break;
             case GM_STATES.INITIALIZE:
