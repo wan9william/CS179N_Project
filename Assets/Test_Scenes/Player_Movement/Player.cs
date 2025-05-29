@@ -38,6 +38,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float horizontal_multiplier = 1.0f;
     [SerializeField] private float vertical_multiplier = 1.0f;
     [SerializeField] private float dampening;
+    [SerializeField] private bool paused;
 
     //Sprinting Parameters
     [SerializeField] private float sprint_amount = 100f;
@@ -161,13 +162,13 @@ void Awake()
 
                 //This will be the area where the player is in between actions. Some examples are between bullet shots, Not interacting with anything, etc.
 
+                if (paused) break;
 
 
+                //This should be separated by state actions (what to do while in the state) and state transitions(which state to move to)
 
-                    //This should be separated by state actions (what to do while in the state) and state transitions(which state to move to)
 
-
-                 if (!Input.GetKey(KeyCode.LeftShift)) { 
+                if (!Input.GetKey(KeyCode.LeftShift)) { 
                     sprint_amount += drain_amount * Time.deltaTime;
                     sprint_amount = Mathf.Clamp(sprint_amount, 0, 100);
                  }
@@ -398,8 +399,10 @@ void Awake()
         {
             case PLAYER_MOVEMENT_STATES.IDLE:
                 animator.SetBool("Walk", false);
+                if (paused) break;
+
                 bool moved = Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D);
-                if (moved && health > 0) movement_state = PLAYER_MOVEMENT_STATES.WALK;
+                if (moved && health > 0 && !paused) movement_state = PLAYER_MOVEMENT_STATES.WALK;
 
 
                 vertical_multiplier = Mathf.Abs( vertical_multiplier ) < eps ? 0 : Mathf.Lerp(vertical_multiplier, 0.0f, Time.deltaTime*dampening);
@@ -627,6 +630,8 @@ void Awake()
     public void SetInteract(GameObject _go) { _interactable = _go; }
 
     public Inventory getInventory() { return inventory; }
+
+    public void setPaused(bool pause) { paused = pause; }
 
     int GetNumKey()
     {

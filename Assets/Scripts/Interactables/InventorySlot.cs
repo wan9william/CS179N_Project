@@ -252,7 +252,7 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IDropHandler
             storedAmmo = -1;  // Reset if non-weapon
         }
             UpdateQuantityDisplay();
-        }
+    }
 
     public void UpdateItem() {
 
