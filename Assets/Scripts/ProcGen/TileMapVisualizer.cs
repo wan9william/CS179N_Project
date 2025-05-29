@@ -14,8 +14,7 @@ public class TileMapVisualizer : MonoBehaviour
                                       wallCornerTopLeft, wallCornerTopRight, wallCornerBottomLeft, wallCornerBottomRight,
                                       wallEdgeUp, wallEdgeDown, wallEdgeLeft, wallEdgeRight,
                                       wallTopLeft, wallTopRight, wallBottomLeft, wallBottomRight, 
-                                      wallIntersect, wallFront,
-                                      wallNone;
+                                      wallIntersect, wallFront;
     public void PaintFloorTiles(IEnumerable<Vector2Int> floorPositions)
     {
         PaintTiles(floorPositions, floorTilemap, floorTile);
@@ -138,10 +137,6 @@ public class TileMapVisualizer : MonoBehaviour
         {
             tile = wallTRight;
         }
-        else if (WallTypesHelper.wallFull.Contains(walltypeAsInt))
-        {
-            tile = wallIntersect;
-        }
         else if (WallTypesHelper.wallInnerCornerDownLeft.Contains(typeAsInt))
         {
             tile = wallTopRight;
@@ -166,6 +161,10 @@ public class TileMapVisualizer : MonoBehaviour
         {
             tile = wallTopRight;
         }
+        else if (WallTypesHelper.wallFull.Contains(walltypeAsInt))
+        {
+            tile = wallIntersect;
+        }
         else if (WallTypesHelper.wallFullEightDirections.Contains(typeAsInt))
         {
             tile = wallFull;
@@ -181,10 +180,6 @@ public class TileMapVisualizer : MonoBehaviour
             PaintSingleTile(wallTilemap, tile, position);
             PaintSingleTile(wallFrontTilemap, wallFront, position + down);
         }
-    }
 
-    internal void PaintEmptyWall(Vector2Int position)
-    {
-        PaintSingleTile(wallTilemap, wallNone, position);
     }
 }

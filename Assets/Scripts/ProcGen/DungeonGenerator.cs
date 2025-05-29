@@ -21,21 +21,13 @@ public class DungeonGenerator : AbstractDungeonGenerator
         SpawnItems(floorPositions);
     }
 
-    protected void SpawnItems(HashSet<Vector2Int> floorPositions)
+    protected void SpawnItems(HashSet<Vector2Int> positions)
     {
-        foreach (var position in floorPositions)
+        foreach (var position in positions)
         {
-            if (spawnItems && CheckEightDirections(position, floorPositions) && CheckPlayerSpawn(position)) itemManager.InstantiateLoot(new Vector3(position.x, position.y, 0), itemManager.transform);
+            if (spawnItems && CheckEightDirections(position, positions)) itemManager.InstantiateLoot(new Vector3(position.x, position.y, 0), itemManager.transform);
         }
     }
-
-    protected bool CheckPlayerSpawn(Vector2Int position)
-    {
-        
-        if ((Mathf.Abs(position.x) <= playerSpawnRange && Mathf.Abs(position.y) <= playerSpawnRange) || (Mathf.Abs(position.x) >= maxLootRange && Mathf.Abs(position.y) >= maxLootRange)) return false;
-        else return true;
-    }
-
     protected bool CheckEightDirections(Vector2Int position, IEnumerable<Vector2Int> floorPositions)
     {
         foreach (Vector2Int direction in Direction2D.eightDirectionsList)
