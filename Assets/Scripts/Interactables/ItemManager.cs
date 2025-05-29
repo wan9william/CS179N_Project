@@ -6,6 +6,8 @@ public class ItemManager : MonoBehaviour
     [SerializeField] public List<Item_ScriptableObj> allItemsList = new List<Item_ScriptableObj>();
     [SerializeField][Range(0f, 1f)] public float itemChancePerTile = 1f;
     private List<GameObject> items = new List<GameObject>();
+    [SerializeField] protected float minLootRange = 4f;
+    [SerializeField] protected float maxLootRange = 50f;
     [SerializeField] private Vector2 offset = Vector2.zero;
     public void InstantiateLoot(Vector3 spawnPosition, Transform parent)
     {
