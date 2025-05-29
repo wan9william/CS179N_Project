@@ -60,5 +60,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: fff1ab4c48bde8d4cbfc8a0219f8ada1, type: 2}
   - {fileID: 11400000, guid: f40b3b1526f2c3842ab693fea6e46211, type: 2}
   - {fileID: 11400000, guid: 6fef394b252f8e34698a83e6edc278eb, type: 2}
-  itemChancePerTile: 0.1
+  itemChancePerTile: 1
+  minLootRange: 4
+  maxLootRange: 50
   offset: {x: 0.33, y: 0.33}

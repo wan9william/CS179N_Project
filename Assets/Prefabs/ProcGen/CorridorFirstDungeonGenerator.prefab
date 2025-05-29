@@ -46,11 +46,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tileMapVisualizer: {fileID: 0}
   startPosition: {x: 0, y: 0}
+  itemManager: {fileID: 0}
+  spawnItems: 0
+  playerSpawnRange: 4
+  maxLootRange: 50
   randomWalkParameters: {fileID: 11400000, guid: 9c8d3c4f53d983842967d9ad767d54a6, type: 2}
-  corridorLength: 20
+  corridorLength: 15
   corridorCount: 10
-  roomPercent: 0.5
+  roomPercent: 0.8
   roomPrefab: {fileID: 5921984419287693527, guid: ac57cd9eec934bf40b26323b5895a7b9, type: 3}
-  minimumRoomLength: 6
-  maximumRoomLength: 17
+  minimumRoomLength: 10
+  maximumRoomLength: 15
+  corridorSize: 3
   randomWalk: 0

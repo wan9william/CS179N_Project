@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 710831374833254450}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.234602, y: 0.84114873, z: 5.2791634}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -46,8 +46,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   floorTilemap: {fileID: 0}
   wallTilemap: {fileID: 0}
-  floorTile: {fileID: 11400000, guid: 931fa0f0ac587b8489815e0480859906, type: 2}
-  wallTop: {fileID: 11400000, guid: 0cafe833aa50ddd449c0b6a5b20386af, type: 2}
+  wallFrontTilemap: {fileID: 0}
+  floorTile: {fileID: 11400000, guid: 3db096fdf4fd6a64db199dc3d3c6a76c, type: 2}
+  wallVerti: {fileID: 11400000, guid: 388a13fac0333e440855c17d7816b48e, type: 2}
+  wallHori: {fileID: 11400000, guid: affd9eb3938b58044874a1dce5e54021, type: 2}
+  wallFull: {fileID: 11400000, guid: 866173b20c8f9f742a6ea64c36759370, type: 2}
+  wallTUp: {fileID: 11400000, guid: cb7924dccf7eae04395cae6f16e0b493, type: 2}
+  wallTDown: {fileID: 11400000, guid: 227c1194cd1fa59479d2e1859a3f7f1f, type: 2}
+  wallTLeft: {fileID: 11400000, guid: 15c1784db4eecaf41b1601539e79b1db, type: 2}
+  wallTRight: {fileID: 11400000, guid: 2a5faabc10c3de9418cdd8e8e54cade1, type: 2}
+  wallCornerTopLeft: {fileID: 11400000, guid: 7f8a21b9413b86745a404f6daa592a60, type: 2}
+  wallCornerTopRight: {fileID: 11400000, guid: 0000a5ce97d2d6349ba01bcc67e5d525, type: 2}
+  wallCornerBottomLeft: {fileID: 11400000, guid: 810d7e2647c03e14ea170966530657be, type: 2}
+  wallCornerBottomRight: {fileID: 11400000, guid: fff1f06af7288c04ab0793d53daee144, type: 2}
+  wallEdgeUp: {fileID: 11400000, guid: a81c928461d49ad4ca881cadf66419db, type: 2}
+  wallEdgeDown: {fileID: 11400000, guid: 884987d492e0f7f44802ab0bbcd552f3, type: 2}
+  wallEdgeLeft: {fileID: 11400000, guid: e50050c8403217448a9e74aefa229aa3, type: 2}
+  wallEdgeRight: {fileID: 11400000, guid: 33a49fb8cad11f547a86e801f2e24422, type: 2}
+  wallTopLeft: {fileID: 11400000, guid: 7f8a21b9413b86745a404f6daa592a60, type: 2}
+  wallTopRight: {fileID: 11400000, guid: 7c1fbf4e59add0c45a6f42887b0dfb76, type: 2}
+  wallBottomLeft: {fileID: 11400000, guid: 72ac972d34131924db8fc3ad9770a14e, type: 2}
+  wallBottomRight: {fileID: 11400000, guid: 2354ec8966230604cad2b9411e3c4f59, type: 2}
+  wallIntersect: {fileID: 11400000, guid: 4932db0617de76743b416e870a8ab976, type: 2}
+  wallFront: {fileID: 11400000, guid: 6c19dc52a8549794c95bdc37db776d47, type: 2}
+  wallNone: {fileID: 11400000, guid: 4932db0617de76743b416e870a8ab976, type: 2}
 --- !u!1 &3226536834590129788
 GameObject:
   m_ObjectHideFlags: 0
@@ -95,4 +117,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tileMapVisualizer: {fileID: 106927420267676641}
   startPosition: {x: 0, y: 0}
-  randomWalkParameters: {fileID: 11400000, guid: 9c8d3c4f53d983842967d9ad767d54a6, type: 2}
+  itemManager: {fileID: 0}
+  spawnItems: 1
+  playerSpawnRange: 4
+  maxLootRange: 50
+  randomWalkParameters: {fileID: 11400000, guid: 924b484406f3a784694a5fbdd46d59e0, type: 2}
