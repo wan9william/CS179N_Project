@@ -6,7 +6,7 @@ public abstract class Interactable : MonoBehaviour
     [SerializeField] private Material _glowMat;
     [SerializeField] protected GameObject _explosion;
     [SerializeField] private float health = 10;
-    [SerializeField] private Animator itemAnimator;
+    [SerializeField] protected Animator itemAnimator;
 
 
     //FOR TESTING PURPOSES
