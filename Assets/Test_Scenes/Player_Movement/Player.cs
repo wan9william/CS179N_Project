@@ -358,6 +358,7 @@ void Awake()
                 
                 if (_interactable)
                 {
+                    Debug.Log("Interact door!");
                     _interactable.GetComponent<Interactable>().Destroy(ref player);
                 }
                 //_interactable = null;

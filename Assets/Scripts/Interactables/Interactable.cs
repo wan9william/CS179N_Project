@@ -6,7 +6,7 @@ public abstract class Interactable : MonoBehaviour
     [SerializeField] private Material _glowMat;
     [SerializeField] protected GameObject _explosion;
     [SerializeField] private float health = 10;
-    [SerializeField] private Animator itemAnimator;
+    [SerializeField] protected Animator itemAnimator;
 
 
     //FOR TESTING PURPOSES
@@ -28,7 +28,10 @@ public abstract class Interactable : MonoBehaviour
         Initialize();
     }
 
-    public void Glow() { transform.GetComponent<Renderer>().material = _glowMat; }
+    public void Glow() { 
+        Renderer _rend = gameObject.GetComponent<Renderer>();
+        if(_rend) _rend.material = _glowMat; 
+    }
 
     protected abstract void Initialize();
 
@@ -60,7 +63,10 @@ public abstract class Interactable : MonoBehaviour
         ExplosionVFX();
     }
 
-    public void NoGlow() { transform.GetComponent<Renderer>().material = _mat; }
+    public void NoGlow() {
+        Renderer _rend = gameObject.GetComponent<Renderer>();
+        if (_rend) _rend.material = _mat;
+     }
 
     protected abstract void onInteract(ref Player player);
 
