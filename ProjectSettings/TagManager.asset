@@ -7,6 +7,8 @@ TagManager:
   - Resource
   - Interactable
   - Object_Manager
+  - LandingPad
+  - Ship
   layers:
   - Default
   - TransparentFX
@@ -17,8 +19,6 @@ TagManager:
   - Obstacle
   - Item_RB
   - Item
-  - 
-  - 
   - 
   - 
   - 
