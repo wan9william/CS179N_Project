@@ -5,7 +5,7 @@ public abstract class Interactable : MonoBehaviour
     [SerializeField] private Material _mat;
     [SerializeField] private Material _glowMat;
     [SerializeField] protected GameObject _explosion;
-    [SerializeField] private float health = 10;
+    [SerializeField] protected float health = 10;
     [SerializeField] protected Animator itemAnimator;
 
 
@@ -51,9 +51,10 @@ public abstract class Interactable : MonoBehaviour
 
         //This could be done through a child class of an abstract resource class
     }
-    public void Hit(float damage) {
+    public virtual bool Hit(float damage) {
         itemAnimator.SetTrigger("Hit");
         health -= damage;
+        return true;
     }
 
     private void CheckHealth() { if (health < 0) SelfDestruct(); }
