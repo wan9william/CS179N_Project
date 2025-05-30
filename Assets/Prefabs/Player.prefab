@@ -217,8 +217,8 @@ Camera:
   m_GameObject: {fileID: 840971275692770589}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -243,7 +243,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 2.5
+  orthographic size: 3
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -932,11 +932,11 @@ GameObject:
   - component: {fileID: 4690868738214975529}
   - component: {fileID: 4576711895773352515}
   - component: {fileID: 716302228250151059}
-  - component: {fileID: 8715545555478229462}
   - component: {fileID: 8499620652966155918}
   - component: {fileID: 5619520729250913256}
   - component: {fileID: 226217057230218222}
   - component: {fileID: 3725884996579917358}
+  - component: {fileID: 3247003656224126665}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -1024,7 +1024,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
+  m_SpriteSortPoint: 1
 --- !u!114 &716302228250151059
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1043,70 +1043,30 @@ MonoBehaviour:
   canvas: {fileID: 0}
   selected_slot: 0
   flashlightPrefab: {fileID: 0}
+  health: 0
   movement_speed: 3
   horizontal_multiplier: 1
   vertical_multiplier: 1
   dampening: 15
   sprint_amount: 100
   drain_amount: 25
+  dropForce: 0
+  _rb: {fileID: 0}
   _equipped: {fileID: 0}
   _hand: {fileID: 1983484274515771791}
   _interactable: {fileID: 0}
+  _healthbar: {fileID: 0}
   _camera: {fileID: 8208601966379429298}
   find_interact: 1
   handOffset: {x: 0, y: -0.15, z: 0}
   handRadius: 0.3
-  handFlip: 0.13
-  weaponLayerFront: 5
-  weaponLayerBack: 1
   handLayerFront: 6
   handLayerBack: 2
---- !u!61 &8715545555478229462
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5444074201541086463}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: 0, y: -0.25}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.9411765, y: 1}
-    newSize: {x: 0.9411765, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Size: {x: 1, y: 0.5}
-  m_EdgeRadius: 0
+  trauma: 0
+  translational_shake_max: 0.05
+  rotational_shake_max: 0.5
+  releaseMouse: 0
+  money: 0
 --- !u!50 &8499620652966155918
 Rigidbody2D:
   serializedVersion: 5
@@ -1191,6 +1151,42 @@ SortingGroup:
   m_SortingLayer: 2
   m_SortingOrder: 3
   m_SortAtRoot: 0
+--- !u!58 &3247003656224126665
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5444074201541086463}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: -0.2}
+  m_Radius: 0.3
 --- !u!1 &5486966124432007655
 GameObject:
   m_ObjectHideFlags: 0
@@ -1816,7 +1812,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6277134349373981363, guid: effe103ed707eb241b8e076a062089cd, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6708733958729938871, guid: effe103ed707eb241b8e076a062089cd, type: 3}
       propertyPath: m_Size.x
