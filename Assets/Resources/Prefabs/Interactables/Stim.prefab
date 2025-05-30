@@ -78,7 +78,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -867108587
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 3
   m_Sprite: {fileID: 9010000181375383852, guid: 2a4861251bfa03d4fbfe9d08b7ce92e8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -105,11 +105,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _mat: {fileID: 0}
   _glowMat: {fileID: 0}
-  _explosion: {fileID: 0}
+  _explosion: {fileID: 7580157664908573505, guid: 2f80de9f2fade014fb43ec9a6f8d2f54, type: 3}
   health: 10
   itemAnimator: {fileID: -663850559428982485}
   damage: 0
   _resource: {fileID: 11400000, guid: 6fef394b252f8e34698a83e6edc278eb, type: 2}
+  quantity: 0
+  natural: 1
 --- !u!61 &7417185729872160839
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -144,17 +146,17 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.06, y: 0.15}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.5625, y: 0.875}
+    pivot: {x: 0.7164476, y: 0.16347885}
+    oldSize: {x: 0.28125, y: 0.4375}
     newSize: {x: 0.5625, y: 0.875}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.96875, y: 0.84375}
+  m_Size: {x: 0.17, y: 0.4}
   m_EdgeRadius: 0
 --- !u!50 &9211076209735115108
 Rigidbody2D:

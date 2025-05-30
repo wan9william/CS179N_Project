@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6483712278813850252}
   - component: {fileID: 6294304488256117073}
   - component: {fileID: 6160284989667227510}
+  - component: {fileID: 8866650092230151602}
   m_Layer: 0
   m_Name: Shotgun_Item
   m_TagString: Interactable
@@ -103,7 +104,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _mat: {fileID: 0}
   _glowMat: {fileID: 0}
-  _explosion: {fileID: 0}
+  _explosion: {fileID: 7580157664908573505, guid: 2f80de9f2fade014fb43ec9a6f8d2f54, type: 3}
   health: 10
   itemAnimator: {fileID: 0}
   damage: 0
@@ -144,7 +145,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.02, y: 0.03}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.47513232, y: 0.3732509}
@@ -154,5 +155,27 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.96875, y: 0.84375}
+  m_Size: {x: 1, y: 0.3}
   m_EdgeRadius: 0
+--- !u!95 &8866650092230151602
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3656777680845249198}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 85f1066851a2b8949979ca625244753a, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
