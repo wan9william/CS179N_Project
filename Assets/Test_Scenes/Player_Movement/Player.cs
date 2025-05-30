@@ -1,6 +1,7 @@
 using Unity.VisualScripting;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.InputSystem.Switch;
 using UnityEngine.UI;
 
 
@@ -78,6 +79,8 @@ public class Player : MonoBehaviour
     //Equipped Tool
     private Weapon _weaponScript;
     private SpriteRenderer _weaponSR;
+    private SpriteRenderer _muzzleFlashSR;
+    [SerializeField] private int muzzleFlashOffset = 0;
     [SerializeField] private bool releaseMouse = false;
 
     //Currency
@@ -603,7 +606,8 @@ void Awake()
         if (!_equipped) return;
         _equipped.transform.up = dir;
 
-        if (!_weaponSR&&_equipped) _weaponSR = _equipped.GetComponentInChildren<SpriteRenderer>();
+        if (!_weaponSR && _equipped)
+            _weaponSR = _equipped.GetComponentInChildren<SpriteRenderer>(); 
 
         if (_weaponSR&&_weaponScript)
         {

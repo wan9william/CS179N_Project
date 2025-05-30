@@ -7,6 +7,7 @@ public abstract class AbstractDungeonGenerator : MonoBehaviour
     [SerializeField] protected Vector2Int startPosition = Vector2Int.zero;
     [SerializeField] protected ItemManager itemManager = null;
     [SerializeField] protected bool spawnItems = true;
+    [SerializeField] protected int minLootRange, maxLootRange;
 
     public void generateDungeon()
     {
