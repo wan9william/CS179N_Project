@@ -1123,6 +1123,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8275736953828758251, guid: 873d4320af3391a44bc3c5ebb9a8248f, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 231373805}
+    - target: {fileID: 8275736953828758251, guid: 873d4320af3391a44bc3c5ebb9a8248f, type: 3}
       propertyPath: spawnOnce
       value: 1
       objectReference: {fileID: 0}
@@ -1142,6 +1146,26 @@ PrefabInstance:
       propertyPath: tileMapVisualizer
       value: 
       objectReference: {fileID: 163898591}
+    - target: {fileID: 8275736953828758251, guid: 873d4320af3391a44bc3c5ebb9a8248f, type: 3}
+      propertyPath: randomizeStartState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8275736953828758251, guid: 873d4320af3391a44bc3c5ebb9a8248f, type: 3}
+      propertyPath: wallLayerMask.m_Bits
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8275736953828758251, guid: 873d4320af3391a44bc3c5ebb9a8248f, type: 3}
+      propertyPath: enemyTypes.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8275736953828758251, guid: 873d4320af3391a44bc3c5ebb9a8248f, type: 3}
+      propertyPath: enemyTypes.Array.data[2].type
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8275736953828758251, guid: 873d4320af3391a44bc3c5ebb9a8248f, type: 3}
+      propertyPath: enemyTypes.Array.data[2].prefab
+      value: 
+      objectReference: {fileID: 915854284506895110, guid: 3115f2d7d5c2504479ce2531bcf278af, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 4834978403138804823, guid: 873d4320af3391a44bc3c5ebb9a8248f, type: 3}
@@ -7204,6 +7228,10 @@ PrefabInstance:
     - target: {fileID: 2712648955458591996, guid: b9b1c110b8e7b1f4f8193a79fa3ada41, type: 3}
       propertyPath: m_Name
       value: TurretSpawn
+      objectReference: {fileID: 0}
+    - target: {fileID: 2712648955458591996, guid: b9b1c110b8e7b1f4f8193a79fa3ada41, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6212107472845298639, guid: b9b1c110b8e7b1f4f8193a79fa3ada41, type: 3}
       propertyPath: m_LocalPosition.x
