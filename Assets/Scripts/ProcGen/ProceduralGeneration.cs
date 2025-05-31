@@ -22,9 +22,37 @@ public static class ProceduralGeneration
     {
         HashSet<Vector2Int> path = new HashSet<Vector2Int>();
         path.Add(startPosition);
-        for (int x = -length / 2; x < length / 2; x++)
+        for (int x = -length / 2; x < (int)((length +1) / 2); x++)
         {
-            for (int y = -width / 2; y < width / 2; y++)
+            for (int y = -width / 2; y < (int)((width + 1) / 2); y++)
+            {
+                var newPosition = startPosition + new Vector2Int(x, y);
+                path.Add(newPosition);
+            }
+        }
+        return path;
+    }
+    public static HashSet<Vector2Int> SimpleRectangleBL(Vector2Int startPosition, int width, int length)
+    {
+        HashSet<Vector2Int> path = new HashSet<Vector2Int>();
+        path.Add(startPosition);
+        for (int x = 0; x < length; x++)
+        {
+            for (int y = 0; y < width; y++)
+            {
+                var newPosition = startPosition + new Vector2Int(x, y);
+                path.Add(newPosition);
+            }
+        }
+        return path;
+    }
+    public static HashSet<Vector2Int> SimpleRectangleTL(Vector2Int startPosition, int width, int length)
+    {
+        HashSet<Vector2Int> path = new HashSet<Vector2Int>();
+        path.Add(startPosition);
+        for (int x = length; x >= 0; x--)
+        {
+            for (int y = width; y >= 0 ; y--)
             {
                 var newPosition = startPosition + new Vector2Int(x, y);
                 path.Add(newPosition);
@@ -67,7 +95,7 @@ public static class ProceduralGeneration
                     {
                         SplitVertically(minWidth, roomsQueue, room);
                     }
-                    else if (room.size.x >= minWidth && room.size.y >= minHeight)
+                    else 
                     {
                         roomsList.Add(room);
                     }
@@ -82,7 +110,7 @@ public static class ProceduralGeneration
                     {
                         SplitHorizontally(minHeight, roomsQueue, room);
                     }
-                    else if (room.size.x >= minWidth && room.size.y >= minHeight)
+                    else
                     {
                         roomsList.Add(room);
                     }

@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using Random = UnityEngine.Random;
 
-public class DungeonGenerator : AbstractDungeonGenerator
+public class JapanDungeonGenerator : JapanAbstractDungeonGenerator
 {
 
     [SerializeField] protected SimpleRandomWalkData randomWalkParameters;
@@ -14,10 +14,11 @@ public class DungeonGenerator : AbstractDungeonGenerator
     protected override void RunProceduralGeneration()
     {
         HashSet<Vector2Int> floorPositions = RunRandomWalk(randomWalkParameters, startPosition);
+        HashSet<Vector2Int> roadPositions = new HashSet<Vector2Int>();
         itemManager.Clear();
         tileMapVisualizer.Clear();
         tileMapVisualizer.PaintFloorTiles(floorPositions);
-        WallGenerator.CreateWalls(floorPositions, tileMapVisualizer);
+        JapanWallGenerator.CreateWalls(floorPositions, roadPositions, tileMapVisualizer);
         SpawnItems(floorPositions);
     }
 
@@ -68,8 +69,7 @@ public class DungeonGenerator : AbstractDungeonGenerator
         floorPositions.UnionWith(path);
         return floorPositions;
     }
-
-    protected HashSet<Vector2Int> RunRectangleWalkTL(Vector2Int position, int width, int length)
+    protected HashSet<Vector2Int> RunRectangleWalkBL(Vector2Int position, int width, int length)
     {
         var currentPositon = position;
         HashSet<Vector2Int> floorPositions = new HashSet<Vector2Int>();
@@ -77,5 +77,12 @@ public class DungeonGenerator : AbstractDungeonGenerator
         floorPositions.UnionWith(path);
         return floorPositions;
     }
-
+    protected HashSet<Vector2Int> RunRectangleWalkTL(Vector2Int position, int width, int length)
+    {
+        var currentPositon = position;
+        HashSet<Vector2Int> floorPositions = new HashSet<Vector2Int>();
+        var path = ProceduralGeneration.SimpleRectangleTL(currentPositon, width, length);
+        floorPositions.UnionWith(path);
+        return floorPositions;
+    }
 }

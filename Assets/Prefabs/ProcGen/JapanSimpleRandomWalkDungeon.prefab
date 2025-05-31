@@ -1,0 +1,212 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &653831043852793335
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 284829534102645643}
+  - component: {fileID: 6830184155295886894}
+  m_Layer: 0
+  m_Name: JapanTilemapVisualizer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &284829534102645643
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 653831043852793335}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4189860059966822411}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6830184155295886894
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 653831043852793335}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb9ef02b4a34419468b53681ef51344d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  floorTilemap: {fileID: 0}
+  roadTilemap: {fileID: 0}
+  wallTilemap: {fileID: 0}
+  wallFrontTilemap: {fileID: 0}
+  fencesTilemap: {fileID: 0}
+  floorTile: {fileID: 11400000, guid: b4c2922dd8e6d99489ecdb403cd44c69, type: 2}
+  roadTile: {fileID: 11400000, guid: 931fa0f0ac587b8489815e0480859906, type: 2}
+  roadVerti: {fileID: 11400000, guid: 3f339dd90b50c9245954847f34813d43, type: 2}
+  roadVerti2: {fileID: 11400000, guid: c6e02d2d033061a4896f6966b7b5ac7c, type: 2}
+  roadHori: {fileID: 11400000, guid: 3c9679d0b7400024f9511575c5b7c67d, type: 2}
+  roadHori2: {fileID: 11400000, guid: e3341378ed145464380d1c1a4dbb9231, type: 2}
+  roadMidLeft: {fileID: 11400000, guid: 7aace38252c33524b83eaa12173d435f, type: 2}
+  roadMidRight: {fileID: 11400000, guid: b217be8deadbeeb4da197ee313d8a24e, type: 2}
+  roadMidTop: {fileID: 11400000, guid: a000165ce4268434da262e8e45a6ebf7, type: 2}
+  roadMidBottom: {fileID: 11400000, guid: dd5e716e205f0754a9e1b207f8e9353a, type: 2}
+  roadCornerTopLeft: {fileID: 11400000, guid: 9564c0acb54af3a4aae53102ce1bf867, type: 2}
+  roadCornerTopRight: {fileID: 11400000, guid: 6e1595f3a1fde544492e4704b944a99e, type: 2}
+  roadCornerBottomLeft: {fileID: 11400000, guid: dc66aa5414020d347b5c312d0cb06558, type: 2}
+  roadCornerBottomRight: {fileID: 11400000, guid: c56e0ff322cd5f841ace2a5764b5606e, type: 2}
+  roadInnerCornerTopLeft: {fileID: 11400000, guid: 2b6e605119b84ff4eb469b09a5792146, type: 2}
+  roadInnerCornerTopRight: {fileID: 11400000, guid: 1dbe1c40b6426984cb45cf9680d73959, type: 2}
+  roadInnerCornerBottomLeft: {fileID: 11400000, guid: 04ba1e2415b1cb4418dd79c143f44c3e, type: 2}
+  roadInnerCornerBottomRight: {fileID: 11400000, guid: 9a26d4d628cceaf47addea8ab7c9e2da, type: 2}
+  roadIntersect: {fileID: 11400000, guid: eb0439018d653484aaa8c10ea8c73f52, type: 2}
+  roadStripeVert: {fileID: 11400000, guid: fa1f52fd416ea01418e794e29eea1d23, type: 2}
+  roadStripeHori: {fileID: 11400000, guid: 6aeac6e38a8ecb547b15e541aad23c99, type: 2}
+  bushTile: {fileID: 11400000, guid: b2ff2a07041268e41b4036af25d20e85, type: 2}
+  grassTile: {fileID: 11400000, guid: 5e0bc66720869da44a3ee128b7ecd968, type: 2}
+  sideMidLeft: {fileID: 11400000, guid: 7901162bdcd21c645a2b776021dee6cb, type: 2}
+  sideMidRight: {fileID: 11400000, guid: 4ea334d3c12e9c64e878dc37b9b3fa99, type: 2}
+  sideMidTop: {fileID: 11400000, guid: bdd06b18b210393448be4ba7ce836b76, type: 2}
+  sideMidBottom: {fileID: 11400000, guid: 37b3ff1d9786d0c46bc412e7cc524040, type: 2}
+  sideCornerTopLeft: {fileID: 11400000, guid: 9185e9f61c5743247acddba04c1da773, type: 2}
+  sideCornerTopRight: {fileID: 11400000, guid: 92fceb8c12d19b342bb2e93d84d7da4d, type: 2}
+  sideCornerBottomLeft: {fileID: 11400000, guid: 5128f5773edf43f4c90f810e702324d9, type: 2}
+  sideCornerBottomRight: {fileID: 11400000, guid: 5f06de8f2178d8043a5eeadd7e894da2, type: 2}
+  sideInnerCornerTopLeft: {fileID: 11400000, guid: 1caf911b85612bc4fbdc8d8342b14d14, type: 2}
+  sideInnerCornerTopRight: {fileID: 11400000, guid: 47c66752741d52549b54eb0ab34d3236, type: 2}
+  sideInnerCornerBottomLeft: {fileID: 11400000, guid: 7592d85f4ef838046987d17ff24576b2, type: 2}
+  sideInnerCornerBottomRight: {fileID: 11400000, guid: c94cad8263e84f647b9ab0cb7dc6f567, type: 2}
+  sideRampUp: {fileID: 11400000, guid: 8cfc5ec9e272e834dac23e9026f21f0f, type: 2}
+  sideRampRight: {fileID: 11400000, guid: 22b689c21b0ac394dbca6fa2c463539d, type: 2}
+  sideRampDown: {fileID: 11400000, guid: 9d05893ef9c3fae4b80a8fbb67635265, type: 2}
+  sideRampLeft: {fileID: 11400000, guid: 8e693a10658f4de4991588d03f4c0eb4, type: 2}
+  wallVerti: {fileID: 11400000, guid: 2275d9317b1e5314c96eea8375ae914d, type: 2}
+  wallHori: {fileID: 11400000, guid: 2d8a229d512e6f1469ada59fee292511, type: 2}
+  wallFull: {fileID: 11400000, guid: e9e799a4baf2aac4c9808b257b7baa02, type: 2}
+  wallTUp: {fileID: 11400000, guid: 50b08fb59ab1b5f4683755c820513271, type: 2}
+  wallTDown: {fileID: 11400000, guid: f6003ad19fce9dd4fbc4d563c522eb85, type: 2}
+  wallTLeft: {fileID: 11400000, guid: de3f0da7737216f499b81de5401be29e, type: 2}
+  wallTRight: {fileID: 11400000, guid: 40a3a4ef0e7580048b499694de5294bf, type: 2}
+  wallCornerTopLeft: {fileID: 11400000, guid: ff97d80e914c2934ebf516bc51d891f3, type: 2}
+  wallCornerTopRight: {fileID: 11400000, guid: 3c2b358f0ffc11041998a4460f44f89a, type: 2}
+  wallCornerBottomLeft: {fileID: 11400000, guid: 7cfebd76effbad144974a7c665b70a87, type: 2}
+  wallCornerBottomRight: {fileID: 11400000, guid: edfa1b1a159054c4591d375ad748add9, type: 2}
+  wallEdgeUp: {fileID: 11400000, guid: 3cc154a3c44b2be44b03f72dfeb33701, type: 2}
+  wallEdgeDown: {fileID: 11400000, guid: 6b865b7be952c874bb0a3b01258355e4, type: 2}
+  wallEdgeLeft: {fileID: 11400000, guid: 45e6de71d0bb5624295318799dadd734, type: 2}
+  wallEdgeRight: {fileID: 11400000, guid: 3904fbcee029fbb4abe138932dc0189a, type: 2}
+  wallTopLeft: {fileID: 11400000, guid: ff97d80e914c2934ebf516bc51d891f3, type: 2}
+  wallTopRight: {fileID: 11400000, guid: 3c2b358f0ffc11041998a4460f44f89a, type: 2}
+  wallBottomLeft: {fileID: 11400000, guid: 7cfebd76effbad144974a7c665b70a87, type: 2}
+  wallBottomRight: {fileID: 11400000, guid: edfa1b1a159054c4591d375ad748add9, type: 2}
+  wallIntersect: {fileID: 11400000, guid: c5ec4a758ec2b4d4e9ad4d33c1bdaacc, type: 2}
+  wallFront: {fileID: 11400000, guid: 0cafe833aa50ddd449c0b6a5b20386af, type: 2}
+--- !u!1 &5042771563953492660
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4189860059966822411}
+  - component: {fileID: 1446254796576453209}
+  m_Layer: 0
+  m_Name: JapanSimpleRandomWalkDungeon
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4189860059966822411
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5042771563953492660}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 284829534102645643}
+  - {fileID: 3205753143518407906}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1446254796576453209
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5042771563953492660}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7a193334f45c024691e11dfbf14cf36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tileMapVisualizer: {fileID: 6830184155295886894}
+  startPosition: {x: 0, y: 0}
+  itemManager: {fileID: 0}
+  spawnItems: 0
+  minLootRange: 10
+  maxLootRange: 100
+  randomWalkParameters: {fileID: 11400000, guid: 9c8d3c4f53d983842967d9ad767d54a6, type: 2}
+--- !u!1 &7832518405003705175
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3205753143518407906}
+  - component: {fileID: 3802676247195171562}
+  m_Layer: 0
+  m_Name: GrassDeployer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3205753143518407906
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7832518405003705175}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4189860059966822411}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3802676247195171562
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7832518405003705175}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6346917581f784b4996d3c5807e27dd3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  grassTilemap: {fileID: 0}
+  grassTile: {fileID: 11400000, guid: a0124f0e5096c484490c7ee22535bd85, type: 2}
+  width: 400
+  length: 400
