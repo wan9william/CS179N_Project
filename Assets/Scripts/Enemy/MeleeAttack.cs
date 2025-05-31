@@ -26,7 +26,7 @@ public class MeleeAttack : MonoBehaviour, EnemyAttack
         float distance = Vector2.Distance(transform.position, target.position);
         if (distance <= stats.attackRange)
         {
-            Debug.Log("Try attack");
+            Debug.Log("[MeleeAttack] Within range, starting attack...");
             StartCoroutine(PerformAttack(target, stats));
         }
     }
@@ -34,15 +34,22 @@ public class MeleeAttack : MonoBehaviour, EnemyAttack
     IEnumerator PerformAttack(Transform target, EnemyStats stats)
     {
         isAttacking = true;
-        yield return new WaitForSeconds(stats.attackDelay); // wind-up
+
+        // Optional wind-up delay
+        yield return new WaitForSeconds(stats.attackDelay);
 
         if (target.TryGetComponent<Player>(out var playerHealth))
         {
             playerHealth.TakeDamage(stats.attackDamage);
             Debug.Log("[MeleeAttack] Player hit!");
         }
+        else
+        {
+            Debug.LogWarning("[MeleeAttack] Could not find PlayerHealth on target.");
+        }
 
-        yield return new WaitForSeconds(stats.attackCooldown); // cooldown
+        // Cooldown before next possible attack
+        yield return new WaitForSeconds(stats.attackCooldown);
         isAttacking = false;
     }
 }

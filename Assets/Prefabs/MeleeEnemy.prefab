@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 8004805295079985542}
   - component: {fileID: 5142670463676549520}
   - component: {fileID: 8167869852750926167}
-  - component: {fileID: 2448398463435694560}
+  - component: {fileID: 2821658754363699301}
   m_Layer: 0
   m_Name: MeleeEnemy
   m_TagString: Untagged
@@ -42,7 +42,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 3.5943904, y: -3.7963953}
+  m_AnchoredPosition: {x: 3.5943904, y: -14.98}
   m_SizeDelta: {x: 1, y: 1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!212 &103738389018688264
@@ -212,7 +212,7 @@ MonoBehaviour:
   slider: {fileID: 977867147157146788}
   mainCamera: {fileID: 0}
   target: {fileID: 1413605786483108945}
-  animator: {fileID: 2448398463435694560}
+  animator: {fileID: 2821658754363699301}
   spriteRenderer: {fileID: 103738389018688264}
 --- !u!114 &8004805295079985542
 MonoBehaviour:
@@ -255,9 +255,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stats: {fileID: 11400000, guid: 2a88c03d4c67bb040aa7b22b00f4102f, type: 2}
-  target: {fileID: 0}
+  target: {fileID: 4690868738214975529, guid: 4c18fb5dec947874ca31c66ba2f5fe97, type: 3}
   spriteRenderer: {fileID: 0}
-  currentState: 0
+  currentState: 2
 --- !u!114 &8167869852750926167
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -270,7 +270,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b34d8382588ed1e409f4e019ba842bde, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!95 &2448398463435694560
+--- !u!95 &2821658754363699301
 Animator:
   serializedVersion: 7
   m_ObjectHideFlags: 0

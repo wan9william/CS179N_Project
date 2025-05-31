@@ -14,12 +14,18 @@ public class EnemyBullet : MonoBehaviour
     {
         Debug.Log($"[EnemyBullet] Triggered with {other.name}");
 
-        // Only affect player
-        if (other.TryGetComponent<PlayerHealth>(out var player))
+        PlayerHealth player = Object.FindFirstObjectByType<PlayerHealth>();
+        if (player != null)
         {
             Debug.Log($"[EnemyBullet] Hit player: {player.name}");
             player.TakeDamage((int)damage);
             Destroy(gameObject);
         }
+        else
+        {
+            Debug.Log("[EnemyBullet] No PlayerHealth found in target.");
+        }
     }
+
+
 }

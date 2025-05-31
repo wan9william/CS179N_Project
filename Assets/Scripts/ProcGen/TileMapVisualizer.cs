@@ -182,4 +182,21 @@ public class TileMapVisualizer : MonoBehaviour
         }
 
     }
+   public List<Vector2Int> GetFloorWorldPositions()
+    {
+        List<Vector2Int> positions = new List<Vector2Int>();
+        foreach (var pos in floorTilemap.cellBounds.allPositionsWithin)
+        {
+            if (floorTilemap.HasTile(pos))
+            {
+                Vector3 worldPos = floorTilemap.CellToWorld(pos);
+                positions.Add(new Vector2Int(Mathf.RoundToInt(worldPos.x), Mathf.RoundToInt(worldPos.y)));
+
+
+            }
+        }
+        return positions;
+    }
+
+
 }
