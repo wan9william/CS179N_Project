@@ -7,6 +7,9 @@ TagManager:
   - Resource
   - Interactable
   - Object_Manager
+  - UI_Manager
+  - Game_Manager
+  - Ship
   layers:
   - Default
   - TransparentFX

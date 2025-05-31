@@ -93,7 +93,7 @@ public class Shop : MonoBehaviour
             if (!resource) return;
 
             //Add the value to the player's wallet
-            recipient.GetMoney() += resource.GetResource().getValue();
+            recipient.SetMoney(recipient.GetMoney() + resource.GetResource().getValue());
 
             //Destroy the gameObject
             resource.Hit(float.MaxValue);

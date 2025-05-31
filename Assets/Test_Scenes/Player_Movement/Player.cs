@@ -1,3 +1,4 @@
+using TMPro;
 using Unity.VisualScripting;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
@@ -58,6 +59,7 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject _interactable;
     [SerializeField] private PlayerHealth _healthbar;
     [SerializeField] private Camera _camera;
+    [SerializeField] private TextMeshProUGUI _moneyText;
 
     //FLAGS
     [Header("Flags")]
@@ -85,6 +87,9 @@ public class Player : MonoBehaviour
 
     //Currency
     [SerializeField] private int money = 0;
+
+    //Managers
+    [SerializeField] private Game_Event_Manager game_event_manager;
 
 
 
@@ -486,7 +491,12 @@ void Awake()
         health -= damage;
 
         //need a death check here as well
-        if (health <= 0) animator.SetBool("Dead", true);
+        if (health <= 0)
+        {
+            animator.SetBool("Dead", true);
+            game_event_manager.SetState(Game_Event_Manager.GM_STATES.END_MISSION);
+            game_event_manager.SetLoseMission(true);
+        }
 
         _healthbar.TakeDamage(damage);
     }
@@ -668,7 +678,12 @@ void Awake()
 
     public ref int GetMoney() { return ref money; }
 
-    public void SetMoney(int val) { money = val; }
+    public void SetMoney(int val) { 
+        money = val;
+
+        //update money value on UI
+        if(_moneyText) _moneyText.text = money.ToString();
+    }
 
 }
 

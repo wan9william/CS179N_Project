@@ -1,16 +1,15 @@
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class Menu : Interactable
+public class Teleporter : Interactable
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    [SerializeField] private Terminal terminal;
-    [SerializeField] Terminal.UI_Elements ui_element;
+    [SerializeField] private Canvas menu;
+    [SerializeField] private Game_Event_Manager game_event_manager;
     protected override void onInteract(ref Player player)
     {
-        if(!terminal) terminal = GameObject.FindWithTag("UI_Manager").GetComponent<Terminal>();
-        terminal.ActivateUI(ui_element);
+        menu.gameObject.SetActive(true);
         player.setPaused(true);
     }
 

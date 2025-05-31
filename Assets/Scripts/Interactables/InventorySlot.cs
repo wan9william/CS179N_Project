@@ -114,12 +114,6 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IDropHandler
                 quantity = quantity - split;
                 UpdateQuantityDisplay();
                 // creating a new carried item with the quantity of split result
-                        
-                /*InventoryItem splitNewItem = Instantiate(myItem, Inventory.Singleton.transform);
-                splitNewItem.Initialize(myItem.myItem, null);
-                splitNewItem.SetQuantity(split);
-                inven.carriedItem = splitNewItem;
-                */
             }
         }
         /*
@@ -211,20 +205,6 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IDropHandler
         item.transform.SetAsFirstSibling();
         // Regular item placement
         inven.carriedItem = null;
-        /*if (item.activeSlot != null)
-        {
-            item.activeSlot.myItem = null;
-        }*/
-        /*
-        myItem = item;
-        myItem.activeSlot = this;
-        myItem.transform.SetParent(transform);
-        myItem.transform.localPosition = Vector3.zero;
-
-        /*if(myTag != slotTag.None)
-        {
-            Inventory.Singleton.Equip(myTag, myItem);
-        }*/
     }
 
     public void SetItem_A(Tuple<Item_ScriptableObj,int> new_item)
@@ -321,30 +301,6 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IDropHandler
 
         if (inven.carriedItem == null) return;
         //This is being set to NULL
-        // Check if the slot has a tag restriction
-        
-        /*
-        if (myTag != slotTag.None && myTag != inven.carriedItem.myItem.itemTag)
-        {
-            Debug.Log("TAg restriction!");
-            return;
-        }*/
-        /*
-        // If we already have an item and it's the same type, try to stack
-        if (myItem != null && myItem.myItem == inven.carriedItem.myItem)
-        {
-            int totalQuantity = myItem.GetQuantity() + inven.carriedItem.GetQuantity();
-            int maxStack = Inventory.Singleton.GetMaxStackSize();
-                
-            if (totalQuantity <= maxStack)
-            {
-                Debug.Log("STack!");
-                myItem.SetQuantity(totalQuantity);
-                Destroy(inven.carriedItem.gameObject);
-                inven.carriedItem = null;
-                return;
-            }
-        }*/
 
         // Regular item placement
         Debug.Log("Normal placement!");
