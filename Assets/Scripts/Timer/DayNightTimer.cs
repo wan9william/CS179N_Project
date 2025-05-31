@@ -58,7 +58,7 @@ public class DayNightTimer : MonoBehaviour
 
             if (showDebugTime)
             {
-                Debug.Log("Progress: " + progress.ToString("F2"));
+                //Debug.Log("Progress: " + progress.ToString("F2"));
             }
         }
         else if (!dayIsOver)

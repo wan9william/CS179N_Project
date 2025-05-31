@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using UnityEngine;
+using UnityEngine.UIElements;
 using Random = UnityEngine.Random;
 
 public class DungeonGenerator : AbstractDungeonGenerator
@@ -13,9 +14,33 @@ public class DungeonGenerator : AbstractDungeonGenerator
     protected override void RunProceduralGeneration()
     {
         HashSet<Vector2Int> floorPositions = RunRandomWalk(randomWalkParameters, startPosition);
+        itemManager.Clear();
         tileMapVisualizer.Clear();
         tileMapVisualizer.PaintFloorTiles(floorPositions);
         WallGenerator.CreateWalls(floorPositions, tileMapVisualizer);
+        SpawnItems(floorPositions);
+    }
+
+    protected void SpawnItems(HashSet<Vector2Int> positions)
+    {
+        foreach (var position in positions)
+        {
+            if (spawnItems && InSpawnArea(position) && CheckEightDirections(position, positions)) itemManager.InstantiateLoot(new Vector3(position.x, position.y, 0), itemManager.transform);
+        }
+    }
+
+    protected bool InSpawnArea(Vector2Int position)
+    {
+        return (Math.Abs(position.x) >= minLootRange || Math.Abs(position.y) >= minLootRange) && (Math.Abs(position.x) <= maxLootRange && Math.Abs(position.y) <= maxLootRange);
+    }
+
+    protected bool CheckEightDirections(Vector2Int position, IEnumerable<Vector2Int> floorPositions)
+    {
+        foreach (Vector2Int direction in Direction2D.eightDirectionsList)
+        {
+            if (!floorPositions.Contains(position + direction)) return false;
+        }
+        return true;
     }
 
     protected HashSet<Vector2Int> RunRandomWalk(SimpleRandomWalkData parameters, Vector2Int position)

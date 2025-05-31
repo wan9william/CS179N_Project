@@ -42,6 +42,7 @@ GameObject:
   - component: {fileID: 9008746323010819863}
   - component: {fileID: 1019702892802534350}
   - component: {fileID: 848104311465782816}
+  - component: {fileID: 1689236057871543980}
   m_Layer: 0
   m_Name: Shotgun Image
   m_TagString: Untagged
@@ -60,7 +61,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: 0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 3175151854617736194}
   m_Father: {fileID: 5984737206847484276}
@@ -107,12 +108,12 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -867108587
-  m_SortingLayer: 2
-  m_SortingOrder: 3
+  m_SortingLayer: 3
+  m_SortingOrder: 1
   m_Sprite: {fileID: -2408530018317867212, guid: 3325be58caa077145875edc55235db34, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
-  m_FlipY: 0
+  m_FlipY: 1
   m_DrawMode: 0
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
@@ -142,6 +143,22 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1689236057871543980
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3777255630778281773}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c2a3b47a0272d8488ba0c32b8860fcb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  muzzlePosition: {x: 1.4, y: 0.14, z: 0}
+  muzzleOffset: {x: 0, y: -0.2, z: 0}
+  _weaponSR: {fileID: 1019702892802534350}
+  _muzzleTR: {fileID: 3175151854617736194}
 --- !u!1 &5192919709124094027
 GameObject:
   m_ObjectHideFlags: 0
@@ -169,9 +186,9 @@ Transform:
   m_GameObject: {fileID: 5192919709124094027}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 1, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.15, z: 0.2}
-  m_ConstrainProportionsScale: 0
+  m_LocalPosition: {x: 1.4, y: -0.06, z: 0}
+  m_LocalScale: {x: 3, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 9008746323010819863}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
@@ -219,12 +236,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 2
-  m_Sprite: {fileID: -123166022, guid: 7a98ee848900c04478d1a6127bcea401, type: 3}
+  m_Sprite: {fileID: -5632094745528637102, guid: 67616a8dc15972d46b5869317e3185b4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 1
   m_FlipY: 1
   m_DrawMode: 0
-  m_Size: {x: 6.4, y: 6.4}
+  m_Size: {x: 0.9411765, y: 0.9411765}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -308,7 +325,7 @@ Transform:
   m_GameObject: {fileID: 5799481334654353510}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.02, y: -1.013, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.47289, y: 2.0743299, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -334,7 +351,7 @@ MonoBehaviour:
   m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeEnabled: 0
-  m_ApplyToSortingLayers: 0000000015f950ccffdde16d
+  m_ApplyToSortingLayers: 00000000
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
@@ -393,8 +410,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 3.41, y: -2, z: 0}
-  m_LocalScale: {x: 5, y: 5, z: 5}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1818682183708256156}
   - {fileID: 9008746323010819863}
@@ -413,12 +430,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 162ba179e35c42d488e1b086e65360e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  audioSource: {fileID: 0}
   weaponOwner: {fileID: 0}
   projectilePrefab: {fileID: 1873891436641685562, guid: 0eccac6df8f10434ca458c9770dbe1c7, type: 3}
   firePoint: {fileID: 2841346013480728197}
   fireForce: 10
   fireCooldown: 0.5
   fireMode: 0
+  chamberReset: 0
   damage: 10
   baseSpreadAngle: 0
   maxSpreadAngle: 10
@@ -426,6 +445,9 @@ MonoBehaviour:
   bloomDecaySpeed: 3
   bulletsPerShot: 6
   perBulletSpread: 15
+  ammoType: {fileID: 0}
+  magazineSize: 10
+  reloadTime: 1.5
   animator: {fileID: 848104311465782816}
   spriteRenderer: {fileID: 1019702892802534350}
   objectManager: {fileID: 0}

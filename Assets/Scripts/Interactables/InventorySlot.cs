@@ -28,6 +28,7 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IDropHandler
     public slotTag myTag;
 
     Item_ScriptableObj empty;
+    public int storedAmmo = -1;
 
     void Start()
     {
@@ -113,12 +114,6 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IDropHandler
                 quantity = quantity - split;
                 UpdateQuantityDisplay();
                 // creating a new carried item with the quantity of split result
-                        
-                /*InventoryItem splitNewItem = Instantiate(myItem, Inventory.Singleton.transform);
-                splitNewItem.Initialize(myItem.myItem, null);
-                splitNewItem.SetQuantity(split);
-                inven.carriedItem = splitNewItem;
-                */
             }
         }
         /*
@@ -210,27 +205,13 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IDropHandler
         item.transform.SetAsFirstSibling();
         // Regular item placement
         inven.carriedItem = null;
-        /*if (item.activeSlot != null)
-        {
-            item.activeSlot.myItem = null;
-        }*/
-        /*
-        myItem = item;
-        myItem.activeSlot = this;
-        myItem.transform.SetParent(transform);
-        myItem.transform.localPosition = Vector3.zero;
-
-        /*if(myTag != slotTag.None)
-        {
-            Inventory.Singleton.Equip(myTag, myItem);
-        }*/
     }
 
     public void SetItem_A(Tuple<Item_ScriptableObj,int> new_item)
     {
         item = new_item.Item1;
         quantity = new_item.Item2;
-
+        
         //Reset visuals
         Image child_image = transform.GetChild(0).GetComponent<Image>();
         child_image.sprite = item.getSprite();
@@ -238,7 +219,19 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IDropHandler
         child_image.color = item.getSprite() ? new Color(1, 1, 1, 1) : new Color(1,1,1,0);
         myItem.myItem= item;
         //Get quantity as well
-        UpdateQuantityDisplay();
+        
+        // Check if this is a weapon prefab
+        Weapon weapon = item.getPrefab()?.GetComponentInChildren<Weapon>();
+        if (weapon != null)
+        {
+            if (storedAmmo < 0)  // Only initialize if not set already
+                storedAmmo = weapon.GetMagazineSize();  // full mag by default
+        }
+        else
+        {
+            storedAmmo = -1;  // Reset if non-weapon
+        }
+            UpdateQuantityDisplay();
     }
 
     public void UpdateItem() {
@@ -254,13 +247,34 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IDropHandler
         child_image.sprite = item.getSprite();
         child_image.color = item.getSprite() ? new Color(1, 1, 1, 1) : new Color(1, 1, 1, 0);
         myItem.myItem = item;
+
+        UpdateQuantityDisplay(); // 💡 Ensure display updates after resetting
     }
 
-    private void UpdateQuantityDisplay()
+    public void UpdateQuantityDisplay()
     {
-        if(quantityText != null)
+    if (quantityText == null) return;
+
+    // If this slot holds a weapon with stored ammo
+    if (storedAmmo >= 0 && item != null && item.getPrefab() != null)
+    {
+        Weapon weapon = item.getPrefab().GetComponentInChildren<Weapon>();
+        if (weapon != null)
         {
-            quantityText.SetText(quantity > 1 ? quantity.ToString() : "");
+            quantityText.SetText($"{storedAmmo} / {weapon.GetMagazineSize()}");
+            return;
+        }
+    }
+
+    // Default behavior for stackable items
+    quantityText.SetText(quantity > 1 ? quantity.ToString() : "");
+    }
+
+    public void UpdateAmmoDisplay(int current, int max)
+    {
+        if (quantityText != null)
+        {
+            quantityText.SetText($"{current} / {max}");
         }
     }
 
@@ -287,30 +301,6 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IDropHandler
 
         if (inven.carriedItem == null) return;
         //This is being set to NULL
-        // Check if the slot has a tag restriction
-        
-        /*
-        if (myTag != slotTag.None && myTag != inven.carriedItem.myItem.itemTag)
-        {
-            Debug.Log("TAg restriction!");
-            return;
-        }*/
-        /*
-        // If we already have an item and it's the same type, try to stack
-        if (myItem != null && myItem.myItem == inven.carriedItem.myItem)
-        {
-            int totalQuantity = myItem.GetQuantity() + inven.carriedItem.GetQuantity();
-            int maxStack = Inventory.Singleton.GetMaxStackSize();
-                
-            if (totalQuantity <= maxStack)
-            {
-                Debug.Log("STack!");
-                myItem.SetQuantity(totalQuantity);
-                Destroy(inven.carriedItem.gameObject);
-                inven.carriedItem = null;
-                return;
-            }
-        }*/
 
         // Regular item placement
         Debug.Log("Normal placement!");

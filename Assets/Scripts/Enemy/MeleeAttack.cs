@@ -19,6 +19,8 @@ public class MeleeAttack : MonoBehaviour, EnemyAttack
 
     public void TryAttack(Transform target, EnemyStats stats)
     {
+        Debug.Log("Attack!");
+        Debug.Log(stats);
         if (target == null || stats == null || !canAttack || isAttacking) return;
 
         float distance = Vector2.Distance(transform.position, target.position);
@@ -36,7 +38,7 @@ public class MeleeAttack : MonoBehaviour, EnemyAttack
         // Optional wind-up delay
         yield return new WaitForSeconds(stats.attackDelay);
 
-        if (target.TryGetComponent<PlayerHealth>(out var playerHealth))
+        if (target.TryGetComponent<Player>(out var playerHealth))
         {
             playerHealth.TakeDamage(stats.attackDamage);
             Debug.Log("[MeleeAttack] Player hit!");

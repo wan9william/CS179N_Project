@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8296853966620984416}
   - component: {fileID: 4942328159348575772}
   - component: {fileID: 3193527782319013495}
+  - component: {fileID: 2496394930070089342}
   m_Layer: 0
   m_Name: Grenade
   m_TagString: Interactable
@@ -30,7 +31,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1.59, y: 1.81, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -105,8 +106,11 @@ MonoBehaviour:
   _glowMat: {fileID: 0}
   _explosion: {fileID: 0}
   health: 10
+  itemAnimator: {fileID: 2496394930070089342}
   damage: 0
   _resource: {fileID: 11400000, guid: adbdfa091b2c0464f87b357a61162d04, type: 2}
+  quantity: 0
+  natural: 1
 --- !u!61 &3193527782319013495
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -144,8 +148,8 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.5625, y: 0.875}
+    pivot: {x: 1, y: 0.5}
+    oldSize: {x: 0.28125, y: 0.4375}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -153,3 +157,25 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.96875, y: 0.84375}
   m_EdgeRadius: 0
+--- !u!95 &2496394930070089342
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9183792719404996813}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 4f20794701fc14144919a47f4c932b19, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

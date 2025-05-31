@@ -5,8 +5,17 @@ public class Door : Interactable
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     [SerializeField] private Tilemap building_top;
+    [SerializeField] private GameObject collider;
+    [SerializeField] private bool open = false;
     protected override void onInteract(ref Player player) {
-        building_top.gameObject.SetActive(false);
+
+        //if open, close, otherwise open
+        bool currentState = itemAnimator.GetBool("Open");
+        open = !currentState;
+        itemAnimator.SetBool("Open", !currentState);
+
+        //this.gameObject.GetComponent<BoxCollider2D>().enabled = !currentState;
+        collider.SetActive(currentState);
     }
 
     protected override void ExplosionVFX()
@@ -18,4 +27,19 @@ public class Door : Interactable
     {
         return;
     }
+
+    protected override void Initialize()
+    {
+        return;
+    }
+
+    public override bool Hit(float damage)
+    {
+        if (open) return false;
+        itemAnimator.SetTrigger("Hit");
+        health -= damage;
+
+        return true;
+    }
+
 }

@@ -15,6 +15,7 @@ MonoBehaviour:
   color: {r: 1, g: 0, b: 0, a: 1}
   sprite: {fileID: 4089025788520073079, guid: 2a4861251bfa03d4fbfe9d08b7ce92e8, type: 3}
   value: 35
+  dropChance: 10
   _name: Antimatter
   ID: 1
   equipPrefab: {fileID: 210607244735680991, guid: e6995617274fe65478d952d2af392dd5, type: 3}
