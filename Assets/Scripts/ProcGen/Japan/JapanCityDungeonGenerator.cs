@@ -163,12 +163,13 @@ public class JapanCityDungeonGenerator : JapanDungeonGenerator
         List<List<Vector2Int>> corridors = new List<List<Vector2Int>>();
 
         //Add Initial Corridors Surrounding Initial Area
-        foreach (var direction in Direction2D.cardinalDirectionsList)
+        for (int i = 0; i < 4; i++)
         {
             List<Vector2Int> corridor = new List<Vector2Int>();
-            for (int j = 1; j <= initialAreaLength; ++j)
+            for (int j = 1; j <= initialAreaLength+8; ++j)
             {
-                corridor.Add(currentPosition + direction * j);
+                currentPosition += Direction2D.cardinalDirectionsList[i];
+                corridor.Add(currentPosition);
 
             }
             corridors.Add(corridor);
@@ -181,14 +182,12 @@ public class JapanCityDungeonGenerator : JapanDungeonGenerator
             currentPosition = corridor[corridor.Count - 1];
             potentialRoomPositions.Add((Vector2Int)currentPosition);
             List<Vector2Int> newcorridor = new List<Vector2Int>();
-            for (int j = 1; j < 12; j++)
+            for (int x = 0; x < 2; x++)
             {
-                ;
-                foreach(var direction in Direction2D.cardinalDirectionsList)
+                for (int j = 1; j < maximumHouseLength; j++)
                 {
-                    newcorridor.Add(currentPosition+direction*j);
+                    newcorridor.Add(currentPosition+Direction2D.cardinalDirectionsList[x]*j);
                 }
-
             }
             corridors.Add(newcorridor);
             floorPositions.UnionWith(corridor);
