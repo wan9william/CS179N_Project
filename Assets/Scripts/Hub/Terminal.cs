@@ -4,52 +4,68 @@ using UnityEngine.SceneManagement;
 public class Terminal : MonoBehaviour
 {
     [SerializeField] private Player player;
-    [SerializeField] private string targetScene = "PlanetScene"; // Set this in the Inspector
+    [SerializeField] private string targetScene = "PlanetScene";
 
+    private Vector3 localShipPosition;
 
     private void Awake()
     {
-        DontDestroyOnLoad(gameObject); // Ensures Terminal survives scene load
+        DontDestroyOnLoad(gameObject); // Keep this Terminal alive between scenes
     }
-    
+
     public void ClickX()
     {
-        transform.gameObject.SetActive(false);
+        gameObject.SetActive(false);
         player.setPaused(false);
     }
 
     public void StartMission()
     {
-        // Disable UI and unpause
         ClickX();
-        //capture the items inside the ship
-        GameObject ship = GameObject.FindGameObjectWithTag("Ship");
-        ShipItemCapture capture = ship?.GetComponentInChildren<ShipItemCapture>();
-        capture?.CaptureItems();
 
-        // Load the target scene and reposition the ship on arrival
+        GameObject ship = GameObject.FindGameObjectWithTag("Ship");
+        GameObject inventoryObject = GameObject.Find("Inventory");
+        
+        if (ship != null && player != null && inventoryObject != null)
+        {
+            //Save position relative to ship
+            localShipPosition = ship.transform.InverseTransformPoint(player.transform.position);
+
+            //Persist player
+            DontDestroyOnLoad(player.gameObject);
+
+            //Persist inventory UI
+            DontDestroyOnLoad(inventoryObject);
+
+            //Persist ship items
+            ship.GetComponentInChildren<ShipItemCapture>()?.CaptureItems();
+        }
+
         SceneManager.sceneLoaded += OnSceneLoaded;
         SceneManager.LoadScene(targetScene);
     }
 
+
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        GameObject landingPad = GameObject.FindGameObjectWithTag("LandingPad");
         GameObject ship = GameObject.FindGameObjectWithTag("Ship");
+        GameObject landingPad = GameObject.FindGameObjectWithTag("LandingPad");
 
-        if (landingPad != null && ship != null)
+        if (ship != null && landingPad != null)
         {
             ship.transform.position = landingPad.transform.position;
-        }
 
-        //Restore item positions
-        ShipItemCapture capture = ship?.GetComponentInChildren<ShipItemCapture>();
-        if (capture != null)
-        {
-            capture.RestoreItemPositions();
+            //Reposition player back into the ship
+            Player newPlayer = FindObjectOfType<Player>();
+            if (newPlayer != null)
+            {
+                newPlayer.transform.position = ship.transform.TransformPoint(localShipPosition);
+            }
+
+            //Restore ship-carried items
+            ship.GetComponentInChildren<ShipItemCapture>()?.RestoreItemPositions();
         }
 
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
-} 
-
+}

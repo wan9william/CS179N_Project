@@ -9,6 +9,7 @@ TagManager:
   - Object_Manager
   - LandingPad
   - Ship
+  - Inventory
   layers:
   - Default
   - TransparentFX
