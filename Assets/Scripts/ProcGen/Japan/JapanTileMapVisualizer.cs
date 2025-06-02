@@ -9,13 +9,13 @@ using UnityEngine.WSA;
 
 public class JapanTileMapVisualizer : MonoBehaviour
 {
-    [SerializeField] private Tilemap floorTilemap, roadTilemap, wallTilemap, wallFrontTilemap, fencesTilemap, grassTilemap;
+    [SerializeField] private Tilemap floorTilemap, roadTilemap, wallTilemap, wallFrontTilemap, fencesTilemap, treesTilemap, grassTilemap, roofTilemap;
 
-    [SerializeField] private TileBase floorTile,
+    [SerializeField] private TileBase floorTile, roofTile,
                                       roadTile, roadVerti, roadVerti2, roadHori, roadHori2, roadMidLeft, roadMidRight, roadMidTop, roadMidBottom,
                                       roadCornerTopLeft, roadCornerTopRight, roadCornerBottomLeft, roadCornerBottomRight,
                                       roadInnerCornerTopLeft, roadInnerCornerTopRight, roadInnerCornerBottomLeft, roadInnerCornerBottomRight,
-                                      roadIntersect, roadStripeVert, roadStripeHori, bushTile,
+                                      roadIntersect, roadStripeVert, roadStripeHori, bushTile, bushTile2, bushTile3, bushTile4, treeTile,
                                       sideFull, sideMidLeft, sideMidRight, sideMidTop, sideMidBottom,
                                       sideCornerTopLeft, sideCornerTopRight, sideCornerBottomLeft, sideCornerBottomRight,
                                       sideInnerCornerTopLeft, sideInnerCornerTopRight, sideInnerCornerBottomLeft, sideInnerCornerBottomRight,
@@ -32,6 +32,11 @@ public class JapanTileMapVisualizer : MonoBehaviour
     public void PaintFloorTiles(IEnumerable<Vector2Int> floorPositions)
     {
         PaintTiles(floorPositions, floorTilemap, floorTile);
+    }
+
+    public void PaintRoofTiles(IEnumerable<Vector2Int> roofPositions)
+    {
+        PaintTiles(roofPositions, roofTilemap, roofTile); 
     }
 
     public void PaintRoadIntersectionTiles(IEnumerable<Vector2Int> roadPositions)
@@ -228,6 +233,9 @@ public class JapanTileMapVisualizer : MonoBehaviour
         fencesTilemap.ClearAllTiles();
         roadTilemap.ClearAllTiles();
         grassTilemap.ClearAllTiles();
+        roofTilemap.ClearAllTiles();
+        treesTilemap.ClearAllTiles();
+        
     }
 
     internal void PaintSingleBasicWall(Vector2Int position, string binaryType, string binaryWallType)
@@ -372,18 +380,54 @@ public class JapanTileMapVisualizer : MonoBehaviour
 
     }
 
-    public void PaintGrassTiles(int width, int length)
+    public void PaintGrassTiles(HashSet<Vector2Int> fencePositions)
     {
-        //for (int i = -width / 2; i < width / 2; i++)
-        //{
-        //    for (int j = -length / 2; j < length / 2; j++)
-        //    {
-        //        PaintSingleTile(grassTilemap, grassTile, new Vector2Int(j, i));
-        //    }
-        //}
+        int minX = 0, minY = 0;
+        int maxX = 0, maxY = 0;
+
+        foreach (var position in fencePositions)
+        {
+            minX = Math.Min(minX, position.x);
+            minY = Math.Min(minY, position.y);
+            maxX = Math.Max(maxX, position.x);
+            maxY = Math.Max(maxY, position.y);
+        }
+        for (int x = minX - 10; x < maxX + 10; x++)
+        {
+            for (int y = minY - 10; y < maxY + 10; y++)
+            {
+                int randNum = UnityEngine.Random.Range(0, grassTiles.Count());
+                PaintSingleTile(grassTilemap, grassTiles[randNum], new Vector2Int(x, y));
+            }
+        }
     }
     internal void PaintSingleBasicFence(Vector2Int position)
     {
-        PaintSingleTile(fencesTilemap, bushTile, position);
+        TileBase fenceTile = bushTile;
+        switch (UnityEngine.Random.Range(0,4))
+        {
+            case 0:
+                fenceTile = bushTile;
+                break;
+
+            case 1: 
+                fenceTile = bushTile2;
+                break;
+
+            case 2:
+                fenceTile = bushTile3;
+                break;
+
+            case 3:
+                fenceTile = bushTile4;
+                break;
+
+        }
+        PaintSingleTile(fencesTilemap, fenceTile, position);
+    }
+
+    internal void PaintSingleBasicTree(Vector2Int position)
+    {
+        PaintSingleTile(treesTilemap, treeTile, position);
     }
 }

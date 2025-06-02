@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
+using static UnityEngine.Rendering.DebugUI.Table;
 
 public class JapanCityDungeonGenerator : JapanDungeonGenerator
 {
@@ -19,10 +21,6 @@ public class JapanCityDungeonGenerator : JapanDungeonGenerator
 
     [SerializeField] private int corridorSize = 3;
     [SerializeField] private int roomOffset = 5;
-    [SerializeField] private bool randomWalk = false;
-   
-    [SerializeField] int grassWidth, grassHeight = 0;
-
 
 
     //PCG Data
@@ -48,16 +46,6 @@ public class JapanCityDungeonGenerator : JapanDungeonGenerator
         HashSet<Vector2Int> potentialRoomPositions = new HashSet<Vector2Int>();
 
         List<List<Vector2Int>> corridors = CreateCorridors(roadPositions, potentialRoomPositions);
-
-        HashSet<Vector2Int> roomPositions = CreateRooms(potentialRoomPositions);
-
-        //List<Vector2Int> deadEnds = FindAllDeadEnds(roadPositions);
-
-        //CreateRoomsAtDeadEnd(deadEnds, roomPositions);
-
-        floorPositions.UnionWith(roadPositions);
-        floorPositions.UnionWith(roomPositions);
-
         tileMapVisualizer.PaintRoadTiles(roadPositions);
         tileMapVisualizer.PaintRoadIntersectionTiles(roadPositions);
 
@@ -66,12 +54,20 @@ public class JapanCityDungeonGenerator : JapanDungeonGenerator
             corridors[i] = IncreaseCorridorBrush(corridors[i], corridorSize);
             roadPositions.UnionWith(corridors[i]);
         }
+        HashSet<Vector2Int> roomPositions = CreateHouses(potentialRoomPositions, roadPositions);
+
+        //List<Vector2Int> deadEnds = FindAllDeadEnds(roadPositions);
+
+        //CreateRoomsAtDeadEnd(deadEnds, roomPositions);
+
+        floorPositions.UnionWith(roadPositions);
+        floorPositions.UnionWith(roomPositions);
 
         tileMapVisualizer.PaintFloorTiles(roomPositions);
-        tileMapVisualizer.PaintGrassTiles(grassWidth, grassHeight);
         var wallPositions = JapanWallGenerator.CreateWalls(roomPositions, roadPositions, tileMapVisualizer);
-        JapanWallGenerator.CreateFences(roadPositions, floorPositions, wallPositions, tileMapVisualizer);
-        SpawnItems(floorPositions);
+        var fencePositions = JapanWallGenerator.CreateFences(roadPositions, floorPositions, wallPositions, tileMapVisualizer);
+        tileMapVisualizer.PaintGrassTiles(fencePositions);
+        SpawnItems(roomPositions, roadPositions);
     }
 
     private List<Vector2Int> IncreaseCorridorBrush(List<Vector2Int> corridor, int size)
@@ -133,14 +129,14 @@ public class JapanCityDungeonGenerator : JapanDungeonGenerator
         roomsDictionary[roomPosition] = roomFloor;
         roomColors.Add(UnityEngine.Random.ColorHSV());
     }
-    private HashSet<Vector2Int> CreateRooms(HashSet<Vector2Int> potentialRoomPositions)
+    private HashSet<Vector2Int> CreateHouses(HashSet<Vector2Int> potentialRoomPositions, HashSet<Vector2Int> roadPositions)
     {
         HashSet<Vector2Int> roomPositions = new HashSet<Vector2Int>();
         int roomToCreateCount = Mathf.RoundToInt(potentialRoomPositions.Count*roomPercent);
 
         List<Vector2Int> roomsToCreate = potentialRoomPositions.OrderBy(x => Guid.NewGuid()).Take(roomToCreateCount).ToList();
         var roomFloor = new HashSet<Vector2Int>();
-        roomFloor = RunRectangleWalkTL(new Vector2Int(roomOffset-2,roomOffset-2), initialAreaWidth, initialAreaLength);
+        roomFloor = RunRectangleWalk(new Vector2Int(0,0), initialAreaWidth+1, initialAreaLength+1);
         roomPositions.UnionWith(roomFloor);
 
         Vector2Int roomOffset2D = new Vector2Int(roomOffset-1, roomOffset);
@@ -148,7 +144,7 @@ public class JapanCityDungeonGenerator : JapanDungeonGenerator
         {
             if (roomPosition == new Vector2Int(0, 0)) continue;
 
-            roomFloor = CreateHouse(roomPosition + roomOffset2D);
+            roomFloor = CreateHouse(roomPosition + roomOffset2D, roadPositions);
             SaveRoomData(roomPosition+roomOffset2D, roomFloor);
             roomPositions.UnionWith(roomFloor);
         }
@@ -184,7 +180,7 @@ public class JapanCityDungeonGenerator : JapanDungeonGenerator
             List<Vector2Int> newcorridor = new List<Vector2Int>();
             for (int x = 0; x < 2; x++)
             {
-                for (int j = 1; j < maximumHouseLength; j++)
+                for (int j = 1; j < maximumHouseLength + 10; j++)
                 {
                     newcorridor.Add(currentPosition+Direction2D.cardinalDirectionsList[x]*j);
                 }
@@ -198,14 +194,20 @@ public class JapanCityDungeonGenerator : JapanDungeonGenerator
     }
 
 
-    private HashSet<Vector2Int> CreateHouse(Vector2Int roomPosition)
+    private HashSet<Vector2Int> CreateHouse(Vector2Int roomPosition, HashSet<Vector2Int> roadPositions)
     {
         var roomsList = ProceduralGeneration.BinarySpacePartitioning(new BoundsInt((Vector3Int)roomPosition, new Vector3Int(maximumHouseLength, maximumHouseLength, 0)), minRoomWidth, minRoomHeight);
+        int count = 0;
+        while (roomsList.Count <= 1 && count<5)
+        {
+            roomsList = ProceduralGeneration.BinarySpacePartitioning(new BoundsInt((Vector3Int)roomPosition, new Vector3Int(maximumHouseLength, maximumHouseLength, 0)), minRoomWidth, minRoomHeight);
+            count++;
+        }
 
         HashSet<Vector2Int> floor = new HashSet<Vector2Int>();
 
-            floor = CreateSimpleRooms(roomsList);
-
+        floor.Clear();
+        floor = CreateSimpleRooms(roomsList, roadPositions);
 
         List<Vector2Int> roomCenters = new List<Vector2Int>();
         foreach (var room in roomsList)
@@ -215,6 +217,7 @@ public class JapanCityDungeonGenerator : JapanDungeonGenerator
 
         HashSet<Vector2Int> corridors = ConnectRooms(roomCenters);
 
+        //Expand House Hallways to 2 wide
         foreach(Vector2Int corridor in corridors)
         {
             floor.Add(corridor + Direction2D.cardinalDirectionsList[1]);
@@ -291,9 +294,55 @@ public class JapanCityDungeonGenerator : JapanDungeonGenerator
         return closest;
     }
 
-    private HashSet<Vector2Int> CreateSimpleRooms(List<BoundsInt> roomsList)
+    private HashSet<Vector2Int> CreateSimpleRooms(List<BoundsInt> roomsList, HashSet<Vector2Int> roadPositions)
     {
         HashSet<Vector2Int> floor = new HashSet<Vector2Int>();
+        var firstElement = roomsList.First();
+        Vector3Int roomMinX = firstElement.min;
+        Vector3Int roomMinY = firstElement.min;
+        foreach(var room in roomsList)
+        {
+            if(room.min.x < roomMinX.x)
+            {
+                roomMinX = room.min;
+            }
+
+            if (room.min.y < roomMinY.y)
+            {
+                roomMinY = room.min;
+            }
+        }
+        Vector2Int startPositionX = (Vector2Int)roomMinX + new Vector2Int(offset, offset);
+        Vector2Int startPositionY = (Vector2Int)roomMinY + new Vector2Int(offset, offset);
+        HashSet<Vector2Int> corridorX = new HashSet<Vector2Int>();
+        HashSet<Vector2Int> corridorY = new HashSet<Vector2Int>();
+        int countX = 0;
+        int countY = 0;
+        while (!roadPositions.Contains(startPositionX + Direction2D.cardinalDirectionsList[3]) && countX < 20)
+        {
+            corridorX.Add(startPositionX + Direction2D.cardinalDirectionsList[0]*2 + Direction2D.cardinalDirectionsList[3]);
+            corridorX.Add(startPositionX + Direction2D.cardinalDirectionsList[0] + Direction2D.cardinalDirectionsList[3]);
+            startPositionX = startPositionX + Direction2D.cardinalDirectionsList[3];
+            countX++;
+        }
+
+        while (!roadPositions.Contains(startPositionY + Direction2D.cardinalDirectionsList[2]) && countY < 20)
+        {
+            corridorY.Add(startPositionY + Direction2D.cardinalDirectionsList[1]*2 + Direction2D.cardinalDirectionsList[2]);
+            corridorY.Add(startPositionY + Direction2D.cardinalDirectionsList[1] + Direction2D.cardinalDirectionsList[2]);
+            startPositionY = startPositionY + Direction2D.cardinalDirectionsList[2];
+            countY++;
+        }
+
+        if (countX < countY)
+        {
+            floor.UnionWith(corridorX);
+        }
+        else
+        {
+            floor.UnionWith(corridorY);
+        }
+
         foreach (var room in roomsList)
         {
             for (int col = offset; col < room.size.x - offset; col++)

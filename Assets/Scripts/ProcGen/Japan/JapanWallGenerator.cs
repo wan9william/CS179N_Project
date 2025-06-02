@@ -18,11 +18,24 @@ public static class JapanWallGenerator
         basicWallPositions.UnionWith(cornerWallPositions);
         return basicWallPositions;
     }
-    public static void CreateFences(HashSet<Vector2Int> roadPositions, HashSet<Vector2Int> floorPositions, HashSet<Vector2Int> wallPositions, JapanTileMapVisualizer tilemapVisualizer)
+    public static HashSet<Vector2Int> CreateFences(HashSet<Vector2Int> roadPositions, HashSet<Vector2Int> floorPositions, HashSet<Vector2Int> wallPositions, JapanTileMapVisualizer tilemapVisualizer)
     {
-        var basicFencePositions = FindFencesInDirections(roadPositions, floorPositions, wallPositions, Direction2D.eightDirectionsList);
+        var basicFencePositions = FindFencesInDirections(roadPositions, floorPositions, wallPositions, Direction2D.eightDirectionsList,3);
+        var basicTreePositions = FindFencesInDirections(roadPositions, floorPositions, wallPositions, Direction2D.eightDirectionsList, 7);
+        basicTreePositions.UnionWith(FindFencesInDirections(roadPositions, floorPositions, wallPositions, Direction2D.eightDirectionsList, 8));
 
         CreateBasicFences(tilemapVisualizer, basicFencePositions);
+
+        CreateBasicTrees(tilemapVisualizer, basicTreePositions);
+        return basicFencePositions;
+    }
+
+    private static void CreateBasicTrees(JapanTileMapVisualizer tilemapVisualizer, HashSet<Vector2Int> basicTreePositions)
+    {
+        foreach (var position in basicTreePositions)
+        {
+            tilemapVisualizer.PaintSingleBasicTree(position);
+        }
     }
 
     private static void CreateBasicFences(JapanTileMapVisualizer tilemapVisualizer, HashSet<Vector2Int> basicFencePositions)
@@ -100,7 +113,7 @@ public static class JapanWallGenerator
         return wallPositions;
     }
 
-    private static HashSet<Vector2Int> FindFencesInDirections(HashSet<Vector2Int> roadPositions, HashSet<Vector2Int> floorPositions, HashSet<Vector2Int> wallPositions, List<Vector2Int> directionList)
+    private static HashSet<Vector2Int> FindFencesInDirections(HashSet<Vector2Int> roadPositions, HashSet<Vector2Int> floorPositions, HashSet<Vector2Int> wallPositions, List<Vector2Int> directionList, int offset)
     {
         int minX = 0, minY = 0, maxX = 0, maxY = 0;
         HashSet<Vector2Int> fencePositions = new HashSet<Vector2Int>();
@@ -113,10 +126,10 @@ public static class JapanWallGenerator
 
         }
 
-        for(int x = minX-1; x < maxX+2; x++)
+        for(int x = minX-offset; x <= maxX+ offset; x++)
         {
-            var neighborPositionMin = new Vector2Int(x, minY-1);
-            var neighborPositionMax = new Vector2Int(x, maxY+1);
+            var neighborPositionMin = new Vector2Int(x, minY- offset);
+            var neighborPositionMax = new Vector2Int(x, maxY+ offset);
             if (!wallPositions.Contains(neighborPositionMin) && !roadPositions.Contains(neighborPositionMin) && !floorPositions.Contains(neighborPositionMin) && !wallPositions.Contains(neighborPositionMin + Direction2D.cardinalDirectionsList[0]))
             {
                 fencePositions.Add(neighborPositionMin);
@@ -127,10 +140,10 @@ public static class JapanWallGenerator
             }
         }
 
-        for (int y = minY-1; y < maxY+2; y++)
+        for (int y = minY- offset; y <= maxY+ offset; y++)
         {
-            var neighborPositionMin = new Vector2Int(minX-1, y);
-            var neighborPositionMax = new Vector2Int(maxX+1, y);
+            var neighborPositionMin = new Vector2Int(minX- offset, y);
+            var neighborPositionMax = new Vector2Int(maxX+ offset, y);
             if (!wallPositions.Contains(neighborPositionMin) && !roadPositions.Contains(neighborPositionMin) && !floorPositions.Contains(neighborPositionMin) && !wallPositions.Contains(neighborPositionMin + Direction2D.cardinalDirectionsList[0]))
             {
                 fencePositions.Add(neighborPositionMin);
@@ -140,6 +153,8 @@ public static class JapanWallGenerator
                 fencePositions.Add(neighborPositionMax);
             }
         }
+
+
         return fencePositions;
     }
 }

@@ -4,9 +4,26 @@ using UnityEngine;
 public class ItemManager : MonoBehaviour
 {
     [SerializeField] public List<Item_ScriptableObj> allItemsList = new List<Item_ScriptableObj>();
+    [SerializeField] public List<GameObject> allObjectsList = new List<GameObject>();
     [SerializeField][Range(0f, 1f)] public float itemChancePerTile = 1f;
+    [SerializeField][Range(0f, 1f)] public float objectChancePerTile = 1f;
     private List<GameObject> items = new List<GameObject>();
     [SerializeField] private Vector2 offset = Vector2.zero;
+    [SerializeField][Range(0f, 1f)] private float randomOffset = 0.2f;
+    public void InstantiateObject(Vector3 spawnPosition, Transform parent)
+    {
+        if (UnityEngine.Random.value <= objectChancePerTile)
+        {
+            GameObject droppedItem = GetDroppedObject();
+            if (droppedItem != null)
+            {
+                GameObject itemGameObject = Instantiate(droppedItem, parent);
+                itemGameObject.transform.localPosition = spawnPosition + new Vector3(offset.x, offset.y);
+                items.Add(itemGameObject);
+            }
+        }
+    }
+
     public void InstantiateLoot(Vector3 spawnPosition, Transform parent)
     {
         if (UnityEngine.Random.value <= itemChancePerTile)
@@ -15,12 +32,11 @@ public class ItemManager : MonoBehaviour
             if (droppedItem != null)
             {
                 GameObject itemGameObject = Instantiate(droppedItem.getResourcePrefab(), parent);
-                itemGameObject.transform.localPosition = spawnPosition + new Vector3(offset.x + Random.Range(-0.5f, 0.5f), offset.y + Random.Range(-0.5f, 0.5f));
+                itemGameObject.transform.localPosition = spawnPosition + new Vector3(offset.x + Random.Range(-randomOffset, randomOffset), offset.y + Random.Range(-randomOffset, randomOffset));
                 items.Add(itemGameObject);
             }
         }
     }
-
     //Loot Table for Dropped Item
     private Item_ScriptableObj GetDroppedItem()
     {
@@ -36,6 +52,21 @@ public class ItemManager : MonoBehaviour
         if (possibleItems.Count > 0)
         {
             Item_ScriptableObj droppedItem = possibleItems[UnityEngine.Random.Range(0, possibleItems.Count)];
+            return droppedItem;
+        }
+        return null;
+    }
+
+    private GameObject GetDroppedObject()
+    {
+        List<GameObject> possibleItems = new List<GameObject>();
+        foreach (GameObject item in allObjectsList)
+        {
+            possibleItems.Add(item);
+        }
+        if (possibleItems.Count > 0)
+        {
+            GameObject droppedItem = possibleItems[UnityEngine.Random.Range(0, possibleItems.Count)];
             return droppedItem;
         }
         return null;

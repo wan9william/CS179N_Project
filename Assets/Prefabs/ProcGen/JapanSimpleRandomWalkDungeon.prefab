@@ -49,7 +49,11 @@ MonoBehaviour:
   wallTilemap: {fileID: 0}
   wallFrontTilemap: {fileID: 0}
   fencesTilemap: {fileID: 0}
+  treesTilemap: {fileID: 0}
+  grassTilemap: {fileID: 0}
+  roofTilemap: {fileID: 0}
   floorTile: {fileID: 11400000, guid: b4c2922dd8e6d99489ecdb403cd44c69, type: 2}
+  roofTile: {fileID: 11400000, guid: 8572394bdaac2f944867bf37bb306ab7, type: 2}
   roadTile: {fileID: 11400000, guid: 931fa0f0ac587b8489815e0480859906, type: 2}
   roadVerti: {fileID: 11400000, guid: 3f339dd90b50c9245954847f34813d43, type: 2}
   roadVerti2: {fileID: 11400000, guid: c6e02d2d033061a4896f6966b7b5ac7c, type: 2}
@@ -70,8 +74,12 @@ MonoBehaviour:
   roadIntersect: {fileID: 11400000, guid: eb0439018d653484aaa8c10ea8c73f52, type: 2}
   roadStripeVert: {fileID: 11400000, guid: fa1f52fd416ea01418e794e29eea1d23, type: 2}
   roadStripeHori: {fileID: 11400000, guid: 6aeac6e38a8ecb547b15e541aad23c99, type: 2}
-  bushTile: {fileID: 11400000, guid: b2ff2a07041268e41b4036af25d20e85, type: 2}
-  grassTile: {fileID: 11400000, guid: 5e0bc66720869da44a3ee128b7ecd968, type: 2}
+  bushTile: {fileID: 11400000, guid: 8702f143d91021d4a9014bbdbc6ff7e1, type: 2}
+  bushTile2: {fileID: 11400000, guid: 80d9ccb429236ac49822468574be2420, type: 2}
+  bushTile3: {fileID: 11400000, guid: 7e1d02789c9a1ab44b6499bb24d8c312, type: 2}
+  bushTile4: {fileID: 11400000, guid: 1d477426f038e8e44ab1d44badd55ae8, type: 2}
+  treeTile: {fileID: 11400000, guid: 5089f44344f99ac42b36ff8efadfeaf4, type: 2}
+  sideFull: {fileID: 11400000, guid: 5e0bc66720869da44a3ee128b7ecd968, type: 2}
   sideMidLeft: {fileID: 11400000, guid: 7901162bdcd21c645a2b776021dee6cb, type: 2}
   sideMidRight: {fileID: 11400000, guid: 4ea334d3c12e9c64e878dc37b9b3fa99, type: 2}
   sideMidTop: {fileID: 11400000, guid: bdd06b18b210393448be4ba7ce836b76, type: 2}
@@ -109,6 +117,50 @@ MonoBehaviour:
   wallBottomRight: {fileID: 11400000, guid: edfa1b1a159054c4591d375ad748add9, type: 2}
   wallIntersect: {fileID: 11400000, guid: c5ec4a758ec2b4d4e9ad4d33c1bdaacc, type: 2}
   wallFront: {fileID: 11400000, guid: 0cafe833aa50ddd449c0b6a5b20386af, type: 2}
+  grassTiles:
+  - {fileID: 11400000, guid: d27460b009557964ab1bb3867eebb687, type: 2}
+  - {fileID: 11400000, guid: b1eaf1a5324359a409fa83e3bba4cdae, type: 2}
+  - {fileID: 11400000, guid: c1c8964df34a92543a7d69b8432232dd, type: 2}
+  - {fileID: 11400000, guid: bf0256db3fb986d4f8e8d49b133f5692, type: 2}
+  - {fileID: 11400000, guid: b4d4163af9dd6e247b5b3baa50fa1b42, type: 2}
+  - {fileID: 11400000, guid: d113ec5e83a0d3147a5108ab36cfd5f4, type: 2}
+  - {fileID: 11400000, guid: 52e3011ad64be01458990d9db38f441d, type: 2}
+  - {fileID: 11400000, guid: 6a48e1153701c434da78b7701dc41e3d, type: 2}
+  - {fileID: 11400000, guid: d25fcb19f58ef4748938c921f096f79a, type: 2}
+  - {fileID: 11400000, guid: a0124f0e5096c484490c7ee22535bd85, type: 2}
+  - {fileID: 11400000, guid: a0124f0e5096c484490c7ee22535bd85, type: 2}
+  - {fileID: 11400000, guid: a0124f0e5096c484490c7ee22535bd85, type: 2}
+  - {fileID: 11400000, guid: a0124f0e5096c484490c7ee22535bd85, type: 2}
+  - {fileID: 11400000, guid: a0124f0e5096c484490c7ee22535bd85, type: 2}
+  - {fileID: 11400000, guid: a0124f0e5096c484490c7ee22535bd85, type: 2}
+  - {fileID: 11400000, guid: a0124f0e5096c484490c7ee22535bd85, type: 2}
+  - {fileID: 11400000, guid: a0124f0e5096c484490c7ee22535bd85, type: 2}
+  - {fileID: 11400000, guid: a0124f0e5096c484490c7ee22535bd85, type: 2}
+  - {fileID: 11400000, guid: a0124f0e5096c484490c7ee22535bd85, type: 2}
+  - {fileID: 11400000, guid: a0124f0e5096c484490c7ee22535bd85, type: 2}
+  - {fileID: 11400000, guid: a0124f0e5096c484490c7ee22535bd85, type: 2}
+  - {fileID: 11400000, guid: a0124f0e5096c484490c7ee22535bd85, type: 2}
+  - {fileID: 11400000, guid: a0124f0e5096c484490c7ee22535bd85, type: 2}
+  - {fileID: 11400000, guid: a0124f0e5096c484490c7ee22535bd85, type: 2}
+  - {fileID: 11400000, guid: a0124f0e5096c484490c7ee22535bd85, type: 2}
+  - {fileID: 11400000, guid: a0124f0e5096c484490c7ee22535bd85, type: 2}
+  - {fileID: 11400000, guid: a0124f0e5096c484490c7ee22535bd85, type: 2}
+  - {fileID: 11400000, guid: a0124f0e5096c484490c7ee22535bd85, type: 2}
+  - {fileID: 11400000, guid: a0124f0e5096c484490c7ee22535bd85, type: 2}
+  - {fileID: 11400000, guid: a0124f0e5096c484490c7ee22535bd85, type: 2}
+  - {fileID: 11400000, guid: a0124f0e5096c484490c7ee22535bd85, type: 2}
+  - {fileID: 11400000, guid: a0124f0e5096c484490c7ee22535bd85, type: 2}
+  - {fileID: 11400000, guid: a0124f0e5096c484490c7ee22535bd85, type: 2}
+  - {fileID: 11400000, guid: a0124f0e5096c484490c7ee22535bd85, type: 2}
+  - {fileID: 11400000, guid: a0124f0e5096c484490c7ee22535bd85, type: 2}
+  - {fileID: 11400000, guid: a0124f0e5096c484490c7ee22535bd85, type: 2}
+  - {fileID: 11400000, guid: a0124f0e5096c484490c7ee22535bd85, type: 2}
+  - {fileID: 11400000, guid: a0124f0e5096c484490c7ee22535bd85, type: 2}
+  - {fileID: 11400000, guid: a0124f0e5096c484490c7ee22535bd85, type: 2}
+  - {fileID: 11400000, guid: a0124f0e5096c484490c7ee22535bd85, type: 2}
+  - {fileID: 11400000, guid: a0124f0e5096c484490c7ee22535bd85, type: 2}
+  - {fileID: 11400000, guid: a0124f0e5096c484490c7ee22535bd85, type: 2}
+  fenceTiles: []
 --- !u!1 &5042771563953492660
 GameObject:
   m_ObjectHideFlags: 0
@@ -140,7 +192,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 284829534102645643}
-  - {fileID: 3205753143518407906}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1446254796576453209
@@ -158,55 +209,8 @@ MonoBehaviour:
   tileMapVisualizer: {fileID: 6830184155295886894}
   startPosition: {x: 0, y: 0}
   itemManager: {fileID: 0}
+  itemManagerRoad: {fileID: 0}
   spawnItems: 0
   minLootRange: 10
   maxLootRange: 100
   randomWalkParameters: {fileID: 11400000, guid: 9c8d3c4f53d983842967d9ad767d54a6, type: 2}
---- !u!1 &7832518405003705175
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 3205753143518407906}
-  - component: {fileID: 3802676247195171562}
-  m_Layer: 0
-  m_Name: GrassDeployer
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &3205753143518407906
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7832518405003705175}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 4189860059966822411}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3802676247195171562
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7832518405003705175}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6346917581f784b4996d3c5807e27dd3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  grassTilemap: {fileID: 0}
-  grassTile: {fileID: 11400000, guid: a0124f0e5096c484490c7ee22535bd85, type: 2}
-  width: 400
-  length: 400

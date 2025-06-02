@@ -16,18 +16,89 @@ public class JapanDungeonGenerator : JapanAbstractDungeonGenerator
         HashSet<Vector2Int> floorPositions = RunRandomWalk(randomWalkParameters, startPosition);
         HashSet<Vector2Int> roadPositions = new HashSet<Vector2Int>();
         itemManager.Clear();
+        itemManagerRoad.Clear();
         tileMapVisualizer.Clear();
         tileMapVisualizer.PaintFloorTiles(floorPositions);
         JapanWallGenerator.CreateWalls(floorPositions, roadPositions, tileMapVisualizer);
-        SpawnItems(floorPositions);
+        SpawnItems(floorPositions, roadPositions);
     }
 
-    protected void SpawnItems(HashSet<Vector2Int> positions)
+    protected void SpawnItems(HashSet<Vector2Int> floorPositions, HashSet<Vector2Int> roadPositions)
     {
-        foreach (var position in positions)
+        foreach (var position in floorPositions)
         {
-            if (spawnItems && InSpawnArea(position) && CheckEightDirections(position, positions)) itemManager.InstantiateLoot(new Vector3(position.x, position.y, 0), itemManager.transform);
+            string binaryType = "";
+            foreach (var direction in Direction2D.eightDirectionsList)
+            {
+                var neighborPosition = position + direction;
+                if (floorPositions.Contains(neighborPosition))
+                    binaryType += "1";
+                else binaryType += "0";
+            }
+
+            int typeAsInt = Convert.ToInt32(binaryType, 2);
+
+            if(spawnItems && InSpawnArea(position))
+            {
+                if (WallTypesHelper.floorEdge.Contains(typeAsInt))
+                {
+                    itemManager.InstantiateObject(new Vector3(position.x, position.y, 0), itemManager.transform);
+                }
+                else
+                {
+                    if (Random.value < 0.2f)
+                    {
+                        itemManager.InstantiateObject(new Vector3(position.x, position.y, 0), itemManager.transform);
+                    }
+                    else
+                    {
+                        itemManager.InstantiateLoot(new Vector3(position.x, position.y, 0), itemManager.transform);
+                    }
+                }
+            }
         }
+
+        foreach (var position in roadPositions)
+        {
+            string binaryType = "";
+            foreach (var direction in Direction2D.eightDirectionsList)
+            {
+                var neighborPosition = position + direction;
+                if (roadPositions.Contains(neighborPosition))
+                    binaryType += "1";
+                else binaryType += "0";
+            }
+            int typeAsInt = Convert.ToInt32(binaryType, 2);
+            if (spawnItems && InSpawnArea(position))
+            {
+                if (WallTypesHelper.floorEdgeHorizontal.Contains(typeAsInt))
+                {
+                    itemManagerRoad.InstantiateObject(new Vector3(position.x, position.y, 0), itemManagerRoad.transform);
+                }
+                else if (WallTypesHelper.floorAll.Contains(typeAsInt))
+                {
+                    itemManagerRoad.InstantiateLoot(new Vector3(position.x, position.y, 0), itemManagerRoad.transform);
+                }
+            }
+        }
+    }
+
+
+    //TODO: CHECKS FOR EDGES OF ROOMS
+    private bool isEdge(Vector2Int position, HashSet<Vector2Int> floorPositions)
+    {
+        string binaryType = "";
+        foreach (var direction in Direction2D.eightDirectionsList)
+        {
+            var neighborPosition = position + direction;
+            if (floorPositions.Contains(neighborPosition))
+                binaryType += "1";
+            else binaryType += "0";
+        }
+
+        int typeAsInt = Convert.ToInt32(binaryType, 2);
+
+        return (WallTypesHelper.floorEdgeHorizontal.Contains(typeAsInt));
     }
 
     protected bool InSpawnArea(Vector2Int position)
