@@ -50,7 +50,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 6d9fc24e61bab234aa2000cddb14dab9, type: 2}
   - {fileID: 11400000, guid: ebfabfcab44f3404d8a80e7c19b4c227, type: 2}
   - {fileID: 11400000, guid: f40b3b1526f2c3842ab693fea6e46211, type: 2}
-  allObjectsList: []
-  itemChancePerTile: 0.25
-  objectChancePerTile: 0
+  allObjectsList:
+  - {fileID: 1125499661087022960, guid: 429e7ea7209e6df41a6b6e86295c662a, type: 3}
+  - {fileID: 6930780734084799376, guid: d49e369f8e0a7d44494b30b4dce391c0, type: 3}
+  - {fileID: 1670858592360923935, guid: cfb9a3ae15ddc2c458609dd7b4542613, type: 3}
+  itemChancePerTile: 0.2
+  objectChancePerTile: 0.2
   offset: {x: 0.33, y: 0.33}
+  randomOffset: 0.2

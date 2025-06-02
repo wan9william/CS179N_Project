@@ -50,11 +50,11 @@ MonoBehaviour:
   itemManagerRoad: {fileID: 0}
   spawnItems: 1
   minLootRange: 20
-  maxLootRange: 100
+  maxLootRange: 200
   randomWalkParameters: {fileID: 11400000, guid: 924b484406f3a784694a5fbdd46d59e0, type: 2}
   corridorLength: 30
-  corridorCount: 15
-  roomPercent: 0.9
+  corridorCount: 10
+  roomPercent: 1
   roomPrefab: {fileID: 603374946818374131, guid: c16bddf7197cfaa48b42a37d84d0a887, type: 3}
   minimumHouseLength: 21
   maximumHouseLength: 21

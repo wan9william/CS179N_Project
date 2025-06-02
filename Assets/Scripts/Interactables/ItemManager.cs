@@ -18,7 +18,7 @@ public class ItemManager : MonoBehaviour
             if (droppedItem != null)
             {
                 GameObject itemGameObject = Instantiate(droppedItem, parent);
-                itemGameObject.transform.localPosition = spawnPosition + new Vector3(offset.x, offset.y);
+                itemGameObject.transform.localPosition = spawnPosition;
                 items.Add(itemGameObject);
             }
         }
@@ -37,6 +37,7 @@ public class ItemManager : MonoBehaviour
             }
         }
     }
+
     //Loot Table for Dropped Item
     private Item_ScriptableObj GetDroppedItem()
     {

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -9,12 +10,18 @@ public abstract class JapanAbstractDungeonGenerator : MonoBehaviour
     [SerializeField] protected ItemManager itemManagerRoad = null;
     [SerializeField] protected bool spawnItems = true;
     [SerializeField] protected int minLootRange, maxLootRange;
+    [SerializeField] protected List<GameObject> doorList;
 
     public void generateDungeon()
     {
         itemManager.Clear();
         itemManagerRoad.Clear();
         tileMapVisualizer.Clear();
+        foreach (GameObject door in doorList)
+        {
+            DestroyImmediate(door);
+        }
+        doorList.Clear();
         RunProceduralGeneration();
     }
 

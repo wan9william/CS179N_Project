@@ -34,9 +34,16 @@ public class JapanTileMapVisualizer : MonoBehaviour
         PaintTiles(floorPositions, floorTilemap, floorTile);
     }
 
-    public void PaintRoofTiles(IEnumerable<Vector2Int> roofPositions)
+    public void PaintRoofTiles(HashSet<Vector2Int> roofPositions, HashSet<Vector2Int> wallPositions, HashSet<Vector2Int> doorPositions)
     {
-        PaintTiles(roofPositions, roofTilemap, roofTile); 
+        roofPositions.UnionWith(wallPositions);
+        foreach (var position in roofPositions)
+        {
+            if (!doorPositions.Contains(position))
+            {
+                PaintSingleTile(roofTilemap, roofTile, position);
+            }
+        }
     }
 
     public void PaintRoadIntersectionTiles(IEnumerable<Vector2Int> roadPositions)
@@ -150,7 +157,7 @@ public class JapanTileMapVisualizer : MonoBehaviour
                                      roadStripeHori,                  roadTile,                  roadTile,  roadIntersect,                   roadTile,             roadTile, roadStripeHori,
                                      roadStripeHori,                roadMidTop, roadInnerCornerBottomLeft,       roadTile, roadInnerCornerBottomRight,           roadMidTop, roadStripeHori,
                                          sideRampUp,        sideCornerTopRight,               roadMidLeft,       roadTile,               roadMidRight,    sideCornerTopLeft,     sideRampUp,
-                                           sideFull,             sideRampRight,            roadStripeVert, roadStripeVert,             roadStripeVert,         sideMidRight,       sideFull};
+                                           sideFull,             sideRampRight,            roadStripeVert, roadStripeVert,             roadStripeVert,        sideRampLeft,       sideFull};
                 PaintSevenSquare(listOfTiles, position);
             }
         }
@@ -235,7 +242,6 @@ public class JapanTileMapVisualizer : MonoBehaviour
         grassTilemap.ClearAllTiles();
         roofTilemap.ClearAllTiles();
         treesTilemap.ClearAllTiles();
-        
     }
 
     internal void PaintSingleBasicWall(Vector2Int position, string binaryType, string binaryWallType)
@@ -430,4 +436,5 @@ public class JapanTileMapVisualizer : MonoBehaviour
     {
         PaintSingleTile(treesTilemap, treeTile, position);
     }
+
 }

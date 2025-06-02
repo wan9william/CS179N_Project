@@ -1,12 +1,15 @@
+using System;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
 public class Door : Interactable
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    [SerializeField] private Tilemap building_top;
-    protected override void onInteract(ref Player player) {
-        building_top.gameObject.SetActive(false);
+    protected override void onInteract(ref Player player)
+    {
+        player.SetFindInteract(true);
+        player.SetInteract(null);
+        gameObject.SetActive(false);
     }
 
     protected override void ExplosionVFX()
@@ -18,7 +21,6 @@ public class Door : Interactable
     {
         return;
     }
-
     protected override void Initialize()
     {
         return;

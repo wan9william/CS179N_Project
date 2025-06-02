@@ -62,7 +62,6 @@ MonoBehaviour:
   allObjectsList:
   - {fileID: 1944561874248949290, guid: 3d8534f28da04354b9b7fe6adb50a419, type: 3}
   - {fileID: 7708460618438769968, guid: 3f3e4fae8807fcf4dac7aeb5b2d0cd8a, type: 3}
-  - {fileID: 1125499661087022960, guid: 429e7ea7209e6df41a6b6e86295c662a, type: 3}
   - {fileID: 707844513925958743, guid: 76c17ff0228477141905dd565c7b069f, type: 3}
   - {fileID: 7868755421187583708, guid: 28601812868c32a488d8ca0601faf3d0, type: 3}
   - {fileID: 707496643322631478, guid: a6ad9a1372a17304599ff2050543995b, type: 3}
@@ -70,6 +69,7 @@ MonoBehaviour:
   - {fileID: 7755180128709064733, guid: 3104622d794d7fe40a560f8f0bd2d228, type: 3}
   - {fileID: 1739963655728356208, guid: 003e569d8262bbe4a8254b462e5b017a, type: 3}
   - {fileID: 8083011890758777299, guid: 57fabb566f5c1be4e9253a57872ced59, type: 3}
-  itemChancePerTile: 0.2
+  itemChancePerTile: 0.4
   objectChancePerTile: 0.25
   offset: {x: 0.33, y: 0.33}
+  randomOffset: 0.2

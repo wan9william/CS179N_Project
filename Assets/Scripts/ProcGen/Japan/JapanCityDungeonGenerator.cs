@@ -11,8 +11,6 @@ public class JapanCityDungeonGenerator : JapanDungeonGenerator
     //PCG Parameters
     [SerializeField] private int corridorLength = 14, corridorCount = 5;
     [SerializeField] [Range(0.1f,1f)] public float roomPercent = 0.8f;
-    [SerializeField] private GameObject roomPrefab;
-    
     
     [SerializeField] private int minimumHouseLength = 6, maximumHouseLength = 17;
     [SerializeField] private int initialAreaLength, initialAreaWidth = 10;
@@ -22,6 +20,8 @@ public class JapanCityDungeonGenerator : JapanDungeonGenerator
     [SerializeField] private int corridorSize = 3;
     [SerializeField] private int roomOffset = 5;
 
+    [SerializeField] private GameObject doorHorizontalPrefab;
+    [SerializeField] private GameObject doorVerticalPrefab;
 
     //PCG Data
     private Dictionary<Vector2Int, HashSet<Vector2Int>> roomsDictionary = new Dictionary<Vector2Int, HashSet<Vector2Int>>();
@@ -42,6 +42,12 @@ public class JapanCityDungeonGenerator : JapanDungeonGenerator
     {
         HashSet<Vector2Int> roadPositions = new HashSet<Vector2Int>();
         HashSet<Vector2Int> floorPositions = new HashSet<Vector2Int>();
+        HashSet<Vector2Int> doorPositions = new HashSet<Vector2Int>();
+        foreach (GameObject door in doorList)
+        {
+            DestroyImmediate(door);
+        }
+        doorList.Clear();
 
         HashSet<Vector2Int> potentialRoomPositions = new HashSet<Vector2Int>();
 
@@ -54,7 +60,7 @@ public class JapanCityDungeonGenerator : JapanDungeonGenerator
             corridors[i] = IncreaseCorridorBrush(corridors[i], corridorSize);
             roadPositions.UnionWith(corridors[i]);
         }
-        HashSet<Vector2Int> roomPositions = CreateHouses(potentialRoomPositions, roadPositions);
+        HashSet<Vector2Int> roomPositions = CreateHouses(potentialRoomPositions, roadPositions, doorPositions, doorList);
 
         //List<Vector2Int> deadEnds = FindAllDeadEnds(roadPositions);
 
@@ -67,7 +73,8 @@ public class JapanCityDungeonGenerator : JapanDungeonGenerator
         var wallPositions = JapanWallGenerator.CreateWalls(roomPositions, roadPositions, tileMapVisualizer);
         var fencePositions = JapanWallGenerator.CreateFences(roadPositions, floorPositions, wallPositions, tileMapVisualizer);
         tileMapVisualizer.PaintGrassTiles(fencePositions);
-        SpawnItems(roomPositions, roadPositions);
+        tileMapVisualizer.PaintRoofTiles(roomPositions, wallPositions, doorPositions);
+        SpawnItems(roomPositions, roadPositions, doorPositions);
     }
 
     private List<Vector2Int> IncreaseCorridorBrush(List<Vector2Int> corridor, int size)
@@ -129,22 +136,20 @@ public class JapanCityDungeonGenerator : JapanDungeonGenerator
         roomsDictionary[roomPosition] = roomFloor;
         roomColors.Add(UnityEngine.Random.ColorHSV());
     }
-    private HashSet<Vector2Int> CreateHouses(HashSet<Vector2Int> potentialRoomPositions, HashSet<Vector2Int> roadPositions)
+    private HashSet<Vector2Int> CreateHouses(HashSet<Vector2Int> potentialRoomPositions, HashSet<Vector2Int> roadPositions, HashSet<Vector2Int> doorPositions, List<GameObject> doorList)
     {
         HashSet<Vector2Int> roomPositions = new HashSet<Vector2Int>();
         int roomToCreateCount = Mathf.RoundToInt(potentialRoomPositions.Count*roomPercent);
 
         List<Vector2Int> roomsToCreate = potentialRoomPositions.OrderBy(x => Guid.NewGuid()).Take(roomToCreateCount).ToList();
         var roomFloor = new HashSet<Vector2Int>();
-        roomFloor = RunRectangleWalk(new Vector2Int(0,0), initialAreaWidth+1, initialAreaLength+1);
-        roomPositions.UnionWith(roomFloor);
 
         Vector2Int roomOffset2D = new Vector2Int(roomOffset-1, roomOffset);
         foreach (var roomPosition in roomsToCreate)
         {
-            if (roomPosition == new Vector2Int(0, 0)) continue;
+            if (roomPosition.x <= initialAreaLength/2 && roomPosition.y <= initialAreaWidth/2) continue;
 
-            roomFloor = CreateHouse(roomPosition + roomOffset2D, roadPositions);
+            roomFloor = CreateHouse(roomPosition + roomOffset2D, roadPositions, doorPositions, doorList);
             SaveRoomData(roomPosition+roomOffset2D, roomFloor);
             roomPositions.UnionWith(roomFloor);
         }
@@ -194,7 +199,7 @@ public class JapanCityDungeonGenerator : JapanDungeonGenerator
     }
 
 
-    private HashSet<Vector2Int> CreateHouse(Vector2Int roomPosition, HashSet<Vector2Int> roadPositions)
+    private HashSet<Vector2Int> CreateHouse(Vector2Int roomPosition, HashSet<Vector2Int> roadPositions, HashSet<Vector2Int> doorPositions, List<GameObject> doorList)
     {
         var roomsList = ProceduralGeneration.BinarySpacePartitioning(new BoundsInt((Vector3Int)roomPosition, new Vector3Int(maximumHouseLength, maximumHouseLength, 0)), minRoomWidth, minRoomHeight);
         int count = 0;
@@ -207,7 +212,7 @@ public class JapanCityDungeonGenerator : JapanDungeonGenerator
         HashSet<Vector2Int> floor = new HashSet<Vector2Int>();
 
         floor.Clear();
-        floor = CreateSimpleRooms(roomsList, roadPositions);
+        floor = CreateSimpleRooms(roomsList, roadPositions, doorPositions, doorList);
 
         List<Vector2Int> roomCenters = new List<Vector2Int>();
         foreach (var room in roomsList)
@@ -294,7 +299,7 @@ public class JapanCityDungeonGenerator : JapanDungeonGenerator
         return closest;
     }
 
-    private HashSet<Vector2Int> CreateSimpleRooms(List<BoundsInt> roomsList, HashSet<Vector2Int> roadPositions)
+    private HashSet<Vector2Int> CreateSimpleRooms(List<BoundsInt> roomsList, HashSet<Vector2Int> roadPositions, HashSet<Vector2Int> doorPositions, List<GameObject> doorList)
     {
         HashSet<Vector2Int> floor = new HashSet<Vector2Int>();
         var firstElement = roomsList.First();
@@ -324,6 +329,7 @@ public class JapanCityDungeonGenerator : JapanDungeonGenerator
             corridorX.Add(startPositionX + Direction2D.cardinalDirectionsList[0] + Direction2D.cardinalDirectionsList[3]);
             startPositionX = startPositionX + Direction2D.cardinalDirectionsList[3];
             countX++;
+
         }
 
         while (!roadPositions.Contains(startPositionY + Direction2D.cardinalDirectionsList[2]) && countY < 20)
@@ -337,10 +343,26 @@ public class JapanCityDungeonGenerator : JapanDungeonGenerator
         if (countX < countY)
         {
             floor.UnionWith(corridorX);
+
+            GameObject door = Instantiate(doorVerticalPrefab, this.transform);
+            doorList.Add(door);
+            Vector2Int startPosition = (startPositionX + Direction2D.cardinalDirectionsList[0] * 2);
+            Vector3 doorPosition = new Vector3(startPosition.x-0.5f, startPosition.y, 0);
+            door.transform.localPosition = doorPosition;
+            doorPositions.Add(startPositionX + Direction2D.cardinalDirectionsList[0] * 2);
+            doorPositions.Add(startPositionX + Direction2D.cardinalDirectionsList[0]);
         }
         else
         {
             floor.UnionWith(corridorY);
+
+            GameObject door = Instantiate(doorHorizontalPrefab, this.transform);
+            doorList.Add(door);
+            Vector2Int startPosition = (startPositionY + Direction2D.cardinalDirectionsList[1]);
+            Vector3 doorPosition = new Vector3(startPosition.x + 0.5f, startPosition.y, 0);
+            door.transform.localPosition = doorPosition;
+            doorPositions.Add(startPositionY + Direction2D.cardinalDirectionsList[1] * 2);
+            doorPositions.Add(startPositionY + Direction2D.cardinalDirectionsList[1]);
         }
 
         foreach (var room in roomsList)

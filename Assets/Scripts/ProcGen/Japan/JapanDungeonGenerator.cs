@@ -15,18 +15,25 @@ public class JapanDungeonGenerator : JapanAbstractDungeonGenerator
     {
         HashSet<Vector2Int> floorPositions = RunRandomWalk(randomWalkParameters, startPosition);
         HashSet<Vector2Int> roadPositions = new HashSet<Vector2Int>();
+        HashSet<Vector2Int> doorPositions = new HashSet<Vector2Int>();
+        foreach (GameObject door in doorList)
+        {
+            DestroyImmediate(door);
+        }
+        doorList.Clear();
         itemManager.Clear();
         itemManagerRoad.Clear();
         tileMapVisualizer.Clear();
         tileMapVisualizer.PaintFloorTiles(floorPositions);
         JapanWallGenerator.CreateWalls(floorPositions, roadPositions, tileMapVisualizer);
-        SpawnItems(floorPositions, roadPositions);
+        SpawnItems(floorPositions, roadPositions, doorPositions);
     }
 
-    protected void SpawnItems(HashSet<Vector2Int> floorPositions, HashSet<Vector2Int> roadPositions)
+    protected void SpawnItems(HashSet<Vector2Int> floorPositions, HashSet<Vector2Int> roadPositions, HashSet<Vector2Int> doorPositions)
     {
         foreach (var position in floorPositions)
         {
+            if (doorPositions.Contains(position)) continue;
             string binaryType = "";
             foreach (var direction in Direction2D.eightDirectionsList)
             {
@@ -44,7 +51,7 @@ public class JapanDungeonGenerator : JapanAbstractDungeonGenerator
                 {
                     itemManager.InstantiateObject(new Vector3(position.x, position.y, 0), itemManager.transform);
                 }
-                else
+                else if (CheckEightDirections(position,floorPositions))
                 {
                     if (Random.value < 0.2f)
                     {

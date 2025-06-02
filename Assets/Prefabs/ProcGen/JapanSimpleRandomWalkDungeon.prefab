@@ -52,8 +52,10 @@ MonoBehaviour:
   treesTilemap: {fileID: 0}
   grassTilemap: {fileID: 0}
   roofTilemap: {fileID: 0}
+  doorTilemap: {fileID: 0}
   floorTile: {fileID: 11400000, guid: b4c2922dd8e6d99489ecdb403cd44c69, type: 2}
-  roofTile: {fileID: 11400000, guid: 8572394bdaac2f944867bf37bb306ab7, type: 2}
+  roofTile: {fileID: 11400000, guid: 745c7cd48c16cd6479e6e05c8456a79c, type: 2}
+  doorTile: {fileID: 11400000, guid: 64706b7c046fc1448ab7d317bed48c7e, type: 2}
   roadTile: {fileID: 11400000, guid: 931fa0f0ac587b8489815e0480859906, type: 2}
   roadVerti: {fileID: 11400000, guid: 3f339dd90b50c9245954847f34813d43, type: 2}
   roadVerti2: {fileID: 11400000, guid: c6e02d2d033061a4896f6966b7b5ac7c, type: 2}
