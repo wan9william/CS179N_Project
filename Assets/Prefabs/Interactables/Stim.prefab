@@ -89,7 +89,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
+  m_SpriteSortPoint: 1
 --- !u!114 &4088291292368310174
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -148,7 +148,7 @@ BoxCollider2D:
   m_Offset: {x: -0.06, y: 0.15}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.7164476, y: 0.16347885}
+    pivot: {x: 0.5, y: 0}
     oldSize: {x: 0.28125, y: 0.4375}
     newSize: {x: 0.5625, y: 0.875}
     adaptiveTilingThreshold: 0.5

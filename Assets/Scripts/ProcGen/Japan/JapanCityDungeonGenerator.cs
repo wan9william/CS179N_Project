@@ -61,6 +61,7 @@ public class JapanCityDungeonGenerator : JapanDungeonGenerator
             roadPositions.UnionWith(corridors[i]);
         }
         HashSet<Vector2Int> roomPositions = CreateHouses(potentialRoomPositions, roadPositions, doorPositions, doorList);
+        roomPositions = RemoveFloors(roomPositions);
 
         //List<Vector2Int> deadEnds = FindAllDeadEnds(roadPositions);
 
