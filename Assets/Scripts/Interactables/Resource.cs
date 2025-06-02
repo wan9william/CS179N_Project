@@ -17,10 +17,9 @@ public class Resource : Interactable
 
         quantity = player.getInventory().addItem(new Tuple<Item_ScriptableObj, int>(_resource, quantity)); //sets the quantity to the leftover quantity after adding to the inventory
 
-        if (audioSource)
+        if (audioSource && audioSource.clip)
         {
-            audioSource.Stop();
-            audioSource.Play();
+            player.PlaySFX(audioSource.clip);
             Debug.Log("PLAY");
         }
 
