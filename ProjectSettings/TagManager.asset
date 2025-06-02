@@ -7,9 +7,15 @@ TagManager:
   - Resource
   - Interactable
   - Object_Manager
+<<<<<<< HEAD
+  - LandingPad
+  - Ship
+  - Inventory
+=======
   - UI_Manager
   - Game_Manager
   - Ship
+>>>>>>> master
   layers:
   - Default
   - TransparentFX

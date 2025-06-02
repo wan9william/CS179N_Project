@@ -23,22 +23,23 @@ public class Bullet : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.GetComponent<Bullet>() != null)
+        Debug.Log($"[Collision] Hit {collision.collider.name}");
+
+        Interactable interactable = collision.collider.GetComponentInParent<Interactable>();
+        if (interactable != null)
         {
-            Debug.Log("[Bullet] Ignored collision with another bullet");
-            return;
+            Debug.Log($"[Bullet] Damaging interactable {collision.collider.name}");
+            interactable.Hit(damage);
         }
 
-        Debug.Log($"[Collision] Hit {collision.collider.name}");
+        // (Optional) Still check for enemies separately if needed
         EnemyHealth enemy = collision.collider.GetComponent<EnemyHealth>();
         if (enemy != null)
         {
-            Debug.Log($"[Bullet] Hit enemy with health: {enemy.name}");
             enemy.TakeDamage(damage);
         }
 
-        
-        gameObject.SetActive(false);
+        gameObject.SetActive(false); // destroy bullet
     }
 
     void OnTriggerEnter2D(Collider2D other)

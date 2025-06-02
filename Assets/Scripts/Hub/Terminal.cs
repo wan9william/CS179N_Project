@@ -1,7 +1,9 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Terminal : MonoBehaviour
 {
+
     public enum UI_Elements { START, EXTRACT}; 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     [SerializeField] Player player;
@@ -57,5 +59,6 @@ public class Terminal : MonoBehaviour
             default:
                 break;
         }
+
     }
 }
