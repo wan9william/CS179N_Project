@@ -25,9 +25,15 @@ public class DungeonGenerator : AbstractDungeonGenerator
     {
         foreach (var position in positions)
         {
-            if (spawnItems && CheckEightDirections(position, positions)) itemManager.InstantiateLoot(new Vector3(position.x, position.y, 0), itemManager.transform);
+            if (spawnItems && InSpawnArea(position) && CheckEightDirections(position, positions)) itemManager.InstantiateLoot(new Vector3(position.x, position.y, 0), itemManager.transform);
         }
     }
+
+    protected bool InSpawnArea(Vector2Int position)
+    {
+        return (Math.Abs(position.x) >= minLootRange || Math.Abs(position.y) >= minLootRange) && (Math.Abs(position.x) <= maxLootRange && Math.Abs(position.y) <= maxLootRange);
+    }
+
     protected bool CheckEightDirections(Vector2Int position, IEnumerable<Vector2Int> floorPositions)
     {
         foreach (Vector2Int direction in Direction2D.eightDirectionsList)

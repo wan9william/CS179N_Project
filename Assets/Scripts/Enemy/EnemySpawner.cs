@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 [System.Serializable]
 public class SpawnEntry
@@ -10,68 +11,128 @@ public class SpawnEntry
 
 public class EnemySpawner : MonoBehaviour
 {
-    public SpawnEntry[] enemyTypes;
-    public Transform[] spawnPoints;
-    public float spawnInterval = 5f;
-    public int enemiesPerWave = 1;
-    public float triggerDistance = 5f; // Distance from player to trigger spawn
-    public bool spawnOnce = true;
+    [Header("References")]
+    public TileMapVisualizer tileMapVisualizer;
+    public Transform player;
 
-    private bool hasSpawned = false;
-    private bool isSpawning = false;
-    private Transform player;
+    [Header("Spawn Settings")]
+    public SpawnEntry[] enemyTypes;
+    public int spawnPointCount = 10;
+    public int enemiesPerSpawn = 2;
+    public float spawnOffset = 0.5f;
+    public float triggerRadius = 7f;
+    public float spawnInterval = 3f;
+    public float minDistanceFromPlayer = 6f;
+    public float minDistanceBetweenSpawners = 5f;
+
+    private List<Vector3> spawnPositions = new List<Vector3>();
+    private Dictionary<Vector3, Coroutine> activeSpawns = new Dictionary<Vector3, Coroutine>();
 
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player")?.transform;
-    }
-
-    void Update()
-    {
-        if (player == null || (hasSpawned && spawnOnce)) return;
-
-        foreach (var point in spawnPoints)
+        if (tileMapVisualizer == null || player == null || enemyTypes.Length == 0)
         {
-            float distance = Vector2.Distance(player.position, point.position);
-            if (distance <= triggerDistance && !isSpawning)
-            {
-                StartCoroutine(SpawnWaveRepeatedly());
-                if (spawnOnce) hasSpawned = true;
-                break;
-            }
+            Debug.LogError("[EnemySpawner] Missing references.");
+            return;
         }
-    }
 
-    IEnumerator SpawnWaveRepeatedly()
-    {
-        isSpawning = true;
+        List<Vector2Int> floorTiles = tileMapVisualizer.GetFloorWorldPositions();
 
-        do
+        int attempts = 0;
+        while (spawnPositions.Count < spawnPointCount && attempts < 1000)
         {
-            for (int i = 0; i < enemiesPerWave; i++)
+            attempts++;
+            Vector2Int tile = floorTiles[Random.Range(0, floorTiles.Count)];
+            Vector3 spawnPos = new Vector3(tile.x + spawnOffset, tile.y + spawnOffset, 0f);
+
+            bool tooClose = false;
+
+            // Don't place near player
+            if (Vector3.Distance(spawnPos, player.position) < minDistanceFromPlayer)
             {
-                var entry = enemyTypes[Random.Range(0, enemyTypes.Length)];
-                var point = spawnPoints[Random.Range(0, spawnPoints.Length)];
+                tooClose = true;
+            }
 
-                GameObject enemy = Instantiate(entry.prefab, point.position, Quaternion.identity);
-
-                var ai = enemy.GetComponent<EnemyAI>();
-                if (ai != null)
+            // Don't place near other spawn points
+            if (!tooClose)
+            {
+                foreach (var existing in spawnPositions)
                 {
-                    switch (entry.type)
+                    if (Vector3.Distance(spawnPos, existing) < minDistanceBetweenSpawners)
                     {
-                        case EnemyType.Idle: ai.currentState = EnemyState.Idle; break;
-                        case EnemyType.Patrol: ai.currentState = EnemyState.Patrol; break;
-                        case EnemyType.Chase: ai.currentState = EnemyState.Chase; break;
-                        default: ai.currentState = EnemyState.Idle; break;
+                        tooClose = true;
+                        break;
                     }
                 }
             }
 
+            if (!tooClose)
+            {
+                spawnPositions.Add(spawnPos);
+            }
+        }
+
+        Debug.Log($"[EnemySpawner] Placed {spawnPositions.Count} spawn points after {attempts} attempts.");
+    }
+
+    void Update()
+    {
+        foreach (Vector3 point in spawnPositions)
+        {
+            float distance = Vector3.Distance(player.position, point);
+
+            if (distance <= triggerRadius)
+            {
+                if (!activeSpawns.ContainsKey(point))
+                {
+                    Coroutine routine = StartCoroutine(SpawnEnemiesAtPoint(point));
+                    activeSpawns[point] = routine;
+                }
+            }
+            else
+            {
+                if (activeSpawns.ContainsKey(point))
+                {
+                    StopCoroutine(activeSpawns[point]);
+                    activeSpawns.Remove(point);
+                }
+            }
+        }
+    }
+
+    IEnumerator SpawnEnemiesAtPoint(Vector3 point)
+    {
+        while (true)
+        {
+            for (int i = 0; i < enemiesPerSpawn; i++)
+            {
+                var entry = enemyTypes[Random.Range(0, enemyTypes.Length)];
+                if (entry.prefab != null)
+                {
+                    GameObject enemy = Instantiate(entry.prefab, point, Quaternion.identity);
+
+                    // Assign player to AI if needed
+                    EnemyAI ai = enemy.GetComponent<EnemyAI>();
+                    if (ai != null && ai.target == null)
+                        ai.target = player;
+                }
+            }
+
             yield return new WaitForSeconds(spawnInterval);
+        }
+    }
 
-        } while (!spawnOnce);
+    public List<Vector3> GetEnemySpawnPositions()
+    {
+        return spawnPositions;
+    }
 
-        isSpawning = false;
+    void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        foreach (var pos in spawnPositions)
+        {
+            Gizmos.DrawSphere(pos, 0.2f);
+        }
     }
 }

@@ -3,69 +3,62 @@ using UnityEngine.SceneManagement;
 
 public class Terminal : MonoBehaviour
 {
-    [SerializeField] private Player player;
-    [SerializeField] private string targetScene = "PlanetScene";
 
-    private Vector3 localShipPosition;
+    public enum UI_Elements { START, EXTRACT}; 
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    [SerializeField] Player player;
+    [SerializeField] Game_Event_Manager game_event_manager;
 
-    private void Awake()
-    {
-        DontDestroyOnLoad(gameObject); // Keep this Terminal alive between scenes
+    [SerializeField] GameObject Start_Button;
+    [SerializeField] GameObject Extract_Button;
+    [SerializeField] UI_Elements current_ui;
+
+    public void ActivateUI(UI_Elements ui) {
+        switch (ui)
+        {
+            case UI_Elements.START:
+                Start_Button.SetActive(true);
+                break;
+            case UI_Elements.EXTRACT:
+                Extract_Button.SetActive(true);
+                break;
+            default:
+                break;
+        }
+        current_ui = ui;
     }
 
-    public void ClickX()
-    {
-        gameObject.SetActive(false);
+    public void ClickX() {
+        DeactivateUI();
         player.setPaused(false);
     }
 
-    public void StartMission()
-    {
-        ClickX();
-
-        GameObject ship = GameObject.FindGameObjectWithTag("Ship");
-        GameObject inventoryObject = GameObject.Find("Inventory");
-        
-        if (ship != null && player != null && inventoryObject != null)
-        {
-            //Save position relative to ship
-            localShipPosition = ship.transform.InverseTransformPoint(player.transform.position);
-
-            //Persist player
-            DontDestroyOnLoad(player.gameObject);
-
-            //Persist inventory UI
-            DontDestroyOnLoad(inventoryObject);
-
-            //Persist ship items
-            ship.GetComponentInChildren<ShipItemCapture>()?.CaptureItems();
-        }
-
-        SceneManager.sceneLoaded += OnSceneLoaded;
-        SceneManager.LoadScene(targetScene);
+    public void ClickStart() {
+        DeactivateUI();
+        player.setPaused(false);
+        game_event_manager.SetState(Game_Event_Manager.GM_STATES.START_MISSION);
     }
 
-
-    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    public void ClickExtract()
     {
-        GameObject ship = GameObject.FindGameObjectWithTag("Ship");
-        GameObject landingPad = GameObject.FindGameObjectWithTag("LandingPad");
+        DeactivateUI();
+        player.setPaused(false);
+        game_event_manager.SetState(Game_Event_Manager.GM_STATES.END_MISSION);
+        game_event_manager.SetLoseMission(false);
+    }
 
-        if (ship != null && landingPad != null)
+    private void DeactivateUI() {
+        switch (current_ui)
         {
-            ship.transform.position = landingPad.transform.position;
-
-            //Reposition player back into the ship
-            Player newPlayer = FindObjectOfType<Player>();
-            if (newPlayer != null)
-            {
-                newPlayer.transform.position = ship.transform.TransformPoint(localShipPosition);
-            }
-
-            //Restore ship-carried items
-            ship.GetComponentInChildren<ShipItemCapture>()?.RestoreItemPositions();
+            case UI_Elements.START:
+                Start_Button.SetActive(false);
+                break;
+            case UI_Elements.EXTRACT:
+                Extract_Button.SetActive(false);
+                break;
+            default:
+                break;
         }
 
-        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 }

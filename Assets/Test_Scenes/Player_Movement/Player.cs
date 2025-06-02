@@ -1,6 +1,8 @@
+using TMPro;
 using Unity.VisualScripting;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.InputSystem.Switch;
 using UnityEngine.UI;
 
 
@@ -57,6 +59,7 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject _interactable;
     [SerializeField] private PlayerHealth _healthbar;
     [SerializeField] private Camera _camera;
+    [SerializeField] private TextMeshProUGUI _moneyText;
 
     //FLAGS
     [Header("Flags")]
@@ -78,10 +81,15 @@ public class Player : MonoBehaviour
     //Equipped Tool
     private Weapon _weaponScript;
     private SpriteRenderer _weaponSR;
+    private SpriteRenderer _muzzleFlashSR;
+    [SerializeField] private int muzzleFlashOffset = 0;
     [SerializeField] private bool releaseMouse = false;
 
     //Currency
     [SerializeField] private int money = 0;
+
+    //Managers
+    [SerializeField] private Game_Event_Manager game_event_manager;
 
 
 
@@ -355,6 +363,7 @@ void Awake()
                 
                 if (_interactable)
                 {
+                    Debug.Log("Interact door!");
                     _interactable.GetComponent<Interactable>().Destroy(ref player);
                 }
                 //_interactable = null;
@@ -482,7 +491,12 @@ void Awake()
         health -= damage;
 
         //need a death check here as well
-        if (health <= 0) animator.SetBool("Dead", true);
+        if (health <= 0)
+        {
+            animator.SetBool("Dead", true);
+            game_event_manager.SetState(Game_Event_Manager.GM_STATES.END_MISSION);
+            game_event_manager.SetLoseMission(true);
+        }
 
         _healthbar.TakeDamage(damage);
     }
@@ -603,7 +617,8 @@ void Awake()
         if (!_equipped) return;
         _equipped.transform.up = dir;
 
-        if (!_weaponSR&&_equipped) _weaponSR = _equipped.GetComponentInChildren<SpriteRenderer>();
+        if (!_weaponSR && _equipped)
+            _weaponSR = _equipped.GetComponentInChildren<SpriteRenderer>(); 
 
         if (_weaponSR&&_weaponScript)
         {
@@ -663,7 +678,12 @@ void Awake()
 
     public ref int GetMoney() { return ref money; }
 
-    public void SetMoney(int val) { money = val; }
+    public void SetMoney(int val) { 
+        money = val;
+
+        //update money value on UI
+        if(_moneyText) _moneyText.text = money.ToString();
+    }
 
 }
 

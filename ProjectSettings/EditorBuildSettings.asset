@@ -15,11 +15,16 @@ EditorBuildSettings:
     path: Assets/Scenes/Inventory_TestScene_Sprint3.unity
     guid: 001337f446d66694199f4ebc329cc358
   - enabled: 1
+<<<<<<< HEAD
     path: Assets/Scenes/ProcGen Test Scene.unity
     guid: 3f6ea3edf98d4b748ab0878adee9cd11
   - enabled: 1
     path: Assets/Scenes/Saving.unity
     guid: 0dfbbf9fc71bd2946a18592604aa518e
+=======
+    path: Assets/Scenes/HubWorld.unity
+    guid: 4f062b6c62aa6ec4990732e5130704fd
+>>>>>>> master
   - enabled: 1
     path: Assets/Scenes/ItemSpawnerTestScene.unity
     guid: f63f9f294140cad489ee0424ddc06270

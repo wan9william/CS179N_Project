@@ -155,6 +155,8 @@ MonoBehaviour:
   itemAnimator: {fileID: -7537914160889272902}
   damage: 0
   _resource: {fileID: 0}
+  quantity: 0
+  natural: 1
 --- !u!95 &-7537914160889272902
 Animator:
   serializedVersion: 7

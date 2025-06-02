@@ -95,6 +95,7 @@ GameObject:
   - component: {fileID: 3884777477121756171}
   - component: {fileID: 2490300557013193417}
   - component: {fileID: 12079794585811555}
+  - component: {fileID: 4010932894683550032}
   m_Layer: 0
   m_Name: img
   m_TagString: Untagged
@@ -160,12 +161,12 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -867108587
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 3
   m_Sprite: {fileID: 116400415285627404, guid: d88a684aeccb0bf46a0f63fd293a77e7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
-  m_FlipY: 0
+  m_FlipY: 1
   m_DrawMode: 0
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
@@ -195,6 +196,22 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &4010932894683550032
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3305528613481279079}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c2a3b47a0272d8488ba0c32b8860fcb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  muzzlePosition: {x: 0.76, y: 0.12, z: 0}
+  muzzleOffset: {x: 0, y: -0.24, z: 0}
+  _weaponSR: {fileID: 2490300557013193417}
+  _muzzleTR: {fileID: 5089273573729402316}
 --- !u!1 &6329848197557075216
 GameObject:
   m_ObjectHideFlags: 0
@@ -221,7 +238,7 @@ Transform:
   m_GameObject: {fileID: 6329848197557075216}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 0.76, y: 0.12, z: 0}
+  m_LocalPosition: {x: 0.76, y: -0.12, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -338,6 +355,7 @@ MonoBehaviour:
   fireForce: 10
   fireCooldown: 0.2
   fireMode: 1
+  chamberReset: 0
   damage: 10
   baseSpreadAngle: 0
   maxSpreadAngle: 10
@@ -360,7 +378,7 @@ SortingGroup:
   m_GameObject: {fileID: 7420429762061062423}
   m_Enabled: 1
   m_SortingLayerID: -867108587
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 1
   m_SortAtRoot: 0
 --- !u!82 &7721655149308782369

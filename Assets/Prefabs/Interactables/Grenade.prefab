@@ -109,6 +109,8 @@ MonoBehaviour:
   itemAnimator: {fileID: 2496394930070089342}
   damage: 0
   _resource: {fileID: 11400000, guid: adbdfa091b2c0464f87b357a61162d04, type: 2}
+  quantity: 0
+  natural: 1
 --- !u!61 &3193527782319013495
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -146,8 +148,8 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.5625, y: 0.875}
+    pivot: {x: 1, y: 0.5}
+    oldSize: {x: 0.28125, y: 0.4375}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0

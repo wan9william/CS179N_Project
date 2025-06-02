@@ -7,9 +7,15 @@ TagManager:
   - Resource
   - Interactable
   - Object_Manager
+<<<<<<< HEAD
   - LandingPad
   - Ship
   - Inventory
+=======
+  - UI_Manager
+  - Game_Manager
+  - Ship
+>>>>>>> master
   layers:
   - Default
   - TransparentFX
@@ -46,6 +52,9 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Lowest
+    uniqueID: 1208893799
     locked: 0
   - name: Background
     uniqueID: 1843518975

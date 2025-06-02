@@ -10,8 +10,8 @@ public class CorridorFirstDungeonGenerator : DungeonGenerator
     [SerializeField] private int corridorLength = 14, corridorCount = 5;
     [SerializeField] [Range(0.1f,1f)] public float roomPercent = 0.8f;
     [SerializeField] private GameObject roomPrefab;
-    [SerializeField] private int minimumRoomLength = 6;
-    [SerializeField] private int maximumRoomLength = 17;
+    [SerializeField] private int minimumRoomLength = 6, maximumRoomLength = 17;
+    [SerializeField] private int initialRoomLength, initialRoomWidth = 10;
     [SerializeField] private int corridorSize = 3;
     [SerializeField] private bool randomWalk = false;
 
@@ -123,7 +123,7 @@ public class CorridorFirstDungeonGenerator : DungeonGenerator
 
         List<Vector2Int> roomsToCreate = potentialRoomPositions.OrderBy(x => Guid.NewGuid()).Take(roomToCreateCount).ToList();
         var roomFloor = new HashSet<Vector2Int>();
-        roomFloor = RunRectangleWalk(new Vector2Int(0, 0), 10, 10);
+        roomFloor = RunRectangleWalk(new Vector2Int(0, 0), initialRoomWidth, initialRoomLength);
         roomPositions.UnionWith(roomFloor);
 
         foreach (var roomPosition in roomsToCreate)

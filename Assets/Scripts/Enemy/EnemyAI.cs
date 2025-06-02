@@ -27,16 +27,21 @@ public class EnemyAI : MonoBehaviour
     {
         seeker = GetComponent<Seeker>();
         rb = GetComponent<Rigidbody2D>();
+
         if (spriteRenderer == null)
             spriteRenderer = GetComponent<SpriteRenderer>();
 
-        // Auto-assign target (player) if not manually set
+        // ✅ Auto-assign Player target if not already set
         if (target == null)
         {
             GameObject player = GameObject.FindGameObjectWithTag("Player");
             if (player != null)
             {
                 target = player.transform;
+            }
+            else
+            {
+                Debug.LogError("[EnemyAI] Player not found. Make sure the player has the 'Player' tag.");
             }
         }
 
@@ -45,6 +50,7 @@ public class EnemyAI : MonoBehaviour
 
         InvokeRepeating(nameof(UpdatePath), 0f, 0.2f);
     }
+
 
     void UpdatePath()
     {
