@@ -60,7 +60,6 @@ public static class WallGenerator
                     binaryWallType += "1";
                 else binaryWallType += "0";
             }
-            Debug.Log(position+" BasicWallType: "+binaryType);
             tilemapVisualizer.PaintSingleBasicWall(position, binaryType, binaryWallType);
         }
     }

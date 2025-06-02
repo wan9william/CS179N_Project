@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class ItemManager : MonoBehaviour
@@ -24,11 +25,11 @@ public class ItemManager : MonoBehaviour
         }
     }
 
-    public void InstantiateLoot(Vector3 spawnPosition, Transform parent)
+    public void InstantiateLoot(Vector3 spawnPosition, double distance, Transform parent)
     {
         if (UnityEngine.Random.value <= itemChancePerTile)
         {
-            Item_ScriptableObj droppedItem = GetDroppedItem();
+            Item_ScriptableObj droppedItem = GetDroppedItem(distance);
             if (droppedItem != null)
             {
                 GameObject itemGameObject = Instantiate(droppedItem.getResourcePrefab(), parent);
@@ -39,20 +40,27 @@ public class ItemManager : MonoBehaviour
     }
 
     //Loot Table for Dropped Item
-    private Item_ScriptableObj GetDroppedItem()
+    private Item_ScriptableObj GetDroppedItem(double distance)
     {
         int randomNumber = UnityEngine.Random.Range(1, 101); //Get a random number between 1-100
         List<Item_ScriptableObj> possibleItems = new List<Item_ScriptableObj>();
         foreach (Item_ScriptableObj item in allItemsList)
         {
-            if (randomNumber <= item.dropChance)
+            if (randomNumber <= item.dropChance*distance/100)
             {
                 possibleItems.Add(item);
             }
         }
         if (possibleItems.Count > 0)
         {
-            Item_ScriptableObj droppedItem = possibleItems[UnityEngine.Random.Range(0, possibleItems.Count)];
+            Item_ScriptableObj droppedItem = possibleItems.First();
+            foreach (Item_ScriptableObj item in possibleItems)
+            {
+                if(item.dropChance < droppedItem.dropChance)
+                {
+                    droppedItem = item;
+                }
+            }
             return droppedItem;
         }
         return null;

@@ -4,12 +4,14 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using UnityEngine.UIElements;
+using UnityEngine.WSA;
 
 public class TileMapVisualizer : MonoBehaviour
 {
     [SerializeField] private Tilemap floorTilemap, wallTilemap, wallFrontTilemap;
 
-    [SerializeField] private TileBase floorTile, wallVerti, wallHori, wallFull,
+    [SerializeField] private TileBase floorTile,floorTile2, wallVerti, wallHori, wallFull,
                                       wallTUp, wallTDown, wallTLeft, wallTRight,
                                       wallCornerTopLeft, wallCornerTopRight, wallCornerBottomLeft, wallCornerBottomRight,
                                       wallEdgeUp, wallEdgeDown, wallEdgeLeft, wallEdgeRight,
@@ -18,6 +20,18 @@ public class TileMapVisualizer : MonoBehaviour
     public void PaintFloorTiles(IEnumerable<Vector2Int> floorPositions)
     {
         PaintTiles(floorPositions, floorTilemap, floorTile);
+    }
+
+    public void PaintColoredTiles(HashSet<Vector2Int> roomPositions, HashSet<Vector2Int> corridorPositions)
+    {
+        foreach (Vector2Int position in roomPositions)
+        {
+            PaintSingleTile(floorTilemap, floorTile, position);
+        }
+        foreach (Vector2Int position in corridorPositions)
+        {
+            PaintSingleTile(floorTilemap, floorTile2, position);
+        }
     }
 
     private void PaintTiles(IEnumerable<Vector2Int> positions, Tilemap tilemap, TileBase tile)
@@ -182,4 +196,5 @@ public class TileMapVisualizer : MonoBehaviour
         }
 
     }
+
 }

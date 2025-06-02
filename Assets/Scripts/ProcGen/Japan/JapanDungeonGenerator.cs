@@ -33,6 +33,7 @@ public class JapanDungeonGenerator : JapanAbstractDungeonGenerator
     {
         foreach (var position in floorPositions)
         {
+            double distance = Math.Sqrt(Math.Pow(position.x, 2) + Math.Pow(position.y, 2));
             if (doorPositions.Contains(position)) continue;
             string binaryType = "";
             foreach (var direction in Direction2D.eightDirectionsList)
@@ -45,7 +46,7 @@ public class JapanDungeonGenerator : JapanAbstractDungeonGenerator
 
             int typeAsInt = Convert.ToInt32(binaryType, 2);
 
-            if(spawnItems && InSpawnArea(position))
+            if(spawnItems && InSpawnArea(position, distance))
             {
                 if (WallTypesHelper.floorEdge.Contains(typeAsInt))
                 {
@@ -59,7 +60,7 @@ public class JapanDungeonGenerator : JapanAbstractDungeonGenerator
                     }
                     else
                     {
-                        itemManager.InstantiateLoot(new Vector3(position.x, position.y, 0), itemManager.transform);
+                        itemManager.InstantiateLoot(new Vector3(position.x, position.y, 0), distance, itemManager.transform);
                     }
                 }
             }
@@ -67,6 +68,7 @@ public class JapanDungeonGenerator : JapanAbstractDungeonGenerator
 
         foreach (var position in roadPositions)
         {
+            double distance = Math.Sqrt(Math.Pow(position.x, 2) + Math.Pow(position.y, 2));
             string binaryType = "";
             foreach (var direction in Direction2D.eightDirectionsList)
             {
@@ -76,7 +78,7 @@ public class JapanDungeonGenerator : JapanAbstractDungeonGenerator
                 else binaryType += "0";
             }
             int typeAsInt = Convert.ToInt32(binaryType, 2);
-            if (spawnItems && InSpawnArea(position))
+            if (spawnItems && InSpawnArea(position, distance))
             {
                 if (WallTypesHelper.floorEdgeHorizontal.Contains(typeAsInt))
                 {
@@ -84,7 +86,7 @@ public class JapanDungeonGenerator : JapanAbstractDungeonGenerator
                 }
                 else if (WallTypesHelper.floorAll.Contains(typeAsInt))
                 {
-                    itemManagerRoad.InstantiateLoot(new Vector3(position.x, position.y, 0), itemManagerRoad.transform);
+                    itemManagerRoad.InstantiateLoot(new Vector3(position.x, position.y, 0), distance, itemManagerRoad.transform);
                 }
             }
         }
@@ -108,9 +110,9 @@ public class JapanDungeonGenerator : JapanAbstractDungeonGenerator
         return (WallTypesHelper.floorEdgeHorizontal.Contains(typeAsInt));
     }
 
-    protected bool InSpawnArea(Vector2Int position)
+    protected bool InSpawnArea(Vector2Int position, double distance)
     {
-        return (Math.Abs(position.x) >= minLootRange || Math.Abs(position.y) >= minLootRange) && (Math.Abs(position.x) <= maxLootRange && Math.Abs(position.y) <= maxLootRange);
+        return (distance >= minLootRange) && (distance <= maxLootRange);
     }
 
     protected bool CheckEightDirections(Vector2Int position, IEnumerable<Vector2Int> floorPositions)
