@@ -37,6 +37,7 @@ public class Terminal : MonoBehaviour
         DeactivateUI();
         player.setPaused(false);
         game_event_manager.SetState(Game_Event_Manager.GM_STATES.START_MISSION);
+        current_ui = UI_Elements.EXTRACT;
     }
 
     public void ClickExtract()
@@ -45,6 +46,7 @@ public class Terminal : MonoBehaviour
         player.setPaused(false);
         game_event_manager.SetState(Game_Event_Manager.GM_STATES.END_MISSION);
         game_event_manager.SetLoseMission(false);
+        current_ui = UI_Elements.START;
     }
 
     private void DeactivateUI() {
