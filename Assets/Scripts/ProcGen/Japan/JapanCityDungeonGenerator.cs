@@ -61,7 +61,6 @@ public class JapanCityDungeonGenerator : JapanDungeonGenerator
             roadPositions.UnionWith(corridors[i]);
         }
         HashSet<Vector2Int> roomPositions = CreateHouses(potentialRoomPositions, roadPositions, doorPositions, doorList);
-        roomPositions = RemoveFloors(roomPositions);
 
         //List<Vector2Int> deadEnds = FindAllDeadEnds(roadPositions);
 
@@ -77,6 +76,7 @@ public class JapanCityDungeonGenerator : JapanDungeonGenerator
         tileMapVisualizer.PaintRoofTiles(roomPositions, wallPositions, doorPositions);
         SpawnItems(roomPositions, roadPositions, doorPositions);
     }
+
 
     private List<Vector2Int> IncreaseCorridorBrush(List<Vector2Int> corridor, int size)
     {
