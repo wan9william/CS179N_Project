@@ -85,7 +85,7 @@ public class CorridorFirstDungeonGenerator : DungeonGenerator
             {
                 GameObject door = Instantiate(doorVerticalPrefab, this.transform);
                 doorList.Add(door);
-                Vector3 doorPosition = new Vector3(position.x - 0.5f, position.y, 0);
+                Vector3 doorPosition = new Vector3(position.x, position.y, 0);
                 door.transform.localPosition = doorPosition;
             }
         }
