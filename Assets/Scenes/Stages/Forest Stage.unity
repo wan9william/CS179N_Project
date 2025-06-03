@@ -21989,7 +21989,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 5282915295244181448, guid: 6648881f49dc9224d8a2d62263ccd521, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1990884279}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6648881f49dc9224d8a2d62263ccd521, type: 3}
 --- !u!114 &1427417492 stripped
@@ -22001,6 +22004,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ec3d7b1c71206324b9e296e1a60f2169, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1427417493 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5282915295244181448, guid: 6648881f49dc9224d8a2d62263ccd521, type: 3}
+  m_PrefabInstance: {fileID: 1427417491}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1427417494 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1507993193079782894, guid: 6648881f49dc9224d8a2d62263ccd521, type: 3}
+  m_PrefabInstance: {fileID: 1427417491}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4894b4f5138eb5c45a21550d5212ccef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1538174959
@@ -145384,6 +145403,52 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!1 &1990884278
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1990884279}
+  - component: {fileID: 1990884280}
+  m_Layer: 0
+  m_Name: Procedural Generation Starter
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1990884279
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1990884278}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1427417493}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1990884280
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1990884278}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c7bf4f0ce58ecc4bb10e1a7a10c0175, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dungeonGenerator: {fileID: 1427417494}
+  pathfinder: {fileID: 937518349}
 --- !u!1 &2108459537
 GameObject:
   m_ObjectHideFlags: 0

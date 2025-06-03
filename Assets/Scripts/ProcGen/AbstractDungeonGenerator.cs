@@ -18,7 +18,7 @@ public abstract class AbstractDungeonGenerator : MonoBehaviour
         pathfinder.Scan();
     }
 
-    protected abstract void RunProceduralGeneration();
+    public abstract void RunProceduralGeneration();
 
 }
 
