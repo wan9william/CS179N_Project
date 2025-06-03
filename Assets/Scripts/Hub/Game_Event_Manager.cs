@@ -180,10 +180,10 @@ public class Game_Event_Manager : MonoBehaviour
         switch (planetName)
         {
             case "Derelict Echo":
-                selectedPlanetScene = "ScifiStage";
+                selectedPlanetScene = "Scifi Stage";
                 break;
             case "Virelia Prime":
-                selectedPlanetScene = "JapanStage";
+                selectedPlanetScene = "Japan Stage";
                 break;
             case "Elarin Reach":
                 selectedPlanetScene = "Forest Stage";
