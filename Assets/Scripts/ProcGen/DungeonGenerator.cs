@@ -13,12 +13,14 @@ public class DungeonGenerator : AbstractDungeonGenerator
 
     protected override void RunProceduralGeneration()
     {
+        tileMapVisualizer.Clear();
         HashSet<Vector2Int> floorPositions = RunRandomWalk(randomWalkParameters, startPosition);
         HashSet<Vector2Int> doorPositions = new HashSet<Vector2Int>();
         itemManager.Clear();
         tileMapVisualizer.Clear();
         tileMapVisualizer.PaintFloorTiles(floorPositions);
         WallGenerator.CreateWalls(floorPositions, tileMapVisualizer);
+        pathfinder.Scan();
         SpawnItems(floorPositions, doorPositions);
     }
 

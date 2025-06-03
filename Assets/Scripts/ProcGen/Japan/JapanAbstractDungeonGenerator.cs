@@ -25,7 +25,7 @@ public abstract class JapanAbstractDungeonGenerator : MonoBehaviour
         RunProceduralGeneration();
     }
 
-    protected abstract void RunProceduralGeneration();
+    public abstract void RunProceduralGeneration();
 
 }
 

@@ -437,4 +437,27 @@ public class JapanTileMapVisualizer : MonoBehaviour
         PaintSingleTile(treesTilemap, treeTile, position);
     }
 
+    public List<Vector2Int> GetFloorWorldPositions()
+    {
+        List<Vector2Int> positions = new List<Vector2Int>();
+        foreach (var pos in floorTilemap.cellBounds.allPositionsWithin)
+        {
+            if (floorTilemap.HasTile(pos))
+            {
+                Vector3 worldPos = floorTilemap.CellToWorld(pos);
+                positions.Add(new Vector2Int(Mathf.RoundToInt(worldPos.x), Mathf.RoundToInt(worldPos.y)));
+            }
+        }
+        foreach (var pos in roadTilemap.cellBounds.allPositionsWithin)
+        {
+            if (roadTilemap.HasTile(pos))
+            {
+                Vector3 worldPos = roadTilemap.CellToWorld(pos);
+                positions.Add(new Vector2Int(Mathf.RoundToInt(worldPos.x), Mathf.RoundToInt(worldPos.y)));
+
+
+            }
+        }
+        return positions;
+    }
 }

@@ -7,4 +7,8 @@ public class AStarBootstrap : MonoBehaviour
     {
         AstarPath.active.Scan();
     }
+    public void Scan()
+    {
+        AstarPath.active.Scan();
+    }
 }

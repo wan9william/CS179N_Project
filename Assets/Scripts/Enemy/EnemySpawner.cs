@@ -30,6 +30,7 @@ public class EnemySpawner : MonoBehaviour
 
     void Start()
     {
+        player = GameObject.Find("Player").transform;
         if (tileMapVisualizer == null || player == null || enemyTypes.Length == 0)
         {
             Debug.LogError("[EnemySpawner] Missing references.");

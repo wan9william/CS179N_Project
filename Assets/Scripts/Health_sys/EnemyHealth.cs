@@ -20,6 +20,8 @@ public class EnemyHealth : MonoBehaviour
 
     void Awake()
     {
+
+        mainCamera = GameObject.Find("Main Camera").GetComponent<Camera>();
         //Prevent running this script on the Player
         if (CompareTag("Player"))
         {

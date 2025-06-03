@@ -66,6 +66,7 @@ public class CorridorFirstDungeonGenerator : DungeonGenerator
         WallGenerator.CreateWalls(floorPositions,tileMapVisualizer);
         RemoveFloorTiles(floorPositions);
         tileMapVisualizer.PaintFloorTiles(floorPositions);
+        pathfinder.Scan();
         SpawnItems(roomPositions,doorPositions);
     }
 

@@ -209,6 +209,7 @@ public class TileMapVisualizer : MonoBehaviour
 
             }
         }
+
         return positions;
     }
 

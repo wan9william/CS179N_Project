@@ -255,7 +255,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stats: {fileID: 11400000, guid: 2a88c03d4c67bb040aa7b22b00f4102f, type: 2}
-  target: {fileID: 4690868738214975529, guid: 4c18fb5dec947874ca31c66ba2f5fe97, type: 3}
+  target: {fileID: 0}
   spriteRenderer: {fileID: 0}
   currentState: 2
 --- !u!114 &8167869852750926167

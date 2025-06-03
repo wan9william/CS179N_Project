@@ -31,8 +31,8 @@ public class JapanCityDungeonGenerator : JapanDungeonGenerator
     //Color
     private List<Color> roomColors = new List<Color>();
 
-    
-    protected override void RunProceduralGeneration()
+    [SerializeField] AStarBootstrap pathfinder;
+    public override void RunProceduralGeneration()
     {
         CorridorFirstGeneration();
     }
@@ -40,6 +40,7 @@ public class JapanCityDungeonGenerator : JapanDungeonGenerator
     //Creates Corridors, then Rooms on the Corridors, then Walls.
     private void CorridorFirstGeneration()
     {
+        tileMapVisualizer.Clear();
         HashSet<Vector2Int> roadPositions = new HashSet<Vector2Int>();
         HashSet<Vector2Int> floorPositions = new HashSet<Vector2Int>();
         HashSet<Vector2Int> doorPositions = new HashSet<Vector2Int>();
@@ -73,6 +74,7 @@ public class JapanCityDungeonGenerator : JapanDungeonGenerator
         tileMapVisualizer.PaintGrassTiles(fencePositions);
         tileMapVisualizer.PaintRoofTiles(roomPositions, innerWallFrontPositions, doorPositions);
         SpawnItems(roomPositions, roadPositions, doorPositions);
+        pathfinder.Scan();
     }
 
     private void RemoveFloorTiles(HashSet<Vector2Int> floorPositions, HashSet<Vector2Int> innerWallFrontPositions)

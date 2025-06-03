@@ -103,7 +103,7 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 4294967295
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -157,6 +157,7 @@ MonoBehaviour:
   _resource: {fileID: 0}
   quantity: 0
   natural: 1
+  audioSource: {fileID: 0}
 --- !u!95 &-7537914160889272902
 Animator:
   serializedVersion: 7

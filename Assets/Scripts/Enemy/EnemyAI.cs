@@ -25,6 +25,7 @@ public class EnemyAI : MonoBehaviour
 
     void Start()
     {
+        target = GameObject.Find("Player").transform;
         seeker = GetComponent<Seeker>();
         rb = GetComponent<Rigidbody2D>();
 

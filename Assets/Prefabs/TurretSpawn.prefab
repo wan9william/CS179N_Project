@@ -44,9 +44,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f98f82d95f770fc4a9e0b1e507d4f7f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tileMapVisualizer: {fileID: 0}
+  enemySpawner: {fileID: 0}
   turretPrefab: {fileID: 5204265099946938788, guid: cdce68f8a2c53d04b98fe319f4dd8339, type: 3}
+  playerTransform: {fileID: 0}
   turretsToSpawn: 3
   spawnOffset: 0.5
   minDistanceFromEnemies: 5
-  tileMapVisualizer: {fileID: 0}
-  enemySpawner: {fileID: 0}
+  minDistanceFromPlayer: 6
+  minDistanceBetweenTurrets: 6

@@ -11,7 +11,7 @@ public class JapanDungeonGenerator : JapanAbstractDungeonGenerator
 
     [SerializeField] protected SimpleRandomWalkData randomWalkParameters;
 
-    protected override void RunProceduralGeneration()
+    public override void RunProceduralGeneration()
     {
         HashSet<Vector2Int> floorPositions = RunRandomWalk(randomWalkParameters, startPosition);
         HashSet<Vector2Int> roadPositions = new HashSet<Vector2Int>();
