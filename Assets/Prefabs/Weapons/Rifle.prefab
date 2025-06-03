@@ -338,6 +338,7 @@ MonoBehaviour:
   fireForce: 10
   fireCooldown: 0.2
   fireMode: 1
+  chamberReset: 0
   damage: 10
   baseSpreadAngle: 0
   maxSpreadAngle: 10
@@ -351,6 +352,8 @@ MonoBehaviour:
   animator: {fileID: 12079794585811555}
   spriteRenderer: {fileID: 2490300557013193417}
   objectManager: {fileID: 0}
+  audioSource2: {fileID: 7721655149308782369}
+  reloadClip: {fileID: 8300000, guid: eb5685b26a6494994af389a3293064e8, type: 3}
 --- !u!210 &-2440677376335865836
 SortingGroup:
   m_ObjectHideFlags: 0
