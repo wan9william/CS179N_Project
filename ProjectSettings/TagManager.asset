@@ -3,29 +3,17 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 3
-  tags:
-  - Resource
-  - Interactable
-  - Object_Manager
-<<<<<<< HEAD
-  - LandingPad
-  - Ship
-  - Inventory
-=======
-  - UI_Manager
-  - Game_Manager
-  - Ship
->>>>>>> master
+  tags: []
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - Characters
+  - 
   - Water
   - UI
-  - Obstacle
-  - Item_RB
-  - Item
+  - 
+  - 
+  - 
   - 
   - 
   - 
@@ -52,21 +40,6 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
-    locked: 0
-  - name: Lowest
-    uniqueID: 1208893799
-    locked: 0
-  - name: Background
-    uniqueID: 1843518975
-    locked: 0
-  - name: Foreground
-    uniqueID: 3427858709
-    locked: 0
-  - name: Highest
-    uniqueID: 3496975553
-    locked: 0
-  - name: UI
-    uniqueID: 3921425219
     locked: 0
   m_RenderingLayers:
   - Default
