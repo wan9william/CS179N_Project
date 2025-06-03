@@ -63,25 +63,11 @@ public class CorridorFirstDungeonGenerator : DungeonGenerator
 
         HashSet<Vector2Int> doorPositions = FindDoorPositions(floorPositions, roomPositions);
         CreateDoors(doorPositions);
-        WallGenerator.CreateWalls(floorPositions,tileMapVisualizer);
-        floorPositions = RemoveFloorTilesTop(floorPositions);
         tileMapVisualizer.PaintFloorTiles(floorPositions);
+        WallGenerator.CreateWalls(floorPositions,tileMapVisualizer);
         SpawnItems(roomPositions,doorPositions);
     }
-    private HashSet<Vector2Int> RemoveFloorTilesTop(HashSet<Vector2Int> floorPositions)
-    {
-        HashSet<Vector2Int> newPositions = new HashSet<Vector2Int>(floorPositions);
-        foreach (Vector2Int pos in floorPositions)
-        {
-            if (!floorPositions.Contains(pos + Direction2D.cardinalDirectionsList[0]))
-            {
-                Debug.Log("Removed " + pos);
-                newPositions.Remove(pos);
-            }
-        }
-        floorPositions = new HashSet<Vector2Int>(newPositions);
-        return newPositions;
-    }
+
     private void CreateDoors(HashSet<Vector2Int> doorPositions)
     {
         if (!doorHorizontalPrefab || !doorVerticalPrefab) return;
@@ -90,15 +76,13 @@ public class CorridorFirstDungeonGenerator : DungeonGenerator
         {
             if(doorPositions.Contains(position + Direction2D.cardinalDirectionsList[1]))
             {
-                //Instantiate Horizontal Door
                 GameObject door = Instantiate(doorHorizontalPrefab, this.transform);
                 doorList.Add(door);
-                Vector3 doorPosition = new Vector3(position.x + 0.5f, position.y + 0.5f, 0);
+                Vector3 doorPosition = new Vector3(position.x + 0.5f, position.y, 0);
                 door.transform.localPosition = doorPosition;
             }
             else if (doorPositions.Contains(position + Direction2D.cardinalDirectionsList[2]))
             {
-                //Instantiate Vertical Door
                 GameObject door = Instantiate(doorVerticalPrefab, this.transform);
                 doorList.Add(door);
                 Vector3 doorPosition = new Vector3(position.x - 0.5f, position.y, 0);

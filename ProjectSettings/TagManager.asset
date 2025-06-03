@@ -48,20 +48,5 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Lowest
-    uniqueID: 437084329
-    locked: 0
-  - name: Background
-    uniqueID: 938335259
-    locked: 0
-  - name: Foreground
-    uniqueID: 3327719463
-    locked: 0
-  - name: Highest
-    uniqueID: 161410131
-    locked: 0
-  - name: UI
-    uniqueID: 1452269125
-    locked: 0
   m_RenderingLayers:
   - Default

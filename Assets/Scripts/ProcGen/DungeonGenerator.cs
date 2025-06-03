@@ -39,9 +39,8 @@ public class DungeonGenerator : AbstractDungeonGenerator
 
             int typeAsInt = Convert.ToInt32(binaryType, 2);
 
-            if (spawnItems && InSpawnArea(position, distance))
+            if (spawnItems && InSpawnArea(position,distance))
             {
-                Debug.Log("Spawn Item: " + position);
                 if (WallTypesHelper.floorEdge.Contains(typeAsInt))
                 {
                     itemManager.InstantiateObject(new Vector3(position.x, position.y, 0), itemManager.transform);
@@ -64,10 +63,6 @@ public class DungeonGenerator : AbstractDungeonGenerator
     protected bool InSpawnArea(Vector2Int position, double distance)
     {
         return (distance >= minLootRange) && (distance <= maxLootRange);
-    }
-    protected bool InSpawnArea(Vector2Int position)
-    {
-        return (Math.Abs(position.x)>= minLootRange) && (Math.Abs(position.x) <= maxLootRange) || (Math.Abs(position.y) >= minLootRange) && (Math.Abs(position.y) <= maxLootRange);
     }
 
     protected bool CheckEightDirections(Vector2Int position, IEnumerable<Vector2Int> floorPositions)
