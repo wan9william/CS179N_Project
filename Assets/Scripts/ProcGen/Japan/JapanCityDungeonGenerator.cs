@@ -65,15 +65,26 @@ public class JapanCityDungeonGenerator : JapanDungeonGenerator
         floorPositions.UnionWith(roadPositions);
         floorPositions.UnionWith(roomPositions);
 
-        tileMapVisualizer.PaintFloorTiles(roomPositions);
         var wallPositions = JapanWallGenerator.CreateWalls(roomPositions, roadPositions, tileMapVisualizer);
         var fencePositions = JapanWallGenerator.CreateFences(roadPositions, floorPositions, wallPositions, tileMapVisualizer);
+        RemoveFloorTiles(roomPositions);
+        tileMapVisualizer.PaintFloorTiles(roomPositions);
         tileMapVisualizer.PaintGrassTiles(fencePositions);
         tileMapVisualizer.PaintRoofTiles(roomPositions, wallPositions, doorPositions);
         SpawnItems(roomPositions, roadPositions, doorPositions);
     }
 
-
+    private void RemoveFloorTiles(HashSet<Vector2Int> floorPositions)
+    {
+        HashSet<Vector2Int> oldfloorPositions = new HashSet<Vector2Int>(floorPositions);
+        foreach (Vector2Int pos in oldfloorPositions)
+        {
+            if (!oldfloorPositions.Contains(pos + Direction2D.cardinalDirectionsList[0]))
+            {
+                floorPositions.Remove(pos);
+            }
+        }
+    }
     private List<Vector2Int> IncreaseCorridorBrush(List<Vector2Int> corridor, int size)
     {
         List<Vector2Int> newCorridor = new List<Vector2Int>();

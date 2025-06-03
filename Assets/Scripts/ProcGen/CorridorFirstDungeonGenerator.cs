@@ -63,9 +63,22 @@ public class CorridorFirstDungeonGenerator : DungeonGenerator
 
         HashSet<Vector2Int> doorPositions = FindDoorPositions(floorPositions, roomPositions);
         CreateDoors(doorPositions);
-        tileMapVisualizer.PaintFloorTiles(floorPositions);
         WallGenerator.CreateWalls(floorPositions,tileMapVisualizer);
+        RemoveFloorTiles(floorPositions);
+        tileMapVisualizer.PaintFloorTiles(floorPositions);
         SpawnItems(roomPositions,doorPositions);
+    }
+
+    private void RemoveFloorTiles(HashSet<Vector2Int> floorPositions)
+    {
+        HashSet<Vector2Int> oldfloorPositions = new HashSet<Vector2Int>(floorPositions);
+        foreach (Vector2Int pos in oldfloorPositions)
+        {
+            if (!oldfloorPositions.Contains(pos + Direction2D.cardinalDirectionsList[0]))
+            {
+                floorPositions.Remove(pos);
+            }
+        }
     }
 
     private void CreateDoors(HashSet<Vector2Int> doorPositions)
@@ -78,14 +91,14 @@ public class CorridorFirstDungeonGenerator : DungeonGenerator
             {
                 GameObject door = Instantiate(doorHorizontalPrefab, this.transform);
                 doorList.Add(door);
-                Vector3 doorPosition = new Vector3(position.x + 0.5f, position.y, 0);
+                Vector3 doorPosition = new Vector3(position.x, position.y, 0);
                 door.transform.localPosition = doorPosition;
             }
             else if (doorPositions.Contains(position + Direction2D.cardinalDirectionsList[2]))
             {
                 GameObject door = Instantiate(doorVerticalPrefab, this.transform);
                 doorList.Add(door);
-                Vector3 doorPosition = new Vector3(position.x, position.y, 0);
+                Vector3 doorPosition = new Vector3(position.x+0.5f, position.y-0.5f, 0);
                 door.transform.localPosition = doorPosition;
             }
         }
