@@ -2118,6 +2118,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &682166655 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1316158622742079089, guid: 37527023768168a45ba07515ee2cd0b7, type: 3}
+  m_PrefabInstance: {fileID: 22454921}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &716731566 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 178916100855336850, guid: 37527023768168a45ba07515ee2cd0b7, type: 3}
@@ -3349,6 +3360,10 @@ PrefabInstance:
       propertyPath: _healthbar
       value: 
       objectReference: {fileID: 1760525425}
+    - target: {fileID: 716302228250151059, guid: 4c18fb5dec947874ca31c66ba2f5fe97, type: 3}
+      propertyPath: _moneyText
+      value: 
+      objectReference: {fileID: 682166655}
     - target: {fileID: 716302228250151059, guid: 4c18fb5dec947874ca31c66ba2f5fe97, type: 3}
       propertyPath: game_event_manager
       value: 
