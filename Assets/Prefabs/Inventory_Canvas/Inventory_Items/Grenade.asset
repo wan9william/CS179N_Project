@@ -17,6 +17,6 @@ MonoBehaviour:
   value: 10
   dropChance: 15
   _name: Grenade
-  ID: 1
+  ID: 7
   equipPrefab: {fileID: 9183792719404996813, guid: 72dcd7a771930e34cac1888345416e5b, type: 3}
   resourcePrefab: {fileID: 9183792719404996813, guid: a408b0b62e778424893e0a7aab3904da, type: 3}

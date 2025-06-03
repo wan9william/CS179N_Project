@@ -57,4 +57,9 @@ public class Resource : Interactable
     {
         return quantity;
     }
+    
+    public bool IsNatural()
+    {
+        return natural;
+    }
 }

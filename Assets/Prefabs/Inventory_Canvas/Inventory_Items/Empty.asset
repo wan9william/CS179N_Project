@@ -15,7 +15,8 @@ MonoBehaviour:
   color: {r: 1, g: 0, b: 0, a: 1}
   sprite: {fileID: 0}
   value: 0
+  dropChance: 0
   _name: Empty
-  ID: 0
+  ID: 5
   equipPrefab: {fileID: 0}
   resourcePrefab: {fileID: 0}

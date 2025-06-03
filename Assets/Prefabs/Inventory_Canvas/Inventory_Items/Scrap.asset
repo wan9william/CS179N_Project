@@ -17,6 +17,6 @@ MonoBehaviour:
   value: 2
   dropChance: 50
   _name: Scrap
-  ID: 1
+  ID: 12
   equipPrefab: {fileID: 2483345626859940841, guid: 370e9023216a812468baad7ab7a34c84, type: 3}
   resourcePrefab: {fileID: 2483345626859940841, guid: c29f7f79f74c73344a714f79ac885dfd, type: 3}

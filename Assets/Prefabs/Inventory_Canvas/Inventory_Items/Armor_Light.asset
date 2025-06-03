@@ -17,6 +17,6 @@ MonoBehaviour:
   value: 0
   dropChance: 20
   _name: Armor Light
-  ID: 1
+  ID: 2
   equipPrefab: {fileID: 4740018917089328927, guid: ad884156d39d67a40acb33069c5c477c, type: 3}
   resourcePrefab: {fileID: 4740018917089328927, guid: 8c6f3e53792b9404187a48e580c0d75a, type: 3}

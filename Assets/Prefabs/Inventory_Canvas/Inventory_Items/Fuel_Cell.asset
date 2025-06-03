@@ -17,6 +17,6 @@ MonoBehaviour:
   value: 22
   dropChance: 5
   _name: Fuel Cell
-  ID: 1
+  ID: 6
   equipPrefab: {fileID: 2194635865067834649, guid: 1b83d2d101d48b84e80388a9ff53f834, type: 3}
   resourcePrefab: {fileID: 2194635865067834649, guid: d929acf55e47e5645b46176e3586dcb1, type: 3}

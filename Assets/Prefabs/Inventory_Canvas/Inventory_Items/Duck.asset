@@ -17,6 +17,6 @@ MonoBehaviour:
   value: 7
   dropChance: 40
   _name: Duck
-  ID: 1
+  ID: 4
   equipPrefab: {fileID: 6528111353357189117, guid: c432a18b5ff696c418e422724f9297f2, type: 3}
   resourcePrefab: {fileID: 6528111353357189117, guid: 6840901e9e628af489376d276839cc61, type: 3}

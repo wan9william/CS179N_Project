@@ -17,6 +17,6 @@ MonoBehaviour:
   value: 0
   dropChance: 10
   _name: Rifle
-  ID: 1
+  ID: 10
   equipPrefab: {fileID: 7420429762061062423, guid: 2a4f2f48c42492f449f8484c430ffb3e, type: 3}
   resourcePrefab: {fileID: 3656777680845249198, guid: f3916cfb59cbef64980135830d4872c7, type: 3}

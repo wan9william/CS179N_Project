@@ -111,13 +111,13 @@ public class Game_Event_Manager : MonoBehaviour
                         shipPositionOffset = ship.transform.InverseTransformPoint(player.transform.position);
                     }
                     //Scene transition
+                    SaveManager.Instance.SaveGame(player, player.getInventory());// Save before returning to hub
                     SceneManager.LoadScene("ItemSpawnerTestScene");
                     state = GM_STATES.IDLE;
                     initialize = true;
                 }
                 break;
             case GM_STATES.END_MISSION:
-                //TURN ON DEATH MESSAGE
                 if (loseMission)
                 {
                     Dead_Text.SetActive(true);
@@ -127,10 +127,9 @@ public class Game_Event_Manager : MonoBehaviour
                 }
 
                 ForwardFadeAnimation(false);
-                //Debug.Log("START!");
                 if (ScreenFadeT >= 1f)
                 {
-                    //Scene transition
+                    SaveManager.Instance.SaveGame(player, player.getInventory());// Save before returning to hub
                     SceneManager.LoadScene("HubWorld");
                     state = GM_STATES.IDLE;
                     initialize = true;
