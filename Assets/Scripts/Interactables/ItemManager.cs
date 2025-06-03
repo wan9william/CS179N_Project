@@ -46,7 +46,7 @@ public class ItemManager : MonoBehaviour
         List<Item_ScriptableObj> possibleItems = new List<Item_ScriptableObj>();
         foreach (Item_ScriptableObj item in allItemsList)
         {
-            if (randomNumber <= item.dropChance*distance/100)
+            if (randomNumber <= item.dropChance*(1+distance/100))
             {
                 possibleItems.Add(item);
             }
