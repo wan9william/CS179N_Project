@@ -8,6 +8,9 @@ public class Game_Event_Manager : MonoBehaviour
     private bool startMission;
     private bool initialize = true;
     private bool loseMission = false;
+    private ShipItemCapture shipItemCapture;
+    private Vector3 shipPositionOffset;
+    private string selectedPlanetScene = "ItemSpawnerTestScene"; // fallback default
 
     //Screen fade effect
     [SerializeField] private float ScreenFadeT = 0f;
@@ -46,6 +49,13 @@ public class Game_Event_Manager : MonoBehaviour
         if(player) DontDestroyOnLoad(player.gameObject);
         if(Object_Manager) DontDestroyOnLoad(Object_Manager);
         if(UI) DontDestroyOnLoad(UI);
+
+        GameObject ship = GameObject.FindWithTag("Ship");
+        if (ship != null)
+        {
+            shipItemCapture = ship.GetComponentInChildren<ShipItemCapture>();
+            DontDestroyOnLoad(ship);
+        }
     }
 
     // Update is called once per frame
@@ -63,8 +73,24 @@ public class Game_Event_Manager : MonoBehaviour
                     ScreenFadeT = 1f;
                     state = GM_STATES.INITIALIZE;
 
-                    //Temporary
-                    player.gameObject.transform.position = GameObject.FindWithTag("Ship").transform.position;
+                    //Fixed?
+                    GameObject ship = GameObject.FindWithTag("Ship");
+                    GameObject landingPad = GameObject.FindWithTag("Landingpad");
+
+                    if (ship != null && landingPad != null)
+                    {
+                        ship.transform.position = landingPad.transform.position;
+
+                        // Move player to relative position inside ship
+                        player.transform.position = ship.transform.TransformPoint(shipPositionOffset);
+
+                        // Restore any dropped ship items
+                        ShipItemCapture capture = ship.GetComponentInChildren<ShipItemCapture>();
+                        if (capture != null)
+                        {
+                            capture.RestoreItemPositions();
+                        }
+                    }
                 }
                 break;
             case GM_STATES.INITIALIZE:
@@ -76,8 +102,17 @@ public class Game_Event_Manager : MonoBehaviour
                 ForwardFadeAnimation(false);
                 //Debug.Log("START!");
                 if (ScreenFadeT >= 1f) {
+                    if (shipItemCapture != null)
+                    {
+                        shipItemCapture.CaptureItems();
+                    }
+                    GameObject ship = GameObject.FindWithTag("Ship");
+                    if (ship != null && player != null)
+                    {
+                        shipPositionOffset = ship.transform.InverseTransformPoint(player.transform.position);
+                    }
                     //Scene transition
-                    SceneManager.LoadScene("ItemSpawnerTestScene");
+                    SceneManager.LoadScene(selectedPlanetScene);
                     state = GM_STATES.IDLE;
                     initialize = true;
                 }
@@ -128,4 +163,24 @@ public class Game_Event_Manager : MonoBehaviour
     public void SetLoseMission(bool lose) {
         loseMission = lose;
     }
+
+    public void SetSelectedPlanet(string planetName)
+    {
+        switch (planetName)
+        {
+            case "Derelict Echo":
+                selectedPlanetScene = "DerelictScene";
+                break;
+            case "Virelia Prime":
+                selectedPlanetScene = "CityScene";
+                break;
+            case "Elarin Reach":
+                selectedPlanetScene = "PlainsScene";
+                break;
+            default:
+                selectedPlanetScene = "ItemSpawnerTestScene";
+                break;
+        }
+    }
+
 }

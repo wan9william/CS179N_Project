@@ -39,53 +39,60 @@ public class Inventory
     
 
     //When adding an item to the inventory
-    public int addItem(Tuple<Item_ScriptableObj,int> new_item) {
+    public int addItem(Tuple<Item_ScriptableObj, int> new_item)
+    {
         Item_ScriptableObj item = new_item.Item1;
         int quantity = new_item.Item2;
 
-        for (int i = 0; i < 8; i++)
+        // Detect if item is a weapon by checking if its prefab has a Weapon component
+        bool isWeapon = item.getPrefab()?.GetComponentInChildren<Weapon>() != null;
+
+        // 1. Stack only if it's not a weapon
+        if (!isWeapon)
         {
-            // stacking existing items of same type in inventory
-            if (inventorySlots[i].item && inventorySlots[i].GetItem() == item)
+            for (int i = 0; i < 8; i++)
             {
-                int currentQuantity = inventorySlots[i].GetQuantity();
-                if (currentQuantity < maxStackSize)
+                if (inventorySlots[i].item && inventorySlots[i].GetItem() == item)
                 {
-                    int spaceInStack = maxStackSize - currentQuantity;
-                    int amountToAdd = Mathf.Min(quantity, spaceInStack);
-                    
-                    inventorySlots[i].SetItem_A(new Tuple<Item_ScriptableObj, int>(item, currentQuantity + amountToAdd));
-                    quantity -= amountToAdd;
+                    int currentQuantity = inventorySlots[i].GetQuantity();
+                    if (currentQuantity < maxStackSize)
+                    {
+                        int spaceInStack = maxStackSize - currentQuantity;
+                        int amountToAdd = Mathf.Min(quantity, spaceInStack);
 
+                        inventorySlots[i].SetItem_A(new Tuple<Item_ScriptableObj, int>(item, currentQuantity + amountToAdd));
+                        quantity -= amountToAdd;
 
-                // Handle weapon UI update
-                Weapon weapon = item.getPrefab()?.GetComponentInChildren<Weapon>();
-                if (weapon != null)
-                {
-                    inventorySlots[i].storedAmmo = weapon.GetMagazineSize(); // full mag by default
-                }
-                else
-                {
-                    inventorySlots[i].storedAmmo = -1;
-                }
-                inventorySlots[i].UpdateQuantityDisplay();
+                        inventorySlots[i].storedAmmo = -1;
+                        inventorySlots[i].UpdateQuantityDisplay();
 
-                    if (quantity <= 0) return 0;
-
+                        if (quantity <= 0) return 0;
+                    }
                 }
             }
         }
 
+        // 2. Add to next empty slot (always for weapons)
         for (int i = 0; i < 8; i++)
         {
-            // if items of a different type, then find new available inventory slots
             if (inventorySlots[i].item.getID() == 0)
             {
                 int amountToAdd = Mathf.Min(quantity, maxStackSize);
                 inventorySlots[i].SetItem_A(new Tuple<Item_ScriptableObj, int>(item, amountToAdd));
                 quantity -= amountToAdd;
 
-                if (quantity <= 0) return 0; // All items have been placed
+                if (isWeapon)
+                {
+                    inventorySlots[i].storedAmmo = new_item.Item2; // from pickup
+                }
+                else
+                {
+                    inventorySlots[i].storedAmmo = -1;
+                }
+
+                inventorySlots[i].UpdateQuantityDisplay();
+
+                if (quantity <= 0) return 0;
             }
         }
 

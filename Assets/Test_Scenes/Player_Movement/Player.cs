@@ -222,22 +222,35 @@ void Awake()
 
                     //Instantiate object
                     //GET THE RESOURCE VERSION OF THE OBJECT
-                    GameObject resourceItem = inventory.GetSelectedResource(selected_slot);
+                // 🔧 Store current ammo before dropping
+                    // 🔁 First, store the weapon's ammo into the inventory
+                    if (_equipped != null && _weaponScript != null)
+                    {
+                        inventory.getInventorySlots()[selected_slot].storedAmmo = _weaponScript.GetCurrentAmmo();
+                    }
 
-                    //This may cause issues in the future
+                    // 💥 Drop logic
+                    GameObject resourceItem = inventory.GetSelectedResource(selected_slot);
                     if (resourceItem == null) break;
 
-                    GameObject droppedItem = Instantiate(resourceItem, transform.position, Quaternion.identity);//Instantiate(_equipped, transform.position, Quaternion.identity);
-
-
+                    GameObject droppedItem = Instantiate(resourceItem, transform.position, Quaternion.identity);
                     droppedItem.transform.localScale = Vector3.one;
-                    droppedItem.layer = 6; //Item_RB layer
-                    droppedItem.GetComponent<Resource>().SetNatural(false);
+                    droppedItem.layer = 6;
 
-                    //Add rigidbody if necessary and calculate direction
+                    Resource resScript = droppedItem.GetComponent<Resource>();
+                    if (resScript != null)
+                    {
+                        resScript.SetNatural(false);
+
+                        int storedAmmo = inventory.getInventorySlots()[selected_slot].storedAmmo;
+                        resScript.SetQuantity(storedAmmo);  // ✅ Set correct ammo
+                    }
+
+                    // Add rigidbody and physics
                     Rigidbody2D rb = !droppedItem.GetComponent<Rigidbody2D>() ? droppedItem.AddComponent<Rigidbody2D>() : droppedItem.GetComponent<Rigidbody2D>();
                     BoxCollider2D bc = !droppedItem.GetComponent<BoxCollider2D>() ? droppedItem.AddComponent<BoxCollider2D>() : droppedItem.GetComponent<BoxCollider2D>();
                     bc.isTrigger = true;
+
                     Vector2 MousePos = Input.mousePosition;
                     Vector3 MouseWorldPos = _camera.ScreenToWorldPoint(MousePos);
                     Vector2 dir = ((Vector2)MouseWorldPos - (Vector2)transform.position).normalized;
@@ -245,18 +258,24 @@ void Awake()
                     rb.gravityScale = 0;
                     rb.linearDamping = 2f;
 
-                    //reset drop force
                     dropForce = 0f;
 
                     Destroy(_equipped);
                     _equipped = null;
 
-                    //REMOVE 1 OF THE SELECTED SLOT'S RESOURCE. DELETION WILL BE HANDLED BY THE SLOT ITSELF
-                    inventory.DecrementItem(selected_slot);
+                    InventorySlot slot = inventory.getInventorySlots()[selected_slot];
+                    if (slot.storedAmmo > 0)
+                    {
+                        slot.SetQuantity(0);
+                        slot.storedAmmo = -1;
+                        slot.UpdateItem();
+                    }
+                    else
+                    {
+                        inventory.DecrementItem(selected_slot);
+                    }
 
-                    //Select same slot
                     SelectEquipped();
-
 
                     break;
                 }

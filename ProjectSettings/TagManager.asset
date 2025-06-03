@@ -3,7 +3,14 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 3
-  tags: []
+  tags:
+  - Ship
+  - Interactable
+  - UI_Manager
+  - Object_Manager
+  - Game_Manager
+  - Inventory
+  - Landingpad
   layers:
   - Default
   - TransparentFX
