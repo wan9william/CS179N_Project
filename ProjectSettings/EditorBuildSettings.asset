@@ -6,7 +6,7 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Stages/ScifiStage1.unity
+    path: Assets/Scenes/Stages/Scifi Stage.unity
     guid: 21ff12776131e454d866e01eaf2e687d
   - enabled: 1
     path: Assets/Scenes/HubWorld 2.unity
