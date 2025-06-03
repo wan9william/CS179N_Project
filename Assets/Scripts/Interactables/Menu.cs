@@ -10,7 +10,7 @@ public class Menu : Interactable
     protected override void onInteract(ref Player player)
     {
         if(!terminal) terminal = GameObject.FindWithTag("UI_Manager").GetComponent<Terminal>();
-        terminal.ActivateUI(ui_element);
+        terminal.Show();
         player.setPaused(true);
     }
 

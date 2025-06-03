@@ -132,7 +132,7 @@ public class Game_Event_Manager : MonoBehaviour
                 if (ScreenFadeT >= 1f)
                 {
                     //Scene transition
-                    SceneManager.LoadScene("HubWorld");
+                    SceneManager.LoadScene("Space");
                     state = GM_STATES.IDLE;
                     initialize = true;
                 }
@@ -169,13 +169,13 @@ public class Game_Event_Manager : MonoBehaviour
         switch (planetName)
         {
             case "Derelict Echo":
-                selectedPlanetScene = "DerelictScene";
+                selectedPlanetScene = "ScifiStage";
                 break;
             case "Virelia Prime":
-                selectedPlanetScene = "CityScene";
+                selectedPlanetScene = "JapanStage";
                 break;
             case "Elarin Reach":
-                selectedPlanetScene = "PlainsScene";
+                selectedPlanetScene = "Forest Stage";
                 break;
             default:
                 selectedPlanetScene = "ItemSpawnerTestScene";
@@ -183,4 +183,9 @@ public class Game_Event_Manager : MonoBehaviour
         }
     }
 
+    public bool IsInMission()
+    {
+        string currentScene = SceneManager.GetActiveScene().name;
+        return currentScene != "HubWorld 2" && currentScene != "Space";
+    }
 }

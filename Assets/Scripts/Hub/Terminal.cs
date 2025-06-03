@@ -11,6 +11,7 @@ public class Terminal : MonoBehaviour
     [SerializeField] private Game_Event_Manager game_event_manager;
 
     [Header("UI Containers")]
+    [SerializeField] private GameObject UI_Parent;
     [SerializeField] private GameObject Start_Mission_UI;
     [SerializeField] private GameObject Extract_Mission_UI;
 
@@ -61,22 +62,26 @@ public class Terminal : MonoBehaviour
         Planet3_Button_Obj.GetComponent<Button>().onClick.AddListener(() => SelectPlanet("Elarin Reach", Planet3_Button_Obj));
     }
 
-    public void ActivateUI(UI_Elements ui)
+    /// <summary>
+    /// Show the terminal UI based on mission state.
+    /// </summary>
+    public void Show()
     {
-        switch (ui)
+        UI_Parent.SetActive(true);
+        player.setPaused(true);
+
+        if (game_event_manager.IsInMission())
         {
-            case UI_Elements.START:
-                Start_Mission_UI.SetActive(true);
-                break;
-            case UI_Elements.EXTRACT:
-                Extract_Mission_UI.SetActive(true);
-                break;
+            Extract_Mission_UI.SetActive(true);
+            Start_Mission_UI.SetActive(false);
+            current_ui = UI_Elements.EXTRACT;
         }
-
-        current_ui = ui;
-
-        if (ui == UI_Elements.START)
+        else
         {
+            Start_Mission_UI.SetActive(true);
+            Extract_Mission_UI.SetActive(false);
+            current_ui = UI_Elements.START;
+
             selectedPlanet = null;
             startButton.interactable = false;
             ResetPlanetButtonColors();
@@ -111,6 +116,7 @@ public class Terminal : MonoBehaviour
     public void ClickX()
     {
         DeactivateUI();
+        UI_Parent.SetActive(false);
         player.setPaused(false);
     }
 
@@ -124,6 +130,7 @@ public class Terminal : MonoBehaviour
 
         current_ui = UI_Elements.EXTRACT;
         DeactivateUI();
+        UI_Parent.SetActive(false);
         player.setPaused(false);
 
         game_event_manager.SetSelectedPlanet(selectedPlanet);
@@ -131,25 +138,22 @@ public class Terminal : MonoBehaviour
 
         Debug.Log("Starting mission on: " + selectedPlanet);
     }
+
     public void ClickExtract()
     {
         DeactivateUI();
+        UI_Parent.SetActive(false);
         player.setPaused(false);
+
         game_event_manager.SetState(Game_Event_Manager.GM_STATES.END_MISSION);
         game_event_manager.SetLoseMission(false);
+
         current_ui = UI_Elements.START;
     }
 
     private void DeactivateUI()
     {
-        switch (current_ui)
-        {
-            case UI_Elements.START:
-                Start_Mission_UI.SetActive(false);
-                break;
-            case UI_Elements.EXTRACT:
-                Extract_Mission_UI.SetActive(false);
-                break;
-        }
+        Start_Mission_UI.SetActive(false);
+        Extract_Mission_UI.SetActive(false);
     }
 }
