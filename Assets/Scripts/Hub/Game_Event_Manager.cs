@@ -144,6 +144,14 @@ public class Game_Event_Manager : MonoBehaviour
                     }
 
                     SceneManager.LoadScene("Space");
+
+                    //Revive the player
+                    player.RevivePlayer();
+
+                    //Turn off UI messages
+                    Dead_Text.SetActive(false);
+                    Success_Text.SetActive(false);
+
                     state = GM_STATES.IDLE;
                     initialize = true;
                 }

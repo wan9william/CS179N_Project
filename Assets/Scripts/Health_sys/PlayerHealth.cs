@@ -54,6 +54,11 @@ public class PlayerHealth : MonoBehaviour
     }
     }
 
+    public void SetHealth(int health) {
+        unitHealth.Health = health;
+        UpdateHealthBar();
+    }
+
     // This method increases the player's health (up to max)
     public void Heal(int amount)
     {
