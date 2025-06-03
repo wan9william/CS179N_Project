@@ -62,10 +62,6 @@ public class JapanCityDungeonGenerator : JapanDungeonGenerator
         }
         HashSet<Vector2Int> roomPositions = CreateHouses(potentialRoomPositions, roadPositions, doorPositions, doorList);
 
-        //List<Vector2Int> deadEnds = FindAllDeadEnds(roadPositions);
-
-        //CreateRoomsAtDeadEnd(deadEnds, roomPositions);
-
         floorPositions.UnionWith(roadPositions);
         floorPositions.UnionWith(roomPositions);
 
@@ -93,39 +89,6 @@ public class JapanCityDungeonGenerator : JapanDungeonGenerator
         }
         return newCorridor;
     }
-
-    //private void CreateRoomsAtDeadEnd(List<Vector2Int> deadEnds, HashSet<Vector2Int> roomFloors)
-    //{
-    //    Vector2Int roomOffset2D = new Vector2Int(roomOffset-1, roomOffset);
-    //    foreach (var position in deadEnds)
-    //    {
-    //        if (position == new Vector2Int(0, 0)) continue; //remove first room
-    //        if (roomFloors.Contains(position) == false)
-    //        {
-    //            var room = randomWalk ? RunRandomWalk(randomWalkParameters, position) : RunRectangleWalkBL(position + roomOffset2D, (int)UnityEngine.Random.Range(minimumRoomLength, maximumRoomLength), (int)UnityEngine.Random.Range(minimumRoomLength, maximumRoomLength));
-    //            roomFloors.UnionWith(room);
-    //        }
-    //    }
-    //}
-
-    //private List<Vector2Int> FindAllDeadEnds(HashSet<Vector2Int> floorPositions)
-    //{
-    //    List<Vector2Int> deadEnds = new List<Vector2Int>();
-    //    foreach (var position in floorPositions)
-    //    {
-    //        int neighborsCount = 0;
-    //        foreach (var direction in Direction2D.cardinalDirectionsList)
-    //        {
-    //            if(floorPositions.Contains(position + direction))
-    //                neighborsCount++;
-    //        }
-
-    //        if (neighborsCount == 1)
-    //            deadEnds.Add(position);
-    //    }
-    //    return deadEnds;
-    //}
-    
     private void ClearRoomData()
     {
         roomsDictionary.Clear();
@@ -140,7 +103,8 @@ public class JapanCityDungeonGenerator : JapanDungeonGenerator
     private HashSet<Vector2Int> CreateHouses(HashSet<Vector2Int> potentialRoomPositions, HashSet<Vector2Int> roadPositions, HashSet<Vector2Int> doorPositions, List<GameObject> doorList)
     {
         HashSet<Vector2Int> roomPositions = new HashSet<Vector2Int>();
-        int roomToCreateCount = Mathf.RoundToInt(potentialRoomPositions.Count*roomPercent);
+        int roomToCreateCount = Mathf.RoundToInt(potentialRoomPositions.Count);
+        Debug.Log("==========Create "+roomToCreateCount+" Houses===========");
 
         List<Vector2Int> roomsToCreate = potentialRoomPositions.OrderBy(x => Guid.NewGuid()).Take(roomToCreateCount).ToList();
         var roomFloor = new HashSet<Vector2Int>();
@@ -148,7 +112,7 @@ public class JapanCityDungeonGenerator : JapanDungeonGenerator
         Vector2Int roomOffset2D = new Vector2Int(roomOffset-1, roomOffset);
         foreach (var roomPosition in roomsToCreate)
         {
-            if (roomPosition.x <= initialAreaLength/2 && roomPosition.y <= initialAreaWidth/2) continue;
+            if (Math.Abs(roomPosition.x + roomOffset) <= initialAreaLength/2 && Math.Abs(roomPosition.y + roomOffset) <= initialAreaWidth/2) continue;
 
             roomFloor = CreateHouse(roomPosition + roomOffset2D, roadPositions, doorPositions, doorList);
             SaveRoomData(roomPosition+roomOffset2D, roomFloor);
@@ -172,8 +136,26 @@ public class JapanCityDungeonGenerator : JapanDungeonGenerator
             {
                 currentPosition += Direction2D.cardinalDirectionsList[i];
                 corridor.Add(currentPosition);
-
             }
+
+            for (int x = 0; x < 4; x++)
+            {
+                List<Vector2Int> newcorridor = new List<Vector2Int>();
+                Vector2Int edgePosition = currentPosition;
+                for (int j = 1; j < maximumHouseLength + 10; j++)
+                {
+                    newcorridor.Add(currentPosition + Direction2D.cardinalDirectionsList[x] * j);
+                }
+                if (x == 3 || x == 4)
+                {
+                    edgePosition = newcorridor[newcorridor.Count - 1];
+                    potentialRoomPositions.Add((Vector2Int)edgePosition);
+                }
+                floorPositions.UnionWith(newcorridor);
+                corridors.Add(newcorridor);
+            }
+
+            potentialRoomPositions.Add((Vector2Int)currentPosition);
             corridors.Add(corridor);
             floorPositions.UnionWith(corridor);
         }
@@ -204,11 +186,12 @@ public class JapanCityDungeonGenerator : JapanDungeonGenerator
     {
         var roomsList = ProceduralGeneration.BinarySpacePartitioning(new BoundsInt((Vector3Int)roomPosition, new Vector3Int(maximumHouseLength, maximumHouseLength, 0)), minRoomWidth, minRoomHeight);
         int count = 0;
-        while (roomsList.Count <= 1 && count<5)
+        while (roomsList.Count <= 1 && count<20)
         {
             roomsList = ProceduralGeneration.BinarySpacePartitioning(new BoundsInt((Vector3Int)roomPosition, new Vector3Int(maximumHouseLength, maximumHouseLength, 0)), minRoomWidth, minRoomHeight);
             count++;
         }
+        Debug.Log("Room Retry Count: " + count);
 
         HashSet<Vector2Int> floor = new HashSet<Vector2Int>();
 
