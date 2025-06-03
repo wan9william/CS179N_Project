@@ -190,4 +190,23 @@ public static class WallTypesHelper
         0b01000001
     };
 
+    public static HashSet<int> floorAll = new HashSet<int>
+    {
+        0b11111111
+    };
+
+    public static HashSet<int> floorEdge = new HashSet<int>
+    {
+        0b00111110,
+        0b11111000,
+        0b11100011,
+        0b10001111
+    };
+
+    public static HashSet<int> floorEdgeHorizontal = new HashSet<int>
+    {
+        0b00111110,
+        0b11100011
+    };
+
 }

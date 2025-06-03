@@ -179,7 +179,8 @@ void Awake()
                 if (!Input.GetKey(KeyCode.LeftShift)) { 
                     sprint_amount += drain_amount * Time.deltaTime;
                     sprint_amount = Mathf.Clamp(sprint_amount, 0, 100);
-                 }
+                    animator.SetFloat("SpeedMult", 1.0f);
+                }
 
 
 
@@ -462,6 +463,7 @@ void Awake()
                 else if (!Input.GetKey(KeyCode.LeftShift)) {
                     sprint_amount += drain_amount * Time.deltaTime;
                     sprint_amount = Mathf.Clamp(sprint_amount, 0, 100);
+                    animator.SetFloat("SpeedMult", 1.5f);
                 }
 
                 if (Input.GetKey(KeyCode.W))
@@ -557,6 +559,7 @@ void Awake()
         _equipped.transform.SetParent(transform, false);
         _equipped.transform.localPosition = Vector3.zero;
         _equipped.transform.localRotation = Quaternion.identity;
+        
 
         Vector3 inverseScale = new Vector3(
             1f / transform.localScale.x,
@@ -644,13 +647,14 @@ void Awake()
             _weaponSR.flipY = (dir.x < 0);  // flip only when pointing left
         }
 
+        if(_equipped)
+
         _handSR = _hand.GetComponent<SpriteRenderer>();
         if (dir.y > 0)
         {
             _handSR.sortingOrder = handLayerBack;
         }
         else _handSR.sortingOrder = handLayerFront;
-
         if(_equipped) _equipped.transform.localPosition = (Vector3)dir * handRadius + handOffset;
         _hand.transform.localPosition = (Vector3)dir * handRadius + handOffset;
     }

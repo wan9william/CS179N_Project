@@ -14,24 +14,55 @@ public class DungeonGenerator : AbstractDungeonGenerator
     protected override void RunProceduralGeneration()
     {
         HashSet<Vector2Int> floorPositions = RunRandomWalk(randomWalkParameters, startPosition);
+        HashSet<Vector2Int> doorPositions = new HashSet<Vector2Int>();
         itemManager.Clear();
         tileMapVisualizer.Clear();
         tileMapVisualizer.PaintFloorTiles(floorPositions);
         WallGenerator.CreateWalls(floorPositions, tileMapVisualizer);
-        SpawnItems(floorPositions);
+        SpawnItems(floorPositions, doorPositions);
     }
 
-    protected void SpawnItems(HashSet<Vector2Int> positions)
+    protected void SpawnItems(HashSet<Vector2Int> floorPositions, HashSet<Vector2Int> doorPositions)
     {
-        foreach (var position in positions)
+        foreach (var position in floorPositions)
         {
-            if (spawnItems && InSpawnArea(position) && CheckEightDirections(position, positions)) itemManager.InstantiateLoot(new Vector3(position.x, position.y, 0), itemManager.transform);
+            double distance = Math.Sqrt(Math.Pow(position.x, 2) + Math.Pow(position.y, 2));
+            if (doorPositions.Contains(position)) continue;
+            string binaryType = "";
+            foreach (var direction in Direction2D.eightDirectionsList)
+            {
+                var neighborPosition = position + direction;
+                if (floorPositions.Contains(neighborPosition))
+                    binaryType += "1";
+                else binaryType += "0";
+            }
+
+            int typeAsInt = Convert.ToInt32(binaryType, 2);
+
+            if (spawnItems && InSpawnArea(position,distance))
+            {
+                if (WallTypesHelper.floorEdge.Contains(typeAsInt))
+                {
+                    itemManager.InstantiateObject(new Vector3(position.x, position.y, 0), itemManager.transform);
+                }
+                else if (CheckEightDirections(position, floorPositions))
+                {
+                    if (Random.value < 0.2f)
+                    {
+                        itemManager.InstantiateObject(new Vector3(position.x, position.y, 0), itemManager.transform);
+                    }
+                    else
+                    {
+                        itemManager.InstantiateLoot(new Vector3(position.x, position.y, 0), distance, itemManager.transform);
+                    }
+                }
+            }
         }
     }
 
-    protected bool InSpawnArea(Vector2Int position)
+    protected bool InSpawnArea(Vector2Int position, double distance)
     {
-        return (Math.Abs(position.x) >= minLootRange || Math.Abs(position.y) >= minLootRange) && (Math.Abs(position.x) <= maxLootRange && Math.Abs(position.y) <= maxLootRange);
+        return (distance >= minLootRange) && (distance <= maxLootRange);
     }
 
     protected bool CheckEightDirections(Vector2Int position, IEnumerable<Vector2Int> floorPositions)
@@ -65,6 +96,15 @@ public class DungeonGenerator : AbstractDungeonGenerator
         var currentPositon = position;
         HashSet<Vector2Int> floorPositions = new HashSet<Vector2Int>();
         var path = ProceduralGeneration.SimpleRectangle(currentPositon, width, length);
+        floorPositions.UnionWith(path);
+        return floorPositions;
+    }
+
+    protected HashSet<Vector2Int> RunRectangleWalkTL(Vector2Int position, int width, int length)
+    {
+        var currentPositon = position;
+        HashSet<Vector2Int> floorPositions = new HashSet<Vector2Int>();
+        var path = ProceduralGeneration.SimpleRectangleBL(currentPositon, width, length);
         floorPositions.UnionWith(path);
         return floorPositions;
     }

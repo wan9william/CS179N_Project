@@ -37,7 +37,6 @@ public class Resource : Interactable
         //Inefficient, replace later
         Instantiate(_explosion, transform.position, Quaternion.identity);
     }
-
     protected override void Tick()
     {
         //Not implemented

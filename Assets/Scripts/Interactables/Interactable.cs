@@ -59,7 +59,7 @@ public abstract class Interactable : MonoBehaviour
 
     private void CheckHealth() { if (health < 0) SelfDestruct(); }
 
-    public void SelfDestruct() {
+    public virtual void SelfDestruct() {
         transform.gameObject.SetActive(false);
         ExplosionVFX();
     }

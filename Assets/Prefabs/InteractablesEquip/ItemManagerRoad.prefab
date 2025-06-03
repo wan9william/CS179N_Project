@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &8832354566841455921
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7970316153855713097}
+  - component: {fileID: 6251897882364655668}
+  m_Layer: 0
+  m_Name: ItemManagerRoad
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7970316153855713097
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8832354566841455921}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6251897882364655668
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8832354566841455921}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a15e09f7b82e42149b3cab528c4caa6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  allItemsList:
+  - {fileID: 11400000, guid: adbdfa091b2c0464f87b357a61162d04, type: 2}
+  - {fileID: 11400000, guid: 06f4142cda1824d43a996b097fb1c297, type: 2}
+  - {fileID: 11400000, guid: 6d9fc24e61bab234aa2000cddb14dab9, type: 2}
+  - {fileID: 11400000, guid: ebfabfcab44f3404d8a80e7c19b4c227, type: 2}
+  - {fileID: 11400000, guid: f40b3b1526f2c3842ab693fea6e46211, type: 2}
+  allObjectsList:
+  - {fileID: 1125499661087022960, guid: 429e7ea7209e6df41a6b6e86295c662a, type: 3}
+  - {fileID: 6930780734084799376, guid: d49e369f8e0a7d44494b30b4dce391c0, type: 3}
+  - {fileID: 1670858592360923935, guid: cfb9a3ae15ddc2c458609dd7b4542613, type: 3}
+  itemChancePerTile: 0.2
+  objectChancePerTile: 0.2
+  offset: {x: 0.33, y: 0.33}
+  randomOffset: 0.2

@@ -21,6 +21,7 @@ public class RoomFirstDungeonGenerator : DungeonGenerator
         var roomsList = ProceduralGeneration.BinarySpacePartitioning(new BoundsInt((Vector3Int)startPosition, new Vector3Int(dungeonWidth, dungeonHeight, 0)), minRoomWidth, minRoomHeight);
 
         HashSet<Vector2Int> floor = new HashSet<Vector2Int>();
+        HashSet<Vector2Int> doorPositions = new HashSet<Vector2Int>();
 
         if (randomWalkRooms)
         {
@@ -43,7 +44,7 @@ public class RoomFirstDungeonGenerator : DungeonGenerator
 
         tileMapVisualizer.PaintFloorTiles(floor);
         WallGenerator.CreateWalls(floor, tileMapVisualizer);
-        SpawnItems(floor);
+        SpawnItems(floor, doorPositions);
     }
 
     private HashSet<Vector2Int> CreateRoomsRandomly(List<BoundsInt> roomsList)

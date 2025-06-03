@@ -56,11 +56,20 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 06f4142cda1824d43a996b097fb1c297, type: 2}
   - {fileID: 11400000, guid: d2d17d6f41eaee345ab5570f2fbfaf9a, type: 2}
   - {fileID: 11400000, guid: 6d9fc24e61bab234aa2000cddb14dab9, type: 2}
-  - {fileID: 11400000, guid: ebfabfcab44f3404d8a80e7c19b4c227, type: 2}
   - {fileID: 11400000, guid: fff1ab4c48bde8d4cbfc8a0219f8ada1, type: 2}
   - {fileID: 11400000, guid: f40b3b1526f2c3842ab693fea6e46211, type: 2}
   - {fileID: 11400000, guid: 6fef394b252f8e34698a83e6edc278eb, type: 2}
-  itemChancePerTile: 1
-  minLootRange: 4
-  maxLootRange: 50
+  allObjectsList:
+  - {fileID: 1944561874248949290, guid: 3d8534f28da04354b9b7fe6adb50a419, type: 3}
+  - {fileID: 7708460618438769968, guid: 3f3e4fae8807fcf4dac7aeb5b2d0cd8a, type: 3}
+  - {fileID: 707844513925958743, guid: 76c17ff0228477141905dd565c7b069f, type: 3}
+  - {fileID: 7868755421187583708, guid: 28601812868c32a488d8ca0601faf3d0, type: 3}
+  - {fileID: 707496643322631478, guid: a6ad9a1372a17304599ff2050543995b, type: 3}
+  - {fileID: 6792836159016694565, guid: d6b849ca2c7839b45935a0b2a92c8df3, type: 3}
+  - {fileID: 7755180128709064733, guid: 3104622d794d7fe40a560f8f0bd2d228, type: 3}
+  - {fileID: 1739963655728356208, guid: 003e569d8262bbe4a8254b462e5b017a, type: 3}
+  - {fileID: 8083011890758777299, guid: 57fabb566f5c1be4e9253a57872ced59, type: 3}
+  itemChancePerTile: 0.4
+  objectChancePerTile: 0.25
   offset: {x: 0.33, y: 0.33}
+  randomOffset: 0.2
