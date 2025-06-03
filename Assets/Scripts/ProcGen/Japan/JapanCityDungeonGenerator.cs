@@ -343,7 +343,7 @@ public class JapanCityDungeonGenerator : JapanDungeonGenerator
             GameObject door = Instantiate(doorHorizontalPrefab, this.transform);
             doorList.Add(door);
             Vector2Int startPosition = (startPositionY + Direction2D.cardinalDirectionsList[1]);
-            Vector3 doorPosition = new Vector3(startPosition.x + 0.5f, startPosition.y, 0);
+            Vector3 doorPosition = new Vector3(startPosition.x + 0.5f, startPosition.y+0.5f, 0);
             door.transform.localPosition = doorPosition;
             doorPositions.Add(startPositionY + Direction2D.cardinalDirectionsList[1] * 2);
             doorPositions.Add(startPositionY + Direction2D.cardinalDirectionsList[1]);
