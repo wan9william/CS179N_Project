@@ -25,7 +25,9 @@ public class ShipItemCapture : MonoBehaviour
             if (col.CompareTag("Interactable") && !relativeOffsets.ContainsKey(col.gameObject))
             {
                 DontDestroyOnLoad(col.gameObject);
-                Vector3 offset = col.transform.position - shipPos;
+                if(col.transform.root != gameObject.transform.root) col.gameObject.transform.parent = gameObject.transform.root;
+                Vector3 offset = col.gameObject.transform.position - shipPos;
+
                 relativeOffsets[col.gameObject] = offset;
 
                 Debug.Log($"[ShipItemCapture] Marked {col.name} to persist (relative offset {offset})");

@@ -6,9 +6,9 @@ public class Game_Event_Manager : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private bool startMission;
-    private bool initialize = true;
+    [SerializeField] private bool initialize = true;
     private bool loseMission = false;
-    private ShipItemCapture shipItemCapture;
+    [SerializeField] private ShipItemCapture shipItemCapture;
     private Vector3 shipPositionOffset;
     private string selectedPlanetScene = "ItemSpawnerTestScene"; // fallback default
 
@@ -134,7 +134,7 @@ public class Game_Event_Manager : MonoBehaviour
                     // ✅ Restore items from mission
                     if (shipItemCapture != null)
                     {
-                        shipItemCapture.RestoreItemPositions();
+                        shipItemCapture.CaptureItems();
                     }
 
                     GameObject ship = GameObject.FindWithTag("Ship");

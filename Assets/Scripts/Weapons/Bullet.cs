@@ -24,12 +24,16 @@ public class Bullet : MonoBehaviour
     void OnCollisionEnter2D(Collision2D collision)
     {
         Debug.Log($"[Collision] Hit {collision.collider.name}");
+        bool success = true;
+
+        if(collision.gameObject.GetComponent<Bullet>()) success = false;
 
         Interactable interactable = collision.collider.GetComponentInParent<Interactable>();
         if (interactable != null)
         {
             Debug.Log($"[Bullet] Damaging interactable {collision.collider.name}");
             interactable.Hit(damage);
+            success = true;
         }
 
         // (Optional) Still check for enemies separately if needed
@@ -37,9 +41,10 @@ public class Bullet : MonoBehaviour
         if (enemy != null)
         {
             enemy.TakeDamage(damage);
+            success = true;
         }
 
-        gameObject.SetActive(false); // destroy bullet
+        if(success) gameObject.SetActive(false); // destroy bullet
     }
 
     void OnTriggerEnter2D(Collider2D other)
