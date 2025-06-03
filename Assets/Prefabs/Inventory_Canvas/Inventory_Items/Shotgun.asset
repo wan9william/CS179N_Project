@@ -17,6 +17,6 @@ MonoBehaviour:
   value: 0
   dropChance: 5
   _name: Shotgun
-  ID: 13
+  ID: 1
   equipPrefab: {fileID: 5972384561809364490, guid: f17b7b8ae91406943bd7feb56fa41f43, type: 3}
   resourcePrefab: {fileID: 3656777680845249198, guid: b3ba6a77dc1f3eb46ac88b56a41318d6, type: 3}

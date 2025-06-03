@@ -17,6 +17,6 @@ MonoBehaviour:
   value: 14
   dropChance: 30
   _name: Book
-  ID: 3
+  ID: 1
   equipPrefab: {fileID: 6523770012386410511, guid: 9046da770a60df146b456cd1dc79fc5a, type: 3}
   resourcePrefab: {fileID: 6523770012386410511, guid: b63d5b311a53ce4468cd6345239260a7, type: 3}

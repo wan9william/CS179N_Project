@@ -17,6 +17,6 @@ MonoBehaviour:
   value: 0
   dropChance: 20
   _name: Stim
-  ID: 9
+  ID: 1
   equipPrefab: {fileID: 3443330127039651185, guid: f30307d7a6db98f499b3ffbe312c4aa3, type: 3}
   resourcePrefab: {fileID: 3443330127039651185, guid: 0a1787d52f2a68240880d8399036f573, type: 3}

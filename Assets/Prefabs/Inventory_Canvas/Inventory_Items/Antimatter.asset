@@ -17,6 +17,6 @@ MonoBehaviour:
   value: 35
   dropChance: 10
   _name: Antimatter
-  ID: 0
+  ID: 1
   equipPrefab: {fileID: 210607244735680991, guid: e6995617274fe65478d952d2af392dd5, type: 3}
   resourcePrefab: {fileID: 9129115006391499319, guid: 8f2a8bf263e1c254d8bf8ff97078caeb, type: 3}
