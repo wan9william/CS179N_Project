@@ -14,7 +14,7 @@ public class Player : MonoBehaviour
 
     //Player Sprint Bar
     [SerializeField] private Slider sprint_bar;
-
+    [SerializeField] private AudioSource sfxAudioSource;
 
     //Inventory
     [SerializeField] private Inventory inventory;
@@ -697,6 +697,12 @@ void Awake()
             child.localScale = Vector3.one;
             NormalizeChildScale(child); // Recursively reset nested children
         }
+    }
+
+    public void PlaySFX(AudioClip clip)
+    {
+        if (sfxAudioSource && clip)
+            sfxAudioSource.PlayOneShot(clip);
     }
 
     public ref int GetMoney() { return ref money; }
