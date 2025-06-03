@@ -10,6 +10,7 @@ public class Game_Event_Manager : MonoBehaviour
     private bool loseMission = false;
     private ShipItemCapture shipItemCapture;
     private Vector3 shipPositionOffset;
+    private string selectedPlanetScene = "ItemSpawnerTestScene"; // fallback default
 
     //Screen fade effect
     [SerializeField] private float ScreenFadeT = 0f;
@@ -111,7 +112,7 @@ public class Game_Event_Manager : MonoBehaviour
                         shipPositionOffset = ship.transform.InverseTransformPoint(player.transform.position);
                     }
                     //Scene transition
-                    SceneManager.LoadScene("ItemSpawnerTestScene");
+                    SceneManager.LoadScene(selectedPlanetScene);
                     state = GM_STATES.IDLE;
                     initialize = true;
                 }
@@ -162,4 +163,24 @@ public class Game_Event_Manager : MonoBehaviour
     public void SetLoseMission(bool lose) {
         loseMission = lose;
     }
+
+    public void SetSelectedPlanet(string planetName)
+    {
+        switch (planetName)
+        {
+            case "Derelict Echo":
+                selectedPlanetScene = "DerelictScene";
+                break;
+            case "Virelia Prime":
+                selectedPlanetScene = "CityScene";
+                break;
+            case "Elarin Reach":
+                selectedPlanetScene = "PlainsScene";
+                break;
+            default:
+                selectedPlanetScene = "ItemSpawnerTestScene";
+                break;
+        }
+    }
+
 }
