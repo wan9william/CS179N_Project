@@ -6,11 +6,20 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Start.unity
-    guid: a0817df42f73b234c92d4d8625db61b0
+    path: Assets/Scenes/Stages/ScifiStage.unity
+    guid: 21ff12776131e454d866e01eaf2e687d
   - enabled: 1
     path: Assets/Scenes/HubWorld 2.unity
     guid: 06c118bf8e5340c498beaa6acc36dbb5
+  - enabled: 1
+    path: Assets/Scenes/Stages/Forest Stage.unity
+    guid: 91b6b892785f2014487c5ea052b4b080
+  - enabled: 1
+    path: Assets/Scenes/Stages/JapanStage.unity
+    guid: ab263915748221e46818e266bd6e6d49
+  - enabled: 1
+    path: Assets/Scenes/Space.unity
+    guid: ad9c50e9ee8714e448ba37623a6a06c0
   m_configObjects:
     com.unity.xr.openxr.settings4: {fileID: 11400000, guid: 9cb6627fead792f41885db81e3a6e071, type: 2}
   m_UseUCBPForAssetBundles: 0
