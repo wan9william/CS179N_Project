@@ -1893,33 +1893,9 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 22454922}
     - target: {fileID: 716302228250151059, guid: 4c18fb5dec947874ca31c66ba2f5fe97, type: 3}
-      propertyPath: _moneyText
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 716302228250151059, guid: 4c18fb5dec947874ca31c66ba2f5fe97, type: 3}
       propertyPath: game_event_manager
       value: 
       objectReference: {fileID: 352100115}
-    - target: {fileID: 3725884996579917358, guid: 4c18fb5dec947874ca31c66ba2f5fe97, type: 3}
-      propertyPath: m_SortingOrder
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 4576711895773352515, guid: 4c18fb5dec947874ca31c66ba2f5fe97, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4576711895773352515, guid: 4c18fb5dec947874ca31c66ba2f5fe97, type: 3}
-      propertyPath: m_SortingOrder
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4576711895773352515, guid: 4c18fb5dec947874ca31c66ba2f5fe97, type: 3}
-      propertyPath: m_SortingLayerID
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4576711895773352515, guid: 4c18fb5dec947874ca31c66ba2f5fe97, type: 3}
-      propertyPath: m_RenderingLayerMask
-      value: 4294967295
-      objectReference: {fileID: 0}
     - target: {fileID: 4690868738214975529, guid: 4c18fb5dec947874ca31c66ba2f5fe97, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -2002,10 +1978,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5444074201541086463, guid: 4c18fb5dec947874ca31c66ba2f5fe97, type: 3}
       propertyPath: m_Name
-      value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 5444074201541086463, guid: 4c18fb5dec947874ca31c66ba2f5fe97, type: 3}
-      propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 5522243058836531330, guid: 4c18fb5dec947874ca31c66ba2f5fe97, type: 3}

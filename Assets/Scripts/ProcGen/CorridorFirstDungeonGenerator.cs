@@ -70,6 +70,8 @@ public class CorridorFirstDungeonGenerator : DungeonGenerator
 
     private void CreateDoors(HashSet<Vector2Int> doorPositions)
     {
+        if (!doorHorizontalPrefab || !doorVerticalPrefab) return;
+
         foreach (var position in doorPositions)
         {
             if(doorPositions.Contains(position + Direction2D.cardinalDirectionsList[1]))
