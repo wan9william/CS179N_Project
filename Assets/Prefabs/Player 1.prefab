@@ -1040,6 +1040,7 @@ MonoBehaviour:
   animator: {fileID: 226217057230218222}
   spriteRenderer: {fileID: 4576711895773352515}
   sprint_bar: {fileID: 4176203704576063588}
+  sfxAudioSource: {fileID: 0}
   canvas: {fileID: 0}
   selected_slot: 0
   flashlightPrefab: {fileID: 0}
@@ -1243,7 +1244,7 @@ MonoBehaviour:
   m_Intensity: 3.15
   m_LightVolumeIntensity: 1
   m_LightVolumeEnabled: 0
-  m_ApplyToSortingLayers: 00000000ffdde16d15f950cc
+  m_ApplyToSortingLayers: 000000001b9504cd513e71fd5f6844662782e6f9a5699e26
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
