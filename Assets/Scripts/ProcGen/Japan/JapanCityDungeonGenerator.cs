@@ -65,16 +65,17 @@ public class JapanCityDungeonGenerator : JapanDungeonGenerator
         floorPositions.UnionWith(roadPositions);
         floorPositions.UnionWith(roomPositions);
 
+        HashSet<Vector2Int> innerWallFrontPositions = new HashSet<Vector2Int>();
         var wallPositions = JapanWallGenerator.CreateWalls(roomPositions, roadPositions, tileMapVisualizer);
         var fencePositions = JapanWallGenerator.CreateFences(roadPositions, floorPositions, wallPositions, tileMapVisualizer);
-        RemoveFloorTiles(roomPositions);
+        RemoveFloorTiles(roomPositions, innerWallFrontPositions);
         tileMapVisualizer.PaintFloorTiles(roomPositions);
         tileMapVisualizer.PaintGrassTiles(fencePositions);
-        tileMapVisualizer.PaintRoofTiles(roomPositions, wallPositions, doorPositions);
+        tileMapVisualizer.PaintRoofTiles(roomPositions, innerWallFrontPositions, doorPositions);
         SpawnItems(roomPositions, roadPositions, doorPositions);
     }
 
-    private void RemoveFloorTiles(HashSet<Vector2Int> floorPositions)
+    private void RemoveFloorTiles(HashSet<Vector2Int> floorPositions, HashSet<Vector2Int> innerWallFrontPositions)
     {
         HashSet<Vector2Int> oldfloorPositions = new HashSet<Vector2Int>(floorPositions);
         foreach (Vector2Int pos in oldfloorPositions)
@@ -82,6 +83,7 @@ public class JapanCityDungeonGenerator : JapanDungeonGenerator
             if (!oldfloorPositions.Contains(pos + Direction2D.cardinalDirectionsList[0]))
             {
                 floorPositions.Remove(pos);
+                innerWallFrontPositions.Add(pos);
             }
         }
     }
@@ -115,7 +117,6 @@ public class JapanCityDungeonGenerator : JapanDungeonGenerator
     {
         HashSet<Vector2Int> roomPositions = new HashSet<Vector2Int>();
         int roomToCreateCount = Mathf.RoundToInt(potentialRoomPositions.Count);
-        Debug.Log("==========Create "+roomToCreateCount+" Houses===========");
 
         List<Vector2Int> roomsToCreate = potentialRoomPositions.OrderBy(x => Guid.NewGuid()).Take(roomToCreateCount).ToList();
         var roomFloor = new HashSet<Vector2Int>();
@@ -202,7 +203,6 @@ public class JapanCityDungeonGenerator : JapanDungeonGenerator
             roomsList = ProceduralGeneration.BinarySpacePartitioning(new BoundsInt((Vector3Int)roomPosition, new Vector3Int(maximumHouseLength, maximumHouseLength, 0)), minRoomWidth, minRoomHeight);
             count++;
         }
-        Debug.Log("Room Retry Count: " + count);
 
         HashSet<Vector2Int> floor = new HashSet<Vector2Int>();
 
@@ -335,31 +335,37 @@ public class JapanCityDungeonGenerator : JapanDungeonGenerator
             countY++;
         }
 
+
         if (countX < countY)
         {
             floor.UnionWith(corridorX);
 
-            GameObject door = Instantiate(doorVerticalPrefab, this.transform);
-            doorList.Add(door);
-            Vector2Int startPosition = (startPositionX + Direction2D.cardinalDirectionsList[0] * 2);
-            Vector3 doorPosition = new Vector3(startPosition.x+0.5f, startPosition.y-0.5f, 0);
-            door.transform.localPosition = doorPosition;
+            if (spawnItems)
+            {
+                GameObject door = Instantiate(doorVerticalPrefab, this.transform);
+                doorList.Add(door);
+
+                Vector2Int startPosition = (startPositionX + Direction2D.cardinalDirectionsList[0] * 2);
+                Vector3 doorPosition = new Vector3(startPosition.x, startPosition.y, 0);
+                door.transform.localPosition = doorPosition;
+            }
             doorPositions.Add(startPositionX + Direction2D.cardinalDirectionsList[0] * 2);
             doorPositions.Add(startPositionX + Direction2D.cardinalDirectionsList[0]);
         }
         else
         {
             floor.UnionWith(corridorY);
-
-            GameObject door = Instantiate(doorHorizontalPrefab, this.transform);
-            doorList.Add(door);
-            Vector2Int startPosition = (startPositionY + Direction2D.cardinalDirectionsList[1]);
-            Vector3 doorPosition = new Vector3(startPosition.x, startPosition.y, 0);
-            door.transform.localPosition = doorPosition;
+            if (spawnItems)
+            {
+                GameObject door = Instantiate(doorHorizontalPrefab, this.transform);
+                doorList.Add(door);
+                Vector2Int startPosition = (startPositionY + Direction2D.cardinalDirectionsList[1]);
+                Vector3 doorPosition = new Vector3(startPosition.x + 0.5f, startPosition.y + 0.5f, 0);
+                door.transform.localPosition = doorPosition;
+            }
             doorPositions.Add(startPositionY + Direction2D.cardinalDirectionsList[1] * 2);
             doorPositions.Add(startPositionY + Direction2D.cardinalDirectionsList[1]);
         }
-
         foreach (var room in roomsList)
         {
             for (int col = offset; col < room.size.x - offset; col++)

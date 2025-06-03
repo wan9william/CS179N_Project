@@ -34,9 +34,9 @@ public class JapanTileMapVisualizer : MonoBehaviour
         PaintTiles(floorPositions, floorTilemap, floorTile);
     }
 
-    public void PaintRoofTiles(HashSet<Vector2Int> roofPositions, HashSet<Vector2Int> wallPositions, HashSet<Vector2Int> doorPositions)
+    public void PaintRoofTiles(HashSet<Vector2Int> roofPositions, HashSet<Vector2Int> wallFrontPositions, HashSet<Vector2Int> doorPositions)
     {
-        roofPositions.UnionWith(wallPositions);
+        roofPositions.UnionWith(wallFrontPositions);
         foreach (var position in roofPositions)
         {
             if (!doorPositions.Contains(position))

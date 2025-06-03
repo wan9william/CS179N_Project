@@ -62,7 +62,7 @@ public class CorridorFirstDungeonGenerator : DungeonGenerator
         }
 
         HashSet<Vector2Int> doorPositions = FindDoorPositions(floorPositions, roomPositions);
-        CreateDoors(doorPositions);
+        if(spawnItems) CreateDoors(doorPositions);
         WallGenerator.CreateWalls(floorPositions,tileMapVisualizer);
         RemoveFloorTiles(floorPositions);
         tileMapVisualizer.PaintFloorTiles(floorPositions);
