@@ -292,6 +292,26 @@ MonoBehaviour:
   company: HTC
   priority: 0
   required: 0
+--- !u!114 &-2853260957409467248
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b213d3e3c7f3109449eb46a4c8ee42f0, type: 3}
+  m_Name: XrPerformanceSettingsFeature WebGL
+  m_EditorClassIdentifier: 
+  m_enabled: 0
+  nameUi: XR Performance Settings
+  version: 1.0.0
+  featureIdInternal: com.unity.openxr.feature.extension.performance_settings
+  openxrExtensionStrings: XR_EXT_performance_settings
+  company: Unity
+  priority: 0
+  required: 0
 --- !u!114 &-1996894201740593846
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -567,7 +587,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5a1f07dc5afe854f9f12a4194aca3fb, type: 3}
   m_Name: WebGL
   m_EditorClassIdentifier: 
-  features: []
+  features:
+  - {fileID: -2853260957409467248}
   m_renderMode: 1
   m_autoColorSubmissionMode: 1
   m_colorSubmissionModes:
@@ -843,41 +864,41 @@ MonoBehaviour:
   m_Name: Standalone
   m_EditorClassIdentifier: 
   features:
-  - {fileID: 2975626673223343903}
-  - {fileID: 7495626368216455187}
-  - {fileID: 1817132175711389412}
-  - {fileID: 3770464736310151867}
-  - {fileID: -3230529352877176740}
-  - {fileID: 1801300031071138861}
-  - {fileID: -6988312976186066305}
-  - {fileID: -3437654451954589162}
-  - {fileID: 6186807972536905230}
-  - {fileID: -208837237670802432}
-  - {fileID: -7630600116644082433}
-  - {fileID: -5763532807069953982}
-  - {fileID: 6688390566385777241}
-  - {fileID: 8001276599109077185}
-  - {fileID: 8360871616886427316}
-  - {fileID: -6718818004244798725}
-  - {fileID: -3353562345044802906}
-  - {fileID: -1996894201740593846}
   - {fileID: 505846774706166426}
-  - {fileID: 5337765922122043315}
   - {fileID: 5882913546727172826}
+  - {fileID: 5337765922122043315}
+  - {fileID: 2861445304390875784}
   - {fileID: -8201335420756577827}
+  - {fileID: -5201802293985210065}
+  - {fileID: 8175745689404898934}
+  - {fileID: -7592040397328210595}
+  - {fileID: 7495626368216455187}
+  - {fileID: 8025591972683562044}
+  - {fileID: 1218582144972558234}
+  - {fileID: -8233616109840681556}
   - {fileID: 3027459798992888218}
   - {fileID: -6086146574214677034}
-  - {fileID: 8175745689404898934}
-  - {fileID: 2219670859251276776}
-  - {fileID: 8025591972683562044}
-  - {fileID: -5201802293985210065}
+  - {fileID: -1996894201740593846}
   - {fileID: -206355601112563405}
-  - {fileID: -8233616109840681556}
-  - {fileID: 1218582144972558234}
   - {fileID: -6590731786895631258}
+  - {fileID: -3353562345044802906}
+  - {fileID: 2219670859251276776}
+  - {fileID: -6718818004244798725}
+  - {fileID: -3230529352877176740}
+  - {fileID: -6988312976186066305}
+  - {fileID: -7630600116644082433}
+  - {fileID: 8001276599109077185}
+  - {fileID: 6186807972536905230}
+  - {fileID: 6688390566385777241}
+  - {fileID: 1801300031071138861}
+  - {fileID: -5763532807069953982}
+  - {fileID: -3437654451954589162}
+  - {fileID: 3770464736310151867}
+  - {fileID: -208837237670802432}
+  - {fileID: 1817132175711389412}
+  - {fileID: 2975626673223343903}
+  - {fileID: 8360871616886427316}
   - {fileID: 5316424565232059702}
-  - {fileID: -7592040397328210595}
-  - {fileID: 2861445304390875784}
   m_renderMode: 1
   m_autoColorSubmissionMode: 1
   m_colorSubmissionModes:
