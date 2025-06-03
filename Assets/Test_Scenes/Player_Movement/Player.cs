@@ -118,6 +118,12 @@ void Awake()
         SelectEquipped();
     }
 
+    public void RevivePlayer() {
+        animator.SetBool("Dead", false);
+        health = 100;
+        _healthbar.SetHealth(100);
+    }
+
     // Update is called once per frame
     void Update()
     {
