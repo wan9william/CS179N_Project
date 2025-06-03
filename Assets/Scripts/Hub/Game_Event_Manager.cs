@@ -6,9 +6,9 @@ public class Game_Event_Manager : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private bool startMission;
-    [SerializeField] private bool initialize = true;
+    private bool initialize = true;
     private bool loseMission = false;
-    [SerializeField] private ShipItemCapture shipItemCapture;
+    private ShipItemCapture shipItemCapture;
     private Vector3 shipPositionOffset;
     private string selectedPlanetScene = "ItemSpawnerTestScene"; // fallback default
 
@@ -131,27 +131,25 @@ public class Game_Event_Manager : MonoBehaviour
 
                 if (ScreenFadeT >= 1f)
                 {
-                    // ✅ Restore items from mission
-                    if (shipItemCapture != null)
+                    GameObject ship = GameObject.FindWithTag("Ship");
+                    if (ship != null)
                     {
-                        shipItemCapture.CaptureItems();
+                        shipItemCapture = ship.GetComponentInChildren<ShipItemCapture>();
+                        if (shipItemCapture != null)
+                        {
+                            shipItemCapture.CaptureItems();
+                        }
+
+                        if (player != null)
+                        {
+                            shipPositionOffset = ship.transform.InverseTransformPoint(player.transform.position);
+                        }
                     }
 
-                    GameObject ship = GameObject.FindWithTag("Ship");
-                    if (ship != null && player != null)
-                    {
-                        player.transform.position = ship.transform.TransformPoint(shipPositionOffset);
-                    }
+                    // Delay restore until scene is loaded
+                    SceneManager.sceneLoaded += OnSceneLoaded_Extract;
 
                     SceneManager.LoadScene("Space");
-
-                    //Revive the player
-                    player.RevivePlayer();
-
-                    //Turn off UI messages
-                    Dead_Text.SetActive(false);
-                    Success_Text.SetActive(false);
-
                     state = GM_STATES.IDLE;
                     initialize = true;
                 }
@@ -206,5 +204,35 @@ public class Game_Event_Manager : MonoBehaviour
     {
         string currentScene = SceneManager.GetActiveScene().name;
         return currentScene != "HubWorld 2" && currentScene != "Space";
+    }
+
+    private void OnSceneLoaded_Extract(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name == "Space")
+        {
+            GameObject ship = GameObject.FindWithTag("Ship");
+            if (ship != null)
+            {
+                shipItemCapture = ship.GetComponentInChildren<ShipItemCapture>();
+                if (shipItemCapture != null)
+                {
+                    shipItemCapture.RestoreItemPositions();
+                }
+
+                // Reposition player
+                if (player != null)
+                {
+                    player.transform.position = ship.transform.TransformPoint(shipPositionOffset);
+                    player.RevivePlayer();
+                }
+            }
+
+            // Hide result UI
+            Dead_Text.SetActive(false);
+            Success_Text.SetActive(false);
+
+            // Unsubscribe so it doesn't trigger again
+            SceneManager.sceneLoaded -= OnSceneLoaded_Extract;
+        }
     }
 }
