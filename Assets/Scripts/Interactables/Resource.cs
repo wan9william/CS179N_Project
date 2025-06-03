@@ -20,7 +20,11 @@ public class Resource : Interactable
 
     protected override void Initialize() {
 
-        quantity = transform.name.Contains("Ammo") && natural ? 20 : 1;
+    // Only set default if it's a natural spawn
+    if (natural)
+    {
+        quantity = transform.name.Contains("Ammo") ? 20 : 1;
+    }
     }
 
     //Meant to differentiate between items dropped and naturally spawn items
@@ -43,4 +47,14 @@ public class Resource : Interactable
     public Item_ScriptableObj GetResource() { return _resource; }
 
     public void SetResource(Item_ScriptableObj resource) { _resource = resource; }
+
+    public void SetQuantity(int q)
+    {
+        quantity = q;
+    }
+
+    public int GetQuantity()
+    {
+        return quantity;
+    }
 }

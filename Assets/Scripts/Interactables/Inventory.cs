@@ -76,18 +76,31 @@ public class Inventory
             }
         }
 
-        for (int i = 0; i < 8; i++)
+    for (int i = 0; i < 8; i++)
+    {
+        // if items of a different type, then find new available inventory slots
+        if (inventorySlots[i].item.getID() == 0)
         {
-            // if items of a different type, then find new available inventory slots
-            if (inventorySlots[i].item.getID() == 0)
-            {
-                int amountToAdd = Mathf.Min(quantity, maxStackSize);
-                inventorySlots[i].SetItem_A(new Tuple<Item_ScriptableObj, int>(item, amountToAdd));
-                quantity -= amountToAdd;
+            int amountToAdd = Mathf.Min(quantity, maxStackSize);
+            inventorySlots[i].SetItem_A(new Tuple<Item_ScriptableObj, int>(item, amountToAdd));
+            quantity -= amountToAdd;
 
-                if (quantity <= 0) return 0; // All items have been placed
+            // 🟢 Add this: set storedAmmo if it's a weapon
+            Weapon weapon = item.getPrefab()?.GetComponentInChildren<Weapon>();
+            if (weapon != null)
+            {
+                inventorySlots[i].storedAmmo = new_item.Item2; // use dropped item's ammo
             }
+            else
+            {
+                inventorySlots[i].storedAmmo = -1;
+            }
+
+            inventorySlots[i].UpdateQuantityDisplay();
+
+            if (quantity <= 0) return 0; // All items have been placed
         }
+    }
 
         return quantity;
     }
