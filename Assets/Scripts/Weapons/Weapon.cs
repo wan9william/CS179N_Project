@@ -44,6 +44,9 @@ public class Weapon : Equippable
     [Header("Object Manager")]
     [SerializeField] private ObjectManager objectManager;
 
+    [Header("Audio")]
+    [SerializeField] private AudioSource audioSource2;
+    [SerializeField] private AudioClip reloadClip;
 
     private float currentSpread = 0f;
     private float lastFireTime = 0f;
@@ -55,6 +58,10 @@ public class Weapon : Equippable
     {
         isReloading = true;
         Debug.Log("[Weapon] Reloading...");
+
+        // Play reload sound
+        if (audioSource2 && reloadClip)
+            audioSource2.PlayOneShot(reloadClip);
 
         yield return new WaitForSeconds(reloadTime);
 

@@ -368,6 +368,8 @@ MonoBehaviour:
   animator: {fileID: 6953975783100476818}
   spriteRenderer: {fileID: 2490300557013193417}
   objectManager: {fileID: 0}
+  audioSource2: {fileID: 1506341793453351693}
+  reloadClip: {fileID: 8300000, guid: 9158afb6966d445db9caf1dccf7acbcc, type: 3}
 --- !u!82 &1506341793453351693
 AudioSource:
   m_ObjectHideFlags: 0
