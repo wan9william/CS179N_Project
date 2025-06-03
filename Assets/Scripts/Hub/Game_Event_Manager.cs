@@ -68,82 +68,71 @@ public class Game_Event_Manager : MonoBehaviour
 
         switch (state) { 
             case GM_STATES.IDLE:
-            if (initialize)
-            {
-                ScreenFadeT = 1f;
-                state = GM_STATES.INITIALIZE;
-
-                GameObject ship = GameObject.FindWithTag("Ship");
-                GameObject landingPad = GameObject.FindWithTag("Landingpad");
-
-                if (ship != null && landingPad != null)
+                if (initialize)
                 {
-                    ship.transform.position = landingPad.transform.position;
+                    ScreenFadeT = 1f;
+                    state = GM_STATES.INITIALIZE;
 
-                    // Move player to relative position inside ship
-                    player.transform.position = ship.transform.TransformPoint(shipPositionOffset);
+                    //Fixed?
+                    GameObject ship = GameObject.FindWithTag("Ship");
+                    GameObject landingPad = GameObject.FindWithTag("Landingpad");
 
-                    // Restore dropped ship items
-                    ShipItemCapture capture = ship.GetComponentInChildren<ShipItemCapture>();
-                    if (capture != null)
+                    if (ship != null && landingPad != null)
                     {
-                        capture.RestoreItemPositions();
+                        ship.transform.position = landingPad.transform.position;
+
+                        // Move player to relative position inside ship
+                        player.transform.position = ship.transform.TransformPoint(shipPositionOffset);
+
+                        // Restore any dropped ship items
+                        ShipItemCapture capture = ship.GetComponentInChildren<ShipItemCapture>();
+                        if (capture != null)
+                        {
+                            capture.RestoreItemPositions();
+                        }
                     }
                 }
-            }
-            break;
+                break;
             case GM_STATES.INITIALIZE:
                 initialize = false;
                 ForwardFadeAnimation(true);
+
                 break;
             case GM_STATES.START_MISSION:
                 ForwardFadeAnimation(false);
-
-                if (ScreenFadeT >= 1f)
-                {
+                //Debug.Log("START!");
+                if (ScreenFadeT >= 1f) {
                     if (shipItemCapture != null)
                     {
-                        shipItemCapture.CaptureItems(); // ✅ Save items on ship
+                        shipItemCapture.CaptureItems();
                     }
-
                     GameObject ship = GameObject.FindWithTag("Ship");
                     if (ship != null && player != null)
                     {
                         shipPositionOffset = ship.transform.InverseTransformPoint(player.transform.position);
                     }
-
-                    SceneManager.LoadScene(selectedPlanetScene); // ✅ Go to mission
+                    //Scene transition
+                    SceneManager.LoadScene(selectedPlanetScene);
                     state = GM_STATES.IDLE;
                     initialize = true;
                 }
                 break;
             case GM_STATES.END_MISSION:
+                //TURN ON DEATH MESSAGE
                 if (loseMission)
                 {
                     Dead_Text.SetActive(true);
                 }
-                else
-                {
+                else {
                     Success_Text.SetActive(true);
                 }
 
                 ForwardFadeAnimation(false);
-
+                //Debug.Log("START!");
                 if (ScreenFadeT >= 1f)
                 {
-                    // ✅ Restore items from mission
-                    if (shipItemCapture != null)
-                    {
-                        shipItemCapture.RestoreItemPositions();
-                    }
-
-                    GameObject ship = GameObject.FindWithTag("Ship");
-                    if (ship != null && player != null)
-                    {
-                        player.transform.position = ship.transform.TransformPoint(shipPositionOffset);
-                    }
-
-                    SceneManager.LoadScene("Space"); // ✅ Return to ship scene
+                    //Scene transition
+                    SceneManager.LoadScene("Space");
                     state = GM_STATES.IDLE;
                     initialize = true;
                 }
