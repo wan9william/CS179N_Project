@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6642477487037728899}
   - component: {fileID: 1986234090233996251}
   - component: {fileID: 558439859973199804}
+  - component: {fileID: -6379842071510807805}
   m_Layer: 0
   m_Name: Door
   m_TagString: Interactable
@@ -93,7 +94,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.5, y: 0.5}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -126,6 +127,18 @@ MonoBehaviour:
   building_top: {fileID: 0}
   collider: {fileID: 2762607267753219698}
   open: 0
+--- !u!210 &-6379842071510807805
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 772012950546682331}
+  m_Enabled: 1
+  m_SortingLayerID: 1715759199
+  m_SortingLayer: 3
+  m_SortingOrder: 3
+  m_SortAtRoot: 0
 --- !u!1 &1565880565200776324
 GameObject:
   m_ObjectHideFlags: 0
@@ -279,7 +292,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.5, y: 0.5}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
