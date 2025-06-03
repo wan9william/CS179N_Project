@@ -283,6 +283,10 @@ PrefabInstance:
       propertyPath: m_VertexColorAlwaysGammaSpace
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1959901821054270716, guid: 37527023768168a45ba07515ee2cd0b7, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2047801923615306332, guid: 37527023768168a45ba07515ee2cd0b7, type: 3}
       propertyPath: m_TagString
       value: UI_Manager
@@ -492,7 +496,8 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 6686751626755479543, guid: 37527023768168a45ba07515ee2cd0b7, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 6761265207126488850, guid: 37527023768168a45ba07515ee2cd0b7, type: 3}
       insertIndex: -1

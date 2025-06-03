@@ -4,7 +4,13 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/Start.unity
+    guid: a0817df42f73b234c92d4d8625db61b0
+  - enabled: 1
+    path: Assets/Scenes/HubWorld 2.unity
+    guid: 06c118bf8e5340c498beaa6acc36dbb5
   m_configObjects:
     com.unity.xr.openxr.settings4: {fileID: 11400000, guid: 9cb6627fead792f41885db81e3a6e071, type: 2}
   m_UseUCBPForAssetBundles: 0
