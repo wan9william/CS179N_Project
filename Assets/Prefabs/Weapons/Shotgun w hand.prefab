@@ -376,7 +376,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5984737206847484276}
   - component: {fileID: 4320193028135363865}
-  - component: {fileID: 4436072789807211049}
+  - component: {fileID: -4935284100200848062}
   m_Layer: 0
   m_Name: Shotgun w hand
   m_TagString: Untagged
@@ -414,13 +414,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 162ba179e35c42d488e1b086e65360e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioSource: {fileID: 4436072789807211049}
+  audioSource: {fileID: 0}
   weaponOwner: {fileID: 0}
   projectilePrefab: {fileID: 1873891436641685562, guid: 0eccac6df8f10434ca458c9770dbe1c7, type: 3}
   firePoint: {fileID: 2841346013480728197}
   fireForce: 10
   fireCooldown: 0.5
   fireMode: 0
+  chamberReset: 0
   damage: 10
   baseSpreadAngle: 0
   maxSpreadAngle: 10
@@ -434,9 +435,8 @@ MonoBehaviour:
   animator: {fileID: 848104311465782816}
   spriteRenderer: {fileID: 1019702892802534350}
   objectManager: {fileID: 0}
-
-  --- !u!82 &4436072789807211049
-  AudioSource:
+--- !u!82 &-4935284100200848062
+AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
