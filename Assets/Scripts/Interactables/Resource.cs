@@ -8,14 +8,22 @@ public class Resource : Interactable
     [SerializeField] Item_ScriptableObj _resource;
     [SerializeField] int quantity;
     [SerializeField] bool natural = true;
+
+    public AudioSource audioSource;
     protected override void onInteract(ref Player player)
     {
         player.SetFindInteract(true);
         player.SetInteract(null);
 
-        quantity = player.getInventory().addItem(new Tuple<Item_ScriptableObj,int>(_resource,quantity)); //sets the quantity to the leftover quantity after adding to the inventory
+        quantity = player.getInventory().addItem(new Tuple<Item_ScriptableObj, int>(_resource, quantity)); //sets the quantity to the leftover quantity after adding to the inventory
 
-        if(quantity <= 0) transform.gameObject.SetActive(false);
+        if (audioSource && audioSource.clip)
+        {
+            player.PlaySFX(audioSource.clip);
+            Debug.Log("PLAY");
+        }
+
+        if (quantity <= 0) transform.gameObject.SetActive(false);
     }
 
     protected override void Initialize() {
