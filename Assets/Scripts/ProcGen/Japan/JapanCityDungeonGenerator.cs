@@ -5,6 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 using static UnityEngine.Rendering.DebugUI.Table;
+using UnityEngine.SceneManagement;
 
 public class JapanCityDungeonGenerator : JapanDungeonGenerator
 {
@@ -35,6 +36,18 @@ public class JapanCityDungeonGenerator : JapanDungeonGenerator
     public override void RunProceduralGeneration()
     {
         CorridorFirstGeneration();
+    }
+
+    void Start()
+    {
+        StartCoroutine(DelayedDungeonGen());
+    }
+
+    private System.Collections.IEnumerator DelayedDungeonGen()
+    {
+        yield return new WaitForEndOfFrame(); // Ensure all scene objects are initialized
+        UnityEngine.Random.InitState(System.DateTime.Now.Millisecond);
+        RunProceduralGeneration();
     }
 
     //Creates Corridors, then Rooms on the Corridors, then Walls.

@@ -26,6 +26,18 @@ public class CorridorFirstDungeonGenerator : DungeonGenerator
     private List<Color> roomColors = new List<Color>();
 
     
+    void Start()
+    {
+        StartCoroutine(GenerateAfterSceneLoad());
+    }
+
+    private System.Collections.IEnumerator GenerateAfterSceneLoad()
+    {
+        yield return new WaitForEndOfFrame(); // wait for objects to initialize
+        UnityEngine.Random.InitState(System.DateTime.Now.Millisecond); // new seed each load
+        RunProceduralGeneration();
+    }
+
     public override void RunProceduralGeneration()
     {
         CorridorFirstGeneration();
@@ -34,15 +46,22 @@ public class CorridorFirstDungeonGenerator : DungeonGenerator
     //Creates Corridors, then Rooms on the Corridors, then Walls.
     private void CorridorFirstGeneration()
     {
-        HashSet<Vector2Int> floorPositions = new HashSet<Vector2Int>();
-        HashSet<Vector2Int> potentialRoomPositions = new HashSet<Vector2Int>();
-        HashSet<Vector2Int> corridorPositions = new HashSet<Vector2Int>();
-
+        // Clear previous generation data
+        ClearRoomData();
+        
+        // Clear previous tilemap content
+        tileMapVisualizer.Clear();
+        
+        // Clear previous doors
         foreach (GameObject door in doorList)
         {
             DestroyImmediate(door);
         }
         doorList.Clear();
+
+        HashSet<Vector2Int> floorPositions = new HashSet<Vector2Int>();
+        HashSet<Vector2Int> potentialRoomPositions = new HashSet<Vector2Int>();
+        HashSet<Vector2Int> corridorPositions = new HashSet<Vector2Int>();
 
         List<List<Vector2Int>> corridors = CreateCorridors(floorPositions, potentialRoomPositions);
 

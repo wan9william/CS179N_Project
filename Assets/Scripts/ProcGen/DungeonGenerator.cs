@@ -11,6 +11,18 @@ public class DungeonGenerator : AbstractDungeonGenerator
 
     [SerializeField] protected SimpleRandomWalkData randomWalkParameters;
 
+    void Start()
+    {
+        StartCoroutine(GenerateAfterSceneLoad());
+    }
+
+    private System.Collections.IEnumerator GenerateAfterSceneLoad()
+    {
+        yield return new WaitForEndOfFrame(); // Wait for everything to be ready
+        UnityEngine.Random.InitState(System.DateTime.Now.Millisecond); // Ensure randomness
+        RunProceduralGeneration();
+    }
+    
     public override void RunProceduralGeneration()
     {
         tileMapVisualizer.Clear();
