@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: MeleeStat
   m_EditorClassIdentifier: 
   moveSpeed: 1.5
-  stopDistance: 1.5
+  stopDistance: 0.5
   nextWaypointDistance: 0.3
   flipSprite: 1
   attackRange: 1.5
