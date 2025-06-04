@@ -23,7 +23,7 @@ public class Resource : Interactable
             Debug.Log("PLAY");
         }
 
-        if (quantity <= 0) transform.gameObject.SetActive(false);
+        if (quantity <= 0) Destroy(gameObject);
     }
 
     protected override void Initialize() {
