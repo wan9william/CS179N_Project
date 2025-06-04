@@ -120,4 +120,21 @@ public class DayNightTimer : MonoBehaviour
 
         audioSource.volume = targetVolume;
     }
+
+    public float GetProgress()
+    {
+        return Mathf.Clamp01(timePassed / totalDayTime);
+    }
+    
+    public float GetTimeRemaining()
+    {
+        return Mathf.Max(0f, totalDayTime - timePassed);
+    }
+
+    public float GetTotalTime()
+    {
+        return totalDayTime;
+    }
+
+
 }

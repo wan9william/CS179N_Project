@@ -46,12 +46,12 @@ public class PlayerHealth : MonoBehaviour
     {
         Debug.Log($"[PlayerHealth] Took {amount} damage.");
         unitHealth.Dmgunit(amount); // or: health -= amount;
-        UpdateHealthBar();  
+        UpdateHealthBar();
 
-    if (flashEffect != null)
-    {
-        flashEffect.Flash();
-    }
+        if (flashEffect != null)
+        {
+            flashEffect.Flash();
+        }
     }
 
     public void SetHealth(int health) {
@@ -75,4 +75,20 @@ public class PlayerHealth : MonoBehaviour
         // Apply it to the fill image
         fillImage.fillAmount = fillAmount;
     }
+
+    public float GetHealthRatio()
+    {
+        return (float)unitHealth.Health / unitHealth.MaxHealth;
+    }
+
+    public int GetCurrentHealth()
+    {
+        return unitHealth.Health;
+    }
+
+    public int GetMaxHealth()
+    {
+        return unitHealth.MaxHealth;
+    }
+
 }
