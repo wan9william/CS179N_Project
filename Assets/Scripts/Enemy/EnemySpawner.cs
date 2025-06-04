@@ -32,8 +32,8 @@ public class EnemySpawner : MonoBehaviour
     [Range(1f, 5f)]
     public float shipSafetyMultiplier = 1.5f;
 
-    [SerializeField] private List<Vector3> spawnPositions = new List<Vector3>();
-    private Dictionary<Vector3, Coroutine> activeSpawns = new Dictionary<Vector3, Coroutine>();
+    [SerializeField] protected List<Vector3> spawnPositions = new List<Vector3>();
+    protected Dictionary<Vector3, Coroutine> activeSpawns = new Dictionary<Vector3, Coroutine>();
 
     void Start()
     {

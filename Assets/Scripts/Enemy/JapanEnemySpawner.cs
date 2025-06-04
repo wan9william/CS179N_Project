@@ -2,11 +2,11 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public class JapanEnemySpawner : MonoBehaviour
+public class JapanEnemySpawner : EnemySpawner
 {
     [Header("References")]
-    public JapanTileMapVisualizer tileMapVisualizer;
-    public Transform player;
+    public JapanTileMapVisualizer JtileMapVisualizer;
+    /*public Transform player;
     public Transform ship;
 
     [Header("Spawn Settings")]
@@ -18,10 +18,10 @@ public class JapanEnemySpawner : MonoBehaviour
     public float spawnInterval = 3f;
     public float minDistanceFromPlayer = 6f;
     public float minDistanceFromShip = 8f;
-    public float minDistanceBetweenSpawners = 5f;
+    public float minDistanceBetweenSpawners = 5f;*/
 
-    private List<Vector3> spawnPositions = new List<Vector3>();
-    private Dictionary<Vector3, Coroutine> activeSpawns = new Dictionary<Vector3, Coroutine>();
+    //private List<Vector3> spawnPositions = new List<Vector3>();
+    //private Dictionary<Vector3, Coroutine> activeSpawns = new Dictionary<Vector3, Coroutine>();
 
     void Start()
     {
@@ -32,7 +32,7 @@ public class JapanEnemySpawner : MonoBehaviour
         if (ship == null)
             ship = GameObject.FindGameObjectWithTag("Ship")?.transform;
 
-        if (tileMapVisualizer == null || player == null || ship == null || enemyTypes.Length == 0)
+        if (JtileMapVisualizer == null || player == null || ship == null || enemyTypes.Length == 0)
         {
             Debug.LogError("[EnemySpawner] Missing references.");
             return;
@@ -43,7 +43,7 @@ public class JapanEnemySpawner : MonoBehaviour
 
     void GenerateSpawnPositions()
     {
-        List<Vector2Int> floorTiles = tileMapVisualizer.GetFloorWorldPositions();
+        List<Vector2Int> floorTiles = JtileMapVisualizer.GetFloorWorldPositions();
 
         int attempts = 0;
         while (spawnPositions.Count < spawnPointCount && attempts < 1000)
@@ -124,10 +124,11 @@ public class JapanEnemySpawner : MonoBehaviour
         }
     }
 
+    /*
     public List<Vector3> GetEnemySpawnPositions()
     {
         return spawnPositions;
-    }
+    }*/
 
     void OnDrawGizmosSelected()
     {
