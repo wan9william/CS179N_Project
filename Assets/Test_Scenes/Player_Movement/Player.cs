@@ -526,6 +526,10 @@ void Awake()
         _healthbar.TakeDamage(damage);
     }
 
+    public float GetHealth() { return health; }
+
+    public float GetMaxHealth() { return 100f; }
+
     public void MissionReset()
     {
         game_event_manager.SetState(Game_Event_Manager.GM_STATES.END_MISSION);

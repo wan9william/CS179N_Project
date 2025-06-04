@@ -5,7 +5,7 @@ using System.Linq;
 public class GameDirector : MonoBehaviour
 {
     [Header("References")]
-    public PlayerHealth playerHealth;
+    public Player playerHealth;
     public DayNightTimer timer;
     public ItemManager itemManager;
     public EnemySpawner enemySpawner;
@@ -28,6 +28,7 @@ public class GameDirector : MonoBehaviour
     void Start()
     {
         inventorySlots = Object.FindObjectsByType<InventorySlot>(FindObjectsSortMode.None);
+        playerHealth = GameObject.FindWithTag("Player").GetComponent<Player>();
 
     }
 
@@ -47,7 +48,7 @@ public class GameDirector : MonoBehaviour
 
     float CalculateDifficulty()
     {
-        float healthRatio = (float)playerHealth.GetCurrentHealth() / playerHealth.GetMaxHealth(); // 1 when full, 0 when dead
+        float healthRatio = (float)playerHealth.GetHealth() / playerHealth.GetMaxHealth(); // 1 when full, 0 when dead
         float healthScore = 1f - healthRatio; // more difficult when low health
 
         int totalResources = 0;
