@@ -22,4 +22,4 @@ MonoBehaviour:
   initialAttackDelay: 2
   attackDelay: 0.3
   projectilePrefab: {fileID: 1873891436641685562, guid: 683c6bcdbe44c3e46ab2a6cecbeaa3fa, type: 3}
-  projectileSpeed: 1
+  projectileSpeed: 10
