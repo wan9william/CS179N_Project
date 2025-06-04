@@ -5,6 +5,7 @@ public class MeleeAttack : MonoBehaviour, EnemyAttack
 {
     private bool isAttacking = false;
     private bool canAttack = false;
+    [SerializeField] float dist;
 
     void Start()
     {
@@ -24,6 +25,7 @@ public class MeleeAttack : MonoBehaviour, EnemyAttack
         if (target == null || stats == null || !canAttack || isAttacking) return;
 
         float distance = Vector2.Distance(transform.position, target.position);
+        dist = distance;
         if (distance <= stats.attackRange)
         {
             Debug.Log("[MeleeAttack] Within range, starting attack...");
