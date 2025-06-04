@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 8665906965145548110}
   - component: {fileID: 9200943782019540686}
   - component: {fileID: 2188227948664884281}
+  - component: {fileID: 2686039390100082936}
   m_Layer: 0
   m_Name: RangedEnemy
   m_TagString: Untagged
@@ -212,8 +213,8 @@ MonoBehaviour:
   slider: {fileID: 5207522037836462302}
   mainCamera: {fileID: 0}
   target: {fileID: 3208393823185724856}
-  animator: {fileID: 0}
-  spriteRenderer: {fileID: 0}
+  animator: {fileID: 2686039390100082936}
+  spriteRenderer: {fileID: 2007758349531093703}
 --- !u!114 &8665906965145548110
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -271,6 +272,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shootPoint: {fileID: 1545164821381344498}
+--- !u!95 &2686039390100082936
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4752732764249950697}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: f10d3d1b0c0ae844c896f7a2b22f80fe, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &4792119170084823862
 GameObject:
   m_ObjectHideFlags: 0
