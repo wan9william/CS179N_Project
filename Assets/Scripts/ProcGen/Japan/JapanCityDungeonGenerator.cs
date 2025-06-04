@@ -48,6 +48,8 @@ public class JapanCityDungeonGenerator : JapanDungeonGenerator
         yield return new WaitForEndOfFrame(); // Ensure all scene objects are initialized
         UnityEngine.Random.InitState(System.DateTime.Now.Millisecond);
         RunProceduralGeneration();
+        yield return new WaitForEndOfFrame(); // Ensure all scene objects are initialized
+        pathfinder.Scan();
     }
 
     //Creates Corridors, then Rooms on the Corridors, then Walls.

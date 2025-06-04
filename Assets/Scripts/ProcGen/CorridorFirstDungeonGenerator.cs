@@ -36,6 +36,8 @@ public class CorridorFirstDungeonGenerator : DungeonGenerator
         yield return new WaitForEndOfFrame(); // wait for objects to initialize
         UnityEngine.Random.InitState(System.DateTime.Now.Millisecond); // new seed each load
         RunProceduralGeneration();
+        yield return new WaitForEndOfFrame(); // Ensure all scene objects are initialized
+        pathfinder.Scan();
     }
 
     public override void RunProceduralGeneration()

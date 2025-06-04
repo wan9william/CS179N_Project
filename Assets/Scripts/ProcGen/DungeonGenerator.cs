@@ -21,6 +21,8 @@ public class DungeonGenerator : AbstractDungeonGenerator
         yield return new WaitForEndOfFrame(); // Wait for everything to be ready
         UnityEngine.Random.InitState(System.DateTime.Now.Millisecond); // Ensure randomness
         RunProceduralGeneration();
+        yield return new WaitForEndOfFrame(); // Ensure all scene objects are initialized
+        pathfinder.Scan();
     }
     
     public override void RunProceduralGeneration()

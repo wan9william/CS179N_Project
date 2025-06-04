@@ -92,7 +92,7 @@ public class AStarBootstrap : MonoBehaviour
         int width = (maxX - minX) + 1;
         int height = (maxY - minY) + 1;
         Vector3 center = new(minX + width / 2f, minY + height / 2f, 0f);
-
+        center.x += 0.5f;
         grid.center = center;
         grid.SetDimensions(width, height, grid.nodeSize);
 

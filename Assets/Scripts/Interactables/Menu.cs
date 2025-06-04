@@ -12,6 +12,7 @@ public class Menu : Interactable
         if(!terminal) terminal = GameObject.FindWithTag("UI_Manager").GetComponent<Terminal>();
         terminal.Show();
         player.setPaused(true);
+        player.GetComponent<Rigidbody2D>().linearVelocity = new Vector2(0,0);
     }
 
     protected override void ExplosionVFX()
