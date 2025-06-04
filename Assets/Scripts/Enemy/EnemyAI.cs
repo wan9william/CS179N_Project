@@ -9,41 +9,31 @@ public class EnemyAI : MonoBehaviour
     public Transform target;
     public SpriteRenderer spriteRenderer;
 
-    //[Header("Patrol Settings")]
-    //public Transform[] patrolPoints;
-    //private int currentPatrolIndex = 0;
-
     private Seeker seeker;
     private Rigidbody2D rb;
     private Path path;
     private Vector2 currentDirection;
     private int currentWaypoint = 0;
-    private bool reachedEndOfPath = false;
 
     private EnemyAttack attackBehavior;
+
     public EnemyState currentState = EnemyState.Idle;
+
+    // You can adjust this threshold to fit how close the player must be
+    public float activationDistance = 5f;
 
     void Start()
     {
-        if(target == null) target = GameObject.Find("Player").transform;
         seeker = GetComponent<Seeker>();
         rb = GetComponent<Rigidbody2D>();
 
         if (spriteRenderer == null)
             spriteRenderer = GetComponent<SpriteRenderer>();
 
-        // ✅ Auto-assign Player target if not already set
         if (target == null)
         {
-            GameObject player = GameObject.FindGameObjectWithTag("Player");
-            if (player != null)
-            {
-                target = player.transform;
-            }
-            else
-            {
-                Debug.LogError("[EnemyAI] Player not found. Make sure the player has the 'Player' tag.");
-            }
+            GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+            if (playerObj != null) target = playerObj.transform;
         }
 
         attackBehavior = GetComponent<EnemyAttack>();
@@ -51,7 +41,6 @@ public class EnemyAI : MonoBehaviour
 
         InvokeRepeating(nameof(UpdatePath), 0f, 0.2f);
     }
-
 
     void UpdatePath()
     {
@@ -78,10 +67,6 @@ public class EnemyAI : MonoBehaviour
                 rb.linearVelocity = Vector2.zero;
                 break;
 
-            //case EnemyState.Patrol:
-            //    HandlePatrol();
-            //    break;
-
             case EnemyState.Chase:
                 HandleChase();
                 break;
@@ -98,52 +83,34 @@ public class EnemyAI : MonoBehaviour
             return;
         }
 
-        if (attackBehavior != null)
-        {
-            attackBehavior.TryAttack(target, stats);
-        }
-
         if (Vector2.Distance(rb.position, target.position) <= stats.stopDistance)
         {
             rb.linearVelocity = Vector2.zero;
             return;
         }
 
-        Vector2 targetDirection = ((Vector2)path.vectorPath[currentWaypoint] - rb.position).normalized;
-        currentDirection = Vector2.Lerp(currentDirection, targetDirection, 0.2f);
-        Vector2 nextPosition = rb.position + currentDirection * stats.moveSpeed * Time.fixedDeltaTime;
-        rb.MovePosition(nextPosition);
+        if (attackBehavior != null)
+        {
+            attackBehavior.TryAttack(target, stats);
+        }
+
+        Vector2 direction = ((Vector2)path.vectorPath[currentWaypoint] - rb.position).normalized;
+        currentDirection = Vector2.Lerp(currentDirection, direction, 0.2f);
+
+        Vector2 movement = currentDirection * stats.moveSpeed;
+        rb.MovePosition(rb.position + movement * Time.fixedDeltaTime);
 
         if (stats.flipSprite && spriteRenderer != null)
         {
             spriteRenderer.flipX = currentDirection.x < -0.05f;
         }
 
-        float distance = Vector2.Distance(rb.position, path.vectorPath[currentWaypoint]);
-        if (distance < stats.nextWaypointDistance)
+        float distanceToWaypoint = Vector2.Distance(rb.position, path.vectorPath[currentWaypoint]);
+        if (distanceToWaypoint < stats.nextWaypointDistance)
         {
             currentWaypoint++;
         }
     }
-
-    //void HandlePatrol()
-    //{
-    //    if (patrolPoints.Length == 0) return;
-
-    //    Vector2 patrolTarget = patrolPoints[currentPatrolIndex].position;
-    //    Vector2 dir = (patrolTarget - rb.position).normalized;
-    //    rb.MovePosition(rb.position + dir * stats.moveSpeed * Time.fixedDeltaTime);
-
-    //    if (Vector2.Distance(rb.position, patrolTarget) < 0.2f)
-    //    {
-    //        currentPatrolIndex = (currentPatrolIndex + 1) % patrolPoints.Length;
-    //    }
-
-    //    if (stats.flipSprite && spriteRenderer != null)
-    //    {
-    //        spriteRenderer.flipX = dir.x < -0.05f;
-    //    }
-    //}
 
     void CheckPlayerProximity()
     {
@@ -151,13 +118,13 @@ public class EnemyAI : MonoBehaviour
 
         float distance = Vector2.Distance(rb.position, target.position);
 
-        if (distance <= stats.stopDistance + 1f)
+        if (distance <= activationDistance && currentState == EnemyState.Idle)
         {
             currentState = EnemyState.Chase;
         }
-        //else if (currentState == EnemyState.Chase && distance > stats.stopDistance + 2f)
-        //{
-        //    currentState = EnemyState.Patrol;
-        //}
+        else if (currentState == EnemyState.Chase && distance > activationDistance + 2f)
+        {
+            currentState = EnemyState.Idle;
+        }
     }
 }

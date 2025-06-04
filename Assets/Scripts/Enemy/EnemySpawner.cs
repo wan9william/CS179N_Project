@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using Pathfinding;
 
 [System.Serializable]
 public class SpawnEntry
@@ -27,12 +28,15 @@ public class EnemySpawner : MonoBehaviour
     public float minDistanceFromShip = 8f;
     public float minDistanceBetweenSpawners = 5f;
 
+    [Header("Spawn Restrictions")]
+    [Range(1f, 5f)]
+    public float shipSafetyMultiplier = 1.5f;
+
     private List<Vector3> spawnPositions = new List<Vector3>();
     private Dictionary<Vector3, Coroutine> activeSpawns = new Dictionary<Vector3, Coroutine>();
 
     void Start()
     {
-        // Auto-assign if not manually set
         if (player == null)
             player = GameObject.FindGameObjectWithTag("Player")?.transform;
 
@@ -70,12 +74,27 @@ public class EnemySpawner : MonoBehaviour
 
     bool IsValidSpawnPosition(Vector3 spawnPos)
     {
+        var grid = AstarPath.active?.data?.gridGraph;
+        if (grid == null)
+            return false;
+
+        // Convert world position to graph-space position
+        var node = grid.GetNearest(spawnPos, NNConstraint.Default).node;
+
+        // Check if the node is walkable and not null (i.e., inside graph)
+        if (node == null || !node.Walkable)
+            return false;
+
+        // Too close to player
         if (Vector3.Distance(spawnPos, player.position) < minDistanceFromPlayer)
             return false;
 
-        if (Vector3.Distance(spawnPos, ship.position) < minDistanceFromShip)
+        // Too close to ship (with multiplier)
+        float shipSafeDistance = minDistanceFromShip * shipSafetyMultiplier;
+        if (Vector3.Distance(spawnPos, ship.position) < shipSafeDistance)
             return false;
 
+        // Too close to other spawn points
         foreach (var existing in spawnPositions)
         {
             if (Vector3.Distance(spawnPos, existing) < minDistanceBetweenSpawners)
@@ -84,6 +103,7 @@ public class EnemySpawner : MonoBehaviour
 
         return true;
     }
+
 
     void Update()
     {
@@ -120,7 +140,6 @@ public class EnemySpawner : MonoBehaviour
                 if (entry.prefab != null)
                 {
                     GameObject enemy = Instantiate(entry.prefab, point, Quaternion.identity);
-
                     EnemyAI ai = enemy.GetComponent<EnemyAI>();
                     if (ai != null && ai.target == null)
                         ai.target = player;
