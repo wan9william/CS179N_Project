@@ -18,7 +18,7 @@ public class EnemyBullet : MonoBehaviour
 
         //The above commented out line was what it was before. However, we want the player and the healthbar to be coupled.
         //Therefore, we have the player update its own healthbar, so any damage should be taken through the player.
-        Player player = Object.FindFirstObjectByType<Player>();
+        Player player = other.GetComponent<Player>();
         if (player != null)
         {
             Debug.Log($"[EnemyBullet] Hit player: {player.name}");
