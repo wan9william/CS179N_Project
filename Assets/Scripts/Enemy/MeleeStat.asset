@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9b2cec5e95900744a60338541320004, type: 3}
   m_Name: MeleeStat
   m_EditorClassIdentifier: 
-  moveSpeed: 3
+  moveSpeed: 1.5
   stopDistance: 1.5
   nextWaypointDistance: 0.3
   flipSprite: 1
