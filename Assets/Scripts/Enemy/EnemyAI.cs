@@ -4,6 +4,10 @@ using Pathfinding;
 [RequireComponent(typeof(Seeker), typeof(Rigidbody2D))]
 public class EnemyAI : MonoBehaviour
 {
+    [Header("Audio")]
+    [SerializeField] private AudioSource movementAudioSource;
+    [SerializeField] private AudioClip movementClip;
+
     [Header("Enemy Stats")]
     public EnemyStats stats;
     public Transform target;
@@ -113,6 +117,13 @@ public class EnemyAI : MonoBehaviour
         currentDirection = Vector2.Lerp(currentDirection, targetDirection, 0.2f);
         Vector2 nextPosition = rb.position + currentDirection * stats.moveSpeed * Time.fixedDeltaTime;
         rb.MovePosition(nextPosition);
+
+        if (movementAudioSource && movementClip && !movementAudioSource.isPlaying)
+        {
+            movementAudioSource.clip = movementClip;
+            movementAudioSource.loop = true;
+            movementAudioSource.Play();
+        }
 
         if (stats.flipSprite && spriteRenderer != null)
         {
