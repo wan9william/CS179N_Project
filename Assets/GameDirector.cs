@@ -15,6 +15,7 @@ public class GameDirector : MonoBehaviour
     public float baseItemChance = 1f;
     public int maxEnemiesPerSpawn = 6;
     public float minItemChance = 0.2f;
+    [SerializeField] private float difficulty;
 
     [Header("Scaling Weights")]
     [Range(0f, 1f)] public float healthWeight = 0.4f;
@@ -35,7 +36,7 @@ public class GameDirector : MonoBehaviour
         if (playerHealth == null || timer == null || itemManager == null || enemySpawner == null)
             return;
 
-        float difficulty = CalculateDifficulty();
+        difficulty = CalculateDifficulty();
 
         // Adjust enemies per spawn
         enemySpawner.enemiesPerSpawn = Mathf.RoundToInt(Mathf.Lerp(baseEnemiesPerSpawn, maxEnemiesPerSpawn, difficulty));
