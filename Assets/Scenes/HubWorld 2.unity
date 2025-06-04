@@ -2048,6 +2048,11 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6761265207126488850, guid: 37527023768168a45ba07515ee2cd0b7, type: 3}
   m_PrefabInstance: {fileID: 22454921}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &737356299 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5906732608731879457, guid: 497868bb8ae3a6b41af4dab882c30650, type: 3}
+  m_PrefabInstance: {fileID: 7989563043160084098}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &792720315 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 760980912590106007, guid: 37527023768168a45ba07515ee2cd0b7, type: 3}
@@ -3410,6 +3415,10 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 1192184108}
+    - target: {fileID: 2271380398267982548, guid: 0c8d8c989d97a6548994764ef195f225, type: 3}
+      propertyPath: boosters
+      value: 
+      objectReference: {fileID: 737356299}
     - target: {fileID: 2271380398267982548, guid: 0c8d8c989d97a6548994764ef195f225, type: 3}
       propertyPath: Dead_Text
       value: 

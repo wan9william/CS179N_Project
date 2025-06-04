@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Tilemaps;
 using UnityEngine.UI;
 
 public class Game_Event_Manager : MonoBehaviour
@@ -22,6 +23,7 @@ public class Game_Event_Manager : MonoBehaviour
     [SerializeField] private GameObject Object_Manager;
     [SerializeField] private Player player;
     [SerializeField] private GameObject UI;
+    [SerializeField] private GameObject boosters;
 
     public enum GM_STATES { 
         IDLE,
@@ -97,6 +99,7 @@ public class Game_Event_Manager : MonoBehaviour
                 ForwardFadeAnimation(true);
                 break;
             case GM_STATES.START_MISSION:
+                boosters.SetActive(false);
                 ForwardFadeAnimation(false);
 
                 if (ScreenFadeT >= 1f)
@@ -118,6 +121,7 @@ public class Game_Event_Manager : MonoBehaviour
                 }
                 break;
             case GM_STATES.END_MISSION:
+                boosters.SetActive(true);
                 if (loseMission)
                 {
                     Dead_Text.SetActive(true);
