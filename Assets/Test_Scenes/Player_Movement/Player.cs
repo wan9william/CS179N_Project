@@ -523,6 +523,7 @@ void Awake()
             animator.SetBool("Dead", true);
             game_event_manager.SetState(Game_Event_Manager.GM_STATES.END_MISSION);
             game_event_manager.SetLoseMission(true);
+            this.gameObject.transform.localPosition= Vector3.zero;
         }
 
         _healthbar.TakeDamage(damage);
