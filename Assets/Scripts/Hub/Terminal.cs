@@ -21,6 +21,10 @@ public class Terminal : MonoBehaviour
     [SerializeField] private GameObject Planet2_Button_Obj;
     [SerializeField] private GameObject Planet3_Button_Obj;
 
+    [Header("Audio Elements")]
+    [SerializeField] private AudioClip selectClip;
+    [SerializeField] private AudioSource audioSource;
+
     private UI_Elements current_ui;
     private string selectedPlanet = null;
     private Button startButton;
@@ -31,6 +35,8 @@ public class Terminal : MonoBehaviour
 
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
+
         startButton = Start_Button_Obj.GetComponent<Button>();
         if (startButton == null)
         {
@@ -103,6 +109,7 @@ public class Terminal : MonoBehaviour
         selectedButton.colors = activeLookColors;
 
         Debug.Log("Selected Planet: " + selectedPlanet);
+        audioSource.Play();
     }
 
     private void ResetPlanetButtonColors()
@@ -118,6 +125,7 @@ public class Terminal : MonoBehaviour
         DeactivateUI();
         UI_Parent.SetActive(false);
         player.setPaused(false);
+        audioSource.Play();
     }
 
     public void ClickStart()
@@ -132,11 +140,13 @@ public class Terminal : MonoBehaviour
         DeactivateUI();
         UI_Parent.SetActive(false);
         player.setPaused(false);
+        audioSource.Play();
 
         game_event_manager.SetSelectedPlanet(selectedPlanet);
         game_event_manager.SetState(Game_Event_Manager.GM_STATES.START_MISSION);
 
         Debug.Log("Starting mission on: " + selectedPlanet);
+        
     }
 
     public void ClickExtract()
@@ -149,6 +159,7 @@ public class Terminal : MonoBehaviour
         game_event_manager.SetLoseMission(false);
 
         current_ui = UI_Elements.START;
+        audioSource.Play();
     }
 
     private void DeactivateUI()
