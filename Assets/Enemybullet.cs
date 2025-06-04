@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class EnemyBullet : MonoBehaviour
 {
+    [SerializeField] GameObject _explosion;
     public float lifetime = 2f;
     public float damage = 10f;
 
@@ -13,7 +14,10 @@ public class EnemyBullet : MonoBehaviour
     void OnTriggerEnter2D(Collider2D other)
     {
         Debug.Log($"[EnemyBullet] Triggered with {other.name}");
+        bool success = true;
 
+        if (other.gameObject.GetComponent<EnemyBullet>()) success = false;
+        if (other.gameObject.GetComponent<EnemyHealth>()) success = false;
         //PlayerHealth player = Object.FindFirstObjectByType<PlayerHealth>();
 
         //The above commented out line was what it was before. However, we want the player and the healthbar to be coupled.
@@ -21,13 +25,20 @@ public class EnemyBullet : MonoBehaviour
         Player player = other.GetComponent<Player>();
         if (player != null)
         {
+            success = true;
             Debug.Log($"[EnemyBullet] Hit player: {player.name}");
             player.TakeDamage((int)damage);
-            Destroy(gameObject);
         }
         else
         {
             Debug.Log("[EnemyBullet] No PlayerHealth found in target.");
+        }
+
+        if (success)
+        {
+            gameObject.SetActive(false);
+            Instantiate(_explosion, gameObject.transform);
+            Destroy(gameObject);
         }
     }
 

@@ -20,6 +20,9 @@ public class TurretSpawner : MonoBehaviour
 
     void Start()
     {
+        if (playerTransform == null)
+            playerTransform = GameObject.FindGameObjectWithTag("Player")?.transform;
+
         if (turretPrefab == null || tileMapVisualizer == null || enemySpawner == null || playerTransform == null)
         {
             Debug.LogError("[TurretSpawner] Missing required references!");

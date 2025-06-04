@@ -120,7 +120,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _mat: {fileID: 0}
   _glowMat: {fileID: 0}
-  _explosion: {fileID: 0}
+  _explosion: {fileID: 7580157664908573505, guid: 2f80de9f2fade014fb43ec9a6f8d2f54, type: 3}
   health: 100
   itemAnimator: {fileID: 0}
   damage: 0

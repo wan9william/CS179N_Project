@@ -22,7 +22,8 @@ public class TurretBehavior : MonoBehaviour
 
     void Update()
     {
-        if (player == null) return;
+        if (player == null)
+            player = GameObject.FindGameObjectWithTag("Player")?.transform;
 
         playerVisible = IsPlayerVisible();
 
