@@ -2071,7 +2071,7 @@ GameObject:
   - component: {fileID: 879668157}
   m_Layer: 0
   m_Name: CryoChamber
-  m_TagString: Untagged
+  m_TagString: Interactable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3130,6 +3130,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 106835682920895475, guid: 4c18fb5dec947874ca31c66ba2f5fe97, type: 3}
+      propertyPath: m_SortingLayer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 106835682920895475, guid: 4c18fb5dec947874ca31c66ba2f5fe97, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 1715759199
+      objectReference: {fileID: 0}
     - target: {fileID: 716302228250151059, guid: 4c18fb5dec947874ca31c66ba2f5fe97, type: 3}
       propertyPath: canvas
       value: 
@@ -3896,6 +3904,22 @@ PrefabInstance:
       value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 1541805565726668028, guid: 497868bb8ae3a6b41af4dab882c30650, type: 3}
+      propertyPath: m_Color.a
+      value: 0.7058824
+      objectReference: {fileID: 0}
+    - target: {fileID: 1541805565726668028, guid: 497868bb8ae3a6b41af4dab882c30650, type: 3}
+      propertyPath: m_Color.b
+      value: 0.9685534
+      objectReference: {fileID: 0}
+    - target: {fileID: 1541805565726668028, guid: 497868bb8ae3a6b41af4dab882c30650, type: 3}
+      propertyPath: m_Color.g
+      value: 0.9674532
+      objectReference: {fileID: 0}
+    - target: {fileID: 1541805565726668028, guid: 497868bb8ae3a6b41af4dab882c30650, type: 3}
+      propertyPath: m_Color.r
+      value: 0.62438184
+      objectReference: {fileID: 0}
+    - target: {fileID: 1541805565726668028, guid: 497868bb8ae3a6b41af4dab882c30650, type: 3}
       propertyPath: m_SortingLayer
       value: 3
       objectReference: {fileID: 0}
@@ -3963,6 +3987,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Boosters
       objectReference: {fileID: 0}
+    - target: {fileID: 6312347910610167721, guid: 497868bb8ae3a6b41af4dab882c30650, type: 3}
+      propertyPath: m_SortingOrder
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 6765819900429371367, guid: 497868bb8ae3a6b41af4dab882c30650, type: 3}
       propertyPath: m_SortingLayer
       value: 2
@@ -3986,6 +4014,10 @@ PrefabInstance:
     - target: {fileID: 7606654151249172098, guid: 497868bb8ae3a6b41af4dab882c30650, type: 3}
       propertyPath: m_Name
       value: Ship
+      objectReference: {fileID: 0}
+    - target: {fileID: 7814624831692789058, guid: 497868bb8ae3a6b41af4dab882c30650, type: 3}
+      propertyPath: m_SortingOrder
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8041686871479616569, guid: 497868bb8ae3a6b41af4dab882c30650, type: 3}
       propertyPath: m_SortingOrder

@@ -133,11 +133,11 @@ void Awake()
         //we could check if we have a weapon every frame
         //_weaponScript = _equipped != null ? _equipped.GetComponentInChildren<Weapon>() : null;
 
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            TakeDamage(10);
+        //if (Input.GetKeyDown(KeyCode.Space))
+        //{
+        //    TakeDamage(10);
 
-        }
+        //}
 
         //reduce trauma after each frame
         trauma -= 1f * Time.deltaTime;
@@ -521,14 +521,21 @@ void Awake()
         if (health <= 0)
         {
             animator.SetBool("Dead", true);
-            game_event_manager.SetState(Game_Event_Manager.GM_STATES.END_MISSION);
-            game_event_manager.SetLoseMission(true);
-            this.gameObject.transform.localPosition= Vector3.zero;
         }
 
         _healthbar.TakeDamage(damage);
     }
 
+    public void MissionReset()
+    {
+        game_event_manager.SetState(Game_Event_Manager.GM_STATES.END_MISSION);
+        game_event_manager.SetLoseMission(true);
+    }
+
+    public void SendToZero()
+    {
+        this.gameObject.transform.localPosition = Vector3.zero;
+    }
     public void SelectEquipped() {
     GameObject selectedPrefab = inventory.selecteditem(selected_slot);
     InventorySlot[] slots = inventory.getInventorySlots();
