@@ -48,18 +48,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c503ac27d0f7244ab99b430cf54c56a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tileMapVisualizer: {fileID: 0}
+  player: {fileID: 0}
+  ship: {fileID: 0}
   enemyTypes:
   - type: 3
     prefab: {fileID: 915854284506895110, guid: 3115f2d7d5c2504479ce2531bcf278af, type: 3}
   - type: 1
     prefab: {fileID: 4752732764249950697, guid: f9656dd8092616e49ab3faf0cb380b5e, type: 3}
-  spawnPoints:
-  - {fileID: 7039842819192352968}
-  - {fileID: 2435475929379735359}
+  spawnPointCount: 10
+  enemiesPerSpawn: 2
+  spawnOffset: 0.5
+  triggerRadius: 7
   spawnInterval: 10
-  enemiesPerWave: 1
-  triggerDistance: 5
-  spawnOnce: 0
+  minDistanceFromPlayer: 6
+  minDistanceFromShip: 12
+  minDistanceBetweenSpawners: 5
+  shipSafetyMultiplier: 1.5
+  spawnPositions: []
 --- !u!61 &467750077282225692
 BoxCollider2D:
   m_ObjectHideFlags: 0
