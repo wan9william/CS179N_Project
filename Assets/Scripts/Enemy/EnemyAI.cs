@@ -107,7 +107,7 @@ public class EnemyAI : MonoBehaviour
         if (movementAudioSource && movementClip && !movementAudioSource.isPlaying)
         {
             movementAudioSource.clip = movementClip;
-            movementAudioSource.loop = true;
+            //movementAudioSource.loop = true;
             movementAudioSource.Play();
         }
 
