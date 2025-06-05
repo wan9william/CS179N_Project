@@ -259,9 +259,10 @@ MonoBehaviour:
   movementAudioSource: {fileID: 7820460043232338590}
   movementClip: {fileID: 8300000, guid: ab6850659b1264a8a8de37a637c5507f, type: 3}
   stats: {fileID: 11400000, guid: 08ee9b323e775f344b2c5ceaa41b8675, type: 2}
-  target: {fileID: 4690868738214975529, guid: 4c18fb5dec947874ca31c66ba2f5fe97, type: 3}
+  target: {fileID: 0}
   spriteRenderer: {fileID: 0}
-  currentState: 0
+  currentState: 2
+  activationDistance: 5
 --- !u!114 &2188227948664884281
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -278,8 +279,6 @@ MonoBehaviour:
 --- !u!95 &2686039390100082936
 Animator:
   serializedVersion: 7
---- !u!82 &7820460043232338590
-AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -299,6 +298,14 @@ AudioSource:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!82 &7820460043232338590
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4752732764249950697}
+  m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}

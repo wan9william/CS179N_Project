@@ -20,10 +20,7 @@ public class EnemyAI : MonoBehaviour
     private int currentWaypoint = 0;
 
     private EnemyAttack attackBehavior;
-
     public EnemyState currentState = EnemyState.Idle;
-
-    // You can adjust this threshold to fit how close the player must be
     public float activationDistance = 5f;
 
     void Start()
@@ -74,6 +71,10 @@ public class EnemyAI : MonoBehaviour
             case EnemyState.Chase:
                 HandleChase();
                 break;
+
+            case EnemyState.Attack:
+                HandleAttack();
+                break;
         }
 
         CheckPlayerProximity();
@@ -93,11 +94,6 @@ public class EnemyAI : MonoBehaviour
             return;
         }
 
-        if (attackBehavior != null)
-        {
-            attackBehavior.TryAttack(target, stats);
-        }
-
         Vector2 direction = ((Vector2)path.vectorPath[currentWaypoint] - rb.position).normalized;
         currentDirection = Vector2.Lerp(currentDirection, direction, 0.2f);
 
@@ -107,7 +103,6 @@ public class EnemyAI : MonoBehaviour
         if (movementAudioSource && movementClip && !movementAudioSource.isPlaying)
         {
             movementAudioSource.clip = movementClip;
-            //movementAudioSource.loop = true;
             movementAudioSource.Play();
         }
 
@@ -123,18 +118,45 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
+    void HandleAttack()
+    {
+        if (attackBehavior != null)
+        {
+            attackBehavior.TryAttack(target, stats);
+        }
+
+        rb.linearVelocity = Vector2.zero;
+
+        // Return to chase if player moves out of range
+        float distance = Vector2.Distance(rb.position, target.position);
+        if (distance > stats.attackRange + 1f)
+        {
+            currentState = EnemyState.Chase;
+        }
+    }
+
     void CheckPlayerProximity()
     {
         if (target == null) return;
 
         float distance = Vector2.Distance(rb.position, target.position);
 
-        if (distance <= activationDistance && currentState == EnemyState.Idle)
+        if (distance <= stats.attackRange)
         {
+            if (currentState != EnemyState.Attack)
+                Debug.Log("[EnemyAI] Switching to ATTACK");
+            currentState = EnemyState.Attack;
+        }
+        else if (distance <= activationDistance)
+        {
+            if (currentState != EnemyState.Chase)
+                Debug.Log("[EnemyAI] Switching to CHASE");
             currentState = EnemyState.Chase;
         }
-        else if (currentState == EnemyState.Chase && distance > activationDistance + 2f)
+        else
         {
+            if (currentState != EnemyState.Idle)
+                Debug.Log("[EnemyAI] Switching to IDLE");
             currentState = EnemyState.Idle;
         }
     }
