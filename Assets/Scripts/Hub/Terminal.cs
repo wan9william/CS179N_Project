@@ -30,6 +30,10 @@ public class Terminal : MonoBehaviour
     private Button startButton;
     private Button selectedButton;
 
+    private bool[] unlocked = new bool[3] { true,false,false};
+    private int[] cost = new int[3] { 0,250,750 };
+    [SerializeField] private GameObject[] cost_ui = new GameObject[3];
+
     private ColorBlock activeLookColors;
     private ColorBlock disabledLookColors;
 
@@ -63,9 +67,9 @@ public class Terminal : MonoBehaviour
         Planet3_Button_Obj.GetComponent<Button>().colors = disabledLookColors;
 
         // Add listeners
-        Planet1_Button_Obj.GetComponent<Button>().onClick.AddListener(() => SelectPlanet("Derelict Echo", Planet1_Button_Obj));
-        Planet2_Button_Obj.GetComponent<Button>().onClick.AddListener(() => SelectPlanet("Virelia Prime", Planet2_Button_Obj));
-        Planet3_Button_Obj.GetComponent<Button>().onClick.AddListener(() => SelectPlanet("Elarin Reach", Planet3_Button_Obj));
+        Planet1_Button_Obj.GetComponent<Button>().onClick.AddListener(() => SelectPlanet("Derelict Echo", Planet1_Button_Obj,0));
+        Planet2_Button_Obj.GetComponent<Button>().onClick.AddListener(() => SelectPlanet("Virelia Prime", Planet2_Button_Obj, 1));
+        Planet3_Button_Obj.GetComponent<Button>().onClick.AddListener(() => SelectPlanet("Elarin Reach", Planet3_Button_Obj, 2));
     }
 
     /// <summary>
@@ -94,15 +98,28 @@ public class Terminal : MonoBehaviour
         }
     }
 
-    private void SelectPlanet(string planetName, GameObject buttonObj)
+    private void SelectPlanet(string planetName, GameObject buttonObj, int index)
     {
-        selectedPlanet = planetName;
-        startButton.interactable = true;
+        
 
         // Reset all planet buttons to disabled look
         Planet1_Button_Obj.GetComponent<Button>().colors = disabledLookColors;
         Planet2_Button_Obj.GetComponent<Button>().colors = disabledLookColors;
         Planet3_Button_Obj.GetComponent<Button>().colors = disabledLookColors;
+
+        //If the moon has been unlocked
+        if (!unlocked[index]) {
+            if (player.GetMoney() >= cost[index])
+            {
+                player.SetMoney(player.GetMoney() - cost[index]);
+                unlocked[index] = true;
+                if (cost_ui[index]) cost_ui[index].SetActive(false);
+            }
+            else { return; }
+        }
+
+        selectedPlanet = planetName;
+        startButton.interactable = true;
 
         // Highlight the selected one
         selectedButton = buttonObj.GetComponent<Button>();
