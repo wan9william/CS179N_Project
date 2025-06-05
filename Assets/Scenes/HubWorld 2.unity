@@ -135,6 +135,18 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 445018056629502315, guid: 37527023768168a45ba07515ee2cd0b7, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 101.59
+      objectReference: {fileID: 0}
+    - target: {fileID: 445018056629502315, guid: 37527023768168a45ba07515ee2cd0b7, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 83.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 445018056629502315, guid: 37527023768168a45ba07515ee2cd0b7, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 513787121489102831, guid: 37527023768168a45ba07515ee2cd0b7, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -282,6 +294,26 @@ PrefabInstance:
     - target: {fileID: 1292642723473007135, guid: 37527023768168a45ba07515ee2cd0b7, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1316158622742079089, guid: 37527023768168a45ba07515ee2cd0b7, type: 3}
+      propertyPath: m_text
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1316158622742079089, guid: 37527023768168a45ba07515ee2cd0b7, type: 3}
+      propertyPath: m_margin.z
+      value: -1.0363235
+      objectReference: {fileID: 0}
+    - target: {fileID: 1316158622742079089, guid: 37527023768168a45ba07515ee2cd0b7, type: 3}
+      propertyPath: m_overflowMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1316158622742079089, guid: 37527023768168a45ba07515ee2cd0b7, type: 3}
+      propertyPath: m_TextWrappingMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1316158622742079089, guid: 37527023768168a45ba07515ee2cd0b7, type: 3}
+      propertyPath: m_HorizontalAlignment
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1939406597952652749, guid: 37527023768168a45ba07515ee2cd0b7, type: 3}
       propertyPath: m_VertexColorAlwaysGammaSpace
@@ -532,6 +564,9 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 517291869}
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1510590418968432920, guid: 37527023768168a45ba07515ee2cd0b7, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 682166656}
     - targetCorrespondingSourceObject: {fileID: 2047801923615306332, guid: 37527023768168a45ba07515ee2cd0b7, type: 3}
       insertIndex: -1
       addedObject: {fileID: 792720316}
@@ -539,6 +574,11 @@ PrefabInstance:
 --- !u!1 &22454922 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6818539270703023008, guid: 37527023768168a45ba07515ee2cd0b7, type: 3}
+  m_PrefabInstance: {fileID: 22454921}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &22454923 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1510590418968432920, guid: 37527023768168a45ba07515ee2cd0b7, type: 3}
   m_PrefabInstance: {fileID: 22454921}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &123643454
@@ -2035,12 +2075,34 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1316158622742079089, guid: 37527023768168a45ba07515ee2cd0b7, type: 3}
   m_PrefabInstance: {fileID: 22454921}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 22454923}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!95 &682166656
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 22454923}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 89e2042884d3f984f9ceb9ac4104b8b8, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &716731566 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 178916100855336850, guid: 37527023768168a45ba07515ee2cd0b7, type: 3}

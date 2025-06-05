@@ -59,6 +59,7 @@ public class Player : MonoBehaviour
     [SerializeField] private PlayerHealth _healthbar;
     [SerializeField] private Camera _camera;
     [SerializeField] private TextMeshProUGUI _moneyText;
+    [SerializeField] private Animator _moneyAnimator;
 
     //FLAGS
     [Header("Flags")]
@@ -115,6 +116,8 @@ void Awake()
         if(sprint_bar != null) sprint_bar.maxValue = 100f;
         inventory.SelectSlot(selected_slot);
         SelectEquipped();
+
+        if(_moneyText) _moneyAnimator = _moneyText.gameObject.GetComponent<Animator>();
     }
 
     public void RevivePlayer() {
@@ -141,6 +144,12 @@ void Awake()
         //reduce trauma after each frame
         trauma -= 1f * Time.deltaTime;
         trauma = Mathf.Clamp(trauma, 0f, 1f);
+
+        if (_moneyAnimator && _moneyAnimator.GetBool("AddMoney"))
+        {
+            //_moneyAnimator.SetBool("AddMoney", false);
+        }
+
 
         if (_camera != null)
         {
@@ -728,7 +737,11 @@ void Awake()
         money = val;
 
         //update money value on UI
-        if(_moneyText) _moneyText.text = money.ToString();
+        if (_moneyText)
+        {
+            _moneyAnimator.SetBool("AddMoney", true);
+            _moneyText.text = money.ToString();
+        }
     }
 
 }
