@@ -70,6 +70,7 @@ public class Shop : MonoBehaviour
                 if (index > catalog.Length-1) index = 0;
 
                 shop_item.GetComponent<SpriteRenderer>().sprite = catalog[index].GetComponent<SpriteRenderer>().sprite;
+                shop_item.GetComponent<SpriteRenderer>().material.SetTexture("_MainTex", catalog[index].GetComponent<SpriteRenderer>().sprite.texture);
                 state = SHOP_STATES.SHOP_IDLE;
                 break;
 

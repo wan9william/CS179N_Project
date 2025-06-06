@@ -329,7 +329,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1959901821054270716, guid: 37527023768168a45ba07515ee2cd0b7, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2047801923615306332, guid: 37527023768168a45ba07515ee2cd0b7, type: 3}
       propertyPath: m_TagString
@@ -3570,6 +3570,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1742962382}
   m_CullTransparentMesh: 1
+--- !u!114 &1756149818 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8341623973261529032, guid: 497868bb8ae3a6b41af4dab882c30650, type: 3}
+  m_PrefabInstance: {fileID: 7989563043160084098}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42d4e72c83f91e346b7a1449b299b13d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1760525425 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6236206850601400630, guid: 37527023768168a45ba07515ee2cd0b7, type: 3}
@@ -4195,6 +4206,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 737356299}
     - target: {fileID: 2271380398267982548, guid: 0c8d8c989d97a6548994764ef195f225, type: 3}
+      propertyPath: shipDoor
+      value: 
+      objectReference: {fileID: 1756149818}
+    - target: {fileID: 2271380398267982548, guid: 0c8d8c989d97a6548994764ef195f225, type: 3}
       propertyPath: Dead_Text
       value: 
       objectReference: {fileID: 1499016997}
@@ -4715,6 +4730,10 @@ PrefabInstance:
       propertyPath: m_SortingLayerID
       value: 1715759199
       objectReference: {fileID: 0}
+    - target: {fileID: 1541805565726668028, guid: 497868bb8ae3a6b41af4dab882c30650, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: b8d0209cae5c4ad4bb928b35a47f916a, type: 2}
     - target: {fileID: 1663081482880808920, guid: 497868bb8ae3a6b41af4dab882c30650, type: 3}
       propertyPath: itemAnimator
       value: 
@@ -4806,6 +4825,10 @@ PrefabInstance:
     - target: {fileID: 8041686871479616569, guid: 497868bb8ae3a6b41af4dab882c30650, type: 3}
       propertyPath: m_SortingOrder
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341623973261529032, guid: 497868bb8ae3a6b41af4dab882c30650, type: 3}
+      propertyPath: locked
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8868063678650881480, guid: 497868bb8ae3a6b41af4dab882c30650, type: 3}
       propertyPath: m_SortingLayer

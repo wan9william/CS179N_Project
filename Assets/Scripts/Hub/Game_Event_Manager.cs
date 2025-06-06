@@ -25,6 +25,9 @@ public class Game_Event_Manager : MonoBehaviour
     [SerializeField] private GameObject UI;
     [SerializeField] private GameObject boosters;
 
+    //Ship Door
+    [SerializeField] private Door shipDoor;
+
     public enum GM_STATES { 
         IDLE,
         INITIALIZE,
@@ -116,6 +119,7 @@ public class Game_Event_Manager : MonoBehaviour
                     }
 
                     SceneManager.LoadScene(selectedPlanetScene);
+                    shipDoor.SetLocked(false);
                     state = GM_STATES.IDLE;
                     initialize = true;
                 }
@@ -150,12 +154,20 @@ public class Game_Event_Manager : MonoBehaviour
                         }
                     }
 
+                    //lock the ship door and close
+                    shipDoor.Destroy(ref player);
+                    shipDoor.SetLocked(true);
+
                     // Delay restore until scene is loaded
                     SceneManager.sceneLoaded += OnSceneLoaded_Extract;
 
                     SceneManager.LoadScene("Space");
                     state = GM_STATES.IDLE;
                     initialize = true;
+
+                    if (ship && player) {
+                        shipPositionOffset = ship.transform.InverseTransformPoint(player.transform.position);
+                    }
                 }
                 break;
             default:

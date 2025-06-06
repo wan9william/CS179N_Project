@@ -9,7 +9,10 @@ public class Door : Interactable
     [SerializeField] private AudioClip openClip;
     private AudioSource audioSource;
     [SerializeField] private bool open = false;
+    [SerializeField] private bool locked = true;
     protected override void onInteract(ref Player player) {
+
+        if (locked) return;
 
         //if open, close, otherwise open
         bool currentState = itemAnimator.GetBool("Open");
@@ -53,5 +56,7 @@ public class Door : Interactable
 
         return true;
     }
+
+    public void SetLocked(bool newlock) { locked = newlock; }
 
 }
