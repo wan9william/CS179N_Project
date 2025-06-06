@@ -34,6 +34,9 @@ public class EnemyBullet : MonoBehaviour
             Debug.Log("[EnemyBullet] No PlayerHealth found in target.");
         }
 
+        Interactable _itemInteractable = other.GetComponent<Interactable>();
+        if (_itemInteractable) { success |= _itemInteractable.Hit(damage); }
+
         if (success)
         {
             gameObject.SetActive(false);

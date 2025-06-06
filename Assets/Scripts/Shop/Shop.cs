@@ -11,6 +11,7 @@ public class Shop : MonoBehaviour
     [SerializeField] private UnityEngine.Object[] catalog;
     [SerializeField] private int index = 0;
     [SerializeField] GameObject shop_item;
+    [SerializeField] private Vector3 shop_itemStartPos;
     enum SHOP_STATES { SHOP_IDLE, SHOP_SELL, SHOP_ROTATE, SHOP_BUY};
     private SHOP_STATES state;
 
@@ -31,11 +32,13 @@ public class Shop : MonoBehaviour
 
         //Load all catalog items
         catalog = Resources.LoadAll("Prefabs/Interactables", typeof(GameObject));
+        shop_itemStartPos = shop_item.transform.localPosition;
     }
 
     // Update is called once per frame
     void Update()
     {
+        shop_item.transform.localPosition = shop_itemStartPos + (Vector3.up * 0.2f * Mathf.Sin(Time.time));
         switch (state)
         {
             case SHOP_STATES.SHOP_IDLE:

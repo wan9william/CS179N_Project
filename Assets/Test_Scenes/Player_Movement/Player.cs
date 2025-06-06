@@ -442,7 +442,12 @@ void Awake()
         {
             case PLAYER_MOVEMENT_STATES.IDLE:
                 animator.SetBool("Walk", false);
-                if (paused) break;
+                if (paused)
+                {
+                    vertical_multiplier = 0;
+                    horizontal_multiplier = 0;
+                    break;
+                }
 
                 bool moved = Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D);
                 if (moved && health > 0 && !paused) movement_state = PLAYER_MOVEMENT_STATES.WALK;
