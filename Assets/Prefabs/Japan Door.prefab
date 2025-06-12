@@ -129,6 +129,7 @@ MonoBehaviour:
   collider: {fileID: 2762607267753219698}
   openClip: {fileID: 8300000, guid: 7ea01c0b809c99044a594207b61943bf, type: 3}
   open: 0
+  locked: 0
 --- !u!210 &-6379842071510807805
 SortingGroup:
   m_ObjectHideFlags: 0
